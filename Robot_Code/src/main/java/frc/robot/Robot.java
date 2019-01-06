@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.lib.VersionData;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +24,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+      VersionData.doVersionID();
+
   }
 
   @Override

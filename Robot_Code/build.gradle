@@ -59,3 +59,40 @@ jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
+
+//build version plugin below this line 
+tasks.register("DoVersionID"){
+    doFirst {
+        String constants = file('src/main/deploy/version.dat').text //maintain path to constants file
+        int loc = constants.indexOf("VERSION_ID") //variable to find
+        if(loc < 0){
+            throw new GradleException('VERSION_ID not found in constants file! \nverify its presence and re-build')
+        }
+        //printf("VERSION_ID found at location: %d \n", loc) //debug
+        int i = loc + 10
+        char curr = 0
+        while(curr != '=' && i < loc + 40){ //locate the equals sign after VersionID. The less than is a safety check 
+            curr = constants.charAt(i)
+            i++
+        }
+        if(i >= loc + 39){
+            throw new GradleException('Could not find = within 30 characters after Version_ID')
+        }
+        int equalspos = i
+        //printf("found equal sign at: %d\n", i)
+        while(curr != ';' && i < loc + 60){ //locate the semicolon. The less than is a safety check 
+            curr = constants.charAt(i)
+            i++
+        }
+        if(i >= loc + 59){
+            throw new GradleException('Could not find line ; within 50 characters after Version_ID')
+        }
+        int versionID = constants.substring(equalspos, i - 1) as Integer //get version value from the constants file
+        //printf("Old version ID: %d\n", versionID)
+        versionID += 1 //increment version id by some value
+        printf("new version ID: %d\n", versionID)
+        String newConstants = constants.substring(0,equalspos) + versionID + ";" + constants.substring(i) //create new text for constants class with updated version string
+        file('src/main/deploy/version.dat').text = newConstants // update constants class
+    }
+}
+compileJava.dependsOn DoVersionID
