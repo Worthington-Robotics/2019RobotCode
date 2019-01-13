@@ -1,14 +1,14 @@
 # FRC Team 4145's 2019 Robot Code
 This repository contains all of the code running on FRC Team 4145's robot controller or RoboRIO.
 ## Contents
-#### Robot_code -- Contains the java code project running on the RoboRIO
+#### Robot_code - Contains the java code project running on the RoboRIO
 #### Other Entries
 ## Development Environment Setup
 In order to setup the development environment a few things must be installed on your computer. There are two available methods. The second method will work with existing setups but requires more work.
 #### Method One
-WPIlib Provides an installer for Windows (Known working) as well as Mac and linux. The installer is avaliable [here](https://github.com/wpilibsuite/allwpilib/releases) **Note: As of 1/12/2019 the Mac and linux versions are having issues.**
+WPIlib Provides an installer for Windows (Known working) as well as Mac and Linux. The installer is avaliable [here](https://github.com/wpilibsuite/allwpilib/releases) **Note: As of 1/12/2019 the Mac and Linux versions are having issues.**
 1. Download your version of the installer above.
-2. Run the installer. it will bring you to a selection menu. Select the Download Visual Studio Code button. The installer will download VSCode from the Web then take you back to the selection menu. If you want, you may un-check the C++ option. Select run and let the installer install and load all of the components needed for development. It will populate 3 special icons for ShuffleBoard (a dashboard), Visual Studio Code and SmartDashboard.
+2. Run the installer. It will bring you to a selection menu. Select the Download Visual Studio Code button. The installer will download VSCode from the Web then take you back to the selection menu. If you want, you may un-check the C++ option. Select run and let the installer install and load all of the components needed for development. It will populate 3 special icons for ShuffleBoard (a dashboard), Visual Studio Code and SmartDashboard.
 3. Clone this repository onto the development computer.
 4. Select file then select open folder and navigate to the directory the project was cloned into. 
 5. Profit??
