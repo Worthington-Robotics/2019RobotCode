@@ -15,8 +15,8 @@ public class Constants {
     public static final int LIFT_UPPER_ID = 8;
 
     //Spark Ports
-    public static final int LEFT_SHOOTER_ID = 2;
-    public static final int RIGHT_SHOOTER_ID = 3;
+    public static final int TOP_CARGOMANIP_ID = 2;
+    public static final int BOTTOM_CARGOMANIP_ID = 3;
     public static final int FORKSUD_ID = 4;
 
     //Encoder Ports
