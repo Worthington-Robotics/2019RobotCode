@@ -1,4 +1,4 @@
-package frc.subsystems;
+package frc.robot.subsystems;
 
 public class Manipulator {
 }
