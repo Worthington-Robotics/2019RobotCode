@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Talon;
 import frc.lib.loops.Loop;
+import frc.robot.Constants;
 
 //TYLER'S REALM
 public class Arm extends Subsystem {
@@ -11,7 +12,11 @@ public class Arm extends Subsystem {
     private TalonSRX armProx, armDist, armWrist;
     private double armProxPower, armDistPower, armWristPower;
     public static Arm getInstance() {return m_Arm;}
-
+    public Arm() {
+        armProx = new TalonSRX(Constants.ARM_PROXIMINAL);
+        armDist = new TalonSRX(Constants.ARM_DISTAL);
+        armWrist = new TalonSRX(Constants.ARM_WRIST);
+    }
     //LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
     private final Loop mloop = new Loop() {
         @Override
