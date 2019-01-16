@@ -21,7 +21,9 @@ public class Arm extends Subsystem {
     private final Loop mloop = new Loop() {
         @Override
         public void onStart(double timestamp) {
-
+            armProxPower = 0;
+            armDistPower = 0;
+            armWristPower = 0;
         }
 
         @Override
