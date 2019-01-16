@@ -28,23 +28,23 @@ public class Constants {
     public static final int TRANS_HIGH_ID = 1;
 
     //Pure pursuit related values
-    public static final double kDriveWheelTrackWidthInches = 23.54;
-    public static final double kDriveWheelDiameterInches = 6.5;
-    public static final double kDriveWheelRadiusInches = kDriveWheelDiameterInches / 2.0;
-    public static final double kTrackScrubFactor = 1.0;  // Tune me!
-    public static final double kRobotLinearInertia = 66.5;  // kg TODO tune
-    public static final double kRobotAngularInertia = 10.0;  // kg m^2 TODO tune
-    public static final double kRobotAngularDrag = 12.0;  // N*m / (rad/sec) TODO tune
-    public static final double kRobotMaxVelocity = 120.0; // TODO tune & find units
-    public static final double kRobotMaxAccel = 120.0; // TODO tune & find units
-    public static final double kRobotMaxVoltage = 10.0; // V TODO tune
-    public static final double kDriveVIntercept = 1.1;  // V
-    public static final double kDriveKv = 0.584;  // V per rad/s
-    public static final double kDriveKa = 0.1;  // V per rad/s^2
-    public static final double kPathKX = 4.0;  //
+    public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23.54;
+    public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.5;
+    public static final double DRIVE_WHEEL_RADIUS_INCHES = DRIVE_WHEEL_DIAMETER_INCHES / 2.0;
+    public static final double TRACK_SCRUB_FACTOR = 1.0;  // Tune me!
+    public static final double ROBOT_LINEAR_INERTIA = 66.5;  // kg TODO tune
+    public static final double ROBOT_ANGULAR_INERTIA = 10.0;  // kg m^2 TODO tune
+    public static final double ROBOT_ANGULAR_DRAG = 12.0;  // N*m / (rad/sec) TODO tune
+    public static final double ROBOT_MAX_VELOCITY = 120.0; // TODO tune & find units
+    public static final double ROBOT_MAX_ACCEL = 120.0; // TODO tune & find units
+    public static final double ROBOT_MAX_VOLTAGE = 10.0; // V TODO tune
+    public static final double DRIVE_V_INTERCEPT = 1.1;  // V
+    public static final double DRIVE_Kv = 0.584;  // V per rad/s
+    public static final double DRIVE_Ka = 0.1;  // V per rad/s^2
+    public static final double PATH_KX = 4.0;  //
     // units/s per unit of error
-    public static final double kPathLookaheadTime = 0.4;  // seconds to look ahead along the path for steering
-    public static final double kPathMinLookaheadDistance = 24.0;  // inches
+    public static final double PATH_LOOK_AHEAD_TIME = 0.4;  // seconds to look ahead along the path for steering
+    public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
     public static final double TICKS_TO_INCHES = 1625;
     public static final double ROTATIONS_TO_INCHES = TICKS_TO_INCHES/DRIVE_ENCODER_PPR;
