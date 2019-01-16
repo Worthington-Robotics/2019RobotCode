@@ -13,7 +13,7 @@ public class CargoMani extends Subsystem {
     private CargoMani() {
         topMotor = new Spark(Constants.TOP_CARGOMANIP_ID);
         bottomMotor = new Spark(Constants.BOTTOM_CARGOMANIP_ID);
-
+        periodic = new PeriodicIO();
     }
 
     public static CargoMani getInstance() {
@@ -21,14 +21,9 @@ public class CargoMani extends Subsystem {
     }
     public void setShotPower (double Power) {periodic.ShotPower = Power;}
 
-    @Override
-    public void readPeriodicInputs() {
-        double[] operatorstick = HIDHelper.getAdjStick(Constants.SECOND_STICK);
-    }
-
      public void writePeriodicOutputs (){
-               // topMotor.set(periodic.ShotPower);
-               // bottomMotor.set(periodic.ShotPower);
+        topMotor.set(periodic.ShotPower);
+        bottomMotor.set(periodic.ShotPower);
     }
 
     public void outputTelemetry() {
