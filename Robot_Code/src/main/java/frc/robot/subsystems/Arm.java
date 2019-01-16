@@ -9,8 +9,8 @@ import frc.robot.Constants;
 public class Arm extends Subsystem {
 
     public static final Arm m_Arm = new Arm();
-    private TalonSRX armProx, armDist, armWrist;
-    private double armProxPower, armDistPower, armWristPower;
+    public TalonSRX armProx, armDist, armWrist;
+    public double armProxPower, armDistPower, armWristPower;
     public static Arm getInstance() {return m_Arm;}
     public Arm() {
         armProx = new TalonSRX(Constants.ARM_PROXIMINAL);
@@ -18,7 +18,7 @@ public class Arm extends Subsystem {
         armWrist = new TalonSRX(Constants.ARM_WRIST);
     }
     //LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
-    private final Loop mloop = new Loop() {
+    private final Loop aloop = new Loop() {
         @Override
         public void onStart(double timestamp) {
             armProxPower = 0;
@@ -37,7 +37,15 @@ public class Arm extends Subsystem {
         }
     };
 
+    @Override
+    public void readPeriodicInputs() {
+        
+    }
 
+    @Override
+    public void writePeriodicOutputs() {
+
+    }
     @Override
     public void outputTelemetry() {
     }
@@ -49,7 +57,9 @@ public class Arm extends Subsystem {
 
     @Override
     public void reset() {
-
+        armProxPower = 0;
+        armDistPower = 0;
+        armWristPower = 0;
     }
 }
 
