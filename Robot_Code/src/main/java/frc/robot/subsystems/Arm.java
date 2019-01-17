@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Talon;
 import frc.lib.loops.Loop;
 import frc.robot.Constants;
 
@@ -62,4 +61,4 @@ public class Arm extends Subsystem {
         armWristPower = 0;
     }
 }
-
+//I want to die, Cool Cool.
