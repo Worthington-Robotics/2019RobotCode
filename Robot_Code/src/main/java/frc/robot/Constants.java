@@ -13,6 +13,7 @@ public class Constants {
     public static final int DRIVE_BACK_RIGHT_ID = 6;
     public static final int LIFT_LOWER_ID = 7;
     public static final int LIFT_UPPER_ID = 8;
+    public static final int ALIEN_ID = 9;
 
     //Spark Ports
     public static final int TOP_CARGOMANIP_ID = 2;
@@ -24,8 +25,8 @@ public class Constants {
     public static final int LOWER_LIFT_ENCODER_B = 6;
 
     //Solenoid Ports
-    public static final int TRANS_LOW_ID = 0;
-    public static final int TRANS_HIGH_ID = 1;
+    public static final int ALIEN_LOW_ID = 0;
+    public static final int ALIEN_HIGH_ID = 1;
 
     //Pure pursuit related values
     public static final double kDriveWheelTrackWidthInches = 23.54;
