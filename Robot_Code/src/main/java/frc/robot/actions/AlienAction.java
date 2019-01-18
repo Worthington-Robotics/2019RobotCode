@@ -10,9 +10,7 @@ public class AlienAction extends Action {
         AlienState = state;
     }
     @Override
-    public void onStart() {
-        Alien.
-    }
+    public void onStart() { Alien.getInstance().setAlienState(AlienState); }
 
     @Override
     public void onLoop() {
@@ -26,6 +24,6 @@ public class AlienAction extends Action {
 
     @Override
     public void onStop() {
-
+    Alien.getInstance().setAlienState(0);
     }
 }
