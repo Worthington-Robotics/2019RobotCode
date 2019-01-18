@@ -17,3 +17,4 @@ gradle-app.setting
 *.lck
 *.xml
 *.iml
+.idea/ #grr -- hopefully this one works
