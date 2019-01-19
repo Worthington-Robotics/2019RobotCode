@@ -84,7 +84,7 @@ public class Constants {
 
     //Startup Constants
     public static final boolean IS_COMP_BOT = true;
-    public static final String ROBOT_NAME = "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP";
+    public static final String ROBOT_NAME = "Whatever_You_Want";
 }
 
 
