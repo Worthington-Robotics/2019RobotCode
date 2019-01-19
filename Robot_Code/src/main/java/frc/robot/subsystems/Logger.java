@@ -36,12 +36,12 @@ public class Logger extends Subsystem {
         @Override
         public void onLoop(double timestamp) {
             if (printWriter != null && initSuccess) { //probably redundant
-                toWrite = "" + Timer.getFPGATimestamp() + Constants.DATA_SEPERATOR;
+                toWrite = "" + Timer.getFPGATimestamp() + Constants.DATA_SEPARATOR;
                 for (String key : numberKeys) {
-                    toWrite += "" + SmartDashboard.getNumber(key, 0.0) + Constants.DATA_SEPERATOR;
+                    toWrite += "" + SmartDashboard.getNumber(key, 0.0) + Constants.DATA_SEPARATOR;
                 }
                 for (String key : stringKeys) {
-                    toWrite += "" + SmartDashboard.getString(key, " ") + Constants.DATA_SEPERATOR;
+                    toWrite += "" + SmartDashboard.getString(key, " ") + Constants.DATA_SEPARATOR;
                 }
                 toWrite += "\r\n";
                 //System.out.println(toWrite);

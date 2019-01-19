@@ -67,9 +67,11 @@ public class Constants {
     public static final double DRIVE_LEFT_KD = 6;
     public static final double DRIVE_LEFT_KF = .066;
 
-    //Update times / rates
+    //Update times / rates / logger constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final double LOGGING_UPDATE_RATE = .02;
+    public static final String DATA_SEPARATOR = "\t";
+
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
@@ -85,6 +87,7 @@ public class Constants {
     //Startup Constants
     public static final boolean IS_COMP_BOT = true;
     public static final String ROBOT_NAME = "Whatever_you_want";
+
 }
 
 
