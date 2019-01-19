@@ -15,6 +15,7 @@ public class Constants {
     public static final int ARM_PROXIMINAL = 7; //TODO FIX AS NEEDED
     public static final int ARM_DISTAL = 8; //TODO FIX AS NEEDED
     public static final int ARM_WRIST = 9; //TODO FIX AS NEEDED
+    public static final int ARM_END = 10;
     //public static final int LIFT_LOWER_ID = 7;
     //public static final int LIFT_UPPER_ID = 8;
 
