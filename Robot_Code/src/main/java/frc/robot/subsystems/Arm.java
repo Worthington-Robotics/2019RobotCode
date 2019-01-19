@@ -13,6 +13,7 @@ public class Arm extends Subsystem {
     private static final Arm m_Arm = new Arm();
     private TalonSRX armProx, armDist, armWrist, armEnd;
     private PeriodicIO periodic;
+    private ArmModes ArmMode = ArmModes.DirectControl;
     public static Arm getInstance() {return m_Arm;}
     public Arm() {
         armProx = new TalonSRX(Constants.ARM_PROXIMINAL);
@@ -48,11 +49,16 @@ public class Arm extends Subsystem {
 
     @Override
     public void writePeriodicOutputs() {
-        armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
-        armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
-        armWrist.set(ControlMode.PercentOutput, periodic.armWristPower);
-        armEnd.set(ControlMode.PercentOutput, periodic.armEndPower);
+        if (ArmMode == ArmModes.DirectControl) {
+            armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
+            armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
+            armWrist.set(ControlMode.PercentOutput, periodic.armWristPower);
+            armEnd.set(ControlMode.PercentOutput, periodic.armEndPower);
+        } else if (ArmMode == ArmModes.PID) {
+
+        }
     }
+
     @Override
     public void outputTelemetry() {
         SmartDashboard.putNumber("Proximal Arm Power", periodic.armProxPower);
@@ -76,6 +82,11 @@ public class Arm extends Subsystem {
         public double armDistPower = 0;
         public double armWristPower = 0;
         public double armEndPower = 0;
+    }
+    public enum ArmModes {
+        DirectControl,
+        PID;
+
     }
 }
 
