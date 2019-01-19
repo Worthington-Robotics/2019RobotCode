@@ -13,6 +13,8 @@ public class Alien extends Subsystem {
 
     public Alien() {
         AlienS = new TalonSRX(Constants.ALIEN_ID);
+        PeriodicIO Periodic = new PeriodicIO();
+
     }
 
     public static Alien getInstance() {
@@ -30,9 +32,14 @@ public class Alien extends Subsystem {
     }
 
     public void writePeriodicOutputs() {
-        if(Periodic.AlienBottomLimit && Periodic.AlienQuest == -1){AlienS.set(ControlMode.PercentOutput,0);}
-        else if(Periodic.AlienTopLimit && Periodic.AlienQuest == 1){AlienS.set(ControlMode.PercentOutput,0);}
-        else{AlienS.set(ControlMode.PercentOutput, Periodic.AlienQuest);}}
+        if (Periodic.AlienBottomLimit && Periodic.AlienQuest == -1) {
+            AlienS.set(ControlMode.PercentOutput, 0);
+        } else if (Periodic.AlienTopLimit && Periodic.AlienQuest == 1) {
+            AlienS.set(ControlMode.PercentOutput, 0);
+        } else {
+            AlienS.set(ControlMode.PercentOutput, Periodic.AlienQuest);
+        }
+    }
 
 
     @Override

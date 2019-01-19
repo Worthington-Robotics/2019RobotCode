@@ -58,6 +58,10 @@ public class Constants {
     public static final double SLOWUP_POWER = -.65;
     public static final double STOP_POWER = 0;
 
+    //Alien Constants
+    public static final double ALIEN_OPEN = 1;
+    public static final double ALIEN_CLOSED = -1;
+
     //PID Gain Constants
     public static final double DRIVE_RIGHT_KP = 0.0885;
     public static final double DRIVE_RIGHT_KI = 0;
@@ -71,11 +75,12 @@ public class Constants {
     //Update times / rates
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final double LOGGING_UPDATE_RATE = .02;
+    public static final String DATA_SEPERATOR = ",";
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
     public static final double MP_TEST_SPEED = 4;
-    public static final boolean RAMPUP = !true;
+    public static final boolean RAMPUP = false;
 
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);

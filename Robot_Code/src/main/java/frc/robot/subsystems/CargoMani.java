@@ -23,7 +23,7 @@ public class CargoMani extends Subsystem {
 
      public void writePeriodicOutputs (){
         topMotor.set(periodic.ShotPower);
-        bottomMotor.set(periodic.ShotPower);
+        bottomMotor.set(-periodic.ShotPower);
     }
 
     public void outputTelemetry() {
@@ -31,11 +31,14 @@ public class CargoMani extends Subsystem {
     }
 
     public void stop() {
+        topMotor.set(0);
+        bottomMotor.set(0);
 
     }
 
     public void reset() {
-
+        topMotor.set(0);
+        bottomMotor.set(0);
     }
     public static class PeriodicIO {
         public double ShotPower = 0.0;
