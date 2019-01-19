@@ -18,3 +18,5 @@ gradle-app.setting
 *.xml
 *.iml
 .idea/ #grr -- hopefully this one works
+*.xml
+*.iml
