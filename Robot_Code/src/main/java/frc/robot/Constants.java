@@ -41,7 +41,7 @@ public class Constants {
     public static final double DRIVE_V_INTERCEPT = 1.1;  // V
     public static final double DRIVE_Kv = 0.584;  // V per rad/s
     public static final double DRIVE_Ka = 0.1;  // V per rad/s^2
-    public static final double Path_KX = 4.0;  //
+    public static final double Path_Kx = 4.0;  //
     // units/s per unit of error
     public static final double PATH_LOOK_AHEAD_TIME = 0.4;  // seconds to look ahead along the path for steering
     public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches

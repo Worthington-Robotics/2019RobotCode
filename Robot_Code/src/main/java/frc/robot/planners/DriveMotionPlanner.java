@@ -53,16 +53,16 @@ public class DriveMotionPlanner implements CSVWritable {
 
     public DriveMotionPlanner() {
         final DCMotorTransmission transmission = new DCMotorTransmission(
-                1.0 / Constants.kDriveKv,
-                Units.inches_to_meters(Constants.kDriveWheelRadiusInches) * Units.inches_to_meters(Constants
-                        .kDriveWheelRadiusInches) * Constants.kRobotLinearInertia / (2.0 * Constants.kDriveKa),
-                Constants.kDriveVIntercept);
+                1.0 / Constants.DRIVE_Kv,
+                Units.inches_to_meters(Constants.DRIVE_WHEEL_RADIUS_INCHES) * Units.inches_to_meters(Constants
+                        .DRIVE_WHEEL_RADIUS_INCHES) * Constants.ROBOT_LINEAR_INERTIA / (2.0 * Constants.DRIVE_Ka),
+                Constants.DRIVE_V_INTERCEPT);
         mModel = new DifferentialDrive(
-                Constants.kRobotLinearInertia,
-                Constants.kRobotAngularInertia,
-                Constants.kRobotAngularDrag,
-                Units.inches_to_meters(Constants.kDriveWheelDiameterInches / 2.0),
-                Units.inches_to_meters(Constants.kDriveWheelTrackWidthInches / 2.0 * Constants.kTrackScrubFactor),
+                Constants.ROBOT_LINEAR_INERTIA,
+                Constants.ROBOT_ANGULAR_INERTIA,
+                Constants.ROBOT_ANGULAR_DRAG,
+                Units.inches_to_meters(Constants.DRIVE_WHEEL_DIAMETER_INCHES / 2.0),
+                Units.inches_to_meters(Constants.DRIVE_WHEEL_TRACK_WIDTH_INCHES / 2.0 * Constants.TRACK_SCRUB_FACTOR),
                 transmission, transmission
         );
     }
@@ -218,27 +218,27 @@ public class DriveMotionPlanner implements CSVWritable {
     }
 
     protected Output updatePurePursuit(DifferentialDrive.DriveDynamics dynamics, Pose2d current_state) {
-        double lookahead_time = Constants.kPathLookaheadTime;
+        double lookahead_time = Constants.PATH_LOOK_AHEAD_TIME;
         final double kLookaheadSearchDt = 0.01;
         TimedState<Pose2dWithCurvature> lookahead_state = mCurrentTrajectory.preview(lookahead_time).state();
         double actual_lookahead_distance = mSetpoint.state().distance(lookahead_state.state());
-        while (actual_lookahead_distance < Constants.kPathMinLookaheadDistance &&
+        while (actual_lookahead_distance < Constants.PATH_MIN_LOOK_AHEAD_DISTANCE &&
                 mCurrentTrajectory.getRemainingProgress() > lookahead_time) {
             lookahead_time += kLookaheadSearchDt;
             lookahead_state = mCurrentTrajectory.preview(lookahead_time).state();
             actual_lookahead_distance = mSetpoint.state().distance(lookahead_state.state());
         }
-        if (actual_lookahead_distance < Constants.kPathMinLookaheadDistance) {
+        if (actual_lookahead_distance < Constants.PATH_MIN_LOOK_AHEAD_DISTANCE) {
             lookahead_state = new TimedState<>(new Pose2dWithCurvature(lookahead_state.state()
                     .getPose().transformBy(Pose2d.fromTranslation(new Translation2d(
-                            (mIsReversed ? -1.0 : 1.0) * (Constants.kPathMinLookaheadDistance -
+                            (mIsReversed ? -1.0 : 1.0) * (Constants.PATH_MIN_LOOK_AHEAD_DISTANCE -
                                     actual_lookahead_distance), 0.0))), 0.0), lookahead_state.t()
                     , lookahead_state.velocity(), lookahead_state.acceleration());
         }
 
         DifferentialDrive.ChassisState adjusted_velocity = new DifferentialDrive.ChassisState();
         // Feedback on longitudinal error (distance).
-        adjusted_velocity.linear = dynamics.chassis_velocity.linear + Constants.kPathKX * Units.inches_to_meters
+        adjusted_velocity.linear = dynamics.chassis_velocity.linear + Constants.Path_Kx * Units.inches_to_meters
                 (mError.getTranslation().x());
 
         // Use pure pursuit to peek ahead along the trajectory and generate a new curvature.
