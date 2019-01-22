@@ -1,16 +1,18 @@
 package frc.robot.actions;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Alien;
 
 public class AlienAction extends Action {
-    private double AlienState;
-    public AlienAction(double state)
+       public AlienAction()
     {
-        AlienState = state;
     }
     @Override
-    public void onStart() { Alien.getInstance().setAlienState(AlienState); }
+    public void onStart() { Alien.getInstance().setAlienState(DoubleSolenoid.Value.kForward);
+        Alien.getInstance().setAlienState(DoubleSolenoid.Value.kReverse);
+
+    }
 
     @Override
     public void onLoop() {
@@ -24,6 +26,6 @@ public class AlienAction extends Action {
 
     @Override
     public void onStop() {
-    Alien.getInstance().setAlienState(0);
+    Alien.getInstance().setAlienState(DoubleSolenoid.Value.kOff);
     }
 }

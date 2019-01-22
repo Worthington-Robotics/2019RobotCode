@@ -1,20 +1,21 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.loops.ILooper;
 import frc.robot.Constants;
 
 public class Alien extends Subsystem {
 
     private static Alien m_Alien = new Alien();
-    private TalonSRX AlienS;
+    private DoubleSolenoid AlienOne;
+    private DoubleSolenoid AlienTwo;
     private PeriodicIO Periodic;
 
     public Alien() {
-        AlienS = new TalonSRX(Constants.ALIEN_ID);
-        PeriodicIO Periodic = new PeriodicIO();
+        AlienOne = new DoubleSolenoid(0,1);
+        AlienTwo = new DoubleSolenoid(2,3);
 
+        PeriodicIO Periodic = new PeriodicIO();
     }
 
     public static Alien getInstance() {
@@ -27,24 +28,17 @@ public class Alien extends Subsystem {
     }
 
     public void readPeriodicInputs() {
-        Periodic.AlienTopLimit = AlienS.getSensorCollection().isFwdLimitSwitchClosed();
-        Periodic.AlienBottomLimit = AlienS.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public void writePeriodicOutputs() {
-        if (Periodic.AlienBottomLimit && Periodic.AlienQuest == -1) {
-            AlienS.set(ControlMode.PercentOutput, 0);
-        } else if (Periodic.AlienTopLimit && Periodic.AlienQuest == 1) {
-            AlienS.set(ControlMode.PercentOutput, 0);
-        } else {
-            AlienS.set(ControlMode.PercentOutput, Periodic.AlienQuest);
-        }
+        AlienOne.set(Periodic.tState);
+        AlienTwo.set(Periodic.tState);
     }
 
 
     @Override
     public void stop() {
-        Periodic.AlienQuest = 0;
+        Periodic.tState = DoubleSolenoid.Value.kOff;
     }
 
     @Override
@@ -52,21 +46,21 @@ public class Alien extends Subsystem {
 
     }
 
-    public void setAlienState(double state) {
-        Periodic.AlienQuest = state;
+    public void setAlienState(DoubleSolenoid.Value state) {
+        Periodic.tState = state;
     }
 
-    public double GetAlienState() {
-        return Periodic.AlienQuest;
+    public DoubleSolenoid.Value GetAlienState() {
+        return Periodic.tState;
     }
 
     @Override
     public void reset() {
-        Periodic.AlienQuest = 0;
+        Periodic.tState = DoubleSolenoid.Value.kOff;
     }
 
     public class PeriodicIO {
-        public double AlienQuest = 0;
+        private DoubleSolenoid.Value tState;
         public boolean AlienTopLimit = false;
         public boolean AlienBottomLimit = false;
     }
