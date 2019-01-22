@@ -25,7 +25,7 @@ public class BlinkyLights extends Subsystem {
 
         @Override
         public void onLoop(double timestamp) {
-            LightPower = HIDHelper.getAdjStick(Constants.SECOND_STICK)[1];
+            LightPower = HIDHelper.getAdjStick(Constants.MASTER_STICK)[1];
         }
         @Override
         public void onStop(double timestamp) {

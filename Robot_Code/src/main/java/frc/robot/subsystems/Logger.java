@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
++package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.loops.ILooper;
 import frc.lib.loops.Loop;
 import frc.robot.Constants;
+import frc.robot.subsystems.Subsystem;
 
 import java.io.BufferedWriter;
 import java.io.File;

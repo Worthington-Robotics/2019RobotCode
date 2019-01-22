@@ -20,7 +20,7 @@ public class Constants {
     //public static final int LIFT_UPPER_ID = 8;
 
     //Spark Ports
-    public static final int LIGHTS = 2;
+    public static final int LIGHTS = 6;
     /*public static final int LEFT_SHOOTER_ID = 2;
     public static final int RIGHT_SHOOTER_ID = 3;
     public static final int FORKSUD_ID = 4;*/
@@ -34,10 +34,10 @@ public class Constants {
     public static final int TRANS_HIGH_ID = 1;
 
     //Pure pursuit related values
-    public static final double kDriveWheelTrackWidthInches = 23.54;
+    public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23.54;
     public static final double kDriveWheelDiameterInches = 6.5;
     public static final double kDriveWheelRadiusInches = kDriveWheelDiameterInches / 2.0;
-    public static final double kTrackScrubFactor = 1.0;  // Tune me!
+    public static final double TRACK_SCRUB_FACTOR = 1.0;  // Tune me!
     public static final double kRobotLinearInertia = 66.5;  // kg TODO tune
     public static final double kRobotAngularInertia = 10.0;  // kg m^2 TODO tune
     public static final double kRobotAngularDrag = 12.0;  // N*m / (rad/sec) TODO tune
@@ -91,6 +91,7 @@ public class Constants {
     //Startup Constants
     public static final boolean IS_COMP_BOT = true;
     public static final String ROBOT_NAME = "Whatever_you_want";
+    public static final String DATA_SEPERATOR = ",";
 }
 
 
