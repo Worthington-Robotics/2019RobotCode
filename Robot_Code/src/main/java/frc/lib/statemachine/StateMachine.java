@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class StateMachine {
-
+/*
     private volatile static int state = -1;
     private volatile static ConcurrentLinkedQueue<ActionGroup> qedStates;
     private volatile static ActionGroup currentState;
@@ -36,5 +36,5 @@ public class StateMachine {
 
     }
 
-
+*/
 }
