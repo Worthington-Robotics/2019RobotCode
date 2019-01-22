@@ -51,7 +51,7 @@ public class Arm extends Subsystem {
     @Override
     public void readPeriodicInputs() {
         if (ArmMode == ArmModes.DirectControl) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5; //TODO Philip what are you doing?
+            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
             periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) / 2.5;
             periodic.armEndPower = (SmartDashboard.getNumber("DB/Slider 3", 2.5) - 2.5) / 2.5;
