@@ -10,8 +10,9 @@ import frc.robot.Constants;
 
 public class Arm extends Subsystem {
 
+    //Standard Declarations
     private static final Arm m_Arm = new Arm();
-    private TalonSRX armProx, armDist, armWrist, armEnd;
+    private TalonSRX armProx, armDist, armWrist, armEnd;  // TODO Edit to make it 2 Prox 1 Dist 1 End (Provided that's ok)
     private PeriodicIO periodic;
     private ArmModes ArmMode = ArmModes.DirectControl;
 
@@ -19,14 +20,16 @@ public class Arm extends Subsystem {
         return m_Arm;
     }
 
+    //Declarations and such so things work (New thing)
     public Arm() {
-        armProx = new TalonSRX(Constants.ARM_PROXIMINAL);
+        armProx = new TalonSRX(Constants.ARM_PROXIMINAL); // TODO See TODO above, Fix Accordingly
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         armWrist = new TalonSRX(Constants.ARM_WRIST);
         armEnd = new TalonSRX(Constants.ARM_END);
         periodic = new PeriodicIO();
     }
 
+    //Looooooooooooooooooooooooooooooooooooooooooooooooop
     private final Loop aloop = new Loop() {
         @Override
         public void onStart(double timestamp) {
@@ -44,10 +47,11 @@ public class Arm extends Subsystem {
         }
     };
 
+    //Get Inputs and Use them
     @Override
     public void readPeriodicInputs() {
         if (ArmMode == ArmModes.DirectControl) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
+            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5; //TODO Philip what are you doing?
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
             periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) / 2.5;
             periodic.armEndPower = (SmartDashboard.getNumber("DB/Slider 3", 2.5) - 2.5) / 2.5;
@@ -59,6 +63,7 @@ public class Arm extends Subsystem {
         }
     }
 
+    //Outputs
     @Override
     public void writePeriodicOutputs() {
         if (ArmMode == ArmModes.DirectControl) {
@@ -75,6 +80,7 @@ public class Arm extends Subsystem {
         }
     }
 
+    //Driver Station Things for Monitoring
     @Override
     public void outputTelemetry() {
         SmartDashboard.putNumber("Proximal Arm Power", periodic.armProxPower);
@@ -102,7 +108,8 @@ public class Arm extends Subsystem {
 
     public enum ArmModes {
         DirectControl,
-        PID;
+        PID,
+        StateSpace
 
     }
 }

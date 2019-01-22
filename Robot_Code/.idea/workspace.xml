@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da669d0c-ad63-4f13-9641-aa772987b7bb" name="Default Changelist" comment="" />
+    <list default="true" id="927fbf27-712e-4ec3-a556-59de77fde020" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -17,10 +17,9 @@
     </projectState>
   </component>
   <component name="FUSProjectUsageTrigger">
-    <session id="-1578399946">
+    <session id="-1830939959">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -37,106 +36,32 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="854" />
+          <entry key="java" value="502" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="854" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-882436818">
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="java" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="270" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="270" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="JAVA" value="502" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/SubsystemManager.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/subsystems/Logger.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/subsystems/Arm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+            <state relative-caret-position="160">
+              <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/subsystems/Arm.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/SubsystemManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
-              <folding>
-                <element signature="e#587#588#0" expanded="true" />
-                <element signature="e#615#616#0" expanded="true" />
-                <element signature="e#2634#2635#0" expanded="true" />
-                <element signature="e#2677#2678#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/OI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
-              <caret line="72" column="52" selection-start-line="72" selection-start-column="52" selection-end-line="72" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/lib/statemachine/StateMachineDescriptor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/frc/lib/statemachine/StateMachine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+            <state relative-caret-position="-486">
+              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -149,7 +74,7 @@
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
       <map>
-        <entry key="$PROJECT_DIR$" value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0" />
+        <entry key="$PROJECT_DIR$" value="C:\Users\tz0209\.gradle\permwrapper\dists\gradle-5.0-bin\pu5208521seraqlersebvqk\gradle-5.0" />
       </map>
     </option>
     <option name="myGradleVersions">
@@ -476,7 +401,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6191656925000" />
+        <entry key="$PROJECT_DIR$" value="6192735093713" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
         <entry key="$PROJECT_DIR$/build.gradle" value="511267634" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="2686650559" />
@@ -528,85 +453,85 @@
               <option name="name" value="Robot_Code" />
               <option name="projectBuildClasspath">
                 <list>
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-installation-beacon-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-base-services-groovy-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-tooling-models-1.0.4.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-model-core-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-core-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-build-cache-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-api-metadata-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-process-services-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-native-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/ant-1.9.13.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-runtime-api-info-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-wrapper-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-1.0.4.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/ant-launcher-1.9.13.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-logging-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-provider-plugins-1.0.4.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-resources-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-model-groovy-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-core-api-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-tooling-builders-1.0.4.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-tooling-api-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-files-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-cli-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-persistent-cache-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-docs-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-api-metadata-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-base-services-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-snapshots-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-messaging-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-base-services-groovy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-build-cache-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-build-option-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-launcher-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-cli-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-core-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-core-api-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-docs-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-files-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-installation-beacon-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-jvm-services-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-base-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-jvm-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-composite-builds-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-junit-platform-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-publish-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ear-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-native-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-dependency-management-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-build-cache-http-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-workers-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ide-native-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-plugin-development-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-diagnostics-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-plugins-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-build-comparison-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-native-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-jacoco-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-version-control-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-native-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-javascript-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-tooling-native-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ide-play-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-scala-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-provider-plugins-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-tooling-builders-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-kotlin-dsl-tooling-models-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-launcher-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-logging-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-messaging-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-model-core-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-model-groovy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-persistent-cache-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-process-services-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-resources-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-runtime-api-info-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-snapshots-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-tooling-api-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/gradle-wrapper-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-announce-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-tooling-api-builders-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-plugin-use-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-maven-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-base-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-jvm-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-jvm-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-build-init-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/ivy-2.3.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-test-kit-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ivy-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-signing-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-sftp-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-code-quality-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-s3-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-antlr-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-reporting-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-java-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-groovy-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-osgi-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-scala-5.0.jar" />
-                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-http-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-build-cache-http-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-build-comparison-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-build-init-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-code-quality-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-composite-builds-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-dependency-management-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-diagnostics-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ear-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ide-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ide-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ide-play-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-ivy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-jacoco-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-javascript-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-groovy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-java-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-jvm-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-language-scala-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-maven-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-osgi-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-base-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-jvm-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-native-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-platform-play-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-plugin-development-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-plugin-use-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-plugins-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-publish-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-reporting-5.0.jar" />
                   <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-gcs-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-http-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-s3-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-resources-sftp-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-scala-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-signing-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-test-kit-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-base-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-junit-platform-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-jvm-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-testing-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-tooling-api-builders-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-tooling-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-version-control-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/gradle-workers-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/permwrapper/dists/gradle-5.0-bin/pu5208521seraqlersebvqk/gradle-5.0/lib/plugins/ivy-2.3.0.jar" />
                 </list>
               </option>
             </ExternalProjectBuildClasspathPojo>
@@ -628,9 +553,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="736" />
+    <option name="x" value="260" />
+    <option name="y" value="20" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -687,16 +613,6 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="frc" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="statemachine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Robot_Code" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Robot_Code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="frc" type="462c0819:PsiDirectoryNode" />
               <item name="robot" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -713,13 +629,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547935981909" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
   </component>
   <component name="RunDashboard">
@@ -739,24 +653,29 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="da669d0c-ad63-4f13-9641-aa772987b7bb" name="Default Changelist" comment="" />
-      <created>1547931755962</created>
+      <changelist id="927fbf27-712e-4ec3-a556-59de77fde020" name="Default Changelist" comment="" />
+      <created>1548183851566</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1547931755962</updated>
+      <updated>1548183851566</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2536349" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Designer" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Build" weight="0.329718" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -764,81 +683,50 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="10" weight="0.32624114" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Maven Projects" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Gradle" order="5" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Maven Projects" order="8" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15565032" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Build" order="10" visible="true" weight="0.3286334" />
-      <window_info anchor="right" id="Maven" order="0" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Gradle" order="6" />
-      <window_info anchor="right" id="Theme Preview" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info anchor="right" id="Maven Projects" order="9" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="72" column="52" selection-start-line="72" selection-start-column="52" selection-end-line="72" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/subsystems/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/subsystems/Arm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
-          <folding>
-            <element signature="e#587#588#0" expanded="true" />
-            <element signature="e#615#616#0" expanded="true" />
-            <element signature="e#2634#2635#0" expanded="true" />
-            <element signature="e#2677#2678#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="160">
+          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/frc/robot/SubsystemManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-486">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
