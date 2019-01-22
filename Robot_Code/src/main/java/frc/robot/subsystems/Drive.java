@@ -2,8 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
@@ -40,7 +42,7 @@ public class Drive extends Subsystem {
     private WPI_TalonSRX driveMiddleRight;
     private WPI_TalonSRX driveBackRight;
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
-    //private AHRS Ahrs;
+    private PigeonIMU pigeonIMU;
     private int ramp_Up_Counter = 0;
     private final Loop mLoop = new Loop() {
 
@@ -105,7 +107,7 @@ public class Drive extends Subsystem {
         driveFrontRight = new WPI_TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
         driveMiddleRight = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new WPI_TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
-        //Ahrs = new AHRS(SPI.Port.kMXP);
+        pigeonIMU = new PigeonIMU(10);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
 
     }
@@ -194,7 +196,7 @@ public class Drive extends Subsystem {
 
         mMotionPlanner.reset();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
-        //Ahrs.reset();
+        pigeonIMU.hasResetOccurred();
         periodic = new PeriodicIO();
         periodic.right_pos_ticks = 0;
         periodic.left_pos_ticks = 0;
@@ -349,7 +351,7 @@ public class Drive extends Subsystem {
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        //periodic.gyro_heading = Rotation2d.fromDegrees((Ahrs.getYaw())).rotateBy(mGyroOffset);
+        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getCompassHeading()).rotateBy(mGyroOffset);
 
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;
@@ -408,7 +410,7 @@ public class Drive extends Subsystem {
     public void outputTelemetry() {
         SmartDashboard.putNumber("Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Left", periodic.left_pos_ticks);
-        //SmartDashboard.putNumber("Heading", Ahrs.getYaw());
+        SmartDashboard.putNumber("Heading", pigeonIMU.getCompassHeading());
         SmartDashboard.putString("Drive State", mDriveControlState.toString());
         SmartDashboard.putNumberArray("drivedemands", new double[]{periodic.left_demand, periodic.right_demand});
         SmartDashboard.putNumberArray("drivevels", new double[]{periodic.left_velocity_ticks_per_100ms, periodic.right_velocity_ticks_per_100ms});
