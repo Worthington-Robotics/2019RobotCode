@@ -17,7 +17,6 @@ import java.util.*;
 public class Logger extends Subsystem {
 
     private static final Logger M_LOGGER = new Logger();
-
     private File base;
     private PrintWriter printWriter;
     private List<String> numberKeys, stringKeys;
@@ -47,8 +46,6 @@ public class Logger extends Subsystem {
                 //System.out.println(toWrite);
                 printWriter.write(toWrite);
                 printWriter.flush();
-            } else {
-
             }
         }
 
