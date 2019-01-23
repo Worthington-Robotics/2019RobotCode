@@ -9,6 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.lib.VersionData;
+import frc.lib.loops.Looper;
+import frc.robot.subsystems.BlinkyLights;
+
+import java.util.Arrays;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,6 +22,11 @@ import frc.lib.VersionData;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  SubsystemManager manager = new SubsystemManager(Arrays.asList(BlinkyLights.getInstance()));
+  Looper enabled = new Looper();
+  Looper disabled = new Looper();
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -25,7 +34,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
       VersionData.doVersionID();
+      manager.registerEnabledLoops(enabled);
+      manager.registerDisabledLoops(disabled);
 
+  }
+
+  public void disabledInit(){
+    enabled.stop();
+    disabled.start();
   }
 
   @Override
@@ -38,6 +54,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    enabled.start();
+    disabled.stop();
   }
 
   @Override

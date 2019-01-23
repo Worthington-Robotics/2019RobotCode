@@ -7,7 +7,7 @@ import frc.lib.util.HIDHelper;
 import frc.robot.Constants;
 
 public class BlinkyLights extends Subsystem {
-    public static final BlinkyLights m_lights = new BlinkyLights();
+    private static final BlinkyLights m_lights = new BlinkyLights();
     private double LightPower;
     private Spark light;
     private BlinkyLights() {
@@ -16,25 +16,9 @@ public class BlinkyLights extends Subsystem {
     }
 
     public static BlinkyLights getInstance(){return m_lights;}
-
-    private final Loop LightsLoop = new Loop() {
-        @Override
-        public void onStart(double timestamp) {
-
-        }
-
-        @Override
-        public void onLoop(double timestamp) {
-            LightPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 5 ;
-        }
-        @Override
-        public void onStop(double timestamp) {
-
-        }
-    };
     @Override
     public void readPeriodicInputs() {
-
+        LightPower =  (SmartDashboard.getNumber("DB/Slider 0", 2.5)-2.5);
     }
 
     @Override
