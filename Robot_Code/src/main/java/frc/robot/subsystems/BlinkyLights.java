@@ -25,7 +25,7 @@ public class BlinkyLights extends Subsystem {
 
         @Override
         public void onLoop(double timestamp) {
-            LightPower = HIDHelper.getAdjStick(Constants.MASTER_STICK)[1];
+            LightPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 5 ;
         }
         @Override
         public void onStop(double timestamp) {
@@ -44,7 +44,7 @@ public class BlinkyLights extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putNumber("Light Number", LightPower);
+        SmartDashboard.putNumber("Pattern #", LightPower);
     }
 
     @Override
