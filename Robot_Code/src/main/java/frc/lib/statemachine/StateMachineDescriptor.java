@@ -9,7 +9,7 @@ public class StateMachineDescriptor {
         Qedstates = new ConcurrentLinkedQueue<>();
     }
 
-    public void addSequntal(Action action, long timeout_ms) {
+    public void addSequential(Action action, long timeout_ms) {
         Qedstates.add(new ActionGroup(action, timeout_ms));
     }
 
@@ -17,7 +17,7 @@ public class StateMachineDescriptor {
         Qedstates.add(new ActionGroup(action, timeout_ms));
     }
 
-    public ConcurrentLinkedQueue getStates() {
+    public ConcurrentLinkedQueue<ActionGroup> getStates() {
         return Qedstates;
     }
 }
