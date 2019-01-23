@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -97,6 +98,33 @@ public class Arm extends Subsystem {
     @Override
     public void reset() {
         periodic = new PeriodicIO();
+        armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armProx.setSelectedSensorPosition(0, 0, 0);
+        armDist.setSelectedSensorPosition(0, 0, 0);
+        armWrist.setSelectedSensorPosition(0, 0, 0);
+        armProx.setSensorPhase(false); //TODO Find Sensor Phase for all talons
+        armDist.setSensorPhase(true);
+        armWrist.setSensorPhase(true);
+        armProx.selectProfileSlot(0, 0);
+        armProx.config_kF(0, Constants.DRIVE_LEFT_KF, 0);
+        armProx.config_kP(0, .25, 0);
+        armProx.config_kI(0, Constants.DRIVE_LEFT_KI, 0);
+        armProx.config_kD(0, Constants.DRIVE_LEFT_KD, 0);
+        armProx.config_IntegralZone(0, 0, 0);
+        armDist.selectProfileSlot(0, 0);
+        armDist.config_kF(0, Constants.DRIVE_RIGHT_KF, 0);
+        armDist.config_kP(0, .25, 0);
+        armDist.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
+        armDist.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
+        armDist.config_IntegralZone(0, 0, 0);
+        armWrist.selectProfileSlot(0, 0);
+        armWrist.config_kF(0, Constants.DRIVE_RIGHT_KF, 0);
+        armWrist.config_kP(0, .25, 0);
+        armWrist.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
+        armWrist.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
+        armWrist.config_IntegralZone(0, 0, 0);
     }
 
     public class PeriodicIO {
