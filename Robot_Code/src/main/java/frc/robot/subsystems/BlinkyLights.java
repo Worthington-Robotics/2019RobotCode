@@ -21,14 +21,11 @@ public class BlinkyLights extends Subsystem {
     public static BlinkyLights getInstance(){return m_lights;}
     @Override
     public void readPeriodicInputs() {
-        if (color == DriverStation.Alliance.Blue) {
-            LightPower = .87;
-        } else if (color == DriverStation.Alliance.Red) {
-            LightPower = .61;
-        } else if (color == DriverStation.Alliance.Invalid) {
-            LightPower = .93;
+        switch (color) {
+            case Red: {
+                LightPower = 
+            }
         }
-        else { LightPower = .99; }
     }
 
     @Override
