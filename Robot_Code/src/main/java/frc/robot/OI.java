@@ -1,9 +1,9 @@
 package frc.robot;
 
-//import edu.wpi.first.wpilibj.buttons.Button;
-//import edu.wpi.first.wpilibj.buttons.JoystickButton;
-//import frc.robot.actions.*;
-//import frc.lib.statemachine.Action;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.actions.*;
+import frc.lib.statemachine.Action;
 
 public class OI{
 
@@ -15,8 +15,8 @@ public class OI{
         Button second5 = new JoystickButton(Constants.SECOND, 5);
         second2.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
         second3.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
-        second4.whileHeld(Action.toCommand(new AlienAction(Constants.ALIEN_CLOSED)));
-        second5.whileHeld(Action.toCommand(new AlienAction(Constants.ALIEN_OPEN)));
+        second4.whileHeld(Action.toCommand(new AlienAction()));
+        second5.whileHeld(Action.toCommand(new AlienAction()));
 
     }
 
