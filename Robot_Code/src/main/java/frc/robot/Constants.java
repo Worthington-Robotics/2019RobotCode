@@ -13,10 +13,11 @@ public class Constants {
     public static final int DRIVE_BACK_RIGHT_ID = 6;
     public static final int LIFT_LOWER_ID = 7;
     public static final int LIFT_UPPER_ID = 8;
+    public static final int ALIEN_ID = 9;
 
     //Spark Ports
-    public static final int LEFT_SHOOTER_ID = 2;
-    public static final int RIGHT_SHOOTER_ID = 3;
+    public static final int TOP_CARGOMANIP_ID = 2;
+    public static final int BOTTOM_CARGOMANIP_ID = 3;
     public static final int FORKSUD_ID = 4;
 
     //Encoder Ports
@@ -24,8 +25,8 @@ public class Constants {
     public static final int LOWER_LIFT_ENCODER_B = 6;
 
     //Solenoid Ports
-    public static final int TRANS_LOW_ID = 0;
-    public static final int TRANS_HIGH_ID = 1;
+    public static final int ALIEN_LOW_ID = 0;
+    public static final int ALIEN_HIGH_ID = 1;
 
     //Pure pursuit related values
     public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23.54;
@@ -57,6 +58,10 @@ public class Constants {
     public static final double SLOWUP_POWER = -.65;
     public static final double STOP_POWER = 0;
 
+    //Alien Constants
+    public static final double ALIEN_OPEN = 1;
+    public static final double ALIEN_CLOSED = -1;
+
     //PID Gain Constants
     public static final double DRIVE_RIGHT_KP = 0.0885;
     public static final double DRIVE_RIGHT_KI = 0;
@@ -70,13 +75,14 @@ public class Constants {
     //Update times / rates / logger constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final double LOGGING_UPDATE_RATE = .02;
-    public static final String DATA_SEPARATOR = "\t";
+
+    public static final String DATA_SEPARATOR = ",";
 
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
     public static final double MP_TEST_SPEED = 4;
-    public static final boolean RAMPUP = !true;
+    public static final boolean RAMPUP = false;
 
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
