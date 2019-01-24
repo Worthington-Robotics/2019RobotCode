@@ -10,11 +10,15 @@ import frc.robot.Constants;
 public class BlinkyLights extends Subsystem {
     private static final BlinkyLights m_lights = new BlinkyLights();
     private double LightPower;
+    private int LightPowerINT;
     private Spark light;
     private DriverStation.Alliance color;
+    private String LightColour;
     private BlinkyLights() {
         light = new Spark(Constants.LIGHTS);
         LightPower = 0;
+        LightPowerINT = 0;
+        LightColour = "Fail";
         color = DriverStation.getInstance().getAlliance();
     }
 
@@ -22,9 +26,17 @@ public class BlinkyLights extends Subsystem {
     @Override
     public void readPeriodicInputs() {
         switch (color) {
-            case Red: {
-                LightPower = 
-            }
+            case Red: LightPower = .61; break;
+            case Blue: LightPower = .87; break;
+            case Invalid: LightPower = .93; break;
+            default: LightPower = .99; break;
+        }
+        LightPowerINT = (int) (LightPower * 100);
+        switch (LightPowerINT) {
+            case 61: LightColour = "Red"; break;
+            case 87: LightColour = "Blue"; break;
+            case 93: LightColour = "White/Invalid"; break;
+            default: LightColour = "Um wot?"; break;
         }
     }
 
@@ -35,7 +47,7 @@ public class BlinkyLights extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putNumber("Pattern #", LightPower);
+        SmartDashboard.putString("Color", LightColour);
     }
 
     @Override
