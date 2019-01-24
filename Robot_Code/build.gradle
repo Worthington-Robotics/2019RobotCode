@@ -93,7 +93,7 @@ tasks.register("DoVersionID"){
         }
         int versionID = constants.substring(equalspos, i - 1) as Integer //get version value from the constants file
         //printf("Old version ID: %d\n", versionID)
-        versionID += 0.1 //increment version id by some value
+        versionID += 1 //increment version id by some value
         printf("new version ID: %d\n", versionID)
         String newConstants = constants.substring(0,equalspos) + versionID + ";" + constants.substring(i) //create new text for constants class with updated version string
         file('src/main/deploy/version.dat').text = newConstants // update constants class

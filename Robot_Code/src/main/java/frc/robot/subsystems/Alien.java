@@ -59,7 +59,7 @@ public class Alien extends Subsystem {
     }
 
     public class PeriodicIO {
-        private DoubleSolenoid.Value tState;
+        private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kOff;
         public boolean AlienTopLimit = false;
         public boolean AlienBottomLimit = false;
     }

@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.lib.VersionData;
 import frc.lib.loops.Looper;
+import frc.robot.subsystems.Alien;
+import frc.robot.subsystems.CargoMani;
 import frc.robot.subsystems.Drive;
 
 import java.util.Arrays;
@@ -26,7 +28,7 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
-  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance()));
+  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(), CargoMani.getInstance(), Alien.getInstance()));
   private Looper EnabledLoops = new Looper();
   private Looper DisabledLoops = new Looper();
   @Override
