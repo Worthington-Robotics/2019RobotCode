@@ -25,8 +25,13 @@ public class Constants {
     public static final int LOWER_LIFT_ENCODER_B = 6;
 
     //Solenoid Ports
-    public static final int ALIEN_LOW_ID = 0;
-    public static final int ALIEN_HIGH_ID = 1;
+    public static final int TRANS_LOW_ID = 0;
+    public static final int TRANS_HIGH_ID = 1;
+    public static final int ALIEN_1_LOW_ID = 2;
+    public static final int ALIEN_1_HIGH_ID = 3;
+    public static final int ALIEN_2_LOW_ID = 4;
+    public static final int ALIEN_2_HIGH_ID = 5;
+
 
     //Pure pursuit related values
     public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23.54;

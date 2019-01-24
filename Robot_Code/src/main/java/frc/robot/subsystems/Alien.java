@@ -12,8 +12,8 @@ public class Alien extends Subsystem {
     private PeriodicIO Periodic;
 
     public Alien() {
-        AlienOne = new DoubleSolenoid(0,1);
-        AlienTwo = new DoubleSolenoid(2,3);
+        AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID,Constants.ALIEN_1_HIGH_ID);
+        AlienTwo = new DoubleSolenoid(Constants.ALIEN_2_LOW_ID,Constants.ALIEN_2_HIGH_ID);
 
         PeriodicIO Periodic = new PeriodicIO();
     }
@@ -43,7 +43,6 @@ public class Alien extends Subsystem {
 
     @Override
     public void registerEnabledLoops(ILooper enabledLooper) {
-
     }
 
     public void setAlienState(DoubleSolenoid.Value state) {
