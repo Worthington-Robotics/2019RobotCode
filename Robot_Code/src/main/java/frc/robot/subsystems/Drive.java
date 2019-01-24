@@ -42,7 +42,7 @@ public class Drive extends Subsystem {
     private WPI_TalonSRX driveMiddleRight;
     private WPI_TalonSRX driveBackRight;
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
-    //private PigeonIMU pigeonIMU;
+    private PigeonIMU pigeonIMU;
     private int ramp_Up_Counter = 0;
     private final Loop mLoop = new Loop() {
 
@@ -106,7 +106,7 @@ public class Drive extends Subsystem {
         driveFrontRight = new WPI_TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
         driveMiddleRight = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new WPI_TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
-        //pigeonIMU = new PigeonIMU(10);
+        pigeonIMU = new PigeonIMU(1);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
 
     }
@@ -195,7 +195,7 @@ public class Drive extends Subsystem {
 
         mMotionPlanner.reset();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
-        //pigeonIMU.hasResetOccurred();
+        pigeonIMU.hasResetOccurred();
         periodic = new PeriodicIO();
         periodic.right_pos_ticks = 0;
         periodic.left_pos_ticks = 0;
@@ -350,7 +350,7 @@ public class Drive extends Subsystem {
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        //periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getCompassHeading()).rotateBy(mGyroOffset);
+        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getCompassHeading()).rotateBy(mGyroOffset);
 
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;
@@ -367,9 +367,6 @@ public class Drive extends Subsystem {
         } else {
             periodic.right_distance += deltaRightTicks * Constants.DRIVE_WHEEL_DIAMETER_INCHES;
         }
-
-
-
         // System.out.println("control state: " + mDriveControlState + ", left: " + periodic.linear_demand + ", right: " + periodic.angular_demand);
     }
 
@@ -409,7 +406,7 @@ public class Drive extends Subsystem {
     public void outputTelemetry() {
         SmartDashboard.putNumber("Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Left", periodic.left_pos_ticks);
-        //SmartDashboard.putNumber("Heading", pigeonIMU.getCompassHeading());
+        SmartDashboard.putNumber("Heading", pigeonIMU.getCompassHeading());
         SmartDashboard.putString("Drive State", mDriveControlState.toString());
         SmartDashboard.putNumberArray("drivedemands", new double[]{periodic.left_demand, periodic.right_demand});
         SmartDashboard.putNumberArray("drivevels", new double[]{periodic.left_velocity_ticks_per_100ms, periodic.right_velocity_ticks_per_100ms});
