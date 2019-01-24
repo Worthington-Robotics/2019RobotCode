@@ -2,8 +2,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.lib.loops.ILooper;
 import frc.lib.loops.Loop;
+import frc.lib.loops.Looper;
 import frc.lib.util.HIDHelper;
 import frc.robot.Constants;
 
@@ -12,32 +15,46 @@ public class BlinkyLights extends Subsystem {
     private double LightPower;
     private int LightPowerINT;
     private Spark light;
-    private DriverStation.Alliance color;
     private String LightColour;
+    private int i;
+    private boolean TorF;
     private BlinkyLights() {
         light = new Spark(Constants.LIGHTS);
-        LightPower = 0;
+        LightPower = .91;
         LightPowerINT = 0;
         LightColour = "Fail";
-        color = DriverStation.getInstance().getAlliance();
+        i = 0;
+        TorF = true;
     }
+    /*public Loop mloop = new Loop() {
+
+        @Override
+        public void onStart(double timestamp) {
+            LightPower = 0.91;
+        }
+        @Override
+        public void onLoop(double timestamp) {
+            if (Timer.getFPGATimestamp()/1000 % 1 == 0 ) {
+
+                if (TorF) {
+                    LightPower = 0.73;
+                } else {
+                    LightPower = .91;
+                }
+                TorF = !TorF;
+            }
+        }
+
+        @Override
+        public void onStop(double timestamp) {
+
+        }
+    };
+*/
 
     public static BlinkyLights getInstance(){return m_lights;}
     @Override
     public void readPeriodicInputs() {
-        switch (color) {
-            case Red: LightPower = .61; break;
-            case Blue: LightPower = .87; break;
-            case Invalid: LightPower = .93; break;
-            default: LightPower = .99; break;
-        }
-        LightPowerINT = (int) (LightPower * 100);
-        switch (LightPowerINT) {
-            case 61: LightColour = "Red"; break;
-            case 87: LightColour = "Blue"; break;
-            case 93: LightColour = "White/Invalid"; break;
-            default: LightColour = "Um wot?"; break;
-        }
     }
 
     @Override
@@ -59,4 +76,10 @@ public class BlinkyLights extends Subsystem {
     public void reset() {
 
     }
+
+    /*
+    @Override
+    public void registerEnabledLoops(ILooper enabledLooper) {
+        enabledLooper.register(mloop);
+    }*/
 }
