@@ -40,6 +40,10 @@ public class Robot extends TimedRobot {
 
   }
 
+  public void robotPeriodic() {
+    manager.outputTelemetry();
+  }
+
   public void disabledInit(){
     enabled.stop();
     disabled.start();

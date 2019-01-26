@@ -18,6 +18,7 @@ public class BlinkyLights extends Subsystem {
     private String LightColour;
     private int i;
     private boolean TorF;
+    public static BlinkyLights getInstance(){return m_lights;}
     private BlinkyLights() {
         light = new Spark(Constants.LIGHTS);
         LightPower = .91;
@@ -26,7 +27,7 @@ public class BlinkyLights extends Subsystem {
         i = 0;
         TorF = true;
     }
-    /*public Loop mloop = new Loop() {
+    public Loop mloop = new Loop() {
 
         @Override
         public void onStart(double timestamp) {
@@ -34,14 +35,15 @@ public class BlinkyLights extends Subsystem {
         }
         @Override
         public void onLoop(double timestamp) {
-            if (Timer.getFPGATimestamp()/1000 % 1 == 0 ) {
-
-                if (TorF) {
-                    LightPower = 0.73;
-                } else {
-                    LightPower = .91;
-                }
-                TorF = !TorF;
+            if (TorF) {
+                LightPower = 0.73;
+            } else {
+                LightPower = 0.91;
+            }
+            TorF = !TorF;
+            LightPowerINT = (int) LightPower * 100;
+            switch (LightPowerINT) {
+                case 73: : LightColour = ""
             }
         }
 
@@ -50,9 +52,8 @@ public class BlinkyLights extends Subsystem {
 
         }
     };
-*/
 
-    public static BlinkyLights getInstance(){return m_lights;}
+
     @Override
     public void readPeriodicInputs() {
     }
@@ -77,9 +78,9 @@ public class BlinkyLights extends Subsystem {
 
     }
 
-    /*
+
     @Override
     public void registerEnabledLoops(ILooper enabledLooper) {
         enabledLooper.register(mloop);
-    }*/
+    }
 }
