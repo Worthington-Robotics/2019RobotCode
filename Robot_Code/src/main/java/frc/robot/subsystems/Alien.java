@@ -9,13 +9,13 @@ public class Alien extends Subsystem {
     private static Alien m_Alien = new Alien();
     private DoubleSolenoid AlienOne;
     private DoubleSolenoid AlienTwo;
-    private PeriodicIO Periodic;
+    private PeriodicIO periodic;
 
     public Alien() {
         AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID,Constants.ALIEN_1_HIGH_ID);
         AlienTwo = new DoubleSolenoid(Constants.ALIEN_2_LOW_ID,Constants.ALIEN_2_HIGH_ID);
 
-        PeriodicIO Periodic = new PeriodicIO();
+        periodic = new PeriodicIO();
     }
 
     public static Alien getInstance() {
@@ -30,32 +30,28 @@ public class Alien extends Subsystem {
     public void readPeriodicInputs() {
     }
 
-    public void writePeriodicOutputs() {
-        AlienOne.set(Periodic.tState);
-        AlienTwo.set(Periodic.tState);
+    public void writePeriodicOutputs(){
+        AlienOne.set(periodic.tState);
+        AlienTwo.set(periodic.tState);
     }
 
 
     @Override
     public void stop() {
-        Periodic.tState = DoubleSolenoid.Value.kOff;
-    }
-
-    @Override
-    public void registerEnabledLoops(ILooper enabledLooper) {
+        periodic.tState = DoubleSolenoid.Value.kOff;
     }
 
     public void setAlienState(DoubleSolenoid.Value state) {
-        Periodic.tState = state;
+        periodic.tState = state;
     }
 
     public DoubleSolenoid.Value GetAlienState() {
-        return Periodic.tState;
+        return periodic.tState;
     }
 
     @Override
     public void reset() {
-        Periodic.tState = DoubleSolenoid.Value.kOff;
+        periodic.tState = DoubleSolenoid.Value.kOff;
     }
 
     public class PeriodicIO {

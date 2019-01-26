@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.lib.VersionData;
+import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
 import frc.robot.subsystems.Alien;
 import frc.robot.subsystems.CargoMani;
@@ -31,6 +31,11 @@ public class Robot extends TimedRobot {
   private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(), CargoMani.getInstance(), Alien.getInstance()));
   private Looper EnabledLoops = new Looper();
   private Looper DisabledLoops = new Looper();
+
+  public void robotPeriodic(){
+    Manager.outputTelemetry();
+  }
+
   @Override
   public void robotInit() {
       VersionData.doVersionID();

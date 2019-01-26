@@ -106,7 +106,7 @@ public class Drive extends Subsystem {
         driveFrontRight = new WPI_TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
         driveMiddleRight = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new WPI_TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
-        pigeonIMU = new PigeonIMU(1);
+        pigeonIMU = new PigeonIMU(driveFrontLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
 
     }
@@ -350,7 +350,7 @@ public class Drive extends Subsystem {
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getCompassHeading()).rotateBy(mGyroOffset);
+        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getCompassHeading());//.rotateBy(mGyroOffset);
 
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;
@@ -404,7 +404,7 @@ public class Drive extends Subsystem {
 
 
     public void outputTelemetry() {
-        SmartDashboard.putNumber("Right", periodic.right_pos_ticks);
+        SmartDashboard.putNumber("SmartDashboard/Drive/Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Left", periodic.left_pos_ticks);
         SmartDashboard.putNumber("Heading", pigeonIMU.getCompassHeading());
         SmartDashboard.putString("Drive State", mDriveControlState.toString());
@@ -415,7 +415,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Robot Error Theta", periodic.error.getRotation().getDegrees());
         SmartDashboard.putNumber("Robot Setpoint X", periodic.path_setpoint.state().getTranslation().x());
         SmartDashboard.putNumber("Robot Setpoint Y", periodic.path_setpoint.state().getTranslation().y());
-        SmartDashboard.putNumber("Robot Setpoint Theta", periodic.path_setpoint.state().getRotation().getDegrees());
+        SmartDashboard.putNumber("Variables/Robot Setpoint Theta", periodic.path_setpoint.state().getRotation().getDegrees());
         SmartDashboard.putNumber("Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Right Talon Error", driveFrontRight.getClosedLoopError(0));
@@ -430,6 +430,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Left Acceleration", periodic.left_accl);
         SmartDashboard.putNumber("Right FeedForward", periodic.right_feedforward);
         SmartDashboard.putNumber("Right Acceleration", periodic.right_accl);
+        SmartDashboard.setDefaultNumber("Left Talon Voltage", 10);
     }
 
 
