@@ -28,9 +28,10 @@ public class Arm extends Subsystem {
         armWrist = new TalonSRX(Constants.ARM_WRIST);
         armEnd = new TalonSRX(Constants.ARM_END);
         periodic = new PeriodicIO();
+        reset();
+
     }
 
-    //Looooooooooooooooooooooooooooooooooooooooooooooooop
     private final Loop aloop = new Loop() {
         @Override
         public void onStart(double timestamp) {
@@ -51,6 +52,14 @@ public class Arm extends Subsystem {
     //Get Inputs and Use them
     @Override
     public void readPeriodicInputs() {
+        periodic.relativeProx = armProx.getSelectedSensorPosition();
+        periodic.absoluteProx = periodic.absoluteProx + periodic.relativeProx;
+        periodic.relativeDist = armDist.getSelectedSensorPosition();
+        periodic.absoluteDist = periodic.absoluteDist + periodic.relativeDist;
+        periodic.relativeWrist = armWrist.getSelectedSensorPosition();
+        periodic.absoluteWrist = periodic.absoluteWrist + periodic.relativeWrist;
+        periodic.relativeEnd = armEnd.getSelectedSensorPosition();
+        periodic.absoluteEnd = periodic.absoluteEnd + periodic.relativeEnd;
         if (ArmMode == ArmModes.DirectControl) {
             periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
@@ -62,6 +71,7 @@ public class Arm extends Subsystem {
             periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) * 1536;
             periodic.armEndPower = (SmartDashboard.getNumber("DB/Slider 3", 2.5) - 2.5) * 1536;
         }
+
     }
 
     //Outputs
@@ -99,31 +109,37 @@ public class Arm extends Subsystem {
     public void reset() {
         periodic = new PeriodicIO();
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        periodic.absoluteProx = armProx.getSelectedSensorPosition();
+        armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        periodic.absoluteDist = armProx.getSelectedSensorPosition();
+        armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        armProx.setSelectedSensorPosition(0, 0, 0);
-        armDist.setSelectedSensorPosition(0, 0, 0);
-        armWrist.setSelectedSensorPosition(0, 0, 0);
+        periodic.absoluteWrist = armProx.getSelectedSensorPosition();
+        armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        armEnd.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        periodic.absoluteEnd = armProx.getSelectedSensorPosition();
+        armEnd.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armProx.setSensorPhase(false); //TODO Find Sensor Phase for all talons
         armDist.setSensorPhase(true);
         armWrist.setSensorPhase(true);
-        armProx.selectProfileSlot(0, 0);
-        armProx.config_kF(0, Constants.DRIVE_LEFT_KF, 0);
+        armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
+        armProx.config_kF(0, 0, 0);
         armProx.config_kP(0, .25, 0);
-        armProx.config_kI(0, Constants.DRIVE_LEFT_KI, 0);
-        armProx.config_kD(0, Constants.DRIVE_LEFT_KD, 0);
+        armProx.config_kI(0, 0, 0);
+        armProx.config_kD(0, 0, 0);
         armProx.config_IntegralZone(0, 0, 0);
         armDist.selectProfileSlot(0, 0);
-        armDist.config_kF(0, Constants.DRIVE_RIGHT_KF, 0);
+        armDist.config_kF(0, 0, 0);
         armDist.config_kP(0, .25, 0);
-        armDist.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
-        armDist.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
+        armDist.config_kI(0, 0, 0);
+        armDist.config_kD(0, 0, 0);
         armDist.config_IntegralZone(0, 0, 0);
         armWrist.selectProfileSlot(0, 0);
-        armWrist.config_kF(0, Constants.DRIVE_RIGHT_KF, 0);
+        armWrist.config_kF(0, 0, 0);
         armWrist.config_kP(0, .25, 0);
-        armWrist.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
-        armWrist.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
+        armWrist.config_kI(0, 0, 0);
+        armWrist.config_kD(0, 0, 0);
         armWrist.config_IntegralZone(0, 0, 0);
     }
 
@@ -132,6 +148,14 @@ public class Arm extends Subsystem {
         public double armDistPower = 0;
         public double armWristPower = 0;
         public double armEndPower = 0;
+        public double absoluteProx = 0;
+        public double absoluteDist = 0;
+        public double absoluteWrist = 0;
+        public double absoluteEnd = 0;
+        public double relativeProx = 0;
+        public double relativeDist = 0;
+        public double relativeWrist = 0;
+        public double relativeEnd = 0;
     }
 
     public enum ArmModes {
