@@ -479,8 +479,7 @@ public class Drive extends Subsystem {
         public double right_accl;
     }
 
-    public setGear {
-        if (getLeftLinearVelocity() > //Load Gear Speed;)
-            //switch gears to high gear
+    if (getLeftLinearVelocity() > 10) {periodic.B2 = true;}
+    if (getLeftLinearVelocity() < 10) {periodic.B2 = false;}
     }
 }
