@@ -478,8 +478,12 @@ public class Drive extends Subsystem {
         public double left_accl;
         public double right_accl;
     }
-
-    if (getLeftLinearVelocity() > 10) {periodic.B2 = true;}
-    if (getLeftLinearVelocity() < 10) {periodic.B2 = false;}
+    private void gearShift(){
+        if (getLeftLinearVelocity() >= 10) {
+            periodic.B2 = true;
+        }
+        if (getLeftLinearVelocity() <= 10) {
+            periodic.B2 = false;
+        }
     }
 }
