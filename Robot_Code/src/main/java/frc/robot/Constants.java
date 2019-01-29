@@ -11,13 +11,14 @@ public class Constants {
     public static final int DRIVE_FRONT_RIGHT_ID = 4;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 5;
     public static final int DRIVE_BACK_RIGHT_ID = 6;
-    public static final int LIFT_LOWER_ID = 7;
-    public static final int LIFT_UPPER_ID = 8;
-    public static final int ALIEN_ID = 9;
+    public static final int ARM_PROXIMINAL = 7; //TODO FIX AS NEEDED
+    public static final int ARM_DISTAL = 8; //TODO FIX AS NEEDED
+    public static final int ARM_WRIST = 9; //TODO FIX AS NEEDED
+    public static final int ARM_END = 10;
 
     //Spark Ports
-    public static final int TOP_CARGOMANIP_ID = 2;
-    public static final int BOTTOM_CARGOMANIP_ID = 3;
+    public static final int TOP_CARGOMANIP_ID = 0;
+    public static final int BOTTOM_CARGOMANIP_ID = 1;
     public static final int FORKSUD_ID = 4;
 
     //Encoder Ports
