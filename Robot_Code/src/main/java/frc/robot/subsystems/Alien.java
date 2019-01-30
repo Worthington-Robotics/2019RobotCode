@@ -13,9 +13,10 @@ public class Alien extends Subsystem {
 
     public Alien() {
         AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID,Constants.ALIEN_1_HIGH_ID);
-        AlienTwo = new DoubleSolenoid(Constants.ALIEN_2_LOW_ID,Constants.ALIEN_2_HIGH_ID);
-
         periodic = new PeriodicIO();
+        periodic.tState = DoubleSolenoid.Value.kReverse;
+
+
     }
 
     public static Alien getInstance() {
@@ -32,7 +33,7 @@ public class Alien extends Subsystem {
 
     public void writePeriodicOutputs(){
         AlienOne.set(periodic.tState);
-        AlienTwo.set(periodic.tState);
+
     }
 
 

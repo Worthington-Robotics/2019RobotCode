@@ -8,9 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
 import frc.robot.subsystems.Alien;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.CargoMani;
 import frc.robot.subsystems.Drive;
 
@@ -28,9 +30,10 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
-  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(), CargoMani.getInstance(), Alien.getInstance()));
+  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(), CargoMani.getInstance(), Alien.getInstance(), Arm.getInstance()));
   private Looper EnabledLoops = new Looper();
   private Looper DisabledLoops = new Looper();
+  private OI Oi = new OI();
 
   public void robotPeriodic(){
     Manager.outputTelemetry();
@@ -47,10 +50,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     EnabledLoops.start();
     DisabledLoops.stop();
+
   }
 
   @Override
   public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -61,6 +66,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -69,6 +75,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
   }
 
   @Override

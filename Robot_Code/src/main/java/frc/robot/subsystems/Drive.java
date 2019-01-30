@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -216,7 +217,12 @@ public class Drive extends Subsystem {
         driveFrontRight.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
         driveFrontRight.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
         driveFrontRight.config_IntegralZone(0, 0, 0);
-        //driveFrontRight.
+        driveFrontRight.setNeutralMode(NeutralMode.Brake);
+        driveFrontLeft.setNeutralMode(NeutralMode.Brake);
+        driveMiddleRight.setNeutralMode(NeutralMode.Brake);
+        driveMiddleLeft.setNeutralMode(NeutralMode.Brake);
+        driveBackRight.setNeutralMode(NeutralMode.Brake);
+        driveBackLeft.setNeutralMode(NeutralMode.Brake);
 
         //TODO add reset with sensor impl
 
