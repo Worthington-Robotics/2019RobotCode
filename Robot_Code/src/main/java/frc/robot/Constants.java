@@ -77,6 +77,19 @@ public class Constants {
     public static final double DRIVE_LEFT_KI = 0;
     public static final double DRIVE_LEFT_KD = 6;
     public static final double DRIVE_LEFT_KF = .066;
+    public static final double ARM_PROX_KP = 0.01;
+    public static final double ARM_PROX_KI = 0;
+    public static final double ARM_PROX_KD = 0;
+    public static final double ARM_PROX_KF = 0;
+    public static final double ARM_DIST_KP = 0.01;
+    public static final double ARM_DIST_KI = 0;
+    public static final double ARM_DIST_KD = 0;
+    public static final double ARM_DIST_KF = 0;
+    public static final double ARM_WRIST_KP = 0.01;
+    public static final double ARM_WRIST_KI = 0;
+    public static final double ARM_WRIST_KD = 0;
+    public static final double ARM_WRIST_KF = 0;
+
 
     //Update times / rates / logger constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
