@@ -11,9 +11,9 @@ import frc.robot.Constants;
 
 public class Arm extends Subsystem {
 
-    //Standard Declarations
     private static final Arm m_Arm = new Arm();
     private final Loop aloop = new Loop() {
+
         @Override
         public void onStart(double timestamp) {
 
@@ -29,12 +29,13 @@ public class Arm extends Subsystem {
 
         }
     };
-    private TalonSRX armProx, armDist, armWrist, armEnd;  // TODO Edit to make it 2 Prox 1 Dist 1 End (Provided that's ok)
+    private TalonSRX armProx, armDist, armWrist, armEnd;
     private PeriodicIO periodic;
     private ArmModes ArmMode = ArmModes.DirectControl;
 
+
     public Arm() {
-        armProx = new TalonSRX(Constants.ARM_PROXIMINAL); // TODO See TODO above, Fix Accordingly
+        armProx = new TalonSRX(Constants.ARM_PROXIMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         armWrist = new TalonSRX(Constants.ARM_WRIST);
         //armEnd = new TalonSRX(Constants.ARM_END);
@@ -75,25 +76,43 @@ public class Arm extends Subsystem {
     @Override
     public void writePeriodicOutputs() {
         if (periodic.armmode == ArmModes.DirectControl) {
-            armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
-            armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
-            armWrist.set(ControlMode.PercentOutput, periodic.armWristPower);
-            //armEnd.set(ControlMode.PercentOutput, periodic.armEndPower);
+            if (SmartDashboard.getBoolean("DB/Button 0", false)) {
+                armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
+            } else {
+                armProx.set(ControlMode.PercentOutput, 0);
+            }
+            if (SmartDashboard.getBoolean("DB/Button 1", false)) {
+                armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
+            } else {
+                armDist.set(ControlMode.PercentOutput, periodic.armProxPower);
+            }
+            if (SmartDashboard.getBoolean("DB/Button 2", false)) {
+                armWrist.set(ControlMode.PercentOutput, periodic.armWristPower);
+            } else {
+                armWrist.set(ControlMode.PercentOutput, periodic.armProxPower);
+            }
+
         } else if (periodic.armmode == ArmModes.PID) {
+            //if (SmartDashboard.getBoolean("DB/Button 0", false))//
             armProx.set(ControlMode.Position, periodic.armProxPower);
+            //if (SmartDashboard.getBoolean("DB/Button 1", false))//
             armDist.set(ControlMode.Position, periodic.armDistPower);
+            //if (SmartDashboard.getBoolean("DB/Button 2", false))
             armWrist.set(ControlMode.Position, periodic.armWristPower);
-           //armEnd.set(ControlMode.Position, periodic.armEndPower);
+            //armEnd.set(ControlMode.Position, periodic.armEndPower);
 
         }
     }
 
-    //Driver Station Things for Monitoring
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putNumber("Proximal Arm Power", periodic.armProxPower);
-        SmartDashboard.putNumber("Distal Arm Power", periodic.armDistPower);
-        SmartDashboard.putNumber("Wrist Arm Power", periodic.armWristPower);
+        SmartDashboard.putNumber("Arm/Proximal Arm Power/", periodic.armProxPower);
+        SmartDashboard.putNumber("Arm/Distal Arm Power/", periodic.armDistPower);
+        SmartDashboard.putNumber("Arm/Wrist Arm Power/", periodic.armWristPower);
+        SmartDashboard.putNumber("Arm/Proximal Arm Goal/", periodic.armProxPower);
+        SmartDashboard.putNumber("Arm/Distal Arm Goal/", periodic.armProxPower);
+        SmartDashboard.putNumber("Arm/Proximal Arm Goal/", periodic.armProxPower);
+
         //SmartDashboard.putNumber("End Arm Power", periodic.armEndPower);
     }
 
@@ -114,9 +133,6 @@ public class Arm extends Subsystem {
         armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         periodic.absoluteWrist = armProx.getSelectedSensorPosition();
         armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        //armEnd.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        //periodic.absoluteEnd = armProx.getSelectedSensorPosition();
-        //armEnd.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armProx.setSensorPhase(false); //TODO Find Sensor Phase for all talons
         armDist.setSensorPhase(true);
         armWrist.setSensorPhase(true);
@@ -152,18 +168,19 @@ public class Arm extends Subsystem {
     }
 
     public class PeriodicIO {
+        //TALON POWERS
         public double armProxPower = 0;
         public double armDistPower = 0;
         public double armWristPower = 0;
-        //public double armEndPower = 0;
+        //TALON ANGLES ABSOLUTE
         public double absoluteProx = 0;
         public double absoluteDist = 0;
         public double absoluteWrist = 0;
-        //public double absoluteEnd = 0;
+        //TALON ANGLE TARES
         public double relativeProx = 0;
         public double relativeDist = 0;
         public double relativeWrist = 0;
-        //public double relativeEnd = 0;
+
         public ArmModes armmode = ArmModes.DirectControl;
     }
 }

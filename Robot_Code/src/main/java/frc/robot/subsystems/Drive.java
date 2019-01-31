@@ -192,11 +192,9 @@ public class Drive extends Subsystem {
 
     public void reset() {
         mOverrideTrajectory = false;
-
-
         mMotionPlanner.reset();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
-        pigeonIMU.hasResetOccurred();
+        pigeonIMU.setCompassAngle(0);
         periodic = new PeriodicIO();
         periodic.right_pos_ticks = 0;
         periodic.left_pos_ticks = 0;
@@ -351,12 +349,13 @@ public class Drive extends Subsystem {
     public synchronized void readPeriodicInputs() {
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
+        periodic.gyro = pigeonIMU.getAbsoluteCompassHeading();
         periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getCompassHeading());//.rotateBy(mGyroOffset);
+        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getAbsoluteCompassHeading()).rotateBy(mGyroOffset);
 
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;
@@ -411,33 +410,32 @@ public class Drive extends Subsystem {
 
 
     public void outputTelemetry() {
-        SmartDashboard.putNumber("SmartDashboard/Drive/Right", periodic.right_pos_ticks);
-        SmartDashboard.putNumber("Left", periodic.left_pos_ticks);
-        SmartDashboard.putNumber("Heading", pigeonIMU.getCompassHeading());
-        SmartDashboard.putString("Drive State", mDriveControlState.toString());
-        SmartDashboard.putNumberArray("drivedemands", new double[]{periodic.left_demand, periodic.right_demand});
-        SmartDashboard.putNumberArray("drivevels", new double[]{periodic.left_velocity_ticks_per_100ms, periodic.right_velocity_ticks_per_100ms});
-        SmartDashboard.putNumber("Robot Error X", periodic.error.getTranslation().x());
-        SmartDashboard.putNumber("Robot Error Y", periodic.error.getTranslation().y());
-        SmartDashboard.putNumber("Robot Error Theta", periodic.error.getRotation().getDegrees());
-        SmartDashboard.putNumber("Robot Setpoint X", periodic.path_setpoint.state().getTranslation().x());
-        SmartDashboard.putNumber("Robot Setpoint Y", periodic.path_setpoint.state().getTranslation().y());
-        SmartDashboard.putNumber("Variables/Robot Setpoint Theta", periodic.path_setpoint.state().getRotation().getDegrees());
-        SmartDashboard.putNumber("Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Right Talon Error", driveFrontRight.getClosedLoopError(0));
-        SmartDashboard.putNumber("Left Talon Error", driveFrontLeft.getClosedLoopError(0));
-        SmartDashboard.putNumber("Right Talon Voltage", driveFrontRight.getBusVoltage());
-        SmartDashboard.putNumber("Left Talon Voltage", driveFrontLeft.getBusVoltage());
-        SmartDashboard.putNumber("Right Talon Voltage II", driveFrontRight.getMotorOutputVoltage());
-        SmartDashboard.putNumber("Left Talon Voltage II", driveFrontLeft.getMotorOutputVoltage());
-        SmartDashboard.putNumber("Right Encoder Counts", periodic.right_pos_ticks);
-        SmartDashboard.putNumber("Left Encoder Counts", periodic.left_pos_ticks);
-        SmartDashboard.putNumber("Left FeedForward", periodic.left_feedforward);
-        SmartDashboard.putNumber("Left Acceleration", periodic.left_accl);
-        SmartDashboard.putNumber("Right FeedForward", periodic.right_feedforward);
-        SmartDashboard.putNumber("Right Acceleration", periodic.right_accl);
-        SmartDashboard.setDefaultNumber("Left Talon Voltage", 10);
+        SmartDashboard.putNumber("Drive/Right/", periodic.right_pos_ticks);
+        SmartDashboard.putNumber("Drive/Left/", periodic.left_pos_ticks);
+        SmartDashboard.putNumber("Drive/Heading/", getHeading().getDegrees());
+        SmartDashboard.putString("Drive/Drive State/", mDriveControlState.toString());
+        SmartDashboard.putNumberArray("Drive/drivedemands/", new double[]{periodic.left_demand, periodic.right_demand});
+        SmartDashboard.putNumberArray("Drive/drivevels/", new double[]{periodic.left_velocity_ticks_per_100ms, periodic.right_velocity_ticks_per_100ms});
+        SmartDashboard.putNumber("Drive/Error/X/", periodic.error.getTranslation().x());
+        SmartDashboard.putNumber("Drive/Error/Y/", periodic.error.getTranslation().y());
+        SmartDashboard.putNumber("Drive/Error/Theta/", periodic.error.getRotation().getDegrees());
+        SmartDashboard.putNumber("Drive/Setpoint/X/", periodic.path_setpoint.state().getTranslation().x());
+        SmartDashboard.putNumber("Drive/Setpoint/Y/", periodic.path_setpoint.state().getTranslation().y());
+        SmartDashboard.putNumber("Drive/Setpoint/Theta/", periodic.path_setpoint.state().getRotation().getDegrees());
+        SmartDashboard.putNumber("Drive/Left Talon Velocity/", periodic.left_velocity_ticks_per_100ms);
+        SmartDashboard.putNumber("Drive/Right Talon Velocity/", periodic.right_velocity_ticks_per_100ms);
+        SmartDashboard.putNumber("Drive/Error/Right Talon Error/", driveFrontRight.getClosedLoopError(0));
+        SmartDashboard.putNumber("Drive/Error/Left Talon Error/", driveFrontLeft.getClosedLoopError(0));
+        SmartDashboard.putNumber("Drive/Right Talon Voltage/", driveFrontRight.getBusVoltage());
+        SmartDashboard.putNumber("Drive/Left Talon Voltage/", driveFrontLeft.getBusVoltage());
+        SmartDashboard.putNumber("Drive/Right Talon Voltage II/", driveFrontRight.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Left Talon Voltage II/", driveFrontLeft.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Right Encoder Counts/", periodic.right_pos_ticks);
+        SmartDashboard.putNumber("Drive/Left Encoder Counts/", periodic.left_pos_ticks);
+        SmartDashboard.putNumber("Drive/Misc/Left FeedForward/", periodic.left_feedforward);
+        SmartDashboard.putNumber("Drive/Misc/Left Acceleration/", periodic.left_accl);
+        SmartDashboard.putNumber("Drive/Misc/Right FeedForward/", periodic.right_feedforward);
+        SmartDashboard.putNumber("Drive/Misc/Right Acceleration/", periodic.right_accl);
     }
 
 
@@ -472,6 +470,7 @@ public class Drive extends Subsystem {
         public Rotation2d gyro_heading = Rotation2d.identity();
         public Pose2d error = Pose2d.identity();
         public boolean B2 = false;
+        public double gyro;
 
 
         // OUTPUTS
