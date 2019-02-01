@@ -107,7 +107,7 @@ public class Drive extends Subsystem {
         driveFrontRight = new WPI_TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
         driveMiddleRight = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new WPI_TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
-        pigeonIMU = new PigeonIMU(driveFrontLeft);
+        //pigeonIMU = new PigeonIMU(driveFrontLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
 
     }
@@ -194,7 +194,7 @@ public class Drive extends Subsystem {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
-        pigeonIMU.setCompassAngle(0);
+        //pigeonIMU.setCompassAngle(0);
         periodic = new PeriodicIO();
         periodic.right_pos_ticks = 0;
         periodic.left_pos_ticks = 0;
@@ -349,13 +349,13 @@ public class Drive extends Subsystem {
     public synchronized void readPeriodicInputs() {
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
-        periodic.gyro = pigeonIMU.getAbsoluteCompassHeading();
+        //periodic.gyro = pigeonIMU.getAbsoluteCompassHeading();
         periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getAbsoluteCompassHeading()).rotateBy(mGyroOffset);
+        //periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getAbsoluteCompassHeading()).rotateBy(mGyroOffset);
 
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;

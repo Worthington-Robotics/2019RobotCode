@@ -29,7 +29,7 @@ public class Arm extends Subsystem {
 
         }
     };
-    private TalonSRX armProx, armDist, armWrist, armEnd;
+    private TalonSRX armProx, armDist, armWrist;
     private PeriodicIO periodic;
     private ArmModes ArmMode = ArmModes.DirectControl;
 
@@ -38,7 +38,6 @@ public class Arm extends Subsystem {
         armProx = new TalonSRX(Constants.ARM_PROXIMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         armWrist = new TalonSRX(Constants.ARM_WRIST);
-        //armEnd = new TalonSRX(Constants.ARM_END);
         periodic = new PeriodicIO();
         reset();
     }
@@ -50,24 +49,17 @@ public class Arm extends Subsystem {
     //Get Inputs and Use them
     @Override
     public void readPeriodicInputs() {
-        periodic.relativeProx = armProx.getSelectedSensorPosition();
-        periodic.absoluteProx = periodic.absoluteProx + periodic.relativeProx;
-        periodic.relativeDist = armDist.getSelectedSensorPosition();
-        periodic.absoluteDist = periodic.absoluteDist + periodic.relativeDist;
-        periodic.relativeWrist = armWrist.getSelectedSensorPosition();
-        periodic.absoluteWrist = periodic.absoluteWrist + periodic.relativeWrist;
-        //periodic.relativeEnd = armEnd.getSelectedSensorPosition();
-        //periodic.absoluteEnd = periodic.absoluteEnd + periodic.relativeEnd;
+        periodic.prox = armProx.getSelectedSensorPosition() + periodic.absoluteProx;
+        periodic.dist = armDist.getSelectedSensorPosition() + periodic.absoluteDist;
+        periodic.wrist = armWrist.getSelectedSensorPosition() + periodic.absoluteWrist;
         if (ArmMode == ArmModes.DirectControl) {
             periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 10;
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 10;
             periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) / 10;
-            //periodic.armEndPower = (SmartDashboard.getNumber("DB/Slider 3", 2.5) - 2.5) / 10;
         } else if (ArmMode == ArmModes.PID) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) * 1024;
-            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) * 1536;
-            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) * 1536;
-            //periodic.armEndPower = (SmartDashboard.getNumber("DB/Slider 3", 2.5) - 2.5) * 1536;
+            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * 1536);
+            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * 1536);
+            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * 1536);
         }
 
     }
@@ -79,17 +71,14 @@ public class Arm extends Subsystem {
             if (SmartDashboard.getBoolean("DB/Button 0", false)) {
                 armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
             } else {
-                armProx.set(ControlMode.PercentOutput, 0);
             }
             if (SmartDashboard.getBoolean("DB/Button 1", false)) {
                 armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
             } else {
-                armDist.set(ControlMode.PercentOutput, periodic.armProxPower);
             }
             if (SmartDashboard.getBoolean("DB/Button 2", false)) {
                 armWrist.set(ControlMode.PercentOutput, periodic.armWristPower);
             } else {
-                armWrist.set(ControlMode.PercentOutput, periodic.armProxPower);
             }
 
         } else if (periodic.armmode == ArmModes.PID) {
@@ -106,12 +95,16 @@ public class Arm extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putNumber("Arm/Proximal Arm Power/", periodic.armProxPower);
-        SmartDashboard.putNumber("Arm/Distal Arm Power/", periodic.armDistPower);
-        SmartDashboard.putNumber("Arm/Wrist Arm Power/", periodic.armWristPower);
-        SmartDashboard.putNumber("Arm/Proximal Arm Goal/", periodic.armProxPower);
-        SmartDashboard.putNumber("Arm/Distal Arm Goal/", periodic.armProxPower);
-        SmartDashboard.putNumber("Arm/Proximal Arm Goal/", periodic.armProxPower);
+
+        SmartDashboard.putNumber("Arm/Prox Absolute", periodic.absoluteProx);
+        SmartDashboard.putNumber("Arm/Dist Absolute", periodic.absoluteDist);
+        SmartDashboard.putNumber("Arm/Wrist Absolute", periodic.absoluteWrist);
+        SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
+        SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
+        SmartDashboard.putNumber("Arm/Wrist Arm Power", periodic.armWristPower);
+        SmartDashboard.putNumber("Arm/Proximal Arm Error", armProx.getClosedLoopError());
+        SmartDashboard.putNumber("Arm/Distal Arm Error", armDist.getClosedLoopError());
+        SmartDashboard.putNumber("Arm/Proximal Arm Error", armWrist.getClosedLoopError());
 
         //SmartDashboard.putNumber("End Arm Power", periodic.armEndPower);
     }
@@ -128,19 +121,19 @@ public class Arm extends Subsystem {
         periodic.absoluteProx = armProx.getSelectedSensorPosition();
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        periodic.absoluteDist = armProx.getSelectedSensorPosition();
+        periodic.absoluteDist = armDist.getSelectedSensorPosition();
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        periodic.absoluteWrist = armProx.getSelectedSensorPosition();
+        periodic.absoluteWrist = armWrist.getSelectedSensorPosition();
         armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        armProx.setSensorPhase(false); //TODO Find Sensor Phase for all talons
+        armProx.setSensorPhase(true); //TODO Find Sensor Phase for all talons
         armDist.setSensorPhase(true);
         armWrist.setSensorPhase(true);
         armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
         armProx.config_kF(0, Constants.ARM_PROX_KF, 0);
         armProx.config_kP(0, Constants.ARM_PROX_KP, 0);
         armProx.config_kI(0, Constants.ARM_PROX_KI, 0);
-        armProx.config_kD(0, Constants.ARM_PROX_KP, 0);
+        armProx.config_kD(0, Constants.ARM_PROX_KD, 0);
         armProx.config_IntegralZone(0, 0, 0);
         armDist.selectProfileSlot(0, 0);
         armDist.config_kF(0, Constants.ARM_DIST_KF, 0);
@@ -154,11 +147,33 @@ public class Arm extends Subsystem {
         armWrist.config_kI(0, Constants.ARM_WRIST_KI, 0);
         armWrist.config_kD(0, Constants.ARM_WRIST_KD, 0);
         armWrist.config_IntegralZone(0, 0, 0);
-        periodic.armmode = ArmModes.DirectControl;
         armProx.setNeutralMode(NeutralMode.Brake);
         armDist.setNeutralMode(NeutralMode.Brake);
         armWrist.setNeutralMode(NeutralMode.Brake);
+        armProx.enableVoltageCompensation(true);
+        armDist.enableVoltageCompensation(true);
+        armWrist.enableVoltageCompensation(true);
+        armProx.configVoltageCompSaturation(10);
+        armDist.configVoltageCompSaturation(10);
+        armWrist.configVoltageCompSaturation(10);
     }
+
+    public void setArmProxPower (double Power)
+    {
+        periodic.armProxPower = Power;
+    }
+
+    public void setArmDistPower (double Power)
+    {
+        periodic.armDistPower = Power;
+    }
+
+    public void setArmWristPower (double Power)
+    {
+        periodic.armWristPower = Power;
+    }
+
+
 
     public enum ArmModes {
         DirectControl,
@@ -169,19 +184,20 @@ public class Arm extends Subsystem {
 
     public class PeriodicIO {
         //TALON POWERS
-        public double armProxPower = 0;
-        public double armDistPower = 0;
-        public double armWristPower = 0;
-        //TALON ANGLES ABSOLUTE
-        public double absoluteProx = 0;
-        public double absoluteDist = 0;
-        public double absoluteWrist = 0;
+        double armProxPower = 0;
+        double armDistPower = 0;
+        double armWristPower = 0;
+        //->||\TALON ANGLES ABSOLUTE
+        double absoluteProx = 0;
+        double absoluteDist = 0;
+        double absoluteWrist = 0;
         //TALON ANGLE TARES
-        public double relativeProx = 0;
-        public double relativeDist = 0;
-        public double relativeWrist = 0;
+        double prox = 0;
+        double dist = 0;
+        double wrist = 0;
 
-        public ArmModes armmode = ArmModes.DirectControl;
+        ArmModes armmode = ArmModes.PID;
     }
 }
+
 

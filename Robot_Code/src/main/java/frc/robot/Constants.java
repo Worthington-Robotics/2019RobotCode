@@ -11,27 +11,20 @@ public class Constants {
     public static final int DRIVE_FRONT_RIGHT_ID = 4;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 5;
     public static final int DRIVE_BACK_RIGHT_ID = 6;
-    public static final int ARM_PROXIMINAL = 7; //TODO FIX AS NEEDED
-    public static final int ARM_DISTAL = 8; //TODO FIX AS NEEDED
-    public static final int ARM_WRIST = 9; //TODO FIX AS NEEDED
-    public static final int ARM_END = 10;
+    public static final int ARM_PROXIMINAL = 7;
+    public static final int ARM_DISTAL = 8;
+    public static final int ARM_WRIST = 9;
 
     //Spark Ports
     public static final int TOP_CARGOMANIP_ID = 1;
     public static final int BOTTOM_CARGOMANIP_ID = 2;
-    public static final int FORKSUD_ID = 4;
 
-    //Encoder Ports
-    public static final int LOWER_LIFT_ENCODER_A = 5;
-    public static final int LOWER_LIFT_ENCODER_B = 6;
 
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
     public static final int ALIEN_1_LOW_ID = 2;
     public static final int ALIEN_1_HIGH_ID = 3;
-    public static final int ALIEN_2_LOW_ID = 4;
-    public static final int ALIEN_2_HIGH_ID = 5;
 
 
     //Pure pursuit related values
@@ -65,8 +58,6 @@ public class Constants {
     public static final double STOP_POWER = 0;
 
     //Alien Constants
-    public static final double ALIEN_OPEN = 1;
-    public static final double ALIEN_CLOSED = -1;
 
     //PID Gain Constants
     public static final double DRIVE_RIGHT_KP = 0.0885;
