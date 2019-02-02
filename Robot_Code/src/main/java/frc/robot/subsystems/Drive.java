@@ -377,7 +377,7 @@ public class Drive extends Subsystem {
 
     @Override
     public synchronized void writePeriodicOutputs() {
-        gearShift();
+        //gearShift();
         if (mDriveControlState == DriveControlState.OPEN_LOOP || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
             //TODO write open loop outputs
             driveFrontLeft.set(ControlMode.PercentOutput, periodic.left_demand);

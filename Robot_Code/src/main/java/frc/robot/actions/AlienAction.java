@@ -9,7 +9,7 @@ public class AlienAction extends Action {
     {
     }
     @Override
-    public void onStart() { Alien.getInstance().setAlienState(DoubleSolenoid.Value.kForward);
+    public void onStart() { Alien.getInstance().setAlienState(DoubleSolenoid.Value.kReverse);
 
 
     }
@@ -26,7 +26,7 @@ public class AlienAction extends Action {
 
     @Override
     public void onStop() {
-        Alien.getInstance().setAlienState(DoubleSolenoid.Value.kReverse);
-        Alien.getInstance().setAlienState(DoubleSolenoid.Value.kOff);
+        Alien.getInstance().setAlienState(DoubleSolenoid.Value.kForward);
+        //Alien.getInstance().setAlienState(DoubleSolenoid.Value.kOff);
     }
 }
