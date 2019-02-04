@@ -43,7 +43,7 @@ public class BlinkyLights extends Subsystem {
             TorF = !TorF;
             LightPowerINT = (int) LightPower * 100;
             switch (LightPowerINT) {
-                case 73: : LightColour = ""
+                case 73: LightColour = "";
             }
         }
 
