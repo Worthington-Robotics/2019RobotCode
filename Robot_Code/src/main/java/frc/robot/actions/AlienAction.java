@@ -27,6 +27,5 @@ public class AlienAction extends Action {
     @Override
     public void onStop() {
         Alien.getInstance().setAlienState(DoubleSolenoid.Value.kForward);
-        //Alien.getInstance().setAlienState(DoubleSolenoid.Value.kOff);
     }
 }

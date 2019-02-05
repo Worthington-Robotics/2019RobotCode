@@ -9,12 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
-import frc.robot.subsystems.Alien;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.CargoMani;
-import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.*;
 
 import java.util.Arrays;
 
@@ -30,7 +28,12 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
-  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(), CargoMani.getInstance(), Alien.getInstance(), Arm.getInstance()));
+  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(),
+          CargoMani.getInstance(),
+          Alien.getInstance(),
+          Arm.getInstance(),
+          Logger.getInstance()
+  ));
   private Looper EnabledLoops = new Looper();
   private Looper DisabledLoops = new Looper();
   private OI Oi = new OI();
@@ -44,6 +47,7 @@ public class Robot extends TimedRobot {
       VersionData.doVersionID();
       Manager.registerEnabledLoops(EnabledLoops);
       Manager.registerDisabledLoops(DisabledLoops);
+      Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
   }
 
   @Override
@@ -62,6 +66,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     EnabledLoops.start();
     DisabledLoops.stop();
+    Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
   }
 
   @Override
@@ -71,6 +76,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    EnabledLoops.start();
+    DisabledLoops.stop();
   }
 
   @Override

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.lib.util.HIDHelper;
+import org.opencv.core.Mat;
 
 public class Constants {
     //Talon IDs
@@ -46,7 +47,7 @@ public class Constants {
     public static final double PATH_LOOK_AHEAD_TIME = 0.4;  // seconds to look ahead along the path for steering
     public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
-    public static final double TICKS_TO_INCHES = 1625;
+    public static final double TICKS_TO_INCHES =DRIVE_ENCODER_PPR/ Math.PI/DRIVE_WHEEL_DIAMETER_INCHES;
     public static final double ROTATIONS_TO_INCHES = TICKS_TO_INCHES/DRIVE_ENCODER_PPR;
 
     //Shot powers
@@ -91,19 +92,37 @@ public class Constants {
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
-    public static final double MP_TEST_SPEED = 4;
+    public static final double MP_TEST_SPEED = 60;
     public static final boolean RAMPUP = false;
 
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
-    public static final Joystick SECOND = new Joystick(1);
+    public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.45, 2);
-    public static final HIDHelper.HIDConstants SECOND_STICK = new HIDHelper.HIDConstants(SECOND, 0.05, 1.0, 1.0, 1.0, 2);
 
     //Startup Constants
     public static final boolean IS_COMP_BOT = true;
     public static final String ROBOT_NAME = "Whatever_you_want";
-
+    //watchkeys tm
+    public static final String[] NUMBER_KEYS = {
+            "Drive/Left Demand",
+            "Drive/Right Demand",
+            "Drive/drivevels",
+            "Drive/Pose/Theta",
+            "Drive/Pose/X",
+            "Drive/Pose/Y",
+            "Drive/Error/Theta",
+            "Drive/Error/X",
+            "Drive/Error/Y",
+            "Drive/Setpoint/Theta",
+            "Drive/Setpoint/X",
+            "Drive/Setpoint/Y",
+            "Drive/Right Talon Velocity",
+            "Drive/Left Talon Velocity",
+            "Drive/Error/Right Talon Error",
+            "Drive/Error/Left Talon Error",
+            "Drive/Left Talon Voltage II"
+    };
 }
 
 

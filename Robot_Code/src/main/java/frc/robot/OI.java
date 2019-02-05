@@ -8,11 +8,12 @@ import frc.lib.statemachine.Action;
 public class OI{
 
     public OI(){
-
-        Button second2 = new JoystickButton(Constants.SECOND, 2);
-        Button second3 = new JoystickButton(Constants.SECOND, 3);
-        Button second4 = new JoystickButton(Constants.SECOND, 4);
-        Button second5 = new JoystickButton(Constants.SECOND, 5);
+        Button Launch1 = new JoystickButton(Constants.LAUNCH_PAD, 1);
+        Button second2 = new JoystickButton(Constants.LAUNCH_PAD, 2);
+        Button second3 = new JoystickButton(Constants.LAUNCH_PAD, 3);
+        Button second4 = new JoystickButton(Constants.LAUNCH_PAD, 4);
+        Button second5 = new JoystickButton(Constants.LAUNCH_PAD, 5);
+        Launch1.whileHeld(Action.toCommand(new AStopAction()));
         second2.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
         second3.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         second4.whileHeld(Action.toCommand(new AlienAction()));

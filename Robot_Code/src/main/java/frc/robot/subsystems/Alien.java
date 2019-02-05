@@ -56,6 +56,6 @@ public class Alien extends Subsystem {
     }
 
     public class PeriodicIO {
-        private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kOff;
+        private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kReverse;
     }
 }
