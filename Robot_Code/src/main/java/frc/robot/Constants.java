@@ -92,7 +92,7 @@ public class Constants {
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
-    public static final double MP_TEST_SPEED = 60;
+    public static final double MP_TEST_SPEED = 6;
     public static final boolean RAMPUP = false;
 
     //Stick Constants
