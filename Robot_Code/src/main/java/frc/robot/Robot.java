@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
           CargoMani.getInstance(),
           Alien.getInstance(),
           Arm.getInstance(),
+          PoseEstimator.getInstance(),
           Logger.getInstance()
   ));
   private Looper EnabledLoops = new Looper();

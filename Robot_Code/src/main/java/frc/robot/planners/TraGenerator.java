@@ -38,8 +38,7 @@ public class TraGenerator {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
         Points.add(new Pose2d(96, 0, Rotation2d.fromDegrees(0)));
-        Points.add(new Pose2d(120, 120, Rotation2d.fromDegrees(90)));
-        Points.add(new Pose2d(180, 144, Rotation2d.fromDegrees(0)));
+
 
 
 

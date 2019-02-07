@@ -3,13 +3,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
@@ -66,8 +63,8 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = -ramp_Up_Counter * .0025;
-                            periodic.right_demand = -ramp_Up_Counter * .0025;
+                            periodic.left_demand = -ramp_Up_Counter * .0025 + .1;
+                            periodic.right_demand = -ramp_Up_Counter * .0025 + .1;
                             ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
                             periodic.left_demand = -Constants.MP_TEST_SPEED * Constants.TICKS_TO_INCHES;
@@ -101,6 +98,7 @@ public class Drive extends Subsystem {
     };
 
     private Drive() {
+        mGyroOffset = Rotation2d.fromDegrees(0);
         periodic = new PeriodicIO();
         mMotionPlanner = new DriveMotionPlanner();
         driveFrontLeft = new WPI_TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
@@ -109,7 +107,7 @@ public class Drive extends Subsystem {
         driveFrontRight = new WPI_TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
         driveMiddleRight = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new WPI_TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
-        //pigeonIMU = new PigeonIMU(driveFrontLeft);
+        pigeonIMU = new PigeonIMU(driveBackLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         reset();
 
@@ -197,14 +195,14 @@ public class Drive extends Subsystem {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
-        //pigeonIMU.setCompassAngle(0);
         periodic = new PeriodicIO();
+        mGyroOffset = Rotation2d.fromDegrees(-pigeonIMU.getFusedHeading());
         periodic.right_pos_ticks = 0;
         periodic.left_pos_ticks = 0;
         ramp_Up_Counter = 0;
         driveFrontRight.setSelectedSensorPosition(0, 0, 0);
         driveFrontLeft.setSelectedSensorPosition(0, 0, 0);
-        driveFrontLeft.setSensorPhase(false);
+        driveFrontLeft.setSensorPhase(true);
         driveFrontRight.setSensorPhase(true);
         driveFrontLeft.selectProfileSlot(0, 0);
         driveFrontLeft.config_kF(0, Constants.DRIVE_LEFT_KF, 0);
@@ -230,6 +228,19 @@ public class Drive extends Subsystem {
         driveMiddleLeft.setNeutralMode(NeutralMode.Brake);
         driveBackRight.setNeutralMode(NeutralMode.Brake);
         driveBackLeft.setNeutralMode(NeutralMode.Brake);
+        driveBackLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
+        driveBackRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
+        driveMiddleLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
+        driveMiddleRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
+        driveFrontRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
+        driveFrontLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
+        driveFrontRight.enableVoltageCompensation(true);
+        driveFrontLeft.enableVoltageCompensation(true);
+        driveMiddleLeft.enableVoltageCompensation(true);
+        driveMiddleRight.enableVoltageCompensation(true);
+        driveBackLeft.enableVoltageCompensation(true);
+        driveBackRight.enableVoltageCompensation(true);
+
 
         //TODO add reset with sensor impl
 
@@ -252,9 +263,9 @@ public class Drive extends Subsystem {
                 DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(inchesPerSecondToRpm(-output.right_velocity)),
                         radiansPerSecondToTicksPer100ms(inchesPerSecondToRpm(-output.left_velocity)));
 
-                setVelocity(signal, new DriveSignal(output.left_feedforward_voltage/12, output.right_feedforward_voltage/12));
-                periodic.left_accl = radiansPerSecondToTicksPer100ms(output.left_accel)/1000;
-                periodic.right_accl = radiansPerSecondToTicksPer100ms(output.right_accel)/1000;
+                setVelocity(signal, new DriveSignal(output.left_feedforward_voltage / 12, output.right_feedforward_voltage / 12));
+                periodic.left_accl = radiansPerSecondToTicksPer100ms(output.left_accel) / 1000;
+                periodic.right_accl = radiansPerSecondToTicksPer100ms(output.right_accel) / 1000;
 
             } else {
                 setVelocity(DriveSignal.BRAKE, DriveSignal.BRAKE);
@@ -331,8 +342,8 @@ public class Drive extends Subsystem {
         }
         periodic.left_demand = signal.getLeft(); //TODO convert to native units
         periodic.right_demand = signal.getRight(); //TODO convert to native units
-        periodic.left_feedforward  = feedforward.getLeft();
-        periodic.right_feedforward  = feedforward.getRight();
+        periodic.left_feedforward = feedforward.getLeft();
+        periodic.right_feedforward = feedforward.getRight();
 
 
     }
@@ -358,13 +369,12 @@ public class Drive extends Subsystem {
     public synchronized void readPeriodicInputs() {
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
-        //periodic.gyro = pigeonIMU.getAbsoluteCompassHeading();
         periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        //periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getAbsoluteCompassHeading()).rotateBy(mGyroOffset);
+        periodic.gyro_heading = (Rotation2d.fromDegrees(-pigeonIMU.getFusedHeading()).rotateBy(mGyroOffset));
 
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;
@@ -399,7 +409,7 @@ public class Drive extends Subsystem {
             //TODO write velocity control mode outputs
 
             driveFrontLeft.set(ControlMode.Velocity, periodic.left_demand, DemandType.ArbitraryFeedForward,
-                    (periodic.left_feedforward + Constants.DRIVE_LEFT_KD* periodic.left_accl / 1023.0));
+                    (periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
             driveFrontRight.set(ControlMode.Velocity, periodic.right_demand, DemandType.ArbitraryFeedForward,
                     -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
             // driveFrontLeft.set(ControlMode.Velocity, periodic.left_demand, DemandType.ArbitraryFeedForward, 0.0);
@@ -421,7 +431,6 @@ public class Drive extends Subsystem {
     public void outputTelemetry() {
         SmartDashboard.putNumber("Drive/Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Left", periodic.left_pos_ticks);
-        SmartDashboard.putNumber("Drive/Heading", getHeading().getDegrees());
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
         SmartDashboard.putNumberArray("Drive/drivedemands", new double[]{periodic.left_demand, periodic.right_demand});
         SmartDashboard.putNumber("Drive/Left Demand", periodic.left_demand);
@@ -448,7 +457,6 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
         SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
     }
-
 
 
     @Override
@@ -495,7 +503,8 @@ public class Drive extends Subsystem {
         public double left_accl;
         public double right_accl;
     }
-    private void gearShift(){
+
+    private void gearShift() {
         if (getLeftLinearVelocity() >= 10) {
             periodic.B2 = true;
         }
