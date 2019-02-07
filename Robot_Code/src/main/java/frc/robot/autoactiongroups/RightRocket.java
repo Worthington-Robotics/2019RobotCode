@@ -6,6 +6,6 @@ import frc.robot.planners.TraGenerator;
 
 public class RightRocket extends StateMachineDescriptor {
     public RightRocket() {
-        addSequential(new DriveTra(TraGenerator.getInstance().getTenFeet(), false), );
+        addSequential(new DriveTra(TraGenerator.getInstance().getRightRocket(), false), 400000000);
     }
 }

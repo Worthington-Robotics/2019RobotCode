@@ -33,8 +33,7 @@ public class TraGenerator {
             double max_voltage) {
         return DMP.generateTrajectory(reversed, waypoints, constraints, 0.0, 0.0, max_vel, max_accel, max_voltage);
     }
-    public Trajectory<TimedState<Pose2dWithCurvature>> getTenFeet()
-    {
+    public Trajectory<TimedState<Pose2dWithCurvature>> getTenFeet() {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
         Points.add(new Pose2d(96, 0, Rotation2d.fromDegrees(0)));
@@ -44,5 +43,11 @@ public class TraGenerator {
 
 
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60.0, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> getRightRocket() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.fromDegrees(0)));
+        Points.add(new Pose2d(108, 132, Rotation2d.fromDegrees(45)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36,60,10);
     }
 }
