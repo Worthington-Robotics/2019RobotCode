@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.lib.statemachine.StateMachine;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     EnabledLoops.start();
     DisabledLoops.stop();
+    StateMachine.runMachine();
 
   }
 
