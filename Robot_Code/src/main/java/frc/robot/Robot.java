@@ -13,6 +13,7 @@ import frc.lib.statemachine.StateMachine;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
+import frc.robot.autoactiongroups.FrontOfCargo;
 import frc.robot.subsystems.*;
 
 import java.util.Arrays;
@@ -56,7 +57,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     EnabledLoops.start();
     DisabledLoops.stop();
-    StateMachine.runMachine();
+    StateMachine.runMachine(new FrontOfCargo());
 
   }
 
