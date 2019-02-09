@@ -283,7 +283,6 @@ public class Drive extends Subsystem {
     }
 
     private void configTele() {
-        reset();
         driveFrontLeft.set(ControlMode.PercentOutput, 0);
         driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
         driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
