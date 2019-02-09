@@ -86,9 +86,9 @@ public class Constants {
     public static final double ARM_WRIST_KF = 0;
 
 
-    public static final double ANGLE_KP = .04;
-    public static final double ANGLE_KI = 0;
-    public static final double ANGLE_KD = 0;
+    public static final double ANGLE_KP = 0.0425;
+    public static final double ANGLE_KI = 0.0;
+    public static final double ANGLE_KD = 0.015;
 
 
     //Update times / rates / logger constants
