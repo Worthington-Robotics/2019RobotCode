@@ -43,12 +43,17 @@ public class AnglePID extends Action {
 
     @Override
     public boolean isFinished() {
-        return angleController.onTarget();
+        if (angleController != null) {
+            return angleController.onTarget();
+        }
+        return true;
     }
 
     @Override
     public void onStop() {
-        angleController.disable();
+        if (angleController != null) {
+            angleController.disable();
+        }
         Drive.getInstance().setOpenLoop(new DriveSignal(0, 0));
     }
 
