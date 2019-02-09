@@ -19,6 +19,8 @@ public class OI{
         second4.whileHeld(Action.toCommand(new AlienAction()));
         second5.whileHeld(Action.toCommand(new AlienAction()));
 
+        Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
+        anglePidButton.whenPressed(Action.toCommand(new AnglePID()));
     }
 
 }
