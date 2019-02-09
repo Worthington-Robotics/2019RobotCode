@@ -211,13 +211,13 @@ public class Drive extends Subsystem {
         driveFrontLeft.config_kP(0, Constants.DRIVE_LEFT_KP, 0);
         driveFrontLeft.config_kI(0, Constants.DRIVE_LEFT_KI, 0);
         driveFrontLeft.config_kD(0, Constants.DRIVE_LEFT_KD, 0);
-        driveFrontLeft.config_IntegralZone(0, 0, 0);
+        driveFrontLeft.config_IntegralZone(0, 300);
         driveFrontRight.selectProfileSlot(0, 0);
         driveFrontRight.config_kF(0, Constants.DRIVE_RIGHT_KF, 0);
         driveFrontRight.config_kP(0, Constants.DRIVE_RIGHT_KP, 0);
         driveFrontRight.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
         driveFrontRight.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
-        driveFrontRight.config_IntegralZone(0, 0, 0);
+        driveFrontRight.config_IntegralZone(0, 300);
         driveFrontRight.setInverted(true);
         driveMiddleRight.setInverted(true);
         driveBackRight.setInverted(true);
