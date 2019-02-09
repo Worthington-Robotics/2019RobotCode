@@ -83,7 +83,9 @@ public class Drive extends Subsystem {
                         SmartDashboard.putNumberArray("stick", operatorInput);
                         setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
                         break;
-
+                    case ANGLE_PID:
+                        // Let the AnglePIDOutput set the values
+                        break;
                     default:
                         System.out.println("You fool, unexpected control state");
                 }
@@ -333,6 +335,20 @@ public class Drive extends Subsystem {
     }
 
     /**
+     * Configure talons for open loop control
+     */
+    public synchronized void setAnglePidLoop(DriveSignal signal) {
+        if (mDriveControlState != DriveControlState.ANGLE_PID) {
+            System.out.println("Switching to angle pid loop");
+            configTele();
+            System.out.println(signal);
+            mDriveControlState = DriveControlState.ANGLE_PID;
+        }
+        periodic.left_demand = signal.getLeft();
+        periodic.right_demand = signal.getRight();
+    }
+
+    /**
      * Configures talons for velocity control
      */
     public synchronized void setVelocity(DriveSignal signal, DriveSignal feedforward) {
@@ -399,7 +415,7 @@ public class Drive extends Subsystem {
     @Override
     public synchronized void writePeriodicOutputs() {
         //gearShift();
-        if (mDriveControlState == DriveControlState.OPEN_LOOP || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
+        if (mDriveControlState == DriveControlState.OPEN_LOOP || mDriveControlState == DriveControlState.ANGLE_PID || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
             //TODO write open loop outputs
             driveFrontLeft.set(ControlMode.PercentOutput, periodic.left_demand);
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
@@ -475,7 +491,8 @@ public class Drive extends Subsystem {
     enum DriveControlState {
         OPEN_LOOP,
         PATH_FOLLOWING,
-        PROFILING_TEST;
+        PROFILING_TEST,
+        ANGLE_PID;
 
         @Override
         public String toString() {
