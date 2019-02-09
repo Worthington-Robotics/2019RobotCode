@@ -8,23 +8,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.loops.Loop;
 import frc.robot.Constants;
 
-
+/**
+ * The code for governing the three-axis arm
+ * using a set of position PIDs with absolute and relative MagEncoder Values
+ */
 public class Arm extends Subsystem {
 
     private static final Arm m_Arm = new Arm();
     private final Loop aloop = new Loop() {
 
-        @Override
+
         public void onStart(double timestamp) {
 
         }
 
-        @Override
+
         public void onLoop(double timestamp) {
 
         }
 
-        @Override
+
         public void onStop(double timestamp) {
 
         }
@@ -42,12 +45,13 @@ public class Arm extends Subsystem {
         reset();
     }
 
+    /**
+     * @return the only arm instance
+     */
     public static Arm getInstance() {
         return m_Arm;
     }
 
-    //Get Inputs and Use them
-    @Override
     public void readPeriodicInputs() {
         periodic.prox = armProx.getSelectedSensorPosition() + periodic.prox;
         periodic.dist = armDist.getSelectedSensorPosition() + periodic.dist;
@@ -64,8 +68,6 @@ public class Arm extends Subsystem {
 
     }
 
-    //Outputs
-    @Override
     public void writePeriodicOutputs() {
         if (periodic.armmode == ArmModes.DirectControl) {
             if (SmartDashboard.getBoolean("DB/Button 0", false)) {
@@ -112,7 +114,6 @@ public class Arm extends Subsystem {
         //SmartDashboard.putNumber("End Arm Power", periodic.armEndPower);
     }
 
-    @Override
     public void stop() {
 
     }
@@ -124,7 +125,7 @@ public class Arm extends Subsystem {
         periodic.prox = armProx.getSelectedSensorPosition() - periodic.proxMod;
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        periodic.dist = armDist.getSelectedSensorPosition()- periodic.distMod;
+        periodic.dist = armDist.getSelectedSensorPosition() - periodic.distMod;
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         periodic.wrist = armWrist.getSelectedSensorPosition() - periodic.wristMod;
@@ -161,21 +162,17 @@ public class Arm extends Subsystem {
         armWrist.configVoltageCompSaturation(10);
     }
 
-    public void setArmProxPower (double Power)
-    {
+    public void setArmProxPower(double Power) {
         periodic.armProxPower = Power;
     }
 
-    public void setArmDistPower (double Power)
-    {
+    public void setArmDistPower(double Power) {
         periodic.armDistPower = Power;
     }
 
-    public void setArmWristPower (double Power)
-    {
+    public void setArmWristPower(double Power) {
         periodic.armWristPower = Power;
     }
-
 
 
     public enum ArmModes {
@@ -193,7 +190,7 @@ public class Arm extends Subsystem {
         //->||\TALON ANGLES ABSOLUTE
         double proxMod = armProx.getSensorCollection().getPulseWidthPosition() - Constants.ProxAbsoluteZero;
         double distMod = armDist.getSensorCollection().getPulseWidthPosition() - Constants.DistAbsoluteZero;
-        double wristMod = armWrist.getSensorCollection().getPulseWidthPosition() - Constants.WristAbsoluteZero;;
+        double wristMod = armWrist.getSensorCollection().getPulseWidthPosition() - Constants.WristAbsoluteZero;
         //TALON ANGLE TARES
         double prox = 0;
         double dist = 0;

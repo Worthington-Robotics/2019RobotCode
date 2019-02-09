@@ -23,11 +23,11 @@ public class Logger extends Subsystem {
     private String toWrite;
     private boolean initSuccess;
 
-    private Loop mLoop = new Loop(){
+    private Loop mLoop = new Loop() {
 
         @Override
         public void onStart(double timestamp) {
-            if(printWriter == null || !initSuccess){
+            if (printWriter == null || !initSuccess) {
                 DriverStation.reportWarning("logger called to init on Null file stream", false);
             }
         }
@@ -51,7 +51,7 @@ public class Logger extends Subsystem {
 
         @Override
         public void onStop(double timestamp) {
-            if(printWriter == null || !initSuccess){
+            if (printWriter == null || !initSuccess) {
                 DriverStation.reportWarning("Results from the last run were not logged due to an initialization error", false);
             }
         }
@@ -86,10 +86,9 @@ public class Logger extends Subsystem {
     private File getMount() {
         File media = new File("/media");
         File logging_path = null;
-        for(File mount : media.listFiles())
-        {
+        for (File mount : media.listFiles()) {
             logging_path = new File(mount.getAbsolutePath() + "/logging");
-            if(logging_path.isDirectory()) {
+            if (logging_path.isDirectory()) {
                 System.out.println(logging_path.getAbsolutePath());
                 break;
             }
@@ -116,7 +115,6 @@ public class Logger extends Subsystem {
         // no OP
     }
 
-    @Override
     public void stop() {
         // no OP
     }

@@ -21,6 +21,7 @@ import frc.lib.util.HIDHelper;
 import frc.robot.Constants;
 import frc.robot.planners.DriveMotionPlanner;
 
+
 public class Drive extends Subsystem {
 
     //used internally for data
@@ -249,6 +250,7 @@ public class Drive extends Subsystem {
         //TODO add reset with sensor impl
 
     }
+
 
     public void overrideTrajectory(boolean value) {
         mOverrideTrajectory = value;
@@ -482,7 +484,7 @@ public class Drive extends Subsystem {
         enabledLooper.register(mLoop);
     }
 
-    @Override
+
     public void stop() {
 
     }

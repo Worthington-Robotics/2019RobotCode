@@ -9,7 +9,6 @@ import frc.lib.loops.ILooper;
 import frc.lib.loops.Loop;
 import frc.lib.util.InterpolatingDouble;
 import frc.lib.util.InterpolatingTreeMap;
-import frc.lib.util.InterpolatingDouble;
 import frc.robot.Kinematics;
 
 import java.util.Map;
@@ -105,7 +104,7 @@ public class PoseEstimator extends Subsystem {
         SmartDashboard.putNumber("Drive/Pose/Theta", odometry.getRotation().getDegrees());
     }
 
-    @Override
+
     public void stop() {
 
     }

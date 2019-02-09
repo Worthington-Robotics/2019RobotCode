@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.lib.util.HIDHelper;
-import org.opencv.core.Mat;
 
 public class Constants {
     //Talon IDs
@@ -48,8 +47,8 @@ public class Constants {
     public static final double PATH_LOOK_AHEAD_TIME = 0.4;  // seconds to look ahead along the path for steering
     public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
-    public static final double TICKS_TO_INCHES =DRIVE_ENCODER_PPR/ Math.PI/DRIVE_WHEEL_DIAMETER_INCHES;
-    public static final double ROTATIONS_TO_INCHES = TICKS_TO_INCHES/DRIVE_ENCODER_PPR;
+    public static final double TICKS_TO_INCHES = DRIVE_ENCODER_PPR / Math.PI / DRIVE_WHEEL_DIAMETER_INCHES;
+    public static final double ROTATIONS_TO_INCHES = TICKS_TO_INCHES / DRIVE_ENCODER_PPR;
 
     //Shot powers
     public static final double SHOOT_POWER = 1;
@@ -58,6 +57,7 @@ public class Constants {
     public static final double PICKUP_POWER = -.75;
     public static final double SLOWUP_POWER = -.65;
     public static final double STOP_POWER = 0;
+
 
     //Alien Constants
 
