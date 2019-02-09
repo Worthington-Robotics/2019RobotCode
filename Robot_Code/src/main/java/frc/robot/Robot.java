@@ -93,5 +93,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     EnabledLoops.stop();
     DisabledLoops.start();
+    Drive.getInstance().reset();
+    PoseEstimator.getInstance().reset();
   }
 }

@@ -62,15 +62,15 @@ public class Constants {
     //Alien Constants
 
     //PID Gain Constants
-    public static final double DRIVE_RIGHT_KP = .9;
+    public static final double DRIVE_RIGHT_KP = .55;
     public static final double DRIVE_RIGHT_KI = 0;
     public static final double DRIVE_RIGHT_KD = 15;
-    public static final double DRIVE_RIGHT_KF = .37;
+    public static final double DRIVE_RIGHT_KF = .575;
 
-    public static final double DRIVE_LEFT_KP = .9; // .0885
+    public static final double DRIVE_LEFT_KP = .5725; // .0885
     public static final double DRIVE_LEFT_KI = 0;
-    public static final double DRIVE_LEFT_KD = 15;
-    public static final double DRIVE_LEFT_KF = .38;
+    public static final double DRIVE_LEFT_KD = 21;
+    public static final double DRIVE_LEFT_KF = .575;
 
     public static final double ARM_PROX_KP = 0.01;
     public static final double ARM_PROX_KI = 0;
@@ -83,6 +83,7 @@ public class Constants {
     public static final double ARM_WRIST_KP = 0.01;
     public static final double ARM_WRIST_KI = 0;
     public static final double ARM_WRIST_KD = 0;
+
     public static final double ARM_WRIST_KF = 0;
 
 
@@ -96,7 +97,7 @@ public class Constants {
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
     public static final double MP_TEST_SPEED = 6;
-    public static final boolean RAMPUP = true;
+    public static final boolean RAMPUP = false;
 
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);

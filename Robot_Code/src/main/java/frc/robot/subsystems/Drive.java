@@ -48,6 +48,7 @@ public class Drive extends Subsystem {
         public void onStart(double timestamp) {
             synchronized (Drive.this) {
             }
+
         }
 
         @Override
@@ -101,6 +102,7 @@ public class Drive extends Subsystem {
         mGyroOffset = Rotation2d.fromDegrees(0);
         periodic = new PeriodicIO();
         mMotionPlanner = new DriveMotionPlanner();
+        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.FEEDFORWARD_ONLY);
         driveFrontLeft = new WPI_TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
         driveMiddleLeft = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_LEFT_ID);
         driveBackLeft = new WPI_TalonSRX(Constants.DRIVE_BACK_LEFT_ID);
@@ -196,7 +198,7 @@ public class Drive extends Subsystem {
         mMotionPlanner.reset();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
         periodic = new PeriodicIO();
-        mGyroOffset = Rotation2d.fromDegrees(-pigeonIMU.getFusedHeading());
+        mGyroOffset = Rotation2d.fromDegrees(pigeonIMU.getFusedHeading());
         periodic.right_pos_ticks = 0;
         periodic.left_pos_ticks = 0;
         ramp_Up_Counter = 0;
@@ -429,6 +431,7 @@ public class Drive extends Subsystem {
 
 
     public void outputTelemetry() {
+        SmartDashboard.putNumber("Drive/Heading", periodic.gyro_heading.getDegrees());
         SmartDashboard.putNumber("Drive/Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Left", periodic.left_pos_ticks);
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
