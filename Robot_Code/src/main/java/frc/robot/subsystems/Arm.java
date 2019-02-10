@@ -178,9 +178,9 @@ public class Arm extends Subsystem {
         if(periodic.armmode != ArmModes.PID){
             periodic.armmode = ArmModes.PID;
         }
-        periodic.armProxPower = config.proximal;
-        periodic.armDistPower = config.distal;
-        periodic.armWristPower = config.wrist;
+        periodic.armProxPower = config.proximal * Constants.DRIVE_ENCODER_PPR * 3 / 4;
+        periodic.armDistPower = config.distal * Constants.DRIVE_ENCODER_PPR * 3 / 4;
+        periodic.armWristPower = config.wrist * Constants.DRIVE_ENCODER_PPR * 3 / 4;
     }
 
     public void setSSArmConfig(ArmConfiguration config){
@@ -243,6 +243,7 @@ public class Arm extends Subsystem {
         double proximal, distal, wrist;
 
         public ArmConfiguration(double proxAngle, double distAngle, double wristAngle){
+            //in rotations
             proximal = proxAngle;
             distal = distAngle;
             wrist = wristAngle;
