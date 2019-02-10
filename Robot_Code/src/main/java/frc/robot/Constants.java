@@ -12,7 +12,7 @@ public class Constants {
     public static final int DRIVE_FRONT_RIGHT_ID = 6;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 5;
     public static final int DRIVE_BACK_RIGHT_ID = 4;
-    public static final int ARM_PROXIMINAL = 7;
+    public static final int ARM_PRONOMINAL = 7;
     public static final int ARM_DISTAL = 8;
     public static final int ARM_WRIST = 9;
 
