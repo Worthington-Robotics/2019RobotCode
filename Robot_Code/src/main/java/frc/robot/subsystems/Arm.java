@@ -26,6 +26,7 @@ public class Arm extends Subsystem {
     private TalonSRX armProx, armDist, armWrist;
     private PeriodicIO periodic;
     private ArmModes ArmMode = ArmModes.DirectControl;
+
     private final Loop aloop = new Loop() {
 
 
@@ -130,6 +131,7 @@ public class Arm extends Subsystem {
     @Override
     public void reset() {
         periodic = new PeriodicIO();
+        configTalons();
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         periodic.prox = armProx.getSelectedSensorPosition() - periodic.proxMod;
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
