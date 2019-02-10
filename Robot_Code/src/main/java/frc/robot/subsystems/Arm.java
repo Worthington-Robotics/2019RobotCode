@@ -66,9 +66,9 @@ public class Arm extends Subsystem {
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 5;
             periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) / 5;
         } else if (ArmMode == ArmModes.PID) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * 1536);
-            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * 1536);
-            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * 1536);
+            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 - periodic.proxMod);
+            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 - periodic.distMod);
+            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 - periodic.wristMod);
         }
 
     }
@@ -101,8 +101,6 @@ public class Arm extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        //TODO REMOVE ALL SENSOR CALLS FROM HERE -- bad phillip
-        //Literally breaks design pattern
         SmartDashboard.putNumber("Arm/Prox Mod", periodic.proxMod);
         SmartDashboard.putNumber("Arm/Prox Absolute", periodic.proxAbsolute);
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
