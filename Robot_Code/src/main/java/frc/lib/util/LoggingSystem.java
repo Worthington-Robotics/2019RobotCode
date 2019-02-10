@@ -83,7 +83,7 @@ public class LoggingSystem {
     public void enablePrint(boolean enable) {
         if (initSuccess) {
             if (enable) {
-                loggerThread.startPeriodic(Constants.LOGGING_UPDATE_RATE);
+                loggerThread.startPeriodic(0.020);
             } else {
                 loggerThread.stop();
             }

@@ -39,12 +39,7 @@ public class Drive extends Subsystem {
 
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
-    private WPI_TalonSRX driveFrontLeft;
-    private WPI_TalonSRX driveMiddleLeft;
-    private WPI_TalonSRX driveBackLeft;
-    private WPI_TalonSRX driveFrontRight;
-    private WPI_TalonSRX driveMiddleRight;
-    private WPI_TalonSRX driveBackRight;
+    private WPI_TalonSRX driveFrontLeft, driveMiddleLeft, driveBackLeft, driveFrontRight, driveMiddleRight, driveBackRight;
 
     private final Loop mLoop = new Loop() {
 
@@ -124,7 +119,6 @@ public class Drive extends Subsystem {
     @Override
     public synchronized void writePeriodicOutputs() {
         if (mDriveControlState == DriveControlState.OPEN_LOOP || mDriveControlState == DriveControlState.ANGLE_PID || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
-            //TODO write open loop outputs
             driveFrontLeft.set(ControlMode.PercentOutput, periodic.left_demand);
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
@@ -132,8 +126,6 @@ public class Drive extends Subsystem {
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         } else {
-            //TODO write velocity control mode outputs
-
             driveFrontLeft.set(ControlMode.Velocity, periodic.left_demand, DemandType.ArbitraryFeedForward,
                     (periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
             driveFrontRight.set(ControlMode.Velocity, periodic.right_demand, DemandType.ArbitraryFeedForward,
@@ -383,6 +375,8 @@ public class Drive extends Subsystem {
     }
 
     public void outputTelemetry() {
+        //TODO REMOVE ALL SENSOR CALLS FROM HERE
+        //literally breaks the purpose of the design pattern
         SmartDashboard.putNumber("Drive/Heading", periodic.gyro_heading.getDegrees());
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
