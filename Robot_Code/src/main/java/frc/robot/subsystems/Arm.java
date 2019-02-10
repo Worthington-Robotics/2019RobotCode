@@ -127,12 +127,8 @@ public class Arm extends Subsystem {
     @Override
     public void reset() {
         periodic = new PeriodicIO();
-        configTalons();
-        armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        armWrist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         resetArmMod();
-
+        configTalons();
     }
 
     public void resetArmMod()
