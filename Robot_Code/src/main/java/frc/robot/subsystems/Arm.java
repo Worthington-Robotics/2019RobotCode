@@ -53,6 +53,9 @@ public class Arm extends Subsystem {
     }
 
     public void readPeriodicInputs() {
+        periodic.proxError = armProx.getClosedLoopError();
+        periodic.distError = armDist.getClosedLoopError();
+        periodic.wristError = armWrist.getClosedLoopError();
 
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
