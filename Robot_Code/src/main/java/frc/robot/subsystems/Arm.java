@@ -133,12 +133,9 @@ public class Arm extends Subsystem {
 
     public void resetArmMod()
     {
-        double PStartConfig = armProx.getSensorCollection().getPulseWidthPosition();
-        double DStartConfig = armDist.getSensorCollection().getPulseWidthPosition();
-        double WStartConfig = armWrist.getSensorCollection().getPulseWidthPosition();
-        periodic.proxMod = Constants.ProxAbsoluteZero - PStartConfig;
-        periodic.distMod = Constants.DistAbsoluteZero - DStartConfig;
-        periodic.wristMod = Constants.WristAbsoluteZero - WStartConfig;
+        periodic.proxMod = Constants.ProxAbsoluteZero - periodic.proxAbsolute;
+        periodic.distMod = Constants.DistAbsoluteZero - periodic.distAbsolute;
+        periodic.wristMod = Constants.WristAbsoluteZero - periodic.wristAbsolute;
     }
     public void configTalons(){
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
