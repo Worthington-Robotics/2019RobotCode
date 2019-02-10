@@ -66,9 +66,9 @@ public class Arm extends Subsystem {
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 5;
             periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) - 2.5) / 5;
         } else if (ArmMode == ArmModes.PID) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 - periodic.proxMod);
-            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 - periodic.distMod);
-            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 - periodic.wristMod);
+            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.proxMod);
+            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.distMod);
+            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3- periodic.wristMod);
         }
 
     }
