@@ -428,26 +428,26 @@ public class Drive extends Subsystem {
 
     public static class PeriodicIO {
         // INPUTS
-        public int left_pos_ticks;
-        public int right_pos_ticks;
-        public int left_velocity_ticks_per_100ms;
-        public int right_velocity_ticks_per_100ms;
-        public Rotation2d gyro_heading = Rotation2d.identity();
-        public Rotation2d gyro_offset = Rotation2d.identity();
-        public Pose2d error = Pose2d.identity();
-        public boolean B2 = false;
+        int left_pos_ticks;
+        int right_pos_ticks;
+        int left_velocity_ticks_per_100ms;
+        int right_velocity_ticks_per_100ms;
+        Rotation2d gyro_heading = Rotation2d.identity();
+        Rotation2d gyro_offset = Rotation2d.identity();
+        Pose2d error = Pose2d.identity();
+        boolean B2 = false;
 
         // OUTPUTS
-        public double ramp_Up_Counter = 0;
-        public double left_accl = 0.0;
-        public double left_demand = 0.0;
-        public double left_distance = 0.0;
-        public double left_feedforward = 0.0;
-        public double right_accl = 0.0;
-        public double right_demand = 0.0;
-        public double right_distance = 0.0;
-        public double right_feedforward = 0.0;
-        public TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
+        double ramp_Up_Counter = 0;
+        double left_accl = 0.0;
+        double left_demand = 0.0;
+        double left_distance = 0.0;
+        double left_feedforward = 0.0;
+        double right_accl = 0.0;
+        double right_demand = 0.0;
+        double right_distance = 0.0;
+        double right_feedforward = 0.0;
+        TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
 
     }
 

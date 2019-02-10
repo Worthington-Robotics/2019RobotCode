@@ -9,14 +9,6 @@ import frc.robot.Constants;
  */
 public class Alien extends Subsystem {
     private static Alien m_Alien = new Alien();
-    private DoubleSolenoid AlienOne;
-    private PeriodicIO periodic;
-
-    private Alien() {
-        AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID, Constants.ALIEN_1_HIGH_ID);
-        periodic = new PeriodicIO();
-        periodic.tState = DoubleSolenoid.Value.kForward;
-    }
 
     /**
      * The getter of the only public Alien instance
@@ -25,6 +17,17 @@ public class Alien extends Subsystem {
      */
     public static Alien getInstance() {
         return m_Alien;
+    }
+
+
+
+    private DoubleSolenoid AlienOne;
+    private PeriodicIO periodic;
+
+    private Alien() {
+        AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID, Constants.ALIEN_1_HIGH_ID);
+        periodic = new PeriodicIO();
+        periodic.tState = DoubleSolenoid.Value.kForward;
     }
 
 
@@ -67,6 +70,6 @@ public class Alien extends Subsystem {
      * stores regularly updated values
      */
     public class PeriodicIO {
-        private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
+        DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
     }
 }
