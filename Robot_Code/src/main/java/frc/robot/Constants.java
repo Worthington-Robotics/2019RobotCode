@@ -27,6 +27,11 @@ public class Constants {
     public static final int ALIEN_1_LOW_ID = 2;
     public static final int ALIEN_1_HIGH_ID = 3;
 
+    //Sensor Ports
+    public static final int ULTRASONIC_IN_1 = 0;
+    public static final int ULTRASONIC_OUT_1 = 1;
+    public static final int ULTRASONIC_IN_2 = 2;
+    public static final int ULTRASONIC_OUT_2 = 3;
 
     //Pure pursuit related values
     public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23;

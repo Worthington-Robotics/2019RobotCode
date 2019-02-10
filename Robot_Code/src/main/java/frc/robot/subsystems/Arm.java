@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.loops.Loop;
+import frc.lib.util.Ultrasonic;
 import frc.robot.Constants;
 
 /**
@@ -26,6 +27,7 @@ public class Arm extends Subsystem {
     private TalonSRX armProx, armDist, armWrist;
     private PeriodicIO periodic;
     private ArmModes ArmMode = ArmModes.DirectControl;
+    private Ultrasonic US1, US2;
 
     private final Loop aloop = new Loop() {
 
@@ -45,10 +47,12 @@ public class Arm extends Subsystem {
         }
     };
 
-    public Arm() {
+    private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         armWrist = new TalonSRX(Constants.ARM_WRIST);
+        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1,Constants.ULTRASONIC_OUT_1);
+        US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
     }
 
@@ -204,6 +208,11 @@ public class Arm extends Subsystem {
         periodic.armWristPower = Power;
     }
 
+    public double getUltrasonicDistance(){
+       //TODO Add sensor voting + sensor outputs
+        return 0;
+    }
+
 
     public enum ArmModes {
         DirectControl,
@@ -249,6 +258,7 @@ public class Arm extends Subsystem {
             wrist = wristAngle;
         }
     }
+
 }
 
 
