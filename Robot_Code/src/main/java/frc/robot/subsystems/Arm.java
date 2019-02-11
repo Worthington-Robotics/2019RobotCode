@@ -57,6 +57,10 @@ public class Arm extends Subsystem {
     }
 
     public void readPeriodicInputs() {
+        periodic.US1Past = periodic.US1Dis;
+        periodic.US2Past = periodic.US2Dis;
+        periodic.US1Dis = US1.getDistance();
+        periodic.US2Dis = US2.getDistance();
         periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();
         periodic.wristError = armWrist.getClosedLoopError();
@@ -204,20 +208,18 @@ public class Arm extends Subsystem {
     }
 
     public double getUltrasonicDistance() {
-        double US1Dis = US1.getDistance();
-        double US2Dis = US2.getDistance();
-        if ((US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE) && (US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) && (US1Dis > Constants.US_SENSOR_OFFSET && US2Dis > Constants.US_SENSOR_OFFSET)) {
-            periodic.US1Past = US1Dis;
-            periodic.US2Past = US2Dis;
-            return (US1Dis + US2Dis) / 2;
-        } else if ((US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE) && (US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) || (US1Dis < Constants.US_SENSOR_OFFSET && US2Dis > Constants.US_SENSOR_OFFSET)) {
-            periodic.US1Past = US1Dis;
-            periodic.US2Past = US2Dis;
-            return US2Dis;
+
+        if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+                && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
+                (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+            return (periodic.US1Dis + periodic.US2Dis) / 2;
+        } else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+                && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
+                (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+            return periodic.US2Dis;
         } else {
-            periodic.US1Past = US1Dis;
-            periodic.US2Past = US2Dis;
-            return US1Dis;
+
+            return periodic.US1Dis;
         }
     }
 
@@ -253,6 +255,8 @@ public class Arm extends Subsystem {
         //PRIOR DISTANCE
         double US1Past = 0;
         double US2Past = 0;
+        double US1Dis = 0;
+        double US2Dis = 0;
 
         ArmModes armmode = ArmModes.DirectControl;
     }
