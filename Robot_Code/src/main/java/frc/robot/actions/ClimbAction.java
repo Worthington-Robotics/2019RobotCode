@@ -14,8 +14,14 @@ public class ClimbAction extends Action {
     }
 
     public void setClimber(boolean reversed, double motorpower) {
-        climbLeft.set(motorpower);
-        climbRight.set(motorpower);
+        if (!reversed) {
+            climbLeft.set(motorpower);
+            climbRight.set(motorpower);
+        } else {
+            climbLeft.set(-motorpower);
+            climbRight.set(-motorpower);
+        }
+
     }
     @Override
     public void onStart() {
