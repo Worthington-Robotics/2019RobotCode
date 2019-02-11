@@ -206,18 +206,18 @@ public class Arm extends Subsystem {
     public double getUltrasonicDistance() {
         double US1Dis = US1.getDistance();
         double US2Dis = US2.getDistance();
-        if (US1Dis - periodic.US1Past > -10 && US1Dis - periodic.US1Past < 10) {
+        if ((US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE) && (US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) && (US1Dis > Constants.US_SENSOR_OFFSET && US2Dis > Constants.US_SENSOR_OFFSET)) {
             periodic.US1Past = US1Dis;
             periodic.US2Past = US2Dis;
             return (US1Dis + US2Dis) / 2;
-        } else if (US1Dis - periodic.US1Past > -10 && !(US1Dis - periodic.US1Past < 10)) {
+        } else if ((US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE) && (US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) || (US1Dis < Constants.US_SENSOR_OFFSET && US2Dis > Constants.US_SENSOR_OFFSET)) {
             periodic.US1Past = US1Dis;
             periodic.US2Past = US2Dis;
-            return (US1Dis + US2Dis) / 2;
+            return US2Dis;
         } else {
             periodic.US1Past = US1Dis;
             periodic.US2Past = US2Dis;
-            return (US1Dis + US2Dis) / 2;
+            return US1Dis;
         }
     }
 
