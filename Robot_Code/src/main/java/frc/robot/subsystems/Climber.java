@@ -22,9 +22,9 @@ public class Climber extends Subsystem {
     @Override
     public void readPeriodicInputs() {
         periodic.fullpower = Constants.LAUNCH_PAD.getRawButton(Constants.CLIMBER_FULL_POWER);
-        if () {
+        //if () {
 
-        }
+        //}
     }
 
     @Override
