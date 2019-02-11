@@ -13,7 +13,6 @@ public class ManipulatorAction extends Action {
 
     public void onStart() {
         CargoMani.getInstance().setShotPower(speed.shotpower);
-
     }
 
     @Override

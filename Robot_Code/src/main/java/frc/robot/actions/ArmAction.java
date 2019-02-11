@@ -1,12 +1,9 @@
 package frc.robot.actions;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
 import frc.lib.statemachine.Action;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-import java.awt.*;
 
 public class ArmAction extends Action {
     private armStates a;
