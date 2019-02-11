@@ -51,7 +51,7 @@ public class Arm extends Subsystem {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         armWrist = new TalonSRX(Constants.ARM_WRIST);
-        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1,Constants.ULTRASONIC_OUT_1);
+        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
         US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
     }
@@ -72,13 +72,13 @@ public class Arm extends Subsystem {
         } else if (ArmMode == ArmModes.PID) {
             periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.proxMod);
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.distMod);
-            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3- periodic.wristMod);
+            periodic.armWristPower = (SmartDashboard.getNumber("DB/Slider 2", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.wristMod);
         }
 
     }
 
     public void writePeriodicOutputs() {
-        switch(periodic.armmode){
+        switch (periodic.armmode) {
             case DirectControl:
                 if (periodic.enableProx) {
                     armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
@@ -103,7 +103,6 @@ public class Arm extends Subsystem {
         }
     }
 
-    @Override
     public void outputTelemetry() {
         SmartDashboard.putNumber("Arm/Prox Mod", periodic.proxMod);
         SmartDashboard.putNumber("Arm/Prox Absolute", periodic.proxAbsolute);
@@ -122,24 +121,20 @@ public class Arm extends Subsystem {
 
     }
 
-    public void stop() {
 
-    }
-
-    @Override
     public void reset() {
         periodic = new PeriodicIO();
         resetArmMod();
         configTalons();
     }
 
-    public void resetArmMod()
-    {
+    public void resetArmMod() {
         periodic.proxMod = Constants.ProxAbsoluteZero - periodic.proxAbsolute;
         periodic.distMod = Constants.DistAbsoluteZero - periodic.distAbsolute;
         periodic.wristMod = Constants.WristAbsoluteZero - periodic.wristAbsolute;
     }
-    public void configTalons(){
+
+    public void configTalons() {
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armProx.setSensorPhase(true);
         armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
@@ -178,8 +173,8 @@ public class Arm extends Subsystem {
 
     }
 
-    public void setPIDArmConfig(ArmConfiguration config){
-        if(periodic.armmode != ArmModes.PID){
+    public void setPIDArmConfig(ArmConfiguration config) {
+        if (periodic.armmode != ArmModes.PID) {
             periodic.armmode = ArmModes.PID;
         }
         periodic.armProxPower = config.proximal * Constants.DRIVE_ENCODER_PPR * 3 / 4;
@@ -187,8 +182,8 @@ public class Arm extends Subsystem {
         periodic.armWristPower = config.wrist * Constants.DRIVE_ENCODER_PPR * 3 / 4;
     }
 
-    public void setSSArmConfig(ArmConfiguration config){
-        if(periodic.armmode != ArmModes.STATE_SPACE){
+    public void setSSArmConfig(ArmConfiguration config) {
+        if (periodic.armmode != ArmModes.STATE_SPACE) {
             periodic.armmode = ArmModes.STATE_SPACE;
         }
         periodic.armProxPower = config.proximal;
@@ -208,9 +203,22 @@ public class Arm extends Subsystem {
         periodic.armWristPower = Power;
     }
 
-    public double getUltrasonicDistance(){
-       //TODO Add sensor voting + sensor outputs
-        return 0;
+    public double getUltrasonicDistance() {
+        double US1Dis = US1.getDistance();
+        double US2Dis = US2.getDistance();
+        if (US1Dis - periodic.US1Past > -10 && US1Dis - periodic.US1Past < 10) {
+            periodic.US1Past = US1Dis;
+            periodic.US2Past = US2Dis;
+            return (US1Dis + US2Dis) / 2;
+        } else if (US1Dis - periodic.US1Past > -10 && !(US1Dis - periodic.US1Past < 10)) {
+            periodic.US1Past = US1Dis;
+            periodic.US2Past = US2Dis;
+            return (US1Dis + US2Dis) / 2;
+        } else {
+            periodic.US1Past = US1Dis;
+            periodic.US2Past = US2Dis;
+            return (US1Dis + US2Dis) / 2;
+        }
     }
 
 
@@ -238,20 +246,22 @@ public class Arm extends Subsystem {
         double proxMod = 0;
         double distMod = 0;
         double wristMod = 0;
-
         //TALON ERROR
         double proxError = armProx.getClosedLoopError();
         double distError = armDist.getClosedLoopError();
         double wristError = armWrist.getClosedLoopError();
+        //PRIOR DISTANCE
+        double US1Past = 0;
+        double US2Past = 0;
 
         ArmModes armmode = ArmModes.DirectControl;
     }
 
-    public static class ArmConfiguration{
+    public static class ArmConfiguration {
 
         double proximal, distal, wrist;
 
-        public ArmConfiguration(double proxAngle, double distAngle, double wristAngle){
+        public ArmConfiguration(double proxAngle, double distAngle, double wristAngle) {
             //in rotations
             proximal = proxAngle;
             distal = distAngle;
