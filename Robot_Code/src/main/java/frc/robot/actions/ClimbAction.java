@@ -8,12 +8,10 @@ public class ClimbAction extends Action {
     boolean reversed;
     double motorpower;
     Spark climbLeft, climbRight;
-    private ClimbAction() {
+    public ClimbAction(boolean reversed, double motorpower) {
         climbLeft = new Spark(Constants.LEFT_CLIMB_ID);
         climbRight = new Spark(Constants.RIGHT_CLIMB_ID);
-    }
 
-    public void setClimber(boolean reversed, double motorpower) {
         if (!reversed) {
             climbLeft.set(motorpower);
             climbRight.set(motorpower);

@@ -89,6 +89,7 @@ public class Constants {
     public static final double PICKUP_POWER = -.75;
     public static final double SLOWUP_POWER = -.65;
     public static final double STOP_POWER = 0;
+    public static final double CLIMB_POWER = 1;
 
     //PID Gain Constants
     public static final double DRIVE_RIGHT_KP = .55;

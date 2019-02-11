@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.AnglePID;
+import frc.robot.actions.ClimbAction;
 import frc.robot.actions.TeleOPArmAction;
 
 public class OI{
@@ -39,8 +40,8 @@ public class OI{
         //CargoOut.whileHeld(Action.toCommand(new ));
         //HatchOut.whileHeld(Action.toCommand(new ));
         //TODO Add Climbing
-        //ClimbFullUp.whileHeld(Action.toCommand( ));
-        //ClimbFullDown.whileHeld(Action.toCommand( ));
+        ClimbFullUp.whileHeld(Action.toCommand(new ClimbAction(false,Constants.CLIMB_POWER)));
+        ClimbFullDown.whileHeld(Action.toCommand(new ClimbAction(true,Constants.CLIMB_POWER)));
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
     }
