@@ -104,6 +104,9 @@ public class Constants {
     public static final double ARM_PROX_KI = 0;
     public static final double ARM_PROX_KD = 0;
     public static final double ARM_PROX_KF = 0;
+    public static final double ARM_PROX_A_FEEDFORWARD = 1;
+    public static final double ARM_DIST_A_FEEDFORWARD = 1;
+    public static final double ARM_WRIST_A_FEEDFORWARD = 1;
     public static final double ARM_DIST_KP = 0.01;
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;

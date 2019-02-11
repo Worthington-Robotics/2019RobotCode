@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -64,6 +65,9 @@ public class Arm extends Subsystem {
         periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();
         periodic.wristError = armWrist.getClosedLoopError();
+        periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
+        periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
+        periodic.wristRel = armWrist.getSensorCollection().getQuadraturePosition();
 
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
@@ -95,9 +99,9 @@ public class Arm extends Subsystem {
                 }
                 break;
             case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower);
-                armDist.set(ControlMode.Position, periodic.armDistPower);
-                armWrist.set(ControlMode.Position, periodic.armWristPower);
+                armProx.set(ControlMode.Position, periodic.armProxPower, DemandType.ArbitraryFeedForward, Math.cos(periodic.proxRel - periodic.proxMod / 4096 * 2 * Math.PI) * Constants.ARM_PROX_A_FEEDFORWARD);
+                armDist.set(ControlMode.Position, periodic.armDistPower, DemandType.ArbitraryFeedForward, Math.cos(periodic.distRel - periodic.distMod / 4096 * 2 * Math.PI) * Constants.ARM_DIST_A_FEEDFORWARD);
+                armWrist.set(ControlMode.Position, periodic.armWristPower, DemandType.ArbitraryFeedForward, Math.cos(periodic.wristRel - periodic.wristMod / 4096 * 2 * Math.PI) * Constants.ARM_WRIST_A_FEEDFORWARD);
                 break;
             case STATE_SPACE:
 
@@ -257,6 +261,10 @@ public class Arm extends Subsystem {
         double US2Past = 0;
         double US1Dis = 0;
         double US2Dis = 0;
+        //TALON RELS
+        double proxRel = 0;
+        double distRel = 0;
+        double wristRel = 0;
 
         ArmModes armmode = ArmModes.DirectControl;
     }
