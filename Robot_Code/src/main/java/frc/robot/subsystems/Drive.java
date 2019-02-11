@@ -102,6 +102,9 @@ public class Drive extends Subsystem {
     public synchronized void readPeriodicInputs() {
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
+        periodic.leftError= driveFrontLeft.getClosedLoopError();
+        periodic.rightError= driveFrontRight.getClosedLoopError();
+
         periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
@@ -147,7 +150,8 @@ public class Drive extends Subsystem {
     }
 
     private Drive() {
-        periodic.gyro_offset = Rotation2d.identity();
+
+
         mMotionPlanner = new DriveMotionPlanner();
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.FEEDFORWARD_ONLY);
         driveFrontLeft = new WPI_TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
@@ -160,6 +164,8 @@ public class Drive extends Subsystem {
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
+        periodic.gyro_offset = Rotation2d.identity();
+
 
     }
 
@@ -389,7 +395,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Left", periodic.left_pos_ticks);
         SmartDashboard.putNumber("Drive/Left Demand", periodic.left_demand);
         SmartDashboard.putNumber("Drive/Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Drive/Error/Left Talon Error", driveFrontLeft.getClosedLoopError(0));
+        SmartDashboard.putNumber("Drive/Error/Left Talon Error", periodic.leftError);
         SmartDashboard.putNumber("Drive/Left Talon Voltage", driveFrontLeft.getBusVoltage());
         SmartDashboard.putNumber("Drive/Left Talon Voltage II", driveFrontLeft.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Left Encoder Counts", periodic.left_pos_ticks);
@@ -399,7 +405,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Right Demand", periodic.right_demand);
         SmartDashboard.putNumber("Drive/Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Drive/Error/Right Talon Error", driveFrontRight.getClosedLoopError(0));
+        SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.rightError);
         SmartDashboard.putNumber("Drive/Right Talon Voltage", driveFrontRight.getBusVoltage());
         SmartDashboard.putNumber("Drive/Right Talon Voltage II", driveFrontRight.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
@@ -436,6 +442,8 @@ public class Drive extends Subsystem {
         Rotation2d gyro_offset = Rotation2d.identity();
         Pose2d error = Pose2d.identity();
         boolean B2 = false;
+        double rightError = 0;
+        double leftError = 0;
 
         // OUTPUTS
         double ramp_Up_Counter = 0;

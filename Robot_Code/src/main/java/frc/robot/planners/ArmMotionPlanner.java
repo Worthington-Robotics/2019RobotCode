@@ -11,10 +11,13 @@ public class ArmMotionPlanner {
      * A method that returns a Voltage based on a current velocity and acceleration
      * @param A current acceleration
      * @param V current Velocity
-     * @param deltaTheta change in theta desired
+     * @param theta1 Start theta
+     * @param theta2 End theta
      * @return Voltage required
      */
-    public double MotionPlanner(double A, double V, double deltaTheta) {
+    public double MotionPlanner(double A, double V, double theta1, double theta2) {
+        double deltaTheta = theta2 - theta1;
+        return 0;
 
     }
 }

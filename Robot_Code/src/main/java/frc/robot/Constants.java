@@ -90,15 +90,15 @@ public class Constants {
     public static final double STOP_POWER = 0;
 
     //PID Gain Constants
-    public static final double DRIVE_RIGHT_KP = .55;
+    public static final double DRIVE_RIGHT_KP = .65;
     public static final double DRIVE_RIGHT_KI = 0.0055;
-    public static final double DRIVE_RIGHT_KD = 18;
-    public static final double DRIVE_RIGHT_KF = .585;
+    public static final double DRIVE_RIGHT_KD = 24;
+    public static final double DRIVE_RIGHT_KF = .485;
 
-    public static final double DRIVE_LEFT_KP = .5725; // .0885
+    public static final double DRIVE_LEFT_KP = .62; // .0885
     public static final double DRIVE_LEFT_KI = 0.005725;
-    public static final double DRIVE_LEFT_KD = 27;
-    public static final double DRIVE_LEFT_KF = .585;
+    public static final double DRIVE_LEFT_KD = 38;
+    public static final double DRIVE_LEFT_KF = .485;
 
     public static final double ARM_PROX_KP = 0.01;
     public static final double ARM_PROX_KI = 0;

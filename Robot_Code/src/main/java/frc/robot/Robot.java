@@ -30,7 +30,8 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
-  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(Drive.getInstance(),
+  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(
+          Drive.getInstance(),
           CargoMani.getInstance(),
           Alien.getInstance(),
           Arm.getInstance(),
