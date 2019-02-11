@@ -25,18 +25,18 @@ public class OI{
         Button Launchpad16 = new JoystickButton(Constants.LAUNCH_PAD,16);
 
 
-        /*GroundHatch.whileHeld(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH, Constants.ReverseButton));
-        GroundCargo.whileHeld(new );
-        BotHatch.whileHeld(new );
-        BotCargo.whileHeld(new );
-        MidHatch.whileHeld(new );
-        MidCargo.whileHeld(new );
-        TopHatch.whileHeld(new );
-        TopCargo.whileHeld(new );
-        Launchpad10.whileHeld(new );
-        Launchpad11.whileHeld(new );
-        Launchpad12.whileHeld(new );
-        Launchpad13.whileHeld(new );*/
+        GroundHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH, Constants.ReverseButton)));
+        GroundCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_CARGO, TeleOPArmAction.armStates.REV_GROUND_CARGO, Constants.ReverseButton)));
+        BotHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_LOW_HATCH, TeleOPArmAction.armStates.REV_LOW_HATCH, Constants.ReverseButton)));
+        BotCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_LOW_CARGO, TeleOPArmAction.armStates.REV_LOW_CARGO, Constants.ReverseButton)));
+        MidHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_MEDIUM_HATCH, TeleOPArmAction.armStates.REV_MEDIUM_HATCH, Constants.ReverseButton)));
+        MidCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_MEDIUM_CARGO, TeleOPArmAction.armStates.REV_MEDIUM_CARGO, Constants.ReverseButton)));
+        TopHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_HATCH, TeleOPArmAction.armStates.REV_HIGH_HATCH, Constants.ReverseButton)));
+        TopCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_CARGO, TeleOPArmAction.armStates.REV_HIGH_CARGO, Constants.ReverseButton)));
+        /*Launchpad10.whileHeld(Action.toCommand(new ));
+        Launchpad11.whileHeld(Action.toCommand(new ));
+        Launchpad12.whileHeld(Action.toCommand(new ));
+        Launchpad13.whileHeld(Action.toCommand(new ));*/
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
     }
