@@ -127,6 +127,15 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
+    public static final int GroundHatch = 1;
+    public static final int GroundCargo = 2;
+    public static final int BottomHatch = 3;
+    public static final int BottomCargo = 4;
+    public static final int MidHatch = 5;
+    public static final int MidCargo = 6;
+    public static final int TopHatch = 7;
+    public static final int TopCargo = 8;
+    public static final int ReverseButton = 9;
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds

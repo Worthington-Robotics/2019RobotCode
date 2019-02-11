@@ -1,22 +1,23 @@
 package frc.robot.actions;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
 import frc.lib.statemachine.Action;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-import java.awt.*;
-
-public class ArmAction extends Action {
+public class TeleOPArmAction extends Action {
     private armStates a;
-    public ArmAction(armStates armState) {
-        a = armState;
+    public TeleOPArmAction(armStates armState, armStates modified, int buttonnumber) {
+        if (Constants.LAUNCH_PAD.getRawButton(Constants.ReverseButton)){
+            a = modified;
+        } else {
+            a = armState;
+        }
+
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPIDArmConfig(a.config);
+
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ArmAction extends Action {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override

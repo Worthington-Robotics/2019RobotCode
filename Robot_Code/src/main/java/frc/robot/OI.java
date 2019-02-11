@@ -3,23 +3,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
-import frc.robot.actions.AStopAction;
-import frc.robot.actions.AlienAction;
-import frc.robot.actions.AnglePID;
-import frc.robot.actions.ManipulatorAction;
+import frc.robot.actions.*;
 
 public class OI{
 
     public OI(){
-        Button Launchpad1 = new JoystickButton(Constants.LAUNCH_PAD, 1);
-        Button Launchpad2 = new JoystickButton(Constants.LAUNCH_PAD, 2);
-        Button Launchpad3 = new JoystickButton(Constants.LAUNCH_PAD, 3);
-        Button Launchpad4 = new JoystickButton(Constants.LAUNCH_PAD, 4);
-        Button Launchpad5 = new JoystickButton(Constants.LAUNCH_PAD, 5);
-        Button Launchpad6 = new JoystickButton(Constants.LAUNCH_PAD, 6);
-        Button Launchpad7 = new JoystickButton(Constants.LAUNCH_PAD, 7);
-        Button Launchpad8 = new JoystickButton(Constants.LAUNCH_PAD, 8);
-        Button Launchpad9 = new JoystickButton(Constants.LAUNCH_PAD, 9);
+        Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GroundHatch);
+        Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.GroundCargo);
+        Button BotHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.BottomHatch);
+        Button BotCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.BottomHatch);
+        Button MidHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.MidHatch);
+        Button MidCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.MidCargo);
+        Button TopHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.TopHatch);
+        Button TopCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.TopCargo);
         Button Launchpad10 = new JoystickButton(Constants.LAUNCH_PAD, 10);
         Button Launchpad11 = new JoystickButton(Constants.LAUNCH_PAD, 11);
         Button Launchpad12 = new JoystickButton(Constants.LAUNCH_PAD, 12);
@@ -29,20 +25,18 @@ public class OI{
         Button Launchpad16 = new JoystickButton(Constants.LAUNCH_PAD,16);
 
 
-        /*Launchpad1.whileHeld(Action.toCommand(new ));
-        Launchpad2.whileHeld(Action.toCommand(new ));
-        Launchpad3.whileHeld(Action.toCommand(new ));
-        Launchpad4.whileHeld(Action.toCommand(new ));
-        Launchpad5.whileHeld(Action.toCommand(new ));
-        Launchpad6.whileHeld(Action.toCommand(new ));
-        Launchpad7.whileHeld(Action.toCommand(new ));
-        Launchpad8.whileHeld(Action.toCommand(new ));
-        Launchpad9.whileHeld(Action.toCommand(new ));
-        Launchpad10.whileHeld(Action.toCommand(new ));
-        Launchpad11.whileHeld(Action.toCommand(new ));
-        Launchpad12.whileHeld(Action.toCommand(new ));
-        Launchpad13.whileHeld(Action.toCommand(new ));*/
-
+        /*GroundHatch.whileHeld(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH, Constants.ReverseButton));
+        GroundCargo.whileHeld(new );
+        BotHatch.whileHeld(new );
+        BotCargo.whileHeld(new );
+        MidHatch.whileHeld(new );
+        MidCargo.whileHeld(new );
+        TopHatch.whileHeld(new );
+        TopCargo.whileHeld(new );
+        Launchpad10.whileHeld(new );
+        Launchpad11.whileHeld(new );
+        Launchpad12.whileHeld(new );
+        Launchpad13.whileHeld(new );*/
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
     }
