@@ -3,7 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
-import frc.robot.actions.*;
+import frc.robot.actions.AnglePID;
+import frc.robot.actions.TeleOPArmAction;
 
 public class OI{
 
@@ -19,8 +20,8 @@ public class OI{
         Button CargoIn = new JoystickButton(Constants.LAUNCH_PAD, 10);
         Button CargoOut = new JoystickButton(Constants.LAUNCH_PAD, 11);
         Button HatchOut = new JoystickButton(Constants.LAUNCH_PAD, 12);
-        Button Launchpad13 = new JoystickButton(Constants.LAUNCH_PAD, 13);
-        Button Launchpad14 = new JoystickButton(Constants.LAUNCH_PAD,14);
+        Button ClimbFullUp = new JoystickButton(Constants.LAUNCH_PAD, 13);
+        Button ClimbFullDown = new JoystickButton(Constants.LAUNCH_PAD,14);
         Button Launchpad15 = new JoystickButton(Constants.LAUNCH_PAD,15);
         Button Launchpad16 = new JoystickButton(Constants.LAUNCH_PAD,16);
 
@@ -37,7 +38,9 @@ public class OI{
         //CargoIn.whileHeld(Action.toCommand(new ManipulatorAction(Constants.SHOOT_POWER)));
         //CargoOut.whileHeld(Action.toCommand(new ));
         //HatchOut.whileHeld(Action.toCommand(new ));
-        //Launchpad13.whileHeld(Action.toCommand(new ));
+        //TODO Add Climbing
+        //ClimbFullUp.whileHeld(Action.toCommand( ));
+        //ClimbFullDown.whileHeld(Action.toCommand( ));
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
     }
