@@ -19,7 +19,8 @@ public class Constants {
     //Spark Ports
     public static final int TOP_CARGOMANIP_ID = 1;
     public static final int BOTTOM_CARGOMANIP_ID = 2;
-
+    public static final int LEFT_CLIME_ID = 3;
+    public static final int RIGHT_CLIME_ID = 4;
 
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
@@ -136,6 +137,13 @@ public class Constants {
     public static final int TopHatch = 7;
     public static final int TopCargo = 8;
     public static final int ReverseButton = 9;
+    public static final int CLIMBER_FULL_POWER = 10;
+    public static final int CLIMBER_ANTI_FULL_POWER = 11;
+    public static final int LAUNCHPAD12 = 12;
+    public static final int LAUNCHPAD13 = 13;
+    public static final int LAUNCHPAD14 = 14;
+    public static final int LAUNCHPAD15 = 15;
+    public static final int LAUNCHPAD16 = 16;
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
