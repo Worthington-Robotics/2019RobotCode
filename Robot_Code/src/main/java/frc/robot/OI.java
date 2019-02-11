@@ -16,9 +16,9 @@ public class OI{
         Button MidCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.MidCargo);
         Button TopHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.TopHatch);
         Button TopCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.TopCargo);
-        Button Launchpad10 = new JoystickButton(Constants.LAUNCH_PAD, 10);
-        Button Launchpad11 = new JoystickButton(Constants.LAUNCH_PAD, 11);
-        Button Launchpad12 = new JoystickButton(Constants.LAUNCH_PAD, 12);
+        Button CargoIn = new JoystickButton(Constants.LAUNCH_PAD, 10);
+        Button CargoOut = new JoystickButton(Constants.LAUNCH_PAD, 11);
+        Button HatchOut = new JoystickButton(Constants.LAUNCH_PAD, 12);
         Button Launchpad13 = new JoystickButton(Constants.LAUNCH_PAD, 13);
         Button Launchpad14 = new JoystickButton(Constants.LAUNCH_PAD,14);
         Button Launchpad15 = new JoystickButton(Constants.LAUNCH_PAD,15);
@@ -33,10 +33,11 @@ public class OI{
         MidCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_MEDIUM_CARGO, TeleOPArmAction.armStates.REV_MEDIUM_CARGO, Constants.ReverseButton)));
         TopHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_HATCH, TeleOPArmAction.armStates.REV_HIGH_HATCH, Constants.ReverseButton)));
         TopCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_CARGO, TeleOPArmAction.armStates.REV_HIGH_CARGO, Constants.ReverseButton)));
-        /*Launchpad10.whileHeld(Action.toCommand(new ));
-        Launchpad11.whileHeld(Action.toCommand(new ));
-        Launchpad12.whileHeld(Action.toCommand(new ));
-        Launchpad13.whileHeld(Action.toCommand(new ));*/
+        //TODO Add Cargo In/Out Functions + Hatch Out Functions
+        //CargoIn.whileHeld(Action.toCommand(new ManipulatorAction(Constants.SHOOT_POWER)));
+        //CargoOut.whileHeld(Action.toCommand(new ));
+        //HatchOut.whileHeld(Action.toCommand(new ));
+        //Launchpad13.whileHeld(Action.toCommand(new ));
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
     }
