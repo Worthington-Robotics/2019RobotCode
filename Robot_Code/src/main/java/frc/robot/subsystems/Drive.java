@@ -133,7 +133,7 @@ public class Drive extends Subsystem {
             driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward,
                     -(periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
             driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward,
-                    -b(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
+                    -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
