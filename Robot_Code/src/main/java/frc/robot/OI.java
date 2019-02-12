@@ -10,21 +10,21 @@ import frc.robot.actions.TeleOPArmAction;
 public class OI{
 
     public OI(){
-        Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GroundHatch);
-        Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.GroundCargo);
-        Button BotHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.BottomHatch);
-        Button BotCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.BottomHatch);
-        Button MidHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.MidHatch);
-        Button MidCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.MidCargo);
-        Button TopHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.TopHatch);
-        Button TopCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.TopCargo);
-        Button CargoIn = new JoystickButton(Constants.LAUNCH_PAD, 10);
-        Button CargoOut = new JoystickButton(Constants.LAUNCH_PAD, 11);
-        Button HatchOut = new JoystickButton(Constants.LAUNCH_PAD, 12);
-        Button ClimbFullUp = new JoystickButton(Constants.LAUNCH_PAD, 13);
-        Button ClimbFullDown = new JoystickButton(Constants.LAUNCH_PAD,14);
-        Button Launchpad15 = new JoystickButton(Constants.LAUNCH_PAD,15);
-        Button Launchpad16 = new JoystickButton(Constants.LAUNCH_PAD,16);
+        Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_HATCH);
+        Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_CARGO);
+        Button BotHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.BOTTOM_HATCH);
+        Button BotCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.BOTTOM_CARGO);
+        Button MidHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.MID_HATCH);
+        Button MidCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.MID_CARGO);
+        Button TopHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.TOP_HATCH);
+        Button TopCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.TOP_CARGO);
+        Button CargoIn = new JoystickButton(Constants.LAUNCH_PAD, Constants.CLIMBER_FULL_POWER);
+        Button CargoOut = new JoystickButton(Constants.LAUNCH_PAD, Constants.CLIMBER_ANTI_FULL_POWER);
+        Button HatchOut = new JoystickButton(Constants.LAUNCH_PAD, Constants.LAUNCHPAD12);
+        Button ClimbFullUp = new JoystickButton(Constants.LAUNCH_PAD, Constants.LAUNCHPAD13);
+        Button ClimbFullDown = new JoystickButton(Constants.LAUNCH_PAD, Constants.LAUNCHPAD14);
+        Button Launchpad15 = new JoystickButton(Constants.LAUNCH_PAD, Constants.LAUNCHPAD15);
+        Button Launchpad16 = new JoystickButton(Constants.LAUNCH_PAD,Constants.LAUNCHPAD16);
 
 
         GroundHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH)));
