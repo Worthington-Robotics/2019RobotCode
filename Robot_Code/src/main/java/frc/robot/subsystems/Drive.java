@@ -63,12 +63,12 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = -periodic.ramp_Up_Counter * .0025 + .1;
-                            periodic.right_demand = -periodic.ramp_Up_Counter * .0025 + .1;
+                            periodic.left_demand = periodic.ramp_Up_Counter * .0025 + .1;
+                            periodic.right_demand = periodic.ramp_Up_Counter * .0025 + .1;
                             periodic.ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
-                            periodic.left_demand = -Constants.MP_TEST_SPEED * Constants.TICKS_TO_INCHES;
-                            periodic.right_demand = -Constants.MP_TEST_SPEED * Constants.TICKS_TO_INCHES;
+                            periodic.left_demand = radiansPerSecondToTicksPer100ms(inchesPerSecondToRadiansPerSecond(Constants.MP_TEST_SPEED));
+                            periodic.right_demand = radiansPerSecondToTicksPer100ms(inchesPerSecondToRadiansPerSecond(Constants.MP_TEST_SPEED));
                         }
 
                         break;
@@ -110,7 +110,7 @@ public class Drive extends Subsystem {
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
         periodic.right_velocity_ticks_per_100ms = -driveFrontRight.getSelectedSensorVelocity(0);
-        periodic.gyro_heading = Rotation2d.fromDegrees(-pigeonIMU.getFusedHeading()).rotateBy(periodic.gyro_offset);
+        periodic.gyro_heading = Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).rotateBy(periodic.gyro_offset);
 
         double deltaLeftTicks = ((periodic.left_pos_ticks - prevLeftTicks) / 4096.0) * Math.PI;
         periodic.left_distance += deltaLeftTicks * Constants.DRIVE_WHEEL_DIAMETER_INCHES;
@@ -129,14 +129,13 @@ public class Drive extends Subsystem {
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         } else {
-            driveFrontLeft.set(ControlMode.Velocity, periodic.left_demand
-                    /*(periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0)*/);
-            driveFrontRight.set(ControlMode.Velocity, periodic.right_demand /*DemandType.ArbitraryFeedForward,
-                    -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0)*/);
-            // driveFrontLeft.set(ControlMode.Velocity, periodic.left_demand, DemandType.ArbitraryFeedForward, 0.0);
+            //TODO almost there with mp stuff
+            driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward,
+                    -(periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
+            driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward,
+                    -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
-            //driveFrontRight.set(ControlMode.Velocity, periodic.right_demand, DemandType.ArbitraryFeedForward, 0.0);
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
@@ -150,10 +149,7 @@ public class Drive extends Subsystem {
     }
 
     private Drive() {
-
-
         mMotionPlanner = new DriveMotionPlanner();
-        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.FEEDFORWARD_ONLY);
         driveFrontLeft = new WPI_TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
         driveMiddleLeft = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_LEFT_ID);
         driveBackLeft = new WPI_TalonSRX(Constants.DRIVE_BACK_LEFT_ID);
@@ -164,9 +160,6 @@ public class Drive extends Subsystem {
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
-        periodic.gyro_offset = Rotation2d.identity();
-
-
     }
 
     public synchronized Rotation2d getHeading() {
@@ -215,8 +208,9 @@ public class Drive extends Subsystem {
     public void reset() {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
+        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.FEEDFORWARD_ONLY);
         periodic = new PeriodicIO();
-        setHeading(Rotation2d.identity());
+        setHeading(Rotation2d.fromDegrees(0));
         resetEncoders();
     }
 
@@ -287,8 +281,8 @@ public class Drive extends Subsystem {
             periodic.path_setpoint = mMotionPlanner.setpoint();
 
             if (!mOverrideTrajectory) {
-                DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(inchesPerSecondToRpm(-output.right_velocity)),
-                        radiansPerSecondToTicksPer100ms(inchesPerSecondToRpm(-output.left_velocity)));
+                DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(output.right_velocity),
+                        radiansPerSecondToTicksPer100ms(output.left_velocity));
 
                 setVelocity(signal, new DriveSignal(output.left_feedforward_voltage / 12, output.right_feedforward_voltage / 12));
                 periodic.left_accl = radiansPerSecondToTicksPer100ms(output.left_accel) / 1000;
@@ -473,7 +467,7 @@ public class Drive extends Subsystem {
     }
 
     private static double rotationsToInches(double rotations) {
-        return rotations / Constants.ROTATIONS_TO_INCHES;
+        return rotations * Math.PI * Constants.DRIVE_WHEEL_DIAMETER_INCHES ;
     }
 
     private static double rpmToInchesPerSecond(double rpm) {
@@ -481,7 +475,7 @@ public class Drive extends Subsystem {
     }
 
     private static double inchesToRotations(double inches) {
-        return inches * Constants.ROTATIONS_TO_INCHES;
+        return inches / (Math.PI * Constants.DRIVE_WHEEL_DIAMETER_INCHES);
     }
 
     private static double inchesPerSecondToRpm(double inches_per_second) {
@@ -490,6 +484,10 @@ public class Drive extends Subsystem {
 
     private static double radiansPerSecondToTicksPer100ms(double rad_s) {
         return rad_s / (Math.PI * 2.0) * 4096.0 / 10.0;
+    }
+
+    private static double inchesPerSecondToRadiansPerSecond(double in_sec){
+        return in_sec / (Constants.DRIVE_WHEEL_DIAMETER_INCHES * Math.PI) * 2 * Math.PI;
     }
 
     private static double rpmToTicksPer100ms(double rpm) {

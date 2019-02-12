@@ -48,12 +48,10 @@ public class Constants {
     public static final double DRIVE_Kv = 0.5234375;  // V per rad/s
     public static final double DRIVE_Ka = 0.1;  // V per rad/s^2
     public static final double Path_Kx = 4.0;  //
-    public static final double DRIVE_VCOMP = 11.0; //V
+    public static final double DRIVE_VCOMP = 10.0; //V
     public static final double PATH_LOOK_AHEAD_TIME = 0.4;  // seconds to look ahead along the path for steering
     public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
-    public static final double TICKS_TO_INCHES = DRIVE_ENCODER_PPR / Math.PI / DRIVE_WHEEL_DIAMETER_INCHES;
-    public static final double ROTATIONS_TO_INCHES = TICKS_TO_INCHES / DRIVE_ENCODER_PPR;
 
     // Arm Absolute Zeros
     public static final double ProxAbsoluteZero = 3532;
@@ -126,7 +124,7 @@ public class Constants {
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
-    public static final double MP_TEST_SPEED = 6;
+    public static final double MP_TEST_SPEED = 24; //in /s
     public static final boolean RAMPUP = false;
 
     //Stick Constants
