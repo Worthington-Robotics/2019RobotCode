@@ -6,7 +6,7 @@ import frc.robot.subsystems.Arm;
 
 public class TeleOPArmAction extends Action {
     private armStates a;
-    public TeleOPArmAction(armStates armState, armStates modified, int buttonnumber) {
+    public TeleOPArmAction(armStates armState, armStates modified) {
         if (Constants.LAUNCH_PAD.getRawButton(Constants.ReverseButton)){
             a = modified;
         } else {
