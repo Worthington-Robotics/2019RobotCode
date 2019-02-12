@@ -133,14 +133,15 @@ public class Drive extends Subsystem {
             driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward,
                     -(periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
             driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward,
-                    -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
+                    -b(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
-        if (periodic.B2) {
+        if (periodic.B2) {        reset();
+
             trans.set(DoubleSolenoid.Value.kForward);
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
@@ -159,7 +160,6 @@ public class Drive extends Subsystem {
         pigeonIMU = new PigeonIMU(driveBackLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
-        reset();
     }
 
     public synchronized Rotation2d getHeading() {
