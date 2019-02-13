@@ -137,14 +137,14 @@ public class Constants {
     public static final int MID_CARGO = 6;
     public static final int TOP_HATCH = 7;
     public static final int TOP_CARGO = 8;
-    public static final int ReverseButton = 9;
+    public static final int REVERSE_BUTTON = 9;
     public static final int CLIMBER_FULL_POWER = 10;
     public static final int CLIMBER_ANTI_FULL_POWER = 11;
     public static final int CARGO_IN = 12;
     public static final int CARGO_OUT = 13;
     public static final int HATCH_OUT = 14;
-    public static final int LAUNCHPAD15 = 15;
-    public static final int LAUNCHPAD16 = 16;
+    public static final int AUTO_STOP_BUTTON = 15;
+    public static final int STOW_BUTTON = 16;
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds

@@ -21,10 +21,9 @@ public class OI{
         Button HatchOut = new JoystickButton(Constants.LAUNCH_PAD, Constants.HATCH_OUT);
         Button ClimbFullUp = new JoystickButton(Constants.LAUNCH_PAD, Constants.CLIMBER_FULL_POWER);
         Button ClimbFullDown = new JoystickButton(Constants.LAUNCH_PAD, Constants.CLIMBER_ANTI_FULL_POWER);
-        Button Launchpad15 = new JoystickButton(Constants.LAUNCH_PAD, Constants.LAUNCHPAD15);
-        Button Stow = new JoystickButton(Constants.LAUNCH_PAD,Constants.LAUNCHPAD16);
-
-
+        Button AutoStopButton = new JoystickButton(Constants.LAUNCH_PAD, Constants.AUTO_STOP_BUTTON);
+        Button Stow = new JoystickButton(Constants.LAUNCH_PAD,Constants.STOW_BUTTON);
+        
         GroundHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH)));
         GroundCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_CARGO, TeleOPArmAction.armStates.REV_GROUND_CARGO)));
         BotHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_LOW_HATCH, TeleOPArmAction.armStates.REV_LOW_HATCH)));
@@ -38,8 +37,7 @@ public class OI{
         HatchOut.whileHeld(Action.toCommand(new AlienAction()));
         ClimbFullUp.whileHeld(Action.toCommand(new ClimbAction(false,Constants.CLIMB_POWER)));
         ClimbFullDown.whileHeld(Action.toCommand(new ClimbAction(true,Constants.CLIMB_POWER)));
-        //TODO Add Astop 
-        //Launchpad15.whileHeld(Action.toCommand(new ));
+        AutoStopButton.whileHeld(Action.toCommand(new AStopAction()));
         Stow.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_STOW_ARM, TeleOPArmAction.armStates.FWD_STOW_ARM) ));
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
