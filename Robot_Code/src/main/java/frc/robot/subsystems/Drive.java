@@ -63,8 +63,8 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = periodic.ramp_Up_Counter * .0025 + .1;
-                            periodic.right_demand = periodic.ramp_Up_Counter * .0025 + .1;
+                            periodic.left_demand = periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .0025 + .1;
+                            periodic.right_demand = periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .0025 + .1;
                             periodic.ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
                             periodic.left_demand = radiansPerSecondToTicksPer100ms(inchesPerSecondToRadiansPerSecond(Constants.MP_TEST_SPEED));
