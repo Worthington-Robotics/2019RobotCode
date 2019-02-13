@@ -56,10 +56,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    PoseEstimator.getInstance().reset();
+    Drive.getInstance().reset();
     EnabledLoops.start();
     DisabledLoops.stop();
     StateMachine.runMachine(new FrontOfCargo());
-
   }
 
   @Override
@@ -94,7 +95,5 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     EnabledLoops.stop();
     DisabledLoops.start();
-    Drive.getInstance().reset();
-    PoseEstimator.getInstance().reset();
   }
 }

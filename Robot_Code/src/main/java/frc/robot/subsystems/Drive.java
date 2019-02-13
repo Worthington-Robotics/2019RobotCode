@@ -129,19 +129,17 @@ public class Drive extends Subsystem {
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         } else {
-            //TODO almost there with mp stuff
-            driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward,
-                    -(periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
-            driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward,
-                    -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
+            periodic.left_feedforward_whole = (periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0);
+            periodic.right_feedforward_whole = (periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0);
+            driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward, -periodic.left_feedforward_whole);
+            driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward, -periodic.right_feedforward_whole);
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
-        if (periodic.B2) {        reset();
-
+        if (periodic.B2) {
             trans.set(DoubleSolenoid.Value.kForward);
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
@@ -160,6 +158,7 @@ public class Drive extends Subsystem {
         pigeonIMU = new PigeonIMU(driveBackLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
+        reset();
     }
 
     public synchronized Rotation2d getHeading() {
@@ -208,7 +207,7 @@ public class Drive extends Subsystem {
     public void reset() {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
-        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.FEEDFORWARD_ONLY);
+        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.NONLINEAR_FEEDBACK);
         periodic = new PeriodicIO();
         setHeading(Rotation2d.fromDegrees(0));
         resetEncoders();
@@ -405,6 +404,9 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
         SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
+
+        SmartDashboard.putNumber("Drive/Left Feedforward whole", periodic.left_feedforward_whole);
+        SmartDashboard.putNumber("Drive/Right Feedforward whole", periodic.right_feedforward_whole);
     }
 
     public void registerEnabledLoops(ILooper enabledLooper) {
@@ -445,10 +447,12 @@ public class Drive extends Subsystem {
         double left_demand = 0.0;
         double left_distance = 0.0;
         double left_feedforward = 0.0;
+        double left_feedforward_whole = 0.0;
         double right_accl = 0.0;
         double right_demand = 0.0;
         double right_distance = 0.0;
         double right_feedforward = 0.0;
+        double right_feedforward_whole = 0.0;
         TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
 
     }

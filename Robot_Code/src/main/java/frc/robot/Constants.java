@@ -43,9 +43,9 @@ public class Constants {
     public static final double ROBOT_ANGULAR_DRAG = 12.0;  // N*m / (rad/sec) TODO tune
     public static final double ROBOT_MAX_VELOCITY = 120.0; // TODO tune & find units
     public static final double ROBOT_MAX_ACCEL = 120.0; // TODO tune & find units
-    public static final double ROBOT_MAX_VOLTAGE = 10.0; // V TODO tune
+    public static final double ROBOT_MAX_VOLTAGE = 10.0; // V
     public static final double DRIVE_V_INTERCEPT = 1.4;  // V
-    public static final double DRIVE_Kv = 0.5234375;  // V per rad/s
+    public static final double DRIVE_Kv = 0.20;  // V per rad/s 0.5234375 //TODO REDETERMINE
     public static final double DRIVE_Ka = 0.1;  // V per rad/s^2
     public static final double Path_Kx = 4.0;  //
     public static final double DRIVE_VCOMP = 10.0; //V
@@ -88,15 +88,15 @@ public class Constants {
     public static final double STOP_POWER = 0;
 
     //PID Gain Constants
-    public static final double DRIVE_RIGHT_KP = .65;
-    public static final double DRIVE_RIGHT_KI = 0.0055;
-    public static final double DRIVE_RIGHT_KD = 24;
-    public static final double DRIVE_RIGHT_KF = .485;
+    public static final double DRIVE_RIGHT_KP = 1.2;
+    public static final double DRIVE_RIGHT_KI = 0.0;
+    public static final double DRIVE_RIGHT_KD = 20;
+    public static final double DRIVE_RIGHT_KF = 0.53; //.485
 
-    public static final double DRIVE_LEFT_KP = .62; // .0885
-    public static final double DRIVE_LEFT_KI = 0.005725;
-    public static final double DRIVE_LEFT_KD = 38;
-    public static final double DRIVE_LEFT_KF = .485;
+    public static final double DRIVE_LEFT_KP = 1.1; // .0885
+    public static final double DRIVE_LEFT_KI = 0.0; //NO INTEGRAL it masks deeper problems
+    public static final double DRIVE_LEFT_KD = 25; //10
+    public static final double DRIVE_LEFT_KF = 0.53;
 
     public static final double ARM_PROX_KP = 0.01;
     public static final double ARM_PROX_KI = 0;
@@ -124,7 +124,7 @@ public class Constants {
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
-    public static final double MP_TEST_SPEED = 24; //in /s
+    public static final double MP_TEST_SPEED = 72; //in /s
     public static final boolean RAMPUP = false;
 
     //Stick Constants
@@ -138,9 +138,6 @@ public class Constants {
     public static final String ROBOT_NAME = "Whatever_you_want";
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
-            "Drive/Left Demand",
-            "Drive/Right Demand",
-            "Drive/drivevels",
             "Drive/Pose/Theta",
             "Drive/Pose/X",
             "Drive/Pose/Y",
@@ -150,11 +147,14 @@ public class Constants {
             "Drive/Setpoint/Theta",
             "Drive/Setpoint/X",
             "Drive/Setpoint/Y",
-            "Drive/Right Talon Velocity",
+            "Drive/Left Demand",
+            "Drive/Right Demand",
             "Drive/Left Talon Velocity",
-            "Drive/Error/Right Talon Error",
+            "Drive/Right Talon Velocity",
             "Drive/Error/Left Talon Error",
-            "Drive/Left Talon Voltage II"
+            "Drive/Error/Right Talon Error",
+            "Drive/Misc/Left FeedForward",
+            "Drive/Misc/Right FeedForward"
     };
 }
 

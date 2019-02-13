@@ -18,7 +18,7 @@ public class TraGenerator {
 
     private TraGenerator() {
         DMP = new DriveMotionPlanner();
-        DMP.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
+        //DMP.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
     }
 
     public static TraGenerator getInstance() {
