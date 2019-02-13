@@ -28,8 +28,8 @@ public class AnglePID extends Action {
                 desiredAngle += 360;
             }
 
-            desiredAngle = -desiredAngle;
-
+            SmartDashboard.putNumber("vision/Start Angle", currentAngle);
+            SmartDashboard.putNumber("vision/Start Angle Offset", angleOffset);
             SmartDashboard.putNumber("vision/Desired Angle", desiredAngle);
 
             angleController = new PIDController(Constants.ANGLE_KP, Constants.ANGLE_KI, Constants.ANGLE_KD, source, output);
