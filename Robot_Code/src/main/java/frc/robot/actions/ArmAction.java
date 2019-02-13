@@ -1,6 +1,7 @@
 package frc.robot.actions;
 
 import frc.lib.statemachine.Action;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class ArmAction extends Action {
@@ -11,11 +12,7 @@ public class ArmAction extends Action {
 
     @Override
     public void onStart() {
-        Arm.getInstance().setArmProxPower(a.getP());
-        Arm.getInstance().setArmDistPower(a.getD());
-        Arm.getInstance().setArmWristPower(a.getW());
-
-
+        Arm.getInstance().setPIDArmConfig(a.config);
     }
 
     @Override
@@ -33,24 +30,33 @@ public class ArmAction extends Action {
 
     }
     public enum armStates {
-        GENERAL_LOW(0,0,0),
-        ROCKET_LOW_CARGO(0,0,0),
-        ROCKET_MEDIUM_HATCH(0,0,0),
-        ROCKET_MEDIUM_CARGO(0,0,0),
-        ROCKET_HIGH_HATCH(0,0,0),
-        ROCKET_HIGH_CARGO(0,0,0),
-        GROUND(0,0,0);
+        FWD_GROUND_HATCH(Constants.FWD_GROUND_HATCH),
+        FWD_GROUND_CARGO(Constants.FWD_GROUND_CARGO),
+        FWD_LOW_HATCH(Constants.FWD_LOW_HATCH),
+        FWD_LOW_CARGO(Constants.FWD_LOW_CARGO),
+        FWD_MEDIUM_HATCH(Constants.FWD_MEDIUM_HATCH),
+        FWD_MEDIUM_CARGO(Constants.FWD_MEDUIM_CARGO),
+        FWD_HIGH_HATCH(Constants.FWD_HIGH_HATCH),
+        FWD_HIGH_CARGO(Constants.FWD_HIGH_CARGO),
 
-        private double p,d,w;
-        armStates(double p , double d, double w)
-        {
+        STRAIGHT_UP(Constants.STRAIGHT_UP),
 
+        REV_GROUND_HATCH(Constants.REV_GROUND_HATCH),
+        REV_GROUND_CARGO(Constants.REV_GROUND_CARGO),
+        REV_LOW_HATCH(Constants.REV_LOW_HATCH),
+        REV_LOW_CARGO(Constants.REV_LOW_CARGO),
+        REV_MEDIUM_HATCH(Constants.REV_MEDIUM_HATCH),
+        REV_MEDIUM_CARGO(Constants.REV_MEDUIM_CARGO),
+        REV_HIGH_HATCH(Constants.REV_HIGH_HATCH),
+        REV_HIGH_CARGO(Constants.REV_HIGH_CARGO);
+
+        private Arm.ArmConfiguration config;
+        armStates(Arm.ArmConfiguration conf) {
+            config = conf;
         }
-        public double getP()
-        {return p;}
-        public double getD()
-        {return d;}
-        public double getW()
-        {return w;}
+
+        public Arm.ArmConfiguration getConfig() {
+            return config;
+        }
     }
 }

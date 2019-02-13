@@ -1,29 +1,36 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.lib.loops.ILooper;
 import frc.robot.Constants;
 
+/**
+ * The Alien Subsystem manipulates the hatch panels with
+ * a pair of pistons controlled with a central double solenoid
+ */
 public class Alien extends Subsystem {
-
     private static Alien m_Alien = new Alien();
-    private DoubleSolenoid AlienOne;
-    private DoubleSolenoid AlienTwo;
-    private PeriodicIO periodic;
 
-    public Alien() {
-        AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID,Constants.ALIEN_1_HIGH_ID);
-        periodic = new PeriodicIO();
-        periodic.tState = DoubleSolenoid.Value.kForward;
-
-
-    }
-
+    /**
+     * The getter of the only public Alien instance
+     *
+     * @return the only instance of Alien to maintain a clean system
+     */
     public static Alien getInstance() {
         return m_Alien;
     }
 
-    @Override
+
+
+    private DoubleSolenoid AlienOne;
+    private PeriodicIO periodic;
+
+    private Alien() {
+        AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID, Constants.ALIEN_1_HIGH_ID);
+        periodic = new PeriodicIO();
+        periodic.tState = DoubleSolenoid.Value.kForward;
+    }
+
+
     public void outputTelemetry() {
 
     }
@@ -31,31 +38,38 @@ public class Alien extends Subsystem {
     public void readPeriodicInputs() {
     }
 
-    public void writePeriodicOutputs(){
+    public void writePeriodicOutputs() {
         AlienOne.set(periodic.tState);
 
     }
 
-
-    @Override
-    public void stop() {
-        periodic.tState = DoubleSolenoid.Value.kForward;
-    }
-
+    /**
+     * sets the solenoid to a DoubleSolenoid.Value state
+     *
+     * @param state either kOff kForward or kReverse
+     */
     public void setAlienState(DoubleSolenoid.Value state) {
         periodic.tState = state;
     }
 
+    /**
+     * gets the solenoid to a DoubleSolenoid.Value state
+     *
+     * @return either kOff kForward or kReverse
+     */
     public DoubleSolenoid.Value GetAlienState() {
         return periodic.tState;
     }
 
-    @Override
+
     public void reset() {
         periodic.tState = DoubleSolenoid.Value.kForward;
     }
 
+    /**
+     * stores regularly updated values
+     */
     public class PeriodicIO {
-        private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
+        DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
     }
 }
