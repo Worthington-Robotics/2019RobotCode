@@ -53,7 +53,9 @@ public class TeleOPArmAction extends Action {
         REV_MEDIUM_HATCH(Constants.REV_MEDIUM_HATCH),
         REV_MEDIUM_CARGO(Constants.REV_MEDUIM_CARGO),
         REV_HIGH_HATCH(Constants.REV_HIGH_HATCH),
-        REV_HIGH_CARGO(Constants.REV_HIGH_CARGO);
+        REV_HIGH_CARGO(Constants.REV_HIGH_CARGO),
+
+        FWD_STOW_ARM(Constants.STOW_ARM);
 
         private Arm.ArmConfiguration config;
         armStates(Arm.ArmConfiguration conf) {

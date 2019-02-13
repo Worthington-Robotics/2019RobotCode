@@ -4,9 +4,11 @@ import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachine;
 
 public class AStopAction extends Action {
+    boolean finished = false;
     @Override
     public void onStart() {
         StateMachine.assertStop();
+        finished = true;
     }
 
     @Override
@@ -16,7 +18,7 @@ public class AStopAction extends Action {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return finished;
     }
 
     @Override

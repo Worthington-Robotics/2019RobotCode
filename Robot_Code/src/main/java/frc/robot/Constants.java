@@ -82,10 +82,10 @@ public class Constants {
     public static final Arm.ArmConfiguration REV_HIGH_HATCH = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration REV_HIGH_CARGO = new Arm.ArmConfiguration(0,0,0);
 
+    public static final Arm.ArmConfiguration STOW_ARM = new Arm.ArmConfiguration(0,0,0);
+
     //Shot powers
     public static final double SHOOT_POWER = 1;
-    public static final double ROLLOUT_POWER = .9;
-    public static final double DROP_POWER = .65;
     public static final double PICKUP_POWER = -.75;
     public static final double SLOWUP_POWER = -.65;
     public static final double STOP_POWER = 0;
@@ -140,9 +140,9 @@ public class Constants {
     public static final int ReverseButton = 9;
     public static final int CLIMBER_FULL_POWER = 10;
     public static final int CLIMBER_ANTI_FULL_POWER = 11;
-    public static final int LAUNCHPAD12 = 12;
-    public static final int LAUNCHPAD13 = 13;
-    public static final int LAUNCHPAD14 = 14;
+    public static final int CARGO_IN = 12;
+    public static final int CARGO_OUT = 13;
+    public static final int HATCH_OUT = 14;
     public static final int LAUNCHPAD15 = 15;
     public static final int LAUNCHPAD16 = 16;
 
