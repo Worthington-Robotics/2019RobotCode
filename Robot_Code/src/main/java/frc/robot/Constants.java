@@ -19,8 +19,7 @@ public class Constants {
     //Spark Ports
     public static final int TOP_CARGOMANIP_ID = 1;
     public static final int BOTTOM_CARGOMANIP_ID = 2;
-    public static final int LEFT_CLIMB_ID = 3;
-    public static final int RIGHT_CLIMB_ID = 4;
+
 
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;

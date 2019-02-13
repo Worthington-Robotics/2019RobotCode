@@ -27,7 +27,6 @@ public class AnglePID extends Action {
             else if (desiredAngle < -180) {
                 desiredAngle += 360;
             }
-            desiredAngle = -desiredAngle;
             SmartDashboard.putNumber("vision/Desired Angle", desiredAngle);
 
             angleController = new PIDController(Constants.ANGLE_KP, Constants.ANGLE_KI, Constants.ANGLE_KD, source, output);
