@@ -164,6 +164,15 @@ public class Arm extends Subsystem {
         StateSpace
 
     }
+
+    public double convertEncoderCounts(int counts)
+    {
+        double radians = counts;
+        radians *= 2*Math.PI;
+        radians /= 4096;
+        return radians;
+
+    }
 }
 
 
