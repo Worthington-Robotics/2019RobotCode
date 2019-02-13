@@ -23,7 +23,7 @@ public class OI{
         Button ClimbFullDown = new JoystickButton(Constants.LAUNCH_PAD, Constants.CLIMBER_ANTI_FULL_POWER);
         Button AutoStopButton = new JoystickButton(Constants.LAUNCH_PAD, Constants.AUTO_STOP_BUTTON);
         Button Stow = new JoystickButton(Constants.LAUNCH_PAD,Constants.STOW_BUTTON);
-        
+
         GroundHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH)));
         GroundCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_CARGO, TeleOPArmAction.armStates.REV_GROUND_CARGO)));
         BotHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_LOW_HATCH, TeleOPArmAction.armStates.REV_LOW_HATCH)));
