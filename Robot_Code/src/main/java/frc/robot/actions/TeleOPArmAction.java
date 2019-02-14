@@ -4,16 +4,20 @@ import frc.lib.statemachine.Action;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-
-public class ArmAction extends Action {
+public class TeleOPArmAction extends Action {
     private armStates a;
-    public ArmAction(armStates armState) {
-        a = armState;
+    public TeleOPArmAction(armStates armState, armStates modified) {
+        if (Constants.LAUNCH_PAD.getRawButton(Constants.REVERSE_BUTTON)){
+            a = modified;
+        } else {
+            a = armState;
+        }
+
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPIDArmConfig(a.config);
+
     }
 
     @Override
@@ -23,7 +27,7 @@ public class ArmAction extends Action {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override

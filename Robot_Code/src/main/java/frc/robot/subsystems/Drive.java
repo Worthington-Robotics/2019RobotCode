@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
@@ -40,6 +41,7 @@ public class Drive extends Subsystem {
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
     private WPI_TalonSRX driveFrontLeft, driveMiddleLeft, driveBackLeft, driveFrontRight, driveMiddleRight, driveBackRight;
+    private Spark climbLeft, climbRight;
 
     private final Loop mLoop = new Loop() {
 
