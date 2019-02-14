@@ -7,9 +7,8 @@ import frc.robot.subsystems.CargoMani;
 public class ManipulatorAction extends Action {
     private ShotPower speed;
 
-    public Action setShotPower(ShotPower shotPower) {
+    public ManipulatorAction (ShotPower shotPower) {
         speed = shotPower;
-        return null;
     }
 
     public void onStart() {

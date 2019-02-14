@@ -8,6 +8,8 @@ import frc.robot.actions.*;
 public class OI{
 
     public OI(){
+        Button Vision = new JoystickButton(Constants.MASTER, 8);
+        Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_HATCH);
         Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_CARGO);
         Button BotHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.BOTTOM_HATCH);
@@ -32,15 +34,15 @@ public class OI{
         MidCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_MEDIUM_CARGO, TeleOPArmAction.armStates.REV_MEDIUM_CARGO)));  
         TopHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_HATCH, TeleOPArmAction.armStates.REV_HIGH_HATCH)));
         TopCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_CARGO, TeleOPArmAction.armStates.REV_HIGH_CARGO)));
-        CargoIn.whileHeld(Action.toCommand(new ManipulatorAction().setShotPower(ManipulatorAction.ShotPower.PickUp)));
-        CargoOut.whileHeld(Action.toCommand(new ManipulatorAction().setShotPower(ManipulatorAction.ShotPower.Shoot)));
+        CargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
+        CargoOut.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         HatchOut.whileHeld(Action.toCommand(new AlienAction()));
         ClimbFullUp.whileHeld(Action.toCommand(new ClimbAction(false,Constants.CLIMB_POWER)));
         ClimbFullDown.whileHeld(Action.toCommand(new ClimbAction(true,Constants.CLIMB_POWER)));
         AutoStopButton.whileHeld(Action.toCommand(new AStopAction()));
         Stow.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_STOW_ARM, TeleOPArmAction.armStates.FWD_STOW_ARM) ));
-        Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
+        Vision.whenPressed(Action.toCommand(new VisionTra()));
     }
 
 }

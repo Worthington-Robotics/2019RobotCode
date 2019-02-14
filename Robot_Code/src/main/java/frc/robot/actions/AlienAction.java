@@ -5,11 +5,12 @@ import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Alien;
 
 public class AlienAction extends Action {
-       public AlienAction()
-    {
+    public AlienAction() {
     }
+
     @Override
-    public void onStart() { Alien.getInstance().setAlienState(DoubleSolenoid.Value.kReverse);
+    public void onStart() {
+        Alien.getInstance().setAlienState(DoubleSolenoid.Value.kReverse);
 
 
     }

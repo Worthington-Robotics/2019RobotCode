@@ -37,7 +37,6 @@ public class Drive extends Subsystem {
     private boolean mOverrideTrajectory = false;
     private PeriodicIO periodic;
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
-
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
     private WPI_TalonSRX driveFrontLeft, driveMiddleLeft, driveBackLeft, driveFrontRight, driveMiddleRight, driveBackRight;
@@ -146,6 +145,13 @@ public class Drive extends Subsystem {
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
         }
+        /*if (!periodic.reversed) {
+            climbLeft.set(periodic.motorpower);
+            climbRight.set(periodic.motorpower);
+        } else {
+            climbLeft.set(-periodic.motorpower);
+            climbRight.set(-periodic.motorpower);
+        }*/
 
     }
 
@@ -161,6 +167,8 @@ public class Drive extends Subsystem {
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
+        /*climbLeft = new Spark(Constants.LEFT_CLIMB_ID);
+        climbRight = new Spark(Constants.RIGHT_CLIMB_ID);*/
     }
 
     public synchronized Rotation2d getHeading() {
@@ -374,7 +382,17 @@ public class Drive extends Subsystem {
         }
         return mMotionPlanner.isDone() || mOverrideTrajectory;
     }
+/*
+    public void setReversed(boolean rever)
+    {
+        periodic.reversed = rever;
+    }
 
+    public void setMotorPower(double MP)
+    {
+        periodic.motorpower = MP;
+    }
+*/
     public void outputTelemetry() {
         //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
@@ -413,10 +431,6 @@ public class Drive extends Subsystem {
         enabledLooper.register(mLoop);
     }
 
-    public void stop() {
-
-    }
-
     enum DriveControlState {
         OPEN_LOOP,
         PATH_FOLLOWING,
@@ -453,6 +467,8 @@ public class Drive extends Subsystem {
         double right_distance = 0.0;
         double right_feedforward = 0.0;
         double right_feedforward_whole = 0.0;
+        /*double motorpower = 0;
+        boolean reversed = false;*/
         TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
 
     }

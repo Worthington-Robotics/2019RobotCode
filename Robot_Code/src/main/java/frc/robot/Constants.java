@@ -133,22 +133,22 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
-    public static final int GROUND_HATCH = 10;
-    public static final int GROUND_CARGO = 4;
-    public static final int BOTTOM_HATCH = 14;
-    public static final int BOTTOM_CARGO = 8;
+    public static final int GROUND_HATCH = 13;
+    public static final int GROUND_CARGO = 10;
+    public static final int BOTTOM_HATCH = 15;
+    public static final int BOTTOM_CARGO = 12;
     public static final int MID_HATCH = 16;
-    public static final int MID_CARGO = 7;
-    public static final int TOP_HATCH = 11;
-    public static final int TOP_CARGO = 3;
-    public static final int REVERSE_BUTTON = 2;
-    public static final int CLIMBER_FULL_POWER = 13;
-    public static final int CLIMBER_ANTI_FULL_POWER = 15;
-    public static final int CARGO_IN = 9;
-    public static final int CARGO_OUT = 6;
-    public static final int HATCH_OUT = 12;
+    public static final int MID_CARGO = 4;
+    public static final int TOP_HATCH = 6;
+    public static final int TOP_CARGO = 2;
+    public static final int REVERSE_BUTTON = 9;
+    public static final int CLIMBER_FULL_POWER = 7;
+    public static final int CLIMBER_ANTI_FULL_POWER = 8;
+    public static final int CARGO_IN = 5;
+    public static final int CARGO_OUT = 11;
+    public static final int HATCH_OUT = 14;
     public static final int AUTO_STOP_BUTTON = 1;
-    public static final int STOW_BUTTON = 5;
+    public static final int STOW_BUTTON = 3;
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
