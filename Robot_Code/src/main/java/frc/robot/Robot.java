@@ -70,6 +70,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    PoseEstimator.getInstance().reset();
+    Drive.getInstance().reset();
     EnabledLoops.start();
     DisabledLoops.stop();
     Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     EnabledLoops.start();
     DisabledLoops.stop();
+    Drive.getInstance().reset();
   }
 
   @Override

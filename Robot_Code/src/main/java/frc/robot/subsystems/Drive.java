@@ -63,8 +63,8 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .0025 + .1;
-                            periodic.right_demand = periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .0025 + .1;
+                            periodic.left_demand = -(periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .000025 + .01);
+                            periodic.right_demand = -(periodic.ramp_Up_Counter * periodic.ramp_Up_Counter *.000025 + .01);
                             periodic.ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
                             periodic.left_demand = radiansPerSecondToTicksPer100ms(inchesPerSecondToRadiansPerSecond(Constants.MP_TEST_SPEED));
@@ -280,8 +280,8 @@ public class Drive extends Subsystem {
             periodic.path_setpoint = mMotionPlanner.setpoint();
 
             if (!mOverrideTrajectory) {
-                DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(output.right_velocity),
-                        radiansPerSecondToTicksPer100ms(output.left_velocity));
+                DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(output.left_velocity),
+                        radiansPerSecondToTicksPer100ms(output.right_velocity));
 
                 setVelocity(signal, new DriveSignal(output.left_feedforward_voltage / 12, output.right_feedforward_voltage / 12));
                 periodic.left_accl = radiansPerSecondToTicksPer100ms(output.left_accel) / 1000;
@@ -389,8 +389,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Left Demand", periodic.left_demand);
         SmartDashboard.putNumber("Drive/Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Drive/Error/Left Talon Error", periodic.leftError);
-        SmartDashboard.putNumber("Drive/Left Talon Voltage", driveFrontLeft.getBusVoltage());
-        SmartDashboard.putNumber("Drive/Left Talon Voltage II", driveFrontLeft.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Left Talon Voltage Out", driveFrontLeft.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Left Encoder Counts", periodic.left_pos_ticks);
         SmartDashboard.putNumber("Drive/Misc/Left FeedForward", periodic.left_feedforward);
         SmartDashboard.putNumber("Drive/Misc/Left Acceleration", periodic.left_accl);
@@ -399,8 +398,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Right Demand", periodic.right_demand);
         SmartDashboard.putNumber("Drive/Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.rightError);
-        SmartDashboard.putNumber("Drive/Right Talon Voltage", driveFrontRight.getBusVoltage());
-        SmartDashboard.putNumber("Drive/Right Talon Voltage II", driveFrontRight.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Right Talon Voltage Out", driveFrontRight.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
         SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);

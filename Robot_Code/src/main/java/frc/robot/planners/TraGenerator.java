@@ -36,7 +36,7 @@ public class TraGenerator {
     public Trajectory<TimedState<Pose2dWithCurvature>> getTenFeet() {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(new Pose2d(0, 0, Rotation2d.identity()));
-        Points.add(new Pose2d(120, 0, Rotation2d.identity()));
+        Points.add(new Pose2d(120, 120, Rotation2d.fromDegrees(90)));
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
     public Trajectory<TimedState<Pose2dWithCurvature>> getRightRocket() {
