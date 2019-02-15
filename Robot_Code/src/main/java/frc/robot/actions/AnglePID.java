@@ -34,8 +34,8 @@ public class AnglePID extends Action {
 
             angleController = new PIDController(Constants.ANGLE_KP, Constants.ANGLE_KI, Constants.ANGLE_KD, source, output);
             angleController.setSetpoint(desiredAngle);
-            angleController.setAbsoluteTolerance(0.5);
-            angleController.setOutputRange(-0.4, 0.4);
+            angleController.setAbsoluteTolerance(0.1);
+            angleController.setOutputRange(-0.5, 0.5);
             angleController.enable();
         }
     }
