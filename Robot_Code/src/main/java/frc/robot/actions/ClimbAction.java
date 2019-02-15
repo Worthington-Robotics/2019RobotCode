@@ -3,6 +3,7 @@ package frc.robot.actions;
 import edu.wpi.first.wpilibj.Spark;
 import frc.lib.statemachine.Action;
 import frc.robot.Constants;
+
 import frc.robot.subsystems.Drive;
 
 public class ClimbAction extends Action {
@@ -30,6 +31,8 @@ public class ClimbAction extends Action {
 
     @Override
     public void onStop() {
+
     /*Drive.getInstance().setMotorPower(0);*/
+
     }
 }

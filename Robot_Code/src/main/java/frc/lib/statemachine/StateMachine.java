@@ -11,20 +11,25 @@ public class StateMachine {
 
     private static final AtomicInteger state = new AtomicInteger(-1);
     private static final AtomicBoolean wantStop = new AtomicBoolean(true);
+    private static final AtomicBoolean stateLock = new AtomicBoolean(false);
     private volatile static ConcurrentLinkedQueue<ActionGroup> queuedStates;
     private volatile static ActionGroup currentState;
     private volatile static double t_start;
     private static final double delay = 0.020;
+
     private static final Runnable Man = () -> {
         try {
             state.set(0);
-            SmartDashboard.putNumber("StateMachine/ state", state.get());
+            SmartDashboard.putNumber("StateMachine/state", state.get());
+            SmartDashboard.putString("StateMachine/status", "State Machine Starting");
             if (queuedStates == null) {
                 state.set(-2);
-                SmartDashboard.putNumber("StateMachine/ state", state.get());
+                SmartDashboard.putNumber("StateMachine/state", state.get());
+                SmartDashboard.putString("StateMachine/status", "State Machine halted, Descriptor was NULL");
             } else {
                 while (!queuedStates.isEmpty() && !wantStop.get()) {
-                    SmartDashboard.putNumber("StateMachine/ state", state.get());
+                    SmartDashboard.putNumber("StateMachine/state", state.get());
+                    SmartDashboard.putString("StateMachine/status", "State Machine Executing");
                     currentState = queuedStates.poll();
                     currentState.onStart();
                     while (!currentState.isFinished() && !wantStop.get()) {
@@ -35,21 +40,26 @@ public class StateMachine {
                     }
                     currentState.onStop();
                     state.getAndAdd(1);
-
                 }
             }
+            SmartDashboard.putString("StateMachine/status", "State Machine halted, No error");
+            stateLock.set(false);
         }catch (Exception e){
             state.set(-3);
-            SmartDashboard.putNumber("StateMachine/ state", state.get());
+            SmartDashboard.putNumber("StateMachine/state", state.get());
+            SmartDashboard.putString("StateMachine/status", "State Machine halted due to unknown error. Check Log");
+            stateLock.set(false);
         }
     };
 
-    public static void runMachine(StateMachineDescriptor descriptor) {
+    public static boolean runMachine(StateMachineDescriptor descriptor) {
+        if(stateLock.get()) return false;
+        stateLock.set(true);
         wantStop.set(false);
         queuedStates = descriptor.getStates();
         Thread thread = new Thread(Man);
         thread.start();
-
+        return true;
     }
 
     public static void assertStop(){
