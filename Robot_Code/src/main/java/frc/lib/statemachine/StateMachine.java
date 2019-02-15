@@ -20,13 +20,16 @@ public class StateMachine {
     private static final Runnable Man = () -> {
         try {
             state.set(0);
-            SmartDashboard.putNumber("StateMachine/ state", state.get());
+            SmartDashboard.putNumber("StateMachine/state", state.get());
+            SmartDashboard.putString("StateMachine/status", "State Machine Starting");
             if (queuedStates == null) {
                 state.set(-2);
-                SmartDashboard.putNumber("StateMachine/ state", state.get());
+                SmartDashboard.putNumber("StateMachine/state", state.get());
+                SmartDashboard.putString("StateMachine/status", "State Machine halted, Descriptor was NULL");
             } else {
                 while (!queuedStates.isEmpty() && !wantStop.get()) {
-                    SmartDashboard.putNumber("StateMachine/ state", state.get());
+                    SmartDashboard.putNumber("StateMachine/state", state.get());
+                    SmartDashboard.putString("StateMachine/status", "State Machine Executing");
                     currentState = queuedStates.poll();
                     currentState.onStart();
                     while (!currentState.isFinished() && !wantStop.get()) {
@@ -37,13 +40,14 @@ public class StateMachine {
                     }
                     currentState.onStop();
                     state.getAndAdd(1);
-
                 }
             }
+            SmartDashboard.putString("StateMachine/status", "State Machine halted, No error");
             stateLock.set(false);
         }catch (Exception e){
             state.set(-3);
-            SmartDashboard.putNumber("StateMachine/ state", state.get());
+            SmartDashboard.putNumber("StateMachine/state", state.get());
+            SmartDashboard.putString("StateMachine/status", "State Machine halted due to unknown error. Check Log");
             stateLock.set(false);
         }
     };
