@@ -28,7 +28,7 @@ public class Arm extends Subsystem {
     private TalonSRX armProx, armDist, armWrist;
     private PeriodicIO periodic;
     private ArmModes ArmMode = ArmModes.DirectControl;
-    /*private Ultrasonic US1, US2;*/
+    private Ultrasonic US1, US2;
 
     private final Loop aloop = new Loop() {
 
@@ -52,16 +52,16 @@ public class Arm extends Subsystem {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         armWrist = new TalonSRX(Constants.ARM_WRIST);
-        /*US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
-        US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);*/
+        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
+        US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
     }
 
     public void readPeriodicInputs() {
         periodic.US1Past = periodic.US1Dis;
         periodic.US2Past = periodic.US2Dis;
-       /* periodic.US1Dis = US1.getDistance();
-        periodic.US2Dis = US2.getDistance();*/
+        periodic.US1Dis = US1.getDistance();
+        periodic.US2Dis = US2.getDistance();
         periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();
         periodic.wristError = armWrist.getClosedLoopError();
