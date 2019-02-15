@@ -35,7 +35,7 @@ public class AnglePID extends Action {
             angleController = new PIDController(Constants.ANGLE_KP, Constants.ANGLE_KI, Constants.ANGLE_KD, source, output);
             angleController.setSetpoint(desiredAngle);
             angleController.setAbsoluteTolerance(0.5);
-            angleController.setOutputRange(-0.6, 0.6);
+            angleController.setOutputRange(-0.4, 0.4);
             angleController.enable();
         }
     }
@@ -58,6 +58,8 @@ public class AnglePID extends Action {
             angleController.disable();
         }
         Drive.getInstance().setOpenLoop(new DriveSignal(0, 0));
+
+        SmartDashboard.putNumber("vision/End Angle", Drive.getInstance().getHeading().getDegrees());
     }
 
 }
