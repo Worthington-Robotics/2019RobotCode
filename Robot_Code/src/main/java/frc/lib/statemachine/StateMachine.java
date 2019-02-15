@@ -11,10 +11,12 @@ public class StateMachine {
 
     private static final AtomicInteger state = new AtomicInteger(-1);
     private static final AtomicBoolean wantStop = new AtomicBoolean(true);
+    private static final AtomicBoolean stateLock = new AtomicBoolean(false);
     private volatile static ConcurrentLinkedQueue<ActionGroup> queuedStates;
     private volatile static ActionGroup currentState;
     private volatile static double t_start;
     private static final double delay = 0.020;
+
     private static final Runnable Man = () -> {
         try {
             state.set(0);
@@ -38,18 +40,22 @@ public class StateMachine {
 
                 }
             }
+            stateLock.set(false);
         }catch (Exception e){
             state.set(-3);
             SmartDashboard.putNumber("StateMachine/ state", state.get());
+            stateLock.set(false);
         }
     };
 
-    public static void runMachine(StateMachineDescriptor descriptor) {
+    public static boolean runMachine(StateMachineDescriptor descriptor) {
+        if(stateLock.get()) return false;
+        stateLock.set(true);
         wantStop.set(false);
         queuedStates = descriptor.getStates();
         Thread thread = new Thread(Man);
         thread.start();
-
+        return true;
     }
 
     public static void assertStop(){
