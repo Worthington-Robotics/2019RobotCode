@@ -137,11 +137,11 @@ public class Drive extends Subsystem {
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
-        if (periodic.B2) {
+        /*if (periodic.B2) {
             trans.set(DoubleSolenoid.Value.kForward);
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
-        }
+        }*/
         if (!periodic.reversed) {
             climbLeft.set(periodic.motorpower);
             climbRight.set(periodic.motorpower);
