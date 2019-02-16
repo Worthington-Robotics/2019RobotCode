@@ -76,6 +76,7 @@ public class Arm extends Subsystem {
             periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.distMod);
         }
 
+
     }
 
     public void writePeriodicOutputs() {
@@ -175,19 +176,30 @@ public class Arm extends Subsystem {
     }
 
     public double getUltrasonicDistance() {
-
         if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
                 && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
                 (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            return (periodic.US1Dis + periodic.US2Dis) / 2;
+            if (!(periodic.US1Dis == Double.POSITIVE_INFINITY)){
+                if (!(periodic.US2Dis == Double.POSITIVE_INFINITY)){
+                    return (periodic.US1Dis + periodic.US2Dis) / 2;
+                }
+            } else {
+                if (!(periodic.US2Dis == Double.POSITIVE_INFINITY)){
+                    return periodic.US2Dis;
+                }
+            }
         } else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
                 && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
                 (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            return periodic.US2Dis;
+            if (!(periodic.US2Dis == Double.POSITIVE_INFINITY)){
+                return periodic.US2Dis;
+            }
         } else {
-
-            return periodic.US1Dis;
+            if (!(periodic.US1Dis == Double.POSITIVE_INFINITY)) {
+                return periodic.US1Dis;
+            }
         }
+        return -1;
     }
 
 
