@@ -34,7 +34,7 @@ public class AnglePID extends Action {
 
             angleController = new PIDController(Constants.ANGLE_KP, Constants.ANGLE_KI, Constants.ANGLE_KD, source, output);
             angleController.setSetpoint(desiredAngle);
-            angleController.setAbsoluteTolerance(0.1);
+            angleController.setAbsoluteTolerance(1.0);
             angleController.setOutputRange(-0.5, 0.5);
             angleController.enable();
         }
@@ -47,6 +47,7 @@ public class AnglePID extends Action {
     @Override
     public boolean isFinished() {
         if (angleController != null) {
+            SmartDashboard.putBoolean("vision/On Target", angleController.onTarget());
             return angleController.onTarget();
         }
         return true;
