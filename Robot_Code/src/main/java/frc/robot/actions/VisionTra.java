@@ -1,6 +1,6 @@
 package frc.robot.actions;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
 import frc.lib.geometry.Pose2dWithCurvature;
@@ -11,6 +11,7 @@ import frc.lib.trajectory.TrajectoryIterator;
 import frc.lib.trajectory.timing.CentripetalAccelerationConstraint;
 import frc.lib.trajectory.timing.TimedState;
 import frc.robot.planners.TraGenerator;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PoseEstimator;
 
@@ -21,19 +22,19 @@ import java.util.List;
 public class VisionTra extends Action {
     Trajectory<TimedState<Pose2dWithCurvature>> visionTra;
     private double distance;
-    private Ultrasonic US = new Ultrasonic(1, 0);
+    //private Ultrasonic US = new Ultrasonic(1, 0);
     private List<Pose2d> Points;
     private static final double minDist = 8;
     private static final double maxDist = 100;
 
     public VisionTra() {
-        US.setAutomaticMode(true);
-        US.setEnabled(true);
+        //US.setAutomaticMode(true);
+        //US.setEnabled(true);
     }
 
     public void onStart() {
         Pose2d currentPose = new Pose2d(PoseEstimator.getInstance().getLatestFieldToVehicle().getValue());
-        distance = US.getRangeInches();
+        distance = Arm.getInstance().getUltrasonicDistance();
         Points = new ArrayList<>();
         Points.add(currentPose);
         if (distance > 0) {
@@ -54,11 +55,11 @@ public class VisionTra extends Action {
     }
 
     public void onLoop() {
-        SmartDashboard.putNumber("ultrasonic/Distance", US.getRangeInches());
+        distance = Arm.getInstance().getUltrasonicDistance();
+        SmartDashboard.putNumber("ultrasonic/Distance", distance);
     }
 
     public boolean isFinished() {
-        distance = US.getRangeInches();
         return distance < minDist || distance > maxDist;
     }
 

@@ -29,24 +29,6 @@ public class Arm extends Subsystem {
     private ArmModes ArmMode = ArmModes.DirectControl;
     private Ultrasonic US1, US2;
 
-    /*private final Loop aloop = new Loop() {
-
-
-        public void onStart(double timestamp) {
-
-        }
-
-
-        public void onLoop(double timestamp) {
-
-        }
-
-
-        public void onStop(double timestamp) {
-
-        }
-    };*/
-
     private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
@@ -68,15 +50,11 @@ public class Arm extends Subsystem {
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
 
-        if (ArmMode == ArmModes.DirectControl) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 5;
-            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 5;
-        } else if (ArmMode == ArmModes.PID) {
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.proxMod);
-            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) * Constants.DRIVE_ENCODER_PPR / 4 * 3 - periodic.distMod);
+
         }
 
-    }
+
+
 
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
@@ -89,8 +67,9 @@ public class Arm extends Subsystem {
                 }
                 break;
             case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower, DemandType.ArbitraryFeedForward, Math.cos(periodic.proxRel - periodic.proxMod / 4096 * 2 * Math.PI) * Constants.ARM_PROX_A_FEEDFORWARD);
-                armDist.set(ControlMode.Position, periodic.armDistPower, DemandType.ArbitraryFeedForward, Math.cos(periodic.distRel - periodic.distMod / 4096 * 2 * Math.PI) * Constants.ARM_DIST_A_FEEDFORWARD);
+                //System.out.println("pid update");
+                armProx.set(ControlMode.Position, periodic.armProxPower);
+                armDist.set(ControlMode.Position, periodic.armDistPower);
                 break;
             case STATE_SPACE:
 
@@ -105,11 +84,15 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Prox Absolute", periodic.proxAbsolute);
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
+        SmartDashboard.putNumber("Arm/Prox Rel",periodic.proxRel);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
         SmartDashboard.putNumber("Arm/Dist Absolute", periodic.distAbsolute);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
+        SmartDashboard.putNumber("Arm/Dist Rel",periodic.distRel);
+        //
+        SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
     }
 
 
@@ -154,24 +137,22 @@ public class Arm extends Subsystem {
         if (periodic.armmode != ArmModes.PID) {
             periodic.armmode = ArmModes.PID;
         }
-        periodic.armProxPower = config.proximal * Constants.DRIVE_ENCODER_PPR * 3 / 4;
-        periodic.armDistPower = config.distal * Constants.DRIVE_ENCODER_PPR * 3 / 4;
+        periodic.armProxPower = config.proximal;
+        periodic.armDistPower = config.distal;
+        System.out.println("set PID Values");
+        System.out.println(periodic.armProxPower);
+        System.out.println(periodic.armDistPower);
+        /*periodic.armProxPower = config.proximal - periodic.proxMod;
+        periodic.armDistPower = config.distal - periodic.distMod;*/
     }
 
     public void setSSArmConfig(ArmConfiguration config) {
         if (periodic.armmode != ArmModes.STATE_SPACE) {
             periodic.armmode = ArmModes.STATE_SPACE;
         }
+        System.out.println(config.proximal);
         periodic.armProxPower = config.proximal;
         periodic.armDistPower = config.distal;
-    }
-
-    public void setArmProxPower(double Power) {
-        periodic.armProxPower = Power;
-    }
-
-    public void setArmDistPower(double Power) {
-        periodic.armDistPower = Power;
     }
 
     public double getUltrasonicDistance() {
@@ -194,7 +175,10 @@ public class Arm extends Subsystem {
     public enum ArmModes {
         DirectControl,
         PID,
-        STATE_SPACE
+        STATE_SPACE;
+        public String toString() {
+            return name().charAt(0) + name().substring(1).toLowerCase();
+        }
     }
 
     public class PeriodicIO {
@@ -222,7 +206,7 @@ public class Arm extends Subsystem {
         double proxRel = 0;
         double distRel = 0;
 
-        ArmModes armmode = ArmModes.DirectControl;
+        ArmModes armmode = ArmModes.PID;
     }
 
     public static class ArmConfiguration {
@@ -237,22 +221,22 @@ public class Arm extends Subsystem {
     }
 
     public enum armStates {
-        FWD_GROUND_CARGO(new Arm.ArmConfiguration(0,0)),
-        FWD_LOW_HATCH(new Arm.ArmConfiguration(0,0)),
-        FWD_LOW_CARGO(new Arm.ArmConfiguration(0,0)),
-        FWD_MEDIUM_HATCH(new Arm.ArmConfiguration(0,0)),
-        FWD_MEDIUM_CARGO(new Arm.ArmConfiguration(0,0)),
-        FWD_HIGH_HATCH(new Arm.ArmConfiguration(0,0)),
-        FWD_HIGH_CARGO(new Arm.ArmConfiguration(0,0)),
+        FWD_GROUND_CARGO(new Arm.ArmConfiguration(0, 0)),
+        FWD_LOW_HATCH(new Arm.ArmConfiguration(0, 0)),
+        FWD_LOW_CARGO(new Arm.ArmConfiguration(0, 0)),
+        FWD_MEDIUM_HATCH(new Arm.ArmConfiguration(0, 0)),
+        FWD_MEDIUM_CARGO(new Arm.ArmConfiguration(0, 0)),
+        FWD_HIGH_HATCH(new Arm.ArmConfiguration(0, 0)),
+        FWD_HIGH_CARGO(new Arm.ArmConfiguration(0, -512)),
 
-        REV_MEDIUM_HATCH(new Arm.ArmConfiguration(0,0)),
-        REV_MEDIUM_CARGO(new Arm.ArmConfiguration(0,0)),
-        REV_HIGH_HATCH(new Arm.ArmConfiguration(0,0)),
-        REV_HIGH_CARGO(new Arm.ArmConfiguration(0,0)),
-        REV_GROUND_CARGO(new Arm.ArmConfiguration(0,0)),
+        REV_MEDIUM_HATCH(new Arm.ArmConfiguration(0, 0)),
+        REV_MEDIUM_CARGO(new Arm.ArmConfiguration(0, 0)),
+        REV_HIGH_HATCH(new Arm.ArmConfiguration(0, 0)),
+        REV_HIGH_CARGO(new Arm.ArmConfiguration(0, 0)),
+        REV_GROUND_CARGO(new Arm.ArmConfiguration(0, 0)),
 
-        GROUND_HATCH(new Arm.ArmConfiguration(0,0)),
-        STOW_ARM(new Arm.ArmConfiguration(0,0));
+        GROUND_HATCH(new Arm.ArmConfiguration(0, 0)),
+        STOW_ARM(new Arm.ArmConfiguration(512, 512));
 
         private Arm.ArmConfiguration config;
 

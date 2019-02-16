@@ -17,7 +17,7 @@ public class TeleOPArmAction extends Action {
 
     @Override
     public void onStart() {
-
+        Arm.getInstance().setPIDArmConfig(a.getConfig());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class TeleOPArmAction extends Action {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
