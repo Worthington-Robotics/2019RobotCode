@@ -51,16 +51,15 @@ public class Arm extends Subsystem {
     private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
-        armWrist = new TalonSRX(Constants.ARM_WRIST);
-        /*US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
-        US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);*/
+        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
+        US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
     }
 
     public void readPeriodicInputs() {
         periodic.US1Past = periodic.US1Dis;
         periodic.US2Past = periodic.US2Dis;
-       /* periodic.US1Dis = US1.getDistance();
+        periodic.US1Dis = US1.getDistance();
         periodic.US2Dis = US2.getDistance();*/
         periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();

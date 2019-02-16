@@ -120,8 +120,8 @@ public class Constants {
     public static final double ANGLE_KI = 0; // 0.00125;
     public static final double ANGLE_KD = 0; // 0.1;
     //UltraSonic constants
-    public static final double US_UPDATE_RATE = 240 * .005;
-    public static final double US_SENSOR_OFFSET = 3;
+    public static final double US_UPDATE_RATE = 1.2;
+    public static final double US_SENSOR_OFFSET = 10;
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
