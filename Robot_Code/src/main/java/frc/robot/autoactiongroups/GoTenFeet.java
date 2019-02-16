@@ -1,10 +1,7 @@
 package frc.robot.autoactiongroups;
 
-import frc.lib.geometry.State;
 import frc.lib.statemachine.Action;
-import frc.lib.statemachine.ActionGroup;
 import frc.lib.statemachine.StateMachineDescriptor;
-import frc.lib.trajectory.Trajectory;
 import frc.robot.actions.DriveTra;
 import frc.robot.actions.ManipulatorAction;
 import frc.robot.planners.TraGenerator;
