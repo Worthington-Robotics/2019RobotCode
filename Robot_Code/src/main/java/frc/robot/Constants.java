@@ -6,12 +6,12 @@ import frc.robot.subsystems.Arm;
 
 public class Constants {
     //Talon IDs
-    public static final int DRIVE_FRONT_LEFT_ID = 3;
-    public static final int DRIVE_MIDDLE_LEFT_ID = 2;
-    public static final int DRIVE_BACK_LEFT_ID = 1;
-    public static final int DRIVE_FRONT_RIGHT_ID = 6;
-    public static final int DRIVE_MIDDLE_RIGHT_ID = 5;
-    public static final int DRIVE_BACK_RIGHT_ID = 4;
+    public static final int DRIVE_FRONT_LEFT_ID = 4;
+    public static final int DRIVE_MIDDLE_LEFT_ID = 5;
+    public static final int DRIVE_BACK_LEFT_ID = 6;
+    public static final int DRIVE_FRONT_RIGHT_ID = 1;
+    public static final int DRIVE_MIDDLE_RIGHT_ID = 2;
+    public static final int DRIVE_BACK_RIGHT_ID = 3;
     public static final int ARM_PRONOMINAL = 7;
     public static final int ARM_DISTAL = 8;
     public static final int ARM_WRIST = 9;
@@ -60,7 +60,7 @@ public class Constants {
     public static final double WristAbsoluteZero = 515;
 
     //Arm Configurations
-    public static final Arm.ArmConfiguration FWD_GROUND_HATCH = new Arm.ArmConfiguration(0,0,0);
+    public static final Arm.ArmConfiguration GROUND_HATCH = new Arm.ArmConfiguration(1936,-3048,206);
     public static final Arm.ArmConfiguration FWD_GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration FWD_LOW_HATCH = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration FWD_LOW_CARGO = new Arm.ArmConfiguration(0,0,0);
@@ -71,11 +71,11 @@ public class Constants {
 
     public static final Arm.ArmConfiguration STRAIGHT_UP = new Arm.ArmConfiguration(0,0,0);
 
-    public static final Arm.ArmConfiguration REV_GROUND_HATCH = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration REV_GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration REV_LOW_HATCH = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration REV_LOW_CARGO = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration REV_MEDIUM_HATCH = new Arm.ArmConfiguration(0,0,0);
+    //public static final Arm.ArmConfiguration REV_GROUND_HATCH = new Arm.ArmConfiguration(0,0,0);
+    //public static final Arm.ArmConfiguration REV_GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
+    //public static final Arm.ArmConfiguration REV_LOW_HATCH = new Arm.ArmConfiguration(0,0,0);
+    //public static final Arm.ArmConfiguration REV_LOW_CARGO = new Arm.ArmConfiguration(0,0,0);
+    public static final Arm.ArmConfiguration REV_MEDIUM_HATCH = new Arm.ArmConfiguration(1984,49,231);
     public static final Arm.ArmConfiguration REV_MEDUIM_CARGO = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration REV_HIGH_HATCH = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration REV_HIGH_CARGO = new Arm.ArmConfiguration(0,0,0);
@@ -133,7 +133,7 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
-    public static final int GROUND_HATCH = 13;
+    public static final int GROUND_HATCH_KEY = 13;
     public static final int GROUND_CARGO = 10;
     public static final int BOTTOM_HATCH = 15;
     public static final int BOTTOM_CARGO = 12;

@@ -41,8 +41,8 @@ public class Drive extends Subsystem {
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
-    private TalonSRX driveFrontLeft,  driveBackLeft, driveFrontRight;
-    private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackRight;
+    private TalonSRX driveFrontLeft,  driveBackRight, driveFrontRight;
+    private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackLeft;
     private Spark climbLeft, climbRight;
 
     private final Loop mLoop = new Loop() {
@@ -127,19 +127,13 @@ public class Drive extends Subsystem {
     public synchronized void writePeriodicOutputs() {
         if (mDriveControlState == DriveControlState.OPEN_LOOP || mDriveControlState == DriveControlState.ANGLE_PID || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
             driveFrontLeft.set(ControlMode.PercentOutput, periodic.left_demand);
-            driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
-            driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveFrontRight.set(ControlMode.PercentOutput, periodic.right_demand);
-            driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         } else {
             periodic.left_feedforward_whole = (periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0);
             periodic.right_feedforward_whole = (periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0);
             driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward, -periodic.left_feedforward_whole);
             driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward, -periodic.right_feedforward_whole);
-            driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
-            driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
-            driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
@@ -148,13 +142,13 @@ public class Drive extends Subsystem {
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
         }
-        /*if (!periodic.reversed) {
+        if (!periodic.reversed) {
             climbLeft.set(periodic.motorpower);
             climbRight.set(periodic.motorpower);
         } else {
             climbLeft.set(-periodic.motorpower);
             climbRight.set(-periodic.motorpower);
-        }*/
+        }
 
     }
 
@@ -162,16 +156,16 @@ public class Drive extends Subsystem {
         mMotionPlanner = new DriveMotionPlanner();
         driveFrontLeft = new TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
         driveMiddleLeft = new VictorSPX(Constants.DRIVE_MIDDLE_LEFT_ID);
-        driveBackLeft = new TalonSRX(Constants.DRIVE_BACK_LEFT_ID);
+        driveBackLeft = new VictorSPX(Constants.DRIVE_BACK_LEFT_ID);
         driveFrontRight = new TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
         driveMiddleRight = new VictorSPX(Constants.DRIVE_MIDDLE_RIGHT_ID);
-        driveBackRight = new VictorSPX(Constants.DRIVE_BACK_RIGHT_ID);
-        pigeonIMU = new PigeonIMU(driveBackLeft);
+        driveBackRight = new TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
+        pigeonIMU = new PigeonIMU(driveBackRight);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
-        /*climbLeft = new Spark(Constants.LEFT_CLIMB_ID);
-        climbRight = new Spark(Constants.RIGHT_CLIMB_ID);*/
+        climbLeft = new Spark(Constants.LEFT_CLIMB_ID);
+        climbRight = new Spark(Constants.RIGHT_CLIMB_ID);
     }
 
     public synchronized Rotation2d getHeading() {
@@ -248,11 +242,13 @@ public class Drive extends Subsystem {
         driveMiddleLeft.setNeutralMode(NeutralMode.Brake);
         driveMiddleLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveMiddleLeft.enableVoltageCompensation(true);
+        driveMiddleLeft.follow(driveFrontLeft);
 
         driveBackLeft.setInverted(false);
         driveBackLeft.setNeutralMode(NeutralMode.Brake);
         driveBackLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveBackLeft.enableVoltageCompensation(true);
+        driveBackLeft.follow(driveFrontLeft);
 
 
         driveFrontRight.setSensorPhase(true);
@@ -271,11 +267,13 @@ public class Drive extends Subsystem {
         driveMiddleRight.setNeutralMode(NeutralMode.Brake);
         driveMiddleRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveMiddleRight.enableVoltageCompensation(true);
+        driveMiddleRight.follow(driveFrontRight);
 
         driveBackRight.setInverted(true);
         driveBackRight.setNeutralMode(NeutralMode.Brake);
         driveBackRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveBackRight.enableVoltageCompensation(true);
+        driveBackRight.follow(driveFrontRight);
 
     }
 
@@ -385,7 +383,7 @@ public class Drive extends Subsystem {
         }
         return mMotionPlanner.isDone() || mOverrideTrajectory;
     }
-/*
+
     public void setReversed(boolean rever)
     {
         periodic.reversed = rever;
@@ -395,7 +393,7 @@ public class Drive extends Subsystem {
     {
         periodic.motorpower = MP;
     }
-*/
+
     public void outputTelemetry() {
         //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
@@ -470,8 +468,8 @@ public class Drive extends Subsystem {
         double right_distance = 0.0;
         double right_feedforward = 0.0;
         double right_feedforward_whole = 0.0;
-        /*double motorpower = 0;
-        boolean reversed = false;*/
+        double motorpower = 0;
+        boolean reversed = false;
         TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
 
     }
@@ -480,14 +478,14 @@ public class Drive extends Subsystem {
      * internal methods beyond this point
      */
 
-    private void gearShift() {
+    /*private void gearShift() {
         if ((getLeftLinearVelocity() + getRightLinearVelocity()) / 2 >= 10) {
             periodic.B2 = true;
         }
         if ((getLeftLinearVelocity() + getRightLinearVelocity()) / 2 <= 8) {
             periodic.B2 = false;
         }
-    }
+    }*/
 
     private static double rotationsToInches(double rotations) {
         return rotations * Math.PI * Constants.DRIVE_WHEEL_DIAMETER_INCHES ;

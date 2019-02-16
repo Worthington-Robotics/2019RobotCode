@@ -10,7 +10,7 @@ public class OI{
     public OI(){
         Button Vision = new JoystickButton(Constants.MASTER, 8);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
-        Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_HATCH);
+        Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_HATCH_KEY);
         Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_CARGO);
         Button BotHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.BOTTOM_HATCH);
         Button BotCargo = new JoystickButton(Constants.LAUNCH_PAD, Constants.BOTTOM_CARGO);
@@ -26,10 +26,6 @@ public class OI{
         Button AutoStopButton = new JoystickButton(Constants.LAUNCH_PAD, Constants.AUTO_STOP_BUTTON);
         Button Stow = new JoystickButton(Constants.LAUNCH_PAD,Constants.STOW_BUTTON);
 
-        GroundHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_HATCH, TeleOPArmAction.armStates.REV_GROUND_HATCH)));
-        GroundCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_GROUND_CARGO, TeleOPArmAction.armStates.REV_GROUND_CARGO)));
-        BotHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_LOW_HATCH, TeleOPArmAction.armStates.REV_LOW_HATCH)));
-        BotCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_LOW_CARGO, TeleOPArmAction.armStates.REV_LOW_CARGO)));
         MidHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_MEDIUM_HATCH, TeleOPArmAction.armStates.REV_MEDIUM_HATCH)));
         MidCargo.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_MEDIUM_CARGO, TeleOPArmAction.armStates.REV_MEDIUM_CARGO)));  
         TopHatch.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_HIGH_HATCH, TeleOPArmAction.armStates.REV_HIGH_HATCH)));
