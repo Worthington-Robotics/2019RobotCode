@@ -18,7 +18,7 @@ public class TraGenerator {
 
     private TraGenerator() {
         DMP = new DriveMotionPlanner();
-        DMP.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
+        //DMP.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
     }
 
     public static TraGenerator getInstance() {
@@ -36,7 +36,7 @@ public class TraGenerator {
     public Trajectory<TimedState<Pose2dWithCurvature>> getTenFeet() {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(new Pose2d(0, 0, Rotation2d.identity()));
-        Points.add(new Pose2d(120, 0, Rotation2d.identity()));
+        Points.add(new Pose2d(120, 0, Rotation2d.fromDegrees(0)));
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
     public Trajectory<TimedState<Pose2dWithCurvature>> getRightRocket() {

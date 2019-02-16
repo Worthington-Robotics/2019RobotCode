@@ -44,10 +44,10 @@ public class Constants {
     public static final double ROBOT_ANGULAR_DRAG = 12.0;  // N*m / (rad/sec) TODO tune
     public static final double ROBOT_MAX_VELOCITY = 120.0; // TODO tune & find units
     public static final double ROBOT_MAX_ACCEL = 120.0; // TODO tune & find units
-    public static final double ROBOT_MAX_VOLTAGE = 10.0; // V TODO tune
-    public static final double DRIVE_V_INTERCEPT = 1.4;  // V
-    public static final double DRIVE_Kv = 0.5234375;  // V per rad/s
-    public static final double DRIVE_Ka = 0.1;  // V per rad/s^2
+    public static final double ROBOT_MAX_VOLTAGE = 10.0; // V
+    public static final double DRIVE_V_INTERCEPT = 1.6;  // V
+    public static final double DRIVE_Kv = 0.316426;  // V per rad/s TODO REDETERMINE
+    public static final double DRIVE_Ka = 0.0801;  // V per rad/s^2    0.0801
     public static final double Path_Kx = 4.0;  //
     public static final double DRIVE_VCOMP = 10.0; //V
     public static final double PATH_LOOK_AHEAD_TIME = 0.4;  // seconds to look ahead along the path for steering
@@ -80,24 +80,25 @@ public class Constants {
     public static final Arm.ArmConfiguration REV_HIGH_HATCH = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration REV_HIGH_CARGO = new Arm.ArmConfiguration(0,0,0);
 
+    public static final Arm.ArmConfiguration STOW_ARM = new Arm.ArmConfiguration(0,0,0);
+
     //Shot powers
     public static final double SHOOT_POWER = 1;
-    public static final double ROLLOUT_POWER = .9;
-    public static final double DROP_POWER = .65;
     public static final double PICKUP_POWER = -.75;
     public static final double SLOWUP_POWER = -.65;
     public static final double STOP_POWER = 0;
+    public static final double CLIMB_POWER = 1;
 
     //PID Gain Constants
-    public static final double DRIVE_RIGHT_KP = .65;
-    public static final double DRIVE_RIGHT_KI = 0.0055;
-    public static final double DRIVE_RIGHT_KD = 24;
-    public static final double DRIVE_RIGHT_KF = .485;
+    public static final double DRIVE_RIGHT_KP = 1.2;
+    public static final double DRIVE_RIGHT_KI = 0.0;
+    public static final double DRIVE_RIGHT_KD = 20;
+    public static final double DRIVE_RIGHT_KF = 0.53; //.485
 
-    public static final double DRIVE_LEFT_KP = .62; // .0885
-    public static final double DRIVE_LEFT_KI = 0.005725;
-    public static final double DRIVE_LEFT_KD = 38;
-    public static final double DRIVE_LEFT_KF = .485;
+    public static final double DRIVE_LEFT_KP = 1.1; // .0885
+    public static final double DRIVE_LEFT_KI = 0.0; //NO INTEGRAL it masks deeper problems
+    public static final double DRIVE_LEFT_KD = 20; //10
+    public static final double DRIVE_LEFT_KF = 0.53;
 
     public static final double ARM_PROX_KP = 0.01;
     public static final double ARM_PROX_KI = 0;
@@ -125,13 +126,29 @@ public class Constants {
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
-    public static final double MP_TEST_SPEED = 24; //in /s
-    public static final boolean RAMPUP = false;
+    public static final double MP_TEST_SPEED = 72; //in /s
+    public static final boolean RAMPUP = true;
 
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
+    public static final int GROUND_HATCH = 13;
+    public static final int GROUND_CARGO = 10;
+    public static final int BOTTOM_HATCH = 15;
+    public static final int BOTTOM_CARGO = 12;
+    public static final int MID_HATCH = 16;
+    public static final int MID_CARGO = 4;
+    public static final int TOP_HATCH = 6;
+    public static final int TOP_CARGO = 2;
+    public static final int REVERSE_BUTTON = 9;
+    public static final int CLIMBER_FULL_POWER = 7;
+    public static final int CLIMBER_ANTI_FULL_POWER = 8;
+    public static final int CARGO_IN = 5;
+    public static final int CARGO_OUT = 11;
+    public static final int HATCH_OUT = 14;
+    public static final int AUTO_STOP_BUTTON = 1;
+    public static final int STOW_BUTTON = 3;
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
@@ -139,9 +156,6 @@ public class Constants {
     public static final String ROBOT_NAME = "Whatever_you_want";
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
-            "Drive/Left Demand",
-            "Drive/Right Demand",
-            "Drive/drivevels",
             "Drive/Pose/Theta",
             "Drive/Pose/X",
             "Drive/Pose/Y",
@@ -151,11 +165,16 @@ public class Constants {
             "Drive/Setpoint/Theta",
             "Drive/Setpoint/X",
             "Drive/Setpoint/Y",
-            "Drive/Right Talon Velocity",
+            "Drive/Left Demand",
+            "Drive/Right Demand",
             "Drive/Left Talon Velocity",
-            "Drive/Error/Right Talon Error",
+            "Drive/Right Talon Velocity",
             "Drive/Error/Left Talon Error",
-            "Drive/Left Talon Voltage II"
+            "Drive/Error/Right Talon Error",
+            "Drive/Misc/Left FeedForward",
+            "Drive/Misc/Right FeedForward",
+            "Drive/Left Talon Voltage Out",
+            "Drive/Right Talon Voltage Out"
     };
 }
 

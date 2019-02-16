@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
@@ -36,10 +37,10 @@ public class Drive extends Subsystem {
     private boolean mOverrideTrajectory = false;
     private PeriodicIO periodic;
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
-
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
     private WPI_TalonSRX driveFrontLeft, driveMiddleLeft, driveBackLeft, driveFrontRight, driveMiddleRight, driveBackRight;
+    private Spark climbLeft, climbRight;
 
     private final Loop mLoop = new Loop() {
 
@@ -63,8 +64,8 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = periodic.ramp_Up_Counter * .0025 + .1;
-                            periodic.right_demand = periodic.ramp_Up_Counter * .0025 + .1;
+                            periodic.left_demand = -(periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .000025 + .01);
+                            periodic.right_demand = -(periodic.ramp_Up_Counter * periodic.ramp_Up_Counter *.000025 + .01);
                             periodic.ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
                             periodic.left_demand = radiansPerSecondToTicksPer100ms(inchesPerSecondToRadiansPerSecond(Constants.MP_TEST_SPEED));
@@ -129,23 +130,28 @@ public class Drive extends Subsystem {
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         } else {
-            //TODO almost there with mp stuff
-            driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward,
-                    -(periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0));
-            driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward,
-                    -(periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0));
+            periodic.left_feedforward_whole = (periodic.left_feedforward + Constants.DRIVE_LEFT_KD * periodic.left_accl / 1023.0);
+            periodic.right_feedforward_whole = (periodic.right_feedforward + Constants.DRIVE_RIGHT_KD * periodic.right_accl / 1023.0);
+            driveFrontLeft.set(ControlMode.Velocity, -periodic.left_demand, DemandType.ArbitraryFeedForward, -periodic.left_feedforward_whole);
+            driveFrontRight.set(ControlMode.Velocity, -periodic.right_demand, DemandType.ArbitraryFeedForward, -periodic.right_feedforward_whole);
             driveMiddleLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveBackLeft.set(ControlMode.Follower, driveFrontLeft.getDeviceID());
             driveMiddleRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
-        if (periodic.B2) {        reset();
-
+        if (periodic.B2) {
             trans.set(DoubleSolenoid.Value.kForward);
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
         }
+        /*if (!periodic.reversed) {
+            climbLeft.set(periodic.motorpower);
+            climbRight.set(periodic.motorpower);
+        } else {
+            climbLeft.set(-periodic.motorpower);
+            climbRight.set(-periodic.motorpower);
+        }*/
 
     }
 
@@ -160,6 +166,9 @@ public class Drive extends Subsystem {
         pigeonIMU = new PigeonIMU(driveBackLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
+        reset();
+        /*climbLeft = new Spark(Constants.LEFT_CLIMB_ID);
+        climbRight = new Spark(Constants.RIGHT_CLIMB_ID);*/
     }
 
     public synchronized Rotation2d getHeading() {
@@ -208,7 +217,7 @@ public class Drive extends Subsystem {
     public void reset() {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
-        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.FEEDFORWARD_ONLY);
+        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.NONLINEAR_FEEDBACK);
         periodic = new PeriodicIO();
         setHeading(Rotation2d.fromDegrees(0));
         resetEncoders();
@@ -281,8 +290,8 @@ public class Drive extends Subsystem {
             periodic.path_setpoint = mMotionPlanner.setpoint();
 
             if (!mOverrideTrajectory) {
-                DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(output.right_velocity),
-                        radiansPerSecondToTicksPer100ms(output.left_velocity));
+                DriveSignal signal = new DriveSignal(radiansPerSecondToTicksPer100ms(output.left_velocity),
+                        radiansPerSecondToTicksPer100ms(output.right_velocity));
 
                 setVelocity(signal, new DriveSignal(output.left_feedforward_voltage / 12, output.right_feedforward_voltage / 12));
                 periodic.left_accl = radiansPerSecondToTicksPer100ms(output.left_accel) / 1000;
@@ -373,7 +382,17 @@ public class Drive extends Subsystem {
         }
         return mMotionPlanner.isDone() || mOverrideTrajectory;
     }
+/*
+    public void setReversed(boolean rever)
+    {
+        periodic.reversed = rever;
+    }
 
+    public void setMotorPower(double MP)
+    {
+        periodic.motorpower = MP;
+    }
+*/
     public void outputTelemetry() {
         //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
@@ -390,8 +409,7 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Left Demand", periodic.left_demand);
         SmartDashboard.putNumber("Drive/Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Drive/Error/Left Talon Error", periodic.leftError);
-        SmartDashboard.putNumber("Drive/Left Talon Voltage", driveFrontLeft.getBusVoltage());
-        SmartDashboard.putNumber("Drive/Left Talon Voltage II", driveFrontLeft.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Left Talon Voltage Out", driveFrontLeft.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Left Encoder Counts", periodic.left_pos_ticks);
         SmartDashboard.putNumber("Drive/Misc/Left FeedForward", periodic.left_feedforward);
         SmartDashboard.putNumber("Drive/Misc/Left Acceleration", periodic.left_accl);
@@ -400,19 +418,17 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Right Demand", periodic.right_demand);
         SmartDashboard.putNumber("Drive/Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.rightError);
-        SmartDashboard.putNumber("Drive/Right Talon Voltage", driveFrontRight.getBusVoltage());
-        SmartDashboard.putNumber("Drive/Right Talon Voltage II", driveFrontRight.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Right Talon Voltage Out", driveFrontRight.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
         SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
+
+        SmartDashboard.putNumber("Drive/Left Feedforward whole", periodic.left_feedforward_whole);
+        SmartDashboard.putNumber("Drive/Right Feedforward whole", periodic.right_feedforward_whole);
     }
 
     public void registerEnabledLoops(ILooper enabledLooper) {
         enabledLooper.register(mLoop);
-    }
-
-    public void stop() {
-
     }
 
     enum DriveControlState {
@@ -445,10 +461,14 @@ public class Drive extends Subsystem {
         double left_demand = 0.0;
         double left_distance = 0.0;
         double left_feedforward = 0.0;
+        double left_feedforward_whole = 0.0;
         double right_accl = 0.0;
         double right_demand = 0.0;
         double right_distance = 0.0;
         double right_feedforward = 0.0;
+        double right_feedforward_whole = 0.0;
+        /*double motorpower = 0;
+        boolean reversed = false;*/
         TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
 
     }

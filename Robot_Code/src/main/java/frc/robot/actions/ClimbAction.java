@@ -4,26 +4,19 @@ import edu.wpi.first.wpilibj.Spark;
 import frc.lib.statemachine.Action;
 import frc.robot.Constants;
 
+import frc.robot.subsystems.Drive;
+
 public class ClimbAction extends Action {
-    boolean reversed;
-    double motorpower;
-    Spark climbLeft, climbRight;
+    private boolean reversed;
+    private double motorpower;
     public ClimbAction(boolean reversed, double motorpower) {
-        climbLeft = new Spark(Constants.LEFT_CLIMB_ID);
-        climbRight = new Spark(Constants.RIGHT_CLIMB_ID);
-
-        if (!reversed) {
-            climbLeft.set(motorpower);
-            climbRight.set(motorpower);
-        } else {
-            climbLeft.set(-motorpower);
-            climbRight.set(-motorpower);
-        }
-
+        this.reversed = reversed;
+        this.motorpower = motorpower;
     }
     @Override
     public void onStart() {
-
+        /*Drive.getInstance().setReversed(reversed);
+        Drive.getInstance().setMotorPower(motorpower);*/
     }
 
     @Override
@@ -38,6 +31,8 @@ public class ClimbAction extends Action {
 
     @Override
     public void onStop() {
+
+    /*Drive.getInstance().setMotorPower(0);*/
 
     }
 }

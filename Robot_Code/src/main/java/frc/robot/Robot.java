@@ -14,6 +14,7 @@ import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
 import frc.robot.autoactiongroups.FrontOfCargo;
+import frc.robot.autoactiongroups.GoTenFeet;
 import frc.robot.subsystems.*;
 
 import java.util.Arrays;
@@ -56,10 +57,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    PoseEstimator.getInstance().reset();
+    Drive.getInstance().reset();
     EnabledLoops.start();
     DisabledLoops.stop();
-    StateMachine.runMachine(new FrontOfCargo());
-
+    StateMachine.runMachine(new GoTenFeet());
   }
 
   @Override
@@ -69,6 +71,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    PoseEstimator.getInstance().reset();
+    Drive.getInstance().reset();
     EnabledLoops.start();
     DisabledLoops.stop();
     Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
@@ -83,6 +87,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     EnabledLoops.start();
     DisabledLoops.stop();
+    Drive.getInstance().reset();
   }
 
   @Override
@@ -94,7 +99,5 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     EnabledLoops.stop();
     DisabledLoops.start();
-    Drive.getInstance().reset();
-    PoseEstimator.getInstance().reset();
   }
 }
