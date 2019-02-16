@@ -24,6 +24,7 @@ public class TraGenerator {
     public static TraGenerator getInstance() {
         return m_instance;
     }
+
     public Trajectory<TimedState<Pose2dWithCurvature>> generateTrajectory(
             boolean reversed,
             final List<Pose2d> waypoints,
@@ -33,16 +34,27 @@ public class TraGenerator {
             double max_voltage) {
         return DMP.generateTrajectory(reversed, waypoints, constraints, 0.0, 0.0, max_vel, max_accel, max_voltage);
     }
+
     public Trajectory<TimedState<Pose2dWithCurvature>> getTenFeet() {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(new Pose2d(0, 0, Rotation2d.identity()));
         Points.add(new Pose2d(120, 0, Rotation2d.fromDegrees(0)));
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
+
     public Trajectory<TimedState<Pose2dWithCurvature>> getRightRocket() {
         List<Pose2d> Points = new ArrayList<>();
-        Points.add(new Pose2d(0,0, Rotation2d.fromDegrees(0)));
+        Points.add(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
         Points.add(new Pose2d(108, 132, Rotation2d.fromDegrees(45)));
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36,60,10);
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
     }
+
+    public Trajectory<TimedState<Pose2dWithCurvature>> autoTestProcedure() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
+        Points.add(new Pose2d(40, 0, Rotation2d.fromDegrees(0)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+
+    }
+
 }

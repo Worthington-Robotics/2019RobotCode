@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -39,7 +41,8 @@ public class Drive extends Subsystem {
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
-    private WPI_TalonSRX driveFrontLeft, driveMiddleLeft, driveBackLeft, driveFrontRight, driveMiddleRight, driveBackRight;
+    private TalonSRX driveFrontLeft,  driveBackLeft, driveFrontRight;
+    private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackRight;
     private Spark climbLeft, climbRight;
 
     private final Loop mLoop = new Loop() {
@@ -157,12 +160,12 @@ public class Drive extends Subsystem {
 
     private Drive() {
         mMotionPlanner = new DriveMotionPlanner();
-        driveFrontLeft = new WPI_TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
-        driveMiddleLeft = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_LEFT_ID);
-        driveBackLeft = new WPI_TalonSRX(Constants.DRIVE_BACK_LEFT_ID);
-        driveFrontRight = new WPI_TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
-        driveMiddleRight = new WPI_TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
-        driveBackRight = new WPI_TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
+        driveFrontLeft = new TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
+        driveMiddleLeft = new VictorSPX(Constants.DRIVE_MIDDLE_LEFT_ID);
+        driveBackLeft = new TalonSRX(Constants.DRIVE_BACK_LEFT_ID);
+        driveFrontRight = new TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
+        driveMiddleRight = new VictorSPX(Constants.DRIVE_MIDDLE_RIGHT_ID);
+        driveBackRight = new VictorSPX(Constants.DRIVE_BACK_RIGHT_ID);
         pigeonIMU = new PigeonIMU(driveBackLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();

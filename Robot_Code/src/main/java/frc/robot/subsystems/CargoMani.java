@@ -10,7 +10,7 @@ public class CargoMani extends Subsystem {
     private Spark topMotor;
     private Spark bottomMotor;
 
-    private CargoMani() {
+    public CargoMani() {
         topMotor = new Spark(Constants.TOP_CARGOMANIP_ID);
         bottomMotor = new Spark(Constants.BOTTOM_CARGOMANIP_ID);
         periodic = new PeriodicIO();
