@@ -3,11 +3,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
+import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.actions.*;
+import frc.robot.autoactiongroups.AutoDockStateMachine;
 
 public class OI{
 
     public OI(){
+        Button AllAction = new JoystickButton(Constants.MASTER, 1);
         Button Vision = new JoystickButton(Constants.MASTER, 8);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, Constants.GROUND_HATCH_KEY);
@@ -38,7 +41,8 @@ public class OI{
         AutoStopButton.whileHeld(Action.toCommand(new AStopAction()));
         Stow.whileHeld(Action.toCommand(new TeleOPArmAction(TeleOPArmAction.armStates.FWD_STOW_ARM, TeleOPArmAction.armStates.FWD_STOW_ARM) ));
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
-        Vision.whenPressed(Action.toCommand(new VisionTra()));
+        Vision.whileHeld(Action.toCommand(new VisionTra()));
+        AllAction.whileHeld(Action.toCommand(new StateMachineRunner(new AutoDockStateMachine())));
     }
 
 }

@@ -1,7 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.lib.statemachine.StateMachineDescriptor;
 import frc.lib.util.HIDHelper;
+import frc.robot.actions.VisionTra;
 import frc.robot.subsystems.Arm;
 
 public class Constants {
