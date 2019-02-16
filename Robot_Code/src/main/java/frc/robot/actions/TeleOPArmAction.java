@@ -35,8 +35,8 @@ public class TeleOPArmAction extends Action {
 
     }
     public enum armStates {
-        FWD_GROUND_HATCH(Constants.GROUND_HATCH),
-        FWD_GROUND_CARGO(Constants.FWD_GROUND_CARGO),
+        REV_GROUND_HATCH(Constants.GROUND_HATCH),
+        REV_GROUND_CARGO(Constants.GROUND_CARGO),
         FWD_LOW_HATCH(Constants.FWD_LOW_HATCH),
         FWD_LOW_CARGO(Constants.FWD_LOW_CARGO),
         FWD_MEDIUM_HATCH(Constants.FWD_MEDIUM_HATCH),

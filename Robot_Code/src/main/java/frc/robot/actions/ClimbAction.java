@@ -15,8 +15,8 @@ public class ClimbAction extends Action {
     }
     @Override
     public void onStart() {
-        /*Drive.getInstance().setReversed(reversed);
-        Drive.getInstance().setMotorPower(motorpower);*/
+        Drive.getInstance().setReversed(reversed);
+        Drive.getInstance().setMotorPower(motorpower);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ClimbAction extends Action {
     @Override
     public void onStop() {
 
-    /*Drive.getInstance().setMotorPower(0);*/
+    Drive.getInstance().setMotorPower(0);
 
     }
 }

@@ -63,7 +63,7 @@ public class Constants {
 
     //Arm Configurations
     public static final Arm.ArmConfiguration GROUND_HATCH = new Arm.ArmConfiguration(1936,-3048,206);
-    public static final Arm.ArmConfiguration FWD_GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
+    public static final Arm.ArmConfiguration GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration FWD_LOW_HATCH = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration FWD_LOW_CARGO = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration FWD_MEDIUM_HATCH = new Arm.ArmConfiguration(0,0,0);
@@ -73,10 +73,7 @@ public class Constants {
 
     public static final Arm.ArmConfiguration STRAIGHT_UP = new Arm.ArmConfiguration(0,0,0);
 
-    //public static final Arm.ArmConfiguration REV_GROUND_HATCH = new Arm.ArmConfiguration(0,0,0);
-    //public static final Arm.ArmConfiguration REV_GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
-    //public static final Arm.ArmConfiguration REV_LOW_HATCH = new Arm.ArmConfiguration(0,0,0);
-    //public static final Arm.ArmConfiguration REV_LOW_CARGO = new Arm.ArmConfiguration(0,0,0);
+
     public static final Arm.ArmConfiguration REV_MEDIUM_HATCH = new Arm.ArmConfiguration(1984,49,231);
     public static final Arm.ArmConfiguration REV_MEDUIM_CARGO = new Arm.ArmConfiguration(0,0,0);
     public static final Arm.ArmConfiguration REV_HIGH_HATCH = new Arm.ArmConfiguration(0,0,0);
@@ -136,7 +133,7 @@ public class Constants {
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
     public static final int GROUND_HATCH_KEY = 13;
-    public static final int GROUND_CARGO = 10;
+    public static final int GROUND_CARGO_KEY = 10;
     public static final int BOTTOM_HATCH = 15;
     public static final int BOTTOM_CARGO = 12;
     public static final int MID_HATCH = 16;
