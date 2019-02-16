@@ -21,11 +21,6 @@ public class SubsystemManager implements ILooper {
         mAllSubsystems.forEach((s) -> s.outputTelemetry());
     }
 
-    public void writeToLog() {
-        mAllSubsystems.forEach((s) -> s.writeToLog());
-    }
-
-
     private class EnabledLoop implements Loop {
 
         @Override

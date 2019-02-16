@@ -1,21 +1,15 @@
 package frc.robot.actions;
 
-import edu.wpi.first.wpilibj.Spark;
 import frc.lib.statemachine.Action;
-import frc.robot.Constants;
-
 import frc.robot.subsystems.Drive;
 
 public class ClimbAction extends Action {
-    private boolean reversed;
     private double motorpower;
-    public ClimbAction(boolean reversed, double motorpower) {
-        this.reversed = reversed;
+    public ClimbAction(double motorpower) {
         this.motorpower = motorpower;
     }
     @Override
     public void onStart() {
-        Drive.getInstance().setReversed(reversed);
         Drive.getInstance().setMotorPower(motorpower);
     }
 
@@ -31,8 +25,6 @@ public class ClimbAction extends Action {
 
     @Override
     public void onStop() {
-
-    Drive.getInstance().setMotorPower(0);
-
+        Drive.getInstance().setMotorPower(0);
     }
 }

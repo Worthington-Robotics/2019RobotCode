@@ -115,10 +115,6 @@ public class Logger extends Subsystem {
         // no OP
     }
 
-    public void stop() {
-        // no OP
-    }
-
     @Override
     public void reset() {
         // no OP

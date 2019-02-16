@@ -4,10 +4,6 @@ import frc.lib.loops.ILooper;
 
 public abstract class Subsystem {
 
-    public void writeToLog() {
-    }
-
-
     /**
      * Updates all periodic variables and sensors
      */

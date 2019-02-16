@@ -104,11 +104,6 @@ public class PoseEstimator extends Subsystem {
         SmartDashboard.putNumber("Drive/Pose/Theta", odometry.getRotation().getDegrees());
     }
 
-
-    public void stop() {
-
-    }
-
     @Override
     public void reset() {
         reset(Timer.getFPGATimestamp(), Pose2d.identity());

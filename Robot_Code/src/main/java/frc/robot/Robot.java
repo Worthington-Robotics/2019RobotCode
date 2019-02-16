@@ -26,77 +26,76 @@ import java.util.Arrays;
  * project.
  */
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
-  private SubsystemManager Manager = new SubsystemManager(Arrays.asList(
+    /**
+    * This function is run when the robot is first started up and should be used
+    * for any initialization code.
+    */
+    private SubsystemManager Manager = new SubsystemManager(Arrays.asList(
           Drive.getInstance(),
-          Manipulator.getInstance(),
-          Alien.getInstance(),
-          Arm.getInstance(),
           PoseEstimator.getInstance(),
+          Manipulator.getInstance(),
+          Arm.getInstance(),
           Logger.getInstance()
-  ));
-  private Looper EnabledLoops = new Looper();
-  private Looper DisabledLoops = new Looper();
-  private OI Oi = new OI();
+    ));
+    private Looper EnabledLoops = new Looper();
+    private Looper DisabledLoops = new Looper();
+    private OI Oi = new OI();
 
-  public void robotPeriodic(){
+    public void robotPeriodic(){
     Manager.outputTelemetry();
-  }
+    }
 
-  @Override
-  public void robotInit() {
-      VersionData.doVersionID();
-      Manager.registerEnabledLoops(EnabledLoops);
-      Manager.registerDisabledLoops(DisabledLoops);
-      Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
-  }
+    @Override
+    public void robotInit() {
+        VersionData.doVersionID();
+        Manager.registerEnabledLoops(EnabledLoops);
+        Manager.registerDisabledLoops(DisabledLoops);
+        Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
+    }
 
-  @Override
-  public void autonomousInit() {
-    PoseEstimator.getInstance().reset();
-    Drive.getInstance().reset();
-    EnabledLoops.start();
-    DisabledLoops.stop();
-    StateMachine.runMachine(new GoTenFeet());
-  }
+    @Override
+    public void autonomousInit() {
+        PoseEstimator.getInstance().reset();
+        Drive.getInstance().reset();
+        EnabledLoops.start();
+        DisabledLoops.stop();
+        StateMachine.runMachine(new GoTenFeet());
+    }
 
-  @Override
-  public void autonomousPeriodic() {
+    @Override
+    public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-  }
+    }
 
-  @Override
-  public void teleopInit() {
-    PoseEstimator.getInstance().reset();
-    Drive.getInstance().reset();
-    EnabledLoops.start();
-    DisabledLoops.stop();
-    Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
-  }
+    @Override
+    public void teleopInit() {
+        PoseEstimator.getInstance().reset();
+        Drive.getInstance().reset();
+        EnabledLoops.start();
+        DisabledLoops.stop();
+        Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
+    }
 
-  @Override
-  public void teleopPeriodic() {
+    @Override
+    public void teleopPeriodic() {
     Scheduler.getInstance().run();
-  }
+    }
 
-  @Override
-  public void testInit() {
-    EnabledLoops.start();
-    DisabledLoops.stop();
-    Drive.getInstance().reset();
-  }
+    @Override
+    public void testInit() {
+        EnabledLoops.start();
+        DisabledLoops.stop();
+        Drive.getInstance().reset();
+    }
 
-  @Override
-  public void testPeriodic() {
+    @Override
+    public void testPeriodic() {
     Scheduler.getInstance().run();
-  }
+    }
 
-  @Override
-  public void disabledInit() {
-    EnabledLoops.stop();
-    DisabledLoops.start();
-  }
+    @Override
+    public void disabledInit() {
+        EnabledLoops.stop();
+        DisabledLoops.start();
+    }
 }

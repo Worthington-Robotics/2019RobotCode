@@ -25,8 +25,8 @@ public class Constants {
     public static final int RIGHT_CLIMB_ID = 4;
 
     //Solenoid Ports
-    public static final int TRANS_LOW_ID = 0;
-    public static final int TRANS_HIGH_ID = 1;
+    //public static final int TRANS_LOW_ID = 0;
+    //public static final int TRANS_HIGH_ID = 1;
     public static final int ALIEN_1_LOW_ID = 2;
     public static final int ALIEN_1_HIGH_ID = 3;
 
@@ -61,26 +61,6 @@ public class Constants {
     public static final double DistAbsoluteZero = 2733;
     public static final double WristAbsoluteZero = 515;
 
-    //Arm Configurations
-    public static final Arm.ArmConfiguration GROUND_HATCH = new Arm.ArmConfiguration(1936,-3048,206);
-    public static final Arm.ArmConfiguration GROUND_CARGO = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration FWD_LOW_HATCH = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration FWD_LOW_CARGO = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration FWD_MEDIUM_HATCH = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration FWD_MEDUIM_CARGO = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration FWD_HIGH_HATCH = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration FWD_HIGH_CARGO = new Arm.ArmConfiguration(0,0,0);
-
-    public static final Arm.ArmConfiguration STRAIGHT_UP = new Arm.ArmConfiguration(0,0,0);
-
-
-    public static final Arm.ArmConfiguration REV_MEDIUM_HATCH = new Arm.ArmConfiguration(1984,49,231);
-    public static final Arm.ArmConfiguration REV_MEDUIM_CARGO = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration REV_HIGH_HATCH = new Arm.ArmConfiguration(0,0,0);
-    public static final Arm.ArmConfiguration REV_HIGH_CARGO = new Arm.ArmConfiguration(0,0,0);
-
-    public static final Arm.ArmConfiguration STOW_ARM = new Arm.ArmConfiguration(0,0,0);
-
     //Shot powers
     public static final double SHOOT_POWER = 1;
     public static final double PICKUP_POWER = -.75;
@@ -104,17 +84,11 @@ public class Constants {
     public static final double ARM_PROX_KD = 0;
     public static final double ARM_PROX_KF = 0;
     public static final double ARM_PROX_A_FEEDFORWARD = 1;
-    public static final double ARM_DIST_A_FEEDFORWARD = 1;
-    public static final double ARM_WRIST_A_FEEDFORWARD = 1;
     public static final double ARM_DIST_KP = 0.01;
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;
     public static final double ARM_DIST_KF = 0;
-    public static final double ARM_WRIST_KP = 0.01;
-    public static final double ARM_WRIST_KI = 0;
-    public static final double ARM_WRIST_KD = 0;
-    public static final double ARM_WRIST_KF = 0;
-
+    public static final double ARM_DIST_A_FEEDFORWARD = 1;
 
     public static final double ANGLE_KP = 0.04; // 0.065;
     public static final double ANGLE_KI = 0; // 0.00125;
@@ -132,22 +106,6 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
-    public static final int GROUND_HATCH_KEY = 13;
-    public static final int GROUND_CARGO_KEY = 10;
-    public static final int BOTTOM_HATCH = 15;
-    public static final int BOTTOM_CARGO = 12;
-    public static final int MID_HATCH = 16;
-    public static final int MID_CARGO = 4;
-    public static final int TOP_HATCH = 6;
-    public static final int TOP_CARGO = 2;
-    public static final int REVERSE_BUTTON = 9;
-    public static final int CLIMBER_FULL_POWER = 7;
-    public static final int CLIMBER_ANTI_FULL_POWER = 8;
-    public static final int CARGO_IN = 5;
-    public static final int CARGO_OUT = 11;
-    public static final int HATCH_OUT = 14;
-    public static final int AUTO_STOP_BUTTON = 1;
-    public static final int STOW_BUTTON = 3;
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds

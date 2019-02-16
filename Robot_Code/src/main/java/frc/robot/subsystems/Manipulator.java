@@ -14,9 +14,8 @@ public class Manipulator extends Subsystem {
     public Manipulator() {
         topMotor = new Spark(Constants.TOP_CARGOMANIP_ID);
         bottomMotor = new Spark(Constants.BOTTOM_CARGOMANIP_ID);
-        periodic = new PeriodicIO();
         AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID, Constants.ALIEN_1_HIGH_ID);
-        periodic.tState = DoubleSolenoid.Value.kForward;
+        reset();
     }
 
     public static Manipulator getInstance() {
@@ -45,6 +44,7 @@ public class Manipulator extends Subsystem {
 
 
     public void reset() {
+        periodic = new PeriodicIO();
         topMotor.set(0);
         bottomMotor.set(0);
         AlienOne.set(DoubleSolenoid.Value.kOff);
