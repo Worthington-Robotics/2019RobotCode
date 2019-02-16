@@ -13,7 +13,6 @@ import frc.lib.statemachine.StateMachine;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
-import frc.robot.autoactiongroups.FrontOfCargo;
 import frc.robot.autoactiongroups.GoTenFeet;
 import frc.robot.subsystems.*;
 
@@ -33,7 +32,7 @@ public class Robot extends TimedRobot {
    */
   private SubsystemManager Manager = new SubsystemManager(Arrays.asList(
           Drive.getInstance(),
-          CargoMani.getInstance(),
+          Manipulator.getInstance(),
           Alien.getInstance(),
           Arm.getInstance(),
           PoseEstimator.getInstance(),

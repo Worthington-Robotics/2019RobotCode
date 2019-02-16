@@ -2,7 +2,7 @@ package frc.robot.actions;
 
 import frc.lib.statemachine.Action;
 import frc.robot.Constants;
-import frc.robot.subsystems.CargoMani;
+import frc.robot.subsystems.Manipulator;
 
 public class ManipulatorAction extends Action {
     private ShotPower speed;
@@ -12,7 +12,7 @@ public class ManipulatorAction extends Action {
     }
 
     public void onStart() {
-        CargoMani.getInstance().setShotPower(speed.shotpower);
+        Manipulator.getInstance().setShotPower(speed.shotpower);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ManipulatorAction extends Action {
 
     @Override
     public void onStop() {
-        CargoMani.getInstance().setShotPower(ShotPower.Stop.shotpower);
+        Manipulator.getInstance().setShotPower(ShotPower.Stop.shotpower);
     }
 
     public enum ShotPower {
