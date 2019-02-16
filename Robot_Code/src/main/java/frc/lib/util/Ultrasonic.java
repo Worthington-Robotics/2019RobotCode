@@ -16,8 +16,9 @@ public class Ultrasonic {
     }
 
     public void update(){
-        outputPin.pulse(0.001); //1 ms pulse
-        distance = inputPin.getPeriod() / 148;
+        outputPin.set(true);
+        distance = inputPin.getPeriod()*1000000/148;
+        outputPin.set(false);
     }
 
     public double getDistance(){
