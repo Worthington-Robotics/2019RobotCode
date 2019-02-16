@@ -42,7 +42,7 @@ public class Drive extends Subsystem {
     private PigeonIMU pigeonIMU;
     private DoubleSolenoid trans;
     private TalonSRX driveFrontLeft,  driveBackLeft, driveFrontRight;
-    private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackRight;
+    private TalonSRX driveMiddleLeft, driveMiddleRight, driveBackRight;
     private Spark climbLeft, climbRight;
 
     private final Loop mLoop = new Loop() {
@@ -161,11 +161,11 @@ public class Drive extends Subsystem {
     private Drive() {
         mMotionPlanner = new DriveMotionPlanner();
         driveFrontLeft = new TalonSRX(Constants.DRIVE_FRONT_LEFT_ID);
-        driveMiddleLeft = new VictorSPX(Constants.DRIVE_MIDDLE_LEFT_ID);
+        driveMiddleLeft = new TalonSRX(Constants.DRIVE_MIDDLE_LEFT_ID);
         driveBackLeft = new TalonSRX(Constants.DRIVE_BACK_LEFT_ID);
         driveFrontRight = new TalonSRX(Constants.DRIVE_FRONT_RIGHT_ID);
-        driveMiddleRight = new VictorSPX(Constants.DRIVE_MIDDLE_RIGHT_ID);
-        driveBackRight = new VictorSPX(Constants.DRIVE_BACK_RIGHT_ID);
+        driveMiddleRight = new TalonSRX(Constants.DRIVE_MIDDLE_RIGHT_ID);
+        driveBackRight = new TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
         pigeonIMU = new PigeonIMU(driveBackLeft);
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
