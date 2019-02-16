@@ -7,8 +7,8 @@ import frc.robot.subsystems.Drive;
 
 public class AnglePIDOutput implements PIDOutput {
 
-    private static final double MIN_OUTPUT = 0.3;
-    private static final double THRESHOLD = 0.07;
+    private static final double MIN_OUTPUT = 0.31;
+    private static final double THRESHOLD = 0.13;
 
     @Override
     public void pidWrite(double output) {
