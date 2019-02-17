@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         VersionData.doVersionID();
+        Arm.getInstance().reset();
         Manager.registerEnabledLoops(EnabledLoops);
         Manager.registerDisabledLoops(DisabledLoops);
         Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);

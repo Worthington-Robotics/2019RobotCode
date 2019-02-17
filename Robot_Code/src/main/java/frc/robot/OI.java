@@ -43,9 +43,9 @@ public class OI{
         MidCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_MEDIUM_CARGO, Arm.armStates.REV_MEDIUM_CARGO)));
         TopHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_HIGH_HATCH, Arm.armStates.REV_HIGH_HATCH)));
         TopCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_HIGH_CARGO, Arm.armStates.REV_HIGH_CARGO)));
-        CargoIn.whenPressed(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
-        CargoOut.whenPressed(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
-        HatchOut.whenPressed(Action.toCommand(new AlienAction()));
+        CargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
+        CargoOut.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
+        HatchOut.whileHeld(Action.toCommand(new AlienAction()));
         ClimbFullUp.whenPressed(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
         ClimbFullDown.whenPressed(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         AutoStopButton.whenPressed(Action.toCommand(new AStopAction()));

@@ -26,7 +26,6 @@ public class Arm extends Subsystem {
 
     private TalonSRX armProx, armDist;
     private PeriodicIO periodic;
-    private ArmModes ArmMode = ArmModes.DirectControl;
     private Ultrasonic US1, US2;
 
     private Arm() {
@@ -46,6 +45,8 @@ public class Arm extends Subsystem {
         periodic.distError = armDist.getClosedLoopError();
         periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
+        periodic.distAbsolute = armDist.getSelectedSensorPosition();
+        periodic.proxAbsolute = armProx.getSelectedSensorPosition();
 
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
@@ -119,6 +120,7 @@ public class Arm extends Subsystem {
         armProx.setNeutralMode(NeutralMode.Brake);
         armProx.configVoltageCompSaturation(10);
         armProx.enableVoltageCompensation(true);
+        armProx.setSensorPhase(false);
         //
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.setSensorPhase(true);
@@ -131,6 +133,7 @@ public class Arm extends Subsystem {
         armDist.setNeutralMode(NeutralMode.Brake);
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
+        armDist.setSensorPhase(false);
     }
 
     public void setPIDArmConfig(ArmConfiguration config) {
@@ -189,8 +192,8 @@ public class Arm extends Subsystem {
         double armProxPower = 0;
         double armDistPower = 0;
         //->||\TALON ANGLES ABSOLUTE
-        double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
-        double distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
+        double proxAbsolute = armProx.getSelectedSensorPosition();
+        double distAbsolute = armDist.getSelectedSensorPosition();
         //TALON MODS
         double proxMod = 0;
         double distMod = 0;
@@ -221,13 +224,13 @@ public class Arm extends Subsystem {
     }
 
     public enum armStates {
-        FWD_GROUND_CARGO(new Arm.ArmConfiguration(0, 0)),
+        FWD_GROUND_CARGO(new Arm.ArmConfiguration(-2000, -2500)),
         FWD_LOW_HATCH(new Arm.ArmConfiguration(0, 0)),
-        FWD_LOW_CARGO(new Arm.ArmConfiguration(0, 0)),
-        FWD_MEDIUM_HATCH(new Arm.ArmConfiguration(0, 0)),
-        FWD_MEDIUM_CARGO(new Arm.ArmConfiguration(0, 0)),
-        FWD_HIGH_HATCH(new Arm.ArmConfiguration(0, 0)),
-        FWD_HIGH_CARGO(new Arm.ArmConfiguration(0, -512)),
+        FWD_LOW_CARGO(new Arm.ArmConfiguration(2048, -1536)),
+        FWD_MEDIUM_HATCH(new Arm.ArmConfiguration(2048, 0)),
+        FWD_MEDIUM_CARGO(new Arm.ArmConfiguration(1024, -1024)),
+        FWD_HIGH_HATCH(new Arm.ArmConfiguration(0, 512)),
+        FWD_HIGH_CARGO(new Arm.ArmConfiguration(2560, -1536)),
 
         REV_MEDIUM_HATCH(new Arm.ArmConfiguration(0, 0)),
         REV_MEDIUM_CARGO(new Arm.ArmConfiguration(0, 0)),

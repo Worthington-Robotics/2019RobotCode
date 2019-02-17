@@ -78,13 +78,13 @@ public class Constants {
     public static final double DRIVE_LEFT_KD = 20; //10
     public static final double DRIVE_LEFT_KF = 0.53;
 
-    public static final double ARM_PROX_KP = 0.5;
+    public static final double ARM_PROX_KP = 11;
     public static final double ARM_PROX_KI = 0;
-    public static final double ARM_PROX_KD = 0;
+    public static final double ARM_PROX_KD = 200;
     public static final double ARM_PROX_KF = 0;
     public static final double ARM_PROX_A_FEEDFORWARD = 1;
 
-    public static final double ARM_DIST_KP = 0.5;
+    public static final double ARM_DIST_KP = 2.75;
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;
     public static final double ARM_DIST_KF = 0;
