@@ -5,14 +5,14 @@ import frc.robot.subsystems.Arm;
 
 
 public class ArmAction extends Action {
-    private Arm.armStates a;
-    public ArmAction(Arm.armStates armState) {
+    private Arm.ArmStates a;
+    public ArmAction(Arm.ArmStates armState) {
         a = armState;
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPIDArmConfig(a.getConfig());
+        Arm.getInstance().setPIDArmConfig(a);
     }
 
     @Override

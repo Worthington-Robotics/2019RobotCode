@@ -6,9 +6,11 @@ import frc.robot.Constants;
 
 public class Manipulator extends Subsystem {
     private static final Manipulator m_instance = new Manipulator();
-    private PeriodicIO periodic;
     private Spark topMotor, bottomMotor;
     private DoubleSolenoid AlienOne;
+
+    private double ShotPower = 0.0;
+    private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
 
 
     public Manipulator() {
@@ -23,19 +25,19 @@ public class Manipulator extends Subsystem {
     }
 
     public void setAlienState(DoubleSolenoid.Value state) {
-        periodic.tState = state;
+        tState = state;
     }
 
     public DoubleSolenoid.Value GetAlienState() {
-        return periodic.tState;
+        return tState;
     }
 
-    public void setShotPower (double Power) {periodic.ShotPower = Power;}
+    public void setShotPower (double Power) {ShotPower = Power;}
 
      public void writePeriodicOutputs (){
-        topMotor.set(periodic.ShotPower);
-        bottomMotor.set(periodic.ShotPower);
-        AlienOne.set(periodic.tState);
+        topMotor.set(ShotPower);
+        bottomMotor.set(ShotPower);
+        AlienOne.set(tState);
     }
 
     public void outputTelemetry() {
@@ -44,14 +46,8 @@ public class Manipulator extends Subsystem {
 
 
     public void reset() {
-        periodic = new PeriodicIO();
         topMotor.set(0);
         bottomMotor.set(0);
         AlienOne.set(DoubleSolenoid.Value.kOff);
-    }
-    
-    public static class PeriodicIO {
-        public double ShotPower = 0.0;
-        DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
     }
 }

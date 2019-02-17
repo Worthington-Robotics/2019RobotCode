@@ -3,7 +3,6 @@ package frc.robot.autoactiongroups;
 import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.actions.*;
-import frc.robot.planners.TraGenerator;
 public class AutoDockStateMachine extends StateMachineDescriptor{
     public AutoDockStateMachine()
     {

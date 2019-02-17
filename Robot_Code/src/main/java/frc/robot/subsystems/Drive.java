@@ -104,8 +104,8 @@ public class Drive extends Subsystem {
     public synchronized void readPeriodicInputs() {
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
-        periodic.leftError= driveFrontLeft.getClosedLoopError();
-        periodic.rightError= driveFrontRight.getClosedLoopError();
+        periodic.left_error = driveFrontLeft.getClosedLoopError();
+        periodic.right_error = driveFrontRight.getClosedLoopError();
 
         periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
@@ -143,7 +143,7 @@ public class Drive extends Subsystem {
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
         }*/
-            climb.set(periodic.motorpower);
+            climb.set(periodic.climber_power);
     }
 
     private Drive() {
@@ -351,7 +351,7 @@ public class Drive extends Subsystem {
 
     public void setMotorPower(double MP)
     {
-        periodic.motorpower = MP;
+        periodic.climber_power = MP;
     }
 
     public synchronized void setTrajectory(TrajectoryIterator<TimedState<Pose2dWithCurvature>> trajectory) {
@@ -378,27 +378,25 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
         SmartDashboard.putNumber("Drive/Error/Y", periodic.error.getTranslation().y());
         SmartDashboard.putNumber("Drive/Error/Theta", periodic.error.getRotation().getDegrees());
-        SmartDashboard.putNumber("Drive/Setpoint/X", periodic.path_setpoint.state().getTranslation().x());
-        SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
-        SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
+        //SmartDashboard.putNumber("Drive/Setpoint/X", periodic.path_setpoint.state().getTranslation().x());
+        //SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
+        //SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
 
-        SmartDashboard.putNumber("Drive/Left", periodic.left_pos_ticks);
         SmartDashboard.putNumber("Drive/Left Demand", periodic.left_demand);
         SmartDashboard.putNumber("Drive/Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Drive/Error/Left Talon Error", periodic.leftError);
+        SmartDashboard.putNumber("Drive/Error/Left Talon Error", periodic.left_error);
         SmartDashboard.putNumber("Drive/Left Talon Voltage Out", driveFrontLeft.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Left Encoder Counts", periodic.left_pos_ticks);
-        SmartDashboard.putNumber("Drive/Misc/Left FeedForward", periodic.left_feedforward);
-        SmartDashboard.putNumber("Drive/Misc/Left Acceleration", periodic.left_accl);
+        //SmartDashboard.putNumber("Drive/Misc/Left FeedForward", periodic.left_feedforward);
+        //SmartDashboard.putNumber("Drive/Misc/Left Acceleration", periodic.left_accl);
 
-        SmartDashboard.putNumber("Drive/Right", periodic.right_pos_ticks);
         SmartDashboard.putNumber("Drive/Right Demand", periodic.right_demand);
         SmartDashboard.putNumber("Drive/Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.rightError);
+        SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.right_error);
         SmartDashboard.putNumber("Drive/Right Talon Voltage Out", driveFrontRight.getMotorOutputVoltage());
         SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
-        SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
-        SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
+        //SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
+        //SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
     }
 
     public void registerEnabledLoops(ILooper enabledLooper) {
@@ -426,8 +424,8 @@ public class Drive extends Subsystem {
         Rotation2d gyro_offset = Rotation2d.identity();
         Pose2d error = Pose2d.identity();
         boolean B2 = false;
-        double rightError = 0;
-        double leftError = 0;
+        double right_error = 0;
+        double left_error = 0;
 
         // OUTPUTS
         double ramp_Up_Counter = 0;
@@ -441,7 +439,7 @@ public class Drive extends Subsystem {
         double right_distance = 0.0;
         double right_feedforward = 0.0;
 
-        double motorpower = 0;
+        double climber_power = 0;
 
         TimedState<Pose2dWithCurvature> path_setpoint = new TimedState<>(Pose2dWithCurvature.identity());
 

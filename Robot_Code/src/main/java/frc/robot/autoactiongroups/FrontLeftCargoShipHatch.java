@@ -9,6 +9,6 @@ import frc.robot.subsystems.Arm;
 
 public class FrontLeftCargoShipHatch extends StateMachineDescriptor {
     public FrontLeftCargoShipHatch() {
-        addParallel(new Action[]{new ArmAction(Arm.armStates.FWD_LOW_HATCH), new DriveTra(TraGenerator.getInstance().frontLeftCargoShipHatch())},3000);
+        addParallel(new Action[]{new ArmAction(Arm.ArmStates.FWD_LOW_HATCH), new DriveTra(TraGenerator.getInstance().frontLeftCargoShipHatch())},3000);
     }
 }

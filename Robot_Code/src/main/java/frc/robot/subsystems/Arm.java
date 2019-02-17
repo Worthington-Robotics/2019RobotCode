@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -136,26 +135,22 @@ public class Arm extends Subsystem {
         armDist.setSensorPhase(false);
     }
 
-    public void setPIDArmConfig(ArmConfiguration config) {
+    public void setPIDArmConfig(ArmStates state) {
         if (periodic.armmode != ArmModes.PID) {
             periodic.armmode = ArmModes.PID;
         }
-        periodic.armProxPower = config.proximal;
-        periodic.armDistPower = config.distal;
-        System.out.println("set PID Values");
-        System.out.println(periodic.armProxPower);
-        System.out.println(periodic.armDistPower);
+        periodic.armProxPower = state.prox;
+        periodic.armDistPower = state.dist;
         /*periodic.armProxPower = config.proximal - periodic.proxMod;
         periodic.armDistPower = config.distal - periodic.distMod;*/
     }
 
-    public void setSSArmConfig(ArmConfiguration config) {
+    public void setSSArmConfig(ArmStates state) {
         if (periodic.armmode != ArmModes.STATE_SPACE) {
             periodic.armmode = ArmModes.STATE_SPACE;
         }
-        System.out.println(config.proximal);
-        periodic.armProxPower = config.proximal;
-        periodic.armDistPower = config.distal;
+        periodic.armProxPower = state.prox;
+        periodic.armDistPower = state.dist;
     }
 
     public double getUltrasonicDistance() {
@@ -212,43 +207,37 @@ public class Arm extends Subsystem {
         ArmModes armmode = ArmModes.PID;
     }
 
-    public static class ArmConfiguration {
+    public enum ArmStates {
+        FWD_GROUND_CARGO(-2000, -2500),
+        FWD_LOW_HATCH(0, 0),
+        FWD_LOW_CARGO(2048, -1536),
+        FWD_MEDIUM_HATCH(2048, 0),
+        FWD_MEDIUM_CARGO(1024, -1024),
+        FWD_HIGH_HATCH(0, 512),
+        FWD_HIGH_CARGO(2560, -1536),
 
-        double proximal, distal;
+        REV_MEDIUM_HATCH(0, 0),
+        REV_MEDIUM_CARGO(0, 0),
+        REV_HIGH_HATCH(0, 0),
+        REV_HIGH_CARGO(0, 0),
+        REV_GROUND_CARGO(0, 0),
 
-        public ArmConfiguration(double proxAngle, double distAngle) {
-            //in rotations
-            proximal = proxAngle;
-            distal = distAngle;
-        }
-    }
+        GROUND_HATCH(0, 0),
+        STOW_ARM(512, 512);
 
-    public enum armStates {
-        FWD_GROUND_CARGO(new Arm.ArmConfiguration(-2000, -2500)),
-        FWD_LOW_HATCH(new Arm.ArmConfiguration(0, 0)),
-        FWD_LOW_CARGO(new Arm.ArmConfiguration(2048, -1536)),
-        FWD_MEDIUM_HATCH(new Arm.ArmConfiguration(2048, 0)),
-        FWD_MEDIUM_CARGO(new Arm.ArmConfiguration(1024, -1024)),
-        FWD_HIGH_HATCH(new Arm.ArmConfiguration(0, 512)),
-        FWD_HIGH_CARGO(new Arm.ArmConfiguration(2560, -1536)),
+        private double prox, dist;
 
-        REV_MEDIUM_HATCH(new Arm.ArmConfiguration(0, 0)),
-        REV_MEDIUM_CARGO(new Arm.ArmConfiguration(0, 0)),
-        REV_HIGH_HATCH(new Arm.ArmConfiguration(0, 0)),
-        REV_HIGH_CARGO(new Arm.ArmConfiguration(0, 0)),
-        REV_GROUND_CARGO(new Arm.ArmConfiguration(0, 0)),
-
-        GROUND_HATCH(new Arm.ArmConfiguration(0, 0)),
-        STOW_ARM(new Arm.ArmConfiguration(512, 512));
-
-        private Arm.ArmConfiguration config;
-
-        armStates(Arm.ArmConfiguration conf) {
-            config = conf;
+        ArmStates(double prox, double dist) {
+            this.prox = prox;
+            this.dist = dist;
         }
 
-        public Arm.ArmConfiguration getConfig() {
-            return config;
+        public double getProx() {
+            return prox;
+        }
+
+        public double getDist() {
+            return dist;
         }
     }
 

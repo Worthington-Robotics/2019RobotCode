@@ -5,8 +5,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class TeleOPArmAction extends Action {
-    private Arm.armStates a;
-    public TeleOPArmAction(Arm.armStates armState, Arm.armStates modified) {
+    private Arm.ArmStates a;
+    public TeleOPArmAction(Arm.ArmStates armState, Arm.ArmStates modified) {
         if (Constants.LAUNCH_PAD.getRawButton(9)){
             a = modified;
         } else {
@@ -17,7 +17,7 @@ public class TeleOPArmAction extends Action {
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPIDArmConfig(a.getConfig());
+        Arm.getInstance().setPIDArmConfig(a);
     }
 
     @Override

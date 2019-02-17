@@ -11,7 +11,7 @@ public class AStopAction extends Action {
     public void onStart() {
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
-        Arm.getInstance().setPIDArmConfig(Arm.armStates.REV_GROUND_CARGO.getConfig());
+        Arm.getInstance().setPIDArmConfig(Arm.ArmStates.REV_GROUND_CARGO);
         finished = true;
     }
 

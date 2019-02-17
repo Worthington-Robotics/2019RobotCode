@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
-import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.actions.*;
 import frc.robot.autoactiongroups.AutoDockStateMachine;
 import frc.robot.subsystems.Arm;
@@ -35,21 +34,21 @@ public class OI{
         Button AutoStopButton = new JoystickButton(Constants.LAUNCH_PAD, 1);
         Button Stow = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
-        GroundHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_GROUND_CARGO, Arm.armStates.REV_GROUND_CARGO)));
-        GroundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.armStates.GROUND_HATCH)));
-        BotCargo.whenPressed(Action.toCommand(new ArmAction(Arm.armStates.FWD_LOW_CARGO)));
-        BotHatch.whenPressed(Action.toCommand(new ArmAction(Arm.armStates.FWD_LOW_HATCH)));
-        MidHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_MEDIUM_HATCH, Arm.armStates.REV_MEDIUM_HATCH)));
-        MidCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_MEDIUM_CARGO, Arm.armStates.REV_MEDIUM_CARGO)));
-        TopHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_HIGH_HATCH, Arm.armStates.REV_HIGH_HATCH)));
-        TopCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.armStates.FWD_HIGH_CARGO, Arm.armStates.REV_HIGH_CARGO)));
+        GroundHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.REV_GROUND_CARGO)));
+        GroundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.GROUND_HATCH)));
+        BotCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO)));
+        BotHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_HATCH)));
+        MidHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_HATCH, Arm.ArmStates.REV_MEDIUM_HATCH)));
+        MidCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO, Arm.ArmStates.REV_MEDIUM_CARGO)));
+        TopHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_HIGH_HATCH, Arm.ArmStates.REV_HIGH_HATCH)));
+        TopCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_HIGH_CARGO, Arm.ArmStates.REV_HIGH_CARGO)));
         CargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
         CargoOut.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         HatchOut.whileHeld(Action.toCommand(new AlienAction()));
         ClimbFullUp.whenPressed(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
         ClimbFullDown.whenPressed(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         AutoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        Stow.whenPressed(Action.toCommand(new ArmAction(Arm.armStates.STOW_ARM)));
+        Stow.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.STOW_ARM)));
 
     }
 

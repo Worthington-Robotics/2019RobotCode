@@ -1,10 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.lib.statemachine.StateMachineDescriptor;
 import frc.lib.util.HIDHelper;
-import frc.robot.actions.VisionTra;
-import frc.robot.subsystems.Arm;
 
 public class Constants {
     //Talon IDs
@@ -21,7 +18,6 @@ public class Constants {
     public static final int TOP_CARGOMANIP_ID = 1;
     public static final int BOTTOM_CARGOMANIP_ID = 2;
     public static final int LEFT_CLIMB_ID = 3;
-    public static final int RIGHT_CLIMB_ID = 4;
 
     //Solenoid Ports
     //public static final int TRANS_LOW_ID = 0;
@@ -62,8 +58,8 @@ public class Constants {
 
     //Shot powers
     public static final double SHOOT_POWER = 1;
-    public static final double PICKUP_POWER = -.75;
-    public static final double SLOWUP_POWER = -.65;
+    public static final double PICKUP_POWER = -.55;
+    public static final double SLOWUP_POWER = -.35;
     public static final double STOP_POWER = 0;
     public static final double CLIMB_POWER = 1;
 
@@ -100,7 +96,7 @@ public class Constants {
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
     public static final double MP_TEST_SPEED = 72; //in /s
-    public static final boolean RAMPUP = true;
+    public static final boolean RAMPUP = false;
 
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
@@ -110,7 +106,6 @@ public class Constants {
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final boolean IS_COMP_BOT = true;
-    public static final String ROBOT_NAME = "Whatever_you_want";
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
             "Drive/Pose/Theta",
