@@ -108,6 +108,8 @@ public class Drive extends Subsystem {
         periodic.right_error = driveFrontRight.getClosedLoopError();
 
         periodic.B2 = Constants.MASTER.getRawButton(2);
+        periodic.B3 = Constants.MASTER.getRawButton(3);
+        periodic.B5 = Constants.MASTER.getRawButton(5);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
@@ -397,6 +399,13 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
         //SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
         //SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
+        SmartDashboard.putString("Drive/Vision/camSource", "Front");
+        if (periodic.B3 == true) {
+            SmartDashboard.putString("Drive/Vision/camSource", "Back");
+        }
+        if (periodic.B5 == true) {
+            SmartDashboard.putString("Drive/Vision/camSource", "Front");
+        }
     }
 
     public void registerEnabledLoops(ILooper enabledLooper) {
@@ -424,6 +433,8 @@ public class Drive extends Subsystem {
         Rotation2d gyro_offset = Rotation2d.identity();
         Pose2d error = Pose2d.identity();
         boolean B2 = false;
+        boolean B3 = false;
+        boolean B5 = false;
         double right_error = 0;
         double left_error = 0;
 
