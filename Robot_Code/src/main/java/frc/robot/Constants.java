@@ -15,8 +15,7 @@ public class Constants {
     public static final int ARM_DISTAL = 8;
 
     //Spark Ports
-    public static final int TOP_CARGOMANIP_ID = 1;
-    public static final int BOTTOM_CARGOMANIP_ID = 2;
+    public static final int BOTTOM_CARGOMANIP_ID = 1;
     public static final int LEFT_CLIMB_ID = 3;
 
     //Solenoid Ports
@@ -52,9 +51,9 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 3532;
-    public static final double DistAbsoluteZero = 2733;
-    public static final double WristAbsoluteZero = 515;
+    public static final double ProxAbsoluteZero = 1419;
+    public static final double DistAbsoluteZero = 186744;
+
 
     //Shot powers
     public static final double SHOOT_POWER = 1;
@@ -74,15 +73,15 @@ public class Constants {
     public static final double DRIVE_LEFT_KD = 20; //10
     public static final double DRIVE_LEFT_KF = 0.53;
 
-    public static final double ARM_PROX_KP = 11;
+    public static final double ARM_PROX_KP = 10;
     public static final double ARM_PROX_KI = 0;
     public static final double ARM_PROX_KD = 200;
     public static final double ARM_PROX_KF = 0;
     public static final double ARM_PROX_A_FEEDFORWARD = 1;
 
-    public static final double ARM_DIST_KP = 2.75;
+    public static final double ARM_DIST_KP = 7.5;
     public static final double ARM_DIST_KI = 0;
-    public static final double ARM_DIST_KD = 0;
+    public static final double ARM_DIST_KD = 75;
     public static final double ARM_DIST_KF = 0;
     public static final double ARM_DIST_A_FEEDFORWARD = 1;
 

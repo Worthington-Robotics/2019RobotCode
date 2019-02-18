@@ -44,32 +44,30 @@ public class Arm extends Subsystem {
         periodic.distError = armDist.getClosedLoopError();
         periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
-        periodic.distAbsolute = armDist.getSelectedSensorPosition();
-        periodic.proxAbsolute = armProx.getSelectedSensorPosition();
+        periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
+        periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
 
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
-
-
+        if (periodic.armmode == ArmModes.DirectControl) {
+            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
+            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
         }
 
 
+    }
 
 
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                if (periodic.enableProx) {
                     armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
-                }
-                if (periodic.enableDist) {
                     armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
-                }
                 break;
             case PID:
                 //System.out.println("pid update");
-                armProx.set(ControlMode.Position, periodic.armProxPower);
-                armDist.set(ControlMode.Position, periodic.armDistPower);
+                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod);
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod);
                 break;
             case STATE_SPACE:
 
@@ -84,13 +82,15 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Prox Absolute", periodic.proxAbsolute);
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
-        SmartDashboard.putNumber("Arm/Prox Rel",periodic.proxRel);
+        SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
+        SmartDashboard.putNumber("Arm/Prox Point", periodic.proxAbsolute - periodic.proxMod);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
         SmartDashboard.putNumber("Arm/Dist Absolute", periodic.distAbsolute);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
-        SmartDashboard.putNumber("Arm/Dist Rel",periodic.distRel);
+        SmartDashboard.putNumber("Arm/Dist Rel", periodic.distRel);
+        SmartDashboard.putNumber("Arm/Dist Point", periodic.distAbsolute - periodic.distMod);
         //
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
     }
@@ -120,6 +120,7 @@ public class Arm extends Subsystem {
         armProx.configVoltageCompSaturation(10);
         armProx.enableVoltageCompensation(true);
         armProx.setSensorPhase(false);
+        armProx.setSelectedSensorPosition(0);
         //
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.setSensorPhase(true);
@@ -133,6 +134,7 @@ public class Arm extends Subsystem {
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
         armDist.setSensorPhase(false);
+        armDist.setSelectedSensorPosition(0);
     }
 
     public void setPIDArmConfig(ArmStates state) {
@@ -151,6 +153,14 @@ public class Arm extends Subsystem {
         }
         periodic.armProxPower = state.prox;
         periodic.armDistPower = state.dist;
+    }
+
+    public void setVelocitymConfig(double prox, double dist) {
+        if (periodic.armmode != ArmModes.DirectControl) {
+            periodic.armmode = ArmModes.DirectControl;
+        }
+        periodic.armProxPower = prox;
+        periodic.armDistPower = dist;
     }
 
     public double getUltrasonicDistance() {
@@ -174,6 +184,7 @@ public class Arm extends Subsystem {
         DirectControl,
         PID,
         STATE_SPACE;
+
         public String toString() {
             return name().charAt(0) + name().substring(1).toLowerCase();
         }
@@ -187,8 +198,8 @@ public class Arm extends Subsystem {
         double armProxPower = 0;
         double armDistPower = 0;
         //->||\TALON ANGLES ABSOLUTE
-        double proxAbsolute = armProx.getSelectedSensorPosition();
-        double distAbsolute = armDist.getSelectedSensorPosition();
+        double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
+        double distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         //TALON MODS
         double proxMod = 0;
         double distMod = 0;
@@ -204,26 +215,27 @@ public class Arm extends Subsystem {
         double proxRel = 0;
         double distRel = 0;
 
-        ArmModes armmode = ArmModes.PID;
+        ArmModes armmode = ArmModes.DirectControl;
     }
 
     public enum ArmStates {
-        FWD_GROUND_CARGO(-2000, -2500),
-        FWD_LOW_HATCH(0, 0),
-        FWD_LOW_CARGO(2048, -1536),
-        FWD_MEDIUM_HATCH(2048, 0),
-        FWD_MEDIUM_CARGO(1024, -1024),
-        FWD_HIGH_HATCH(0, 512),
-        FWD_HIGH_CARGO(2560, -1536),
+        FWD_GROUND_CARGO(1419, -512),
+        FWD_LOW_HATCH(-640, -500),
 
-        REV_MEDIUM_HATCH(0, 0),
+        FWD_LOW_CARGO(-640, 0),
+        FWD_MEDIUM_HATCH(-1024, 0),
+        FWD_MEDIUM_CARGO(0, 0),
+        FWD_HIGH_HATCH(0, 750),
+        FWD_HIGH_CARGO(0, 575),
+
+        REV_MEDIUM_HATCH(0, 300),
         REV_MEDIUM_CARGO(0, 0),
         REV_HIGH_HATCH(0, 0),
         REV_HIGH_CARGO(0, 0),
         REV_GROUND_CARGO(0, 0),
 
         GROUND_HATCH(0, 0),
-        STOW_ARM(512, 512);
+        STOW_ARM(-750, 0);
 
         private double prox, dist;
 
