@@ -219,14 +219,14 @@ public class Arm extends Subsystem {
     }
 
     public enum ArmStates {
-        FWD_GROUND_CARGO(1419, -512),
-        FWD_LOW_HATCH(-640, -500),
+        FWD_GROUND_CARGO(-1419, 1100),
 
-        FWD_LOW_CARGO(-640, 0),
-        FWD_MEDIUM_HATCH(-1024, 0),
-        FWD_MEDIUM_CARGO(0, 0),
-        FWD_HIGH_HATCH(0, 750),
-        FWD_HIGH_CARGO(0, 575),
+        FWD_LOW_HATCH(-1400, 800),
+        FWD_LOW_CARGO(-1300, 700),
+        FWD_MEDIUM_HATCH(-700, 700),
+        FWD_MEDIUM_CARGO(-512, 700),
+        FWD_HIGH_HATCH(-100, 575),
+        FWD_HIGH_CARGO(0, 300),
 
         REV_MEDIUM_HATCH(0, 300),
         REV_MEDIUM_CARGO(0, 0),
@@ -235,7 +235,7 @@ public class Arm extends Subsystem {
         REV_GROUND_CARGO(0, 0),
 
         GROUND_HATCH(0, 0),
-        STOW_ARM(-750, 0);
+        STOW_ARM(-1000, 2048);
 
         private double prox, dist;
 
