@@ -32,7 +32,7 @@ public class Constants {
 
     //Pure pursuit related values
     public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23;
-    public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.225;
+    public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.225; // 6
     public static final double DRIVE_WHEEL_RADIUS_INCHES = DRIVE_WHEEL_DIAMETER_INCHES / 2.0;
     public static final double TRACK_SCRUB_FACTOR = 1.0;  // Tune me!
     public static final double ROBOT_LINEAR_INERTIA = 59;  // kg TODO tune
