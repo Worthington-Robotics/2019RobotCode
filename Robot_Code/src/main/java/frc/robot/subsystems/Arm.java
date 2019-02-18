@@ -50,8 +50,10 @@ public class Arm extends Subsystem {
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
         if (periodic.armmode == ArmModes.DirectControl) {
-            periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
-            periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
+            if(periodic.enableDist)
+            {periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;}
+            if(periodic.enableProx)
+            {periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;}
         }
 
 
@@ -143,8 +145,6 @@ public class Arm extends Subsystem {
         }
         periodic.armProxPower = state.prox;
         periodic.armDistPower = state.dist;
-        /*periodic.armProxPower = config.proximal - periodic.proxMod;
-        periodic.armDistPower = config.distal - periodic.distMod;*/
     }
 
     public void setSSArmConfig(ArmStates state) {
@@ -192,8 +192,8 @@ public class Arm extends Subsystem {
 
     public class PeriodicIO {
         //joint enable booleans
-        boolean enableProx = true;
-        boolean enableDist = true;
+        boolean enableProx = false;
+        boolean enableDist = false;
         //TALON POWERS
         double armProxPower = 0;
         double armDistPower = 0;
