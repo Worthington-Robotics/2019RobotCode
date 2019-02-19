@@ -51,8 +51,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 1332;
-    public static final double DistAbsoluteZero = 847;
+    public static final double ProxAbsoluteZero = 5500;
+    public static final double DistAbsoluteZero = 724;
 
 
     //Shot powers
@@ -60,24 +60,24 @@ public class Constants {
     public static final double PICKUP_POWER = -.55;
     public static final double SLOWUP_POWER = -.35;
     public static final double STOP_POWER = 0;
-    public static final double CLIMB_POWER = 1;
+    public static final double CLIMB_POWER = .5;
 
     //PID Gain Constants
     public static final double DRIVE_RIGHT_KP = 1.2;
     public static final double DRIVE_RIGHT_KI = 0.0;
-    public static final double DRIVE_RIGHT_KD = 20;
+    public static final double DRIVE_RIGHT_KD = 25; // 20 for practice bot
     public static final double DRIVE_RIGHT_KF = 0.53; //.485
 
     public static final double DRIVE_LEFT_KP = 1.1; // .0885
     public static final double DRIVE_LEFT_KI = 0.0; //NO INTEGRAL it masks deeper problems
-    public static final double DRIVE_LEFT_KD = 20; //10
+    public static final double DRIVE_LEFT_KD = 25; //20 for practice
     public static final double DRIVE_LEFT_KF = 0.53;
 
-    public static final double ARM_PROX_KP = 5;//10
+    public static final double ARM_PROX_KP = 5.5;//10
     public static final double ARM_PROX_KI = 0;
     public static final double ARM_PROX_KD = 400;//200
     public static final double ARM_PROX_KF = 0;
-    public static final double ARM_PROX_A_FEEDFORWARD = .4;
+    public static final double ARM_PROX_A_FEEDFORWARD = .552;
 
     public static final double ARM_DIST_KP = 4;//7.5
     public static final double ARM_DIST_KI = 0;

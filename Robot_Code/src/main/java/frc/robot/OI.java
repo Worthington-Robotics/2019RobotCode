@@ -45,8 +45,8 @@ public class OI{
         CargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
         CargoOut.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         HatchOut.whileHeld(Action.toCommand(new AlienAction()));
-        ClimbFullUp.whenPressed(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
-        ClimbFullDown.whenPressed(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
+        ClimbFullUp.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
+        ClimbFullDown.whileHeld(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         AutoStopButton.whenPressed(Action.toCommand(new AStopAction()));
         Stow.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.STOW_ARM)));
 

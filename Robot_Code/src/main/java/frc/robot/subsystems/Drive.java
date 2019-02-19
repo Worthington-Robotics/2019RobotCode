@@ -2,10 +2,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
@@ -65,8 +67,8 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = -(periodic.ramp_Up_Counter * periodic.ramp_Up_Counter * .000025 + .01);
-                            periodic.right_demand = -(periodic.ramp_Up_Counter * periodic.ramp_Up_Counter *.000025 + .01);
+                            periodic.left_demand = -(periodic.ramp_Up_Counter  * .0025 + .01);
+                            periodic.right_demand = -(periodic.ramp_Up_Counter * .0025 + .01);
                             periodic.ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
                             periodic.left_demand = radiansPerSecondToTicksPer100ms(inchesPerSecondToRadiansPerSecond(Constants.MP_TEST_SPEED));
@@ -161,6 +163,7 @@ public class Drive extends Subsystem {
         configTalons();
         reset();
         climb = new Spark(Constants.LEFT_CLIMB_ID);
+
     }
 
     public synchronized Rotation2d getHeading() {
@@ -392,6 +395,7 @@ public class Drive extends Subsystem {
         //SmartDashboard.putNumber("Drive/Misc/Left FeedForward", periodic.left_feedforward);
         //SmartDashboard.putNumber("Drive/Misc/Left Acceleration", periodic.left_accl);
 
+
         SmartDashboard.putNumber("Drive/Right Demand", periodic.right_demand);
         SmartDashboard.putNumber("Drive/Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
         SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.right_error);
@@ -437,6 +441,7 @@ public class Drive extends Subsystem {
         boolean B5 = false;
         double right_error = 0;
         double left_error = 0;
+        boolean climbLimit = false;
 
         // OUTPUTS
         double ramp_Up_Counter = 0;
