@@ -51,8 +51,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 1431;
-    public static final double DistAbsoluteZero = -1611;
+    public static final double ProxAbsoluteZero = 1332;
+    public static final double DistAbsoluteZero = 847;
 
 
     //Shot powers
@@ -73,17 +73,16 @@ public class Constants {
     public static final double DRIVE_LEFT_KD = 20; //10
     public static final double DRIVE_LEFT_KF = 0.53;
 
-    public static final double ARM_PROX_KP = 10;
+    public static final double ARM_PROX_KP = 5;//10
     public static final double ARM_PROX_KI = 0;
-    public static final double ARM_PROX_KD = 200;
+    public static final double ARM_PROX_KD = 400;//200
     public static final double ARM_PROX_KF = 0;
-    public static final double ARM_PROX_A_FEEDFORWARD = 1;
+    public static final double ARM_PROX_A_FEEDFORWARD = .4;
 
-    public static final double ARM_DIST_KP = 7.5;
+    public static final double ARM_DIST_KP = 4;//7.5
     public static final double ARM_DIST_KI = 0;
-    public static final double ARM_DIST_KD = 75;
+    public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
-    public static final double ARM_DIST_A_FEEDFORWARD = 1;
 
     public static final double ANGLE_KP = 0.04; // 0.065;
     public static final double ANGLE_KI = 0; // 0.00125;
@@ -100,7 +99,7 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 1.0, 1.0, 0.6, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.50, 0.50, 0.6, 2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
@@ -125,7 +124,9 @@ public class Constants {
             "Drive/Misc/Left FeedForward",
             "Drive/Misc/Right FeedForward",
             "Drive/Left Talon Voltage Out",
-            "Drive/Right Talon Voltage Out"
+            "Drive/Right Talon Voltage Out",
+            "Arm/Prox Amps",
+            "Arm/Dist Amps"
     };
 }
 

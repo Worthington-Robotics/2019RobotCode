@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -30,16 +31,24 @@ public class Arm extends Subsystem {
     private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
+        armProx.configContinuousCurrentLimit(20);
+        armDist.configContinuousCurrentLimit(20);
+        armDist.enableCurrentLimit(true);
+        armProx.enableCurrentLimit(true);
         US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
         US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
     }
 
     public void readPeriodicInputs() {
+        periodic.proxPrev = periodic.proxRel;
+        periodic.distPrev = periodic.distRel;
         periodic.US1Past = periodic.US1Dis;
         periodic.US2Past = periodic.US2Dis;
         periodic.US1Dis = US1.getDistance();
         periodic.US2Dis = US2.getDistance();
+        periodic.proxAmps = armProx.getOutputCurrent();
+        periodic.distAmps = armDist.getOutputCurrent();
         periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();
         periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
@@ -50,10 +59,12 @@ public class Arm extends Subsystem {
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
         if (periodic.armmode == ArmModes.DirectControl) {
-            if(periodic.enableDist)
-            {periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;}
-            if(periodic.enableProx)
-            {periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;}
+            if (periodic.enableProx) {
+                periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
+            }
+            if (periodic.enableDist) {
+                periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
+            }
         }
 
 
@@ -63,17 +74,19 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                    armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
-                    armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
+                armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
+                armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
                 break;
             case PID:
-                //System.out.println("pid update");
-                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod);
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod);
+                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod/*, DemandType.ArbitraryFeedForward, Math.sin(periodic.armDistPower + periodic.distMod / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
 
                 break;
+            case SAFETY_CATCH:
+                armProx.set(ControlMode.PercentOutput, 0);
+                armDist.set(ControlMode.PercentOutput, 0);
             default:
                 System.out.println("Arm entered unexpected control state!");
         }
@@ -86,8 +99,10 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
         SmartDashboard.putNumber("Arm/Prox Point", periodic.proxAbsolute - periodic.proxMod);
+        SmartDashboard.putNumber("Arm/Prox Amps", periodic.proxAmps);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
+        SmartDashboard.putNumber("Arm/Dist Amps", periodic.distAmps);
         SmartDashboard.putNumber("Arm/Dist Absolute", periodic.distAbsolute);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
@@ -155,6 +170,10 @@ public class Arm extends Subsystem {
         periodic.armDistPower = state.dist;
     }
 
+    public void safeMode() {
+        periodic.armmode = ArmModes.SAFETY_CATCH;
+    }
+
     public void setVelocitymConfig(double prox, double dist) {
         if (periodic.armmode != ArmModes.DirectControl) {
             periodic.armmode = ArmModes.DirectControl;
@@ -183,7 +202,8 @@ public class Arm extends Subsystem {
     public enum ArmModes {
         DirectControl,
         PID,
-        STATE_SPACE;
+        STATE_SPACE,
+        SAFETY_CATCH;
 
         public String toString() {
             return name().charAt(0) + name().substring(1).toLowerCase();
@@ -214,6 +234,12 @@ public class Arm extends Subsystem {
         //TALON RELS
         double proxRel = 0;
         double distRel = 0;
+        //past counts
+        double proxPrev = 0;
+        double distPrev = 0;
+        //
+        double proxAmps = 0;
+        double distAmps = 0;
 
         ArmModes armmode = ArmModes.DirectControl;
     }
