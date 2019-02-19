@@ -16,7 +16,6 @@ public class BlinkyLights extends Subsystem {
     private int LightPowerINT;
     private Spark light;
     private String LightColour;
-    private int i;
     private boolean TorF;
     public static BlinkyLights getInstance(){return m_lights;}
     private BlinkyLights() {
@@ -24,8 +23,7 @@ public class BlinkyLights extends Subsystem {
         LightPower = .91;
         LightPowerINT = 0;
         LightColour = "Fail";
-        i = 0;
-        TorF = true;
+        TorF = false;
     }
     public Loop mloop = new Loop() {
 
@@ -36,14 +34,16 @@ public class BlinkyLights extends Subsystem {
         @Override
         public void onLoop(double timestamp) {
             if (TorF) {
-                LightPower = 0.73;
+                LightPower = 0.61;
             } else {
                 LightPower = 0.91;
             }
-            TorF = !TorF;
             LightPowerINT = (int) LightPower * 100;
             switch (LightPowerINT) {
-                case 73: LightColour = "";
+                case 61: LightColour = "Red"; break;
+                case 87: LightColour = "Blue"; break;
+                case 73: LightColour = "Green"; break;
+                default: LightColour = "Error"; break;
             }
         }
 
@@ -60,12 +60,17 @@ public class BlinkyLights extends Subsystem {
 
     @Override
     public void writePeriodicOutputs() {
+        light.setInverted(false);
+        light.setSpeed(LightPower);
         light.set(LightPower);
+        SmartDashboard.putString("Color", LightColour);
+        SmartDashboard.putNumber("Power", LightPower);
+        SmartDashboard.putNumber("# Spark is Getting", light.getSpeed());
     }
 
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putString("Color", LightColour);
+
     }
 
     @Override
