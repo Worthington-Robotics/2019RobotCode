@@ -41,8 +41,8 @@ public class Constants {
     public static final double ROBOT_MAX_VELOCITY = 120.0; // TODO tune & find units
     public static final double ROBOT_MAX_ACCEL = 120.0; // TODO tune & find units
     public static final double ROBOT_MAX_VOLTAGE = 10.0; // V
-    public static final double DRIVE_V_INTERCEPT = 1.6;  // V
-    public static final double DRIVE_Kv = 0.316426;  // V per rad/s TODO REDETERMINE
+    public static final double DRIVE_V_INTERCEPT = 1.2;  // V //1.6 for practice......................
+    public static final double DRIVE_Kv = 0.316426;  // V per rad/s TODO REDETERMINE -.335
     public static final double DRIVE_Ka = 0.0801;  // V per rad/s^2    0.0801
     public static final double Path_Kx = 4.0;  //
     public static final double DRIVE_VCOMP = 10.0; //V
@@ -51,8 +51,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 5500;
-    public static final double DistAbsoluteZero = 724;
+    public static final double ProxAbsoluteZero = 4385;
+    public static final double DistAbsoluteZero = -1919;
 
 
     //Shot powers
@@ -99,11 +99,12 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.50, 0.50, 0.6, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.6, 2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final boolean IS_COMP_BOT = true;
+    public static final String NOMBRE = "It's The Alien...";
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
             "Drive/Pose/Theta",
