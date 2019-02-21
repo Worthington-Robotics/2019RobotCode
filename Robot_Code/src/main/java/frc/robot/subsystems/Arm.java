@@ -74,10 +74,15 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
+                if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == 28)
+                    periodic.armDistPower = .25;
+                if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
+                    periodic.armDistPower = -.25;
                 armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
                 armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
                 break;
             case PID:
+                if(periodic.)
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
                 armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod/*, DemandType.ArbitraryFeedForward, Math.sin(periodic.armDistPower + periodic.distMod / 2048 * Math.PI)*/);
                 break;
