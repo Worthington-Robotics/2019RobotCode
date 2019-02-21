@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
         EnabledLoops.start();
         DisabledLoops.stop();
         StateMachine.runMachine(new GoTenFeet());
+        Arm.getInstance().reset();
     }
 
     @Override
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
         EnabledLoops.start();
         DisabledLoops.stop();
         Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
+        Arm.getInstance().reset();
     }
 
     @Override

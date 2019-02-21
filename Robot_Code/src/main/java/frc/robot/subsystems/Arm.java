@@ -246,7 +246,7 @@ public class Arm extends Subsystem {
         double proxAmps = 0;
         double distAmps = 0;
 
-        ArmModes armmode = ArmModes.DirectControl;
+        ArmModes armmode = ArmModes.SAFETY_CATCH;
     }
 
     public enum ArmStates {
