@@ -7,17 +7,31 @@ public class ArmMotionPlanner {
         //put model here?
     }
 
-    /**
-     * A method that returns a Voltage based on a current velocity and acceleration
-     * @param A current acceleration
-     * @param V current Velocity
-     * @param theta1 Start theta
-     * @param theta2 End theta
-     * @return Voltage required
-     */
-    public double MotionPlanner(double A, double V, double theta1, double theta2) {
-        double deltaTheta = theta2 - theta1;
+    public double update() {
+
         return 0;
 
+    }
+
+    public static class Output{
+
+        public double proxVel = 0.0, proxAccel = 0.0, proxArbFF = 0.0;
+        public double distVel = 0.0, distAccel = 0.0, distArbFF = 0.0;
+
+        public Output(double proxVel, double proxAccel, double proxArbFF, double distVel, double distAccel, double distArbFF){
+            this.proxVel = proxVel;
+            this.proxAccel = proxAccel;
+            this.proxArbFF = proxArbFF;
+            this.distVel = distVel;
+            this.distAccel = distAccel;
+            this.distArbFF = distArbFF;
+        }
+
+    }
+
+    enum FollowerType{
+        TRAPEZOIDAL,
+        PID_MODEL,
+        FEED_FORWARD_ONLY
     }
 }
