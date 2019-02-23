@@ -7,8 +7,8 @@ import frc.lib.geometry.Rotation2d;
 import frc.lib.geometry.Twist2d;
 import frc.lib.loops.ILooper;
 import frc.lib.loops.Loop;
-import frc.lib.math.InterpolatingDouble;
-import frc.lib.math.InterpolatingTreeMap;
+import frc.lib.util.InterpolatingDouble;
+import frc.lib.util.InterpolatingTreeMap;
 import frc.robot.Kinematics;
 
 import java.util.Map;
@@ -99,14 +99,9 @@ public class PoseEstimator extends Subsystem {
     @Override
     public void outputTelemetry() {
         Pose2d odometry = getLatestFieldToVehicle().getValue();
-        SmartDashboard.putNumber("Robot Pose/X", odometry.getTranslation().x());
-        SmartDashboard.putNumber("Robot Pose/Y", odometry.getTranslation().y());
-        SmartDashboard.putNumber("Robot Pose/Theta", odometry.getRotation().getDegrees());
-    }
-
-    @Override
-    public void stop() {
-
+        SmartDashboard.putNumber("Drive/Pose/X", odometry.getTranslation().x());
+        SmartDashboard.putNumber("Drive/Pose/Y", odometry.getTranslation().y());
+        SmartDashboard.putNumber("Drive/Pose/Theta", odometry.getRotation().getDegrees());
     }
 
     @Override

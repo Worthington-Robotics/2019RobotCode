@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2019.1.1"
+    id "edu.wpi.first.GradleRIO" version "2019.3.2"
 }
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
@@ -39,12 +39,16 @@ def includeDesktopSupport = false
 
 // Maven central needed for JUnit
 repositories {
+
+
+    jcenter()
     mavenCentral()
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
+    compile 'gov.nist.math:jama:1.0.3'
     compile wpi.deps.wpilib()
     compile wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)

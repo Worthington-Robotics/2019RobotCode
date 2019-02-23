@@ -36,13 +36,10 @@ public class HIDHelper{
 
     public static double getAxisMapped(double input, double min_output, double max_output){
         return (input - -1) * (max_output - min_output) / (1 - -1) + max_output;
-
-
     }
 
 
     public static class HIDConstants{
-
         private Joystick joystick;
         private double deadBand, scalarCutX, scalarCutY, scalarCutZ;
         private int polyFunct;
@@ -54,6 +51,7 @@ public class HIDHelper{
             this.scalarCutZ = scalarCutZ;
             this.polyFunct = polyFunct;
         }
+
         public static Joystick getJoystick(HIDConstants hid){return hid.joystick;}
     }
 

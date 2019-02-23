@@ -32,14 +32,6 @@ public class Kinematics {
         return new Twist2d(dx, dy, prev_heading.inverse().rotateBy(current_heading).getRadians());
     }
 
-    public static Twist2d forwardKinematics2(double x_delta, Rotation2d prev_heading, Rotation2d current_heading){
-        final double dy = 0.0;
-        return new Twist2d(x_delta, dy, prev_heading.inverse().rotateBy(current_heading).getRadians());
-    }
-
-    public static Twist2d forwardKinematics2(double linear_delta, double angular_delta){
-        return new Twist2d(linear_delta, 0.0, angular_delta);
-    }
 
     /**
      * For convenience, integrate forward kinematics with a Twist2d and previous rotation.

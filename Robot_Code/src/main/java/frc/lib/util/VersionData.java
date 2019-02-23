@@ -1,8 +1,9 @@
-package frc.lib;
+package frc.lib.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,7 +21,9 @@ public class VersionData{
             BufferedReader reader = new BufferedReader(new FileReader(version));
             String contents = reader.readLine();
             int versionid = Integer.parseInt(contents.substring(contents.indexOf("=") + 1,contents.indexOf(';')));
+            SmartDashboard.putNumber("Version ID", versionid);
             DriverStation.reportWarning("Build version ID: " + versionid, false);
+            reader.close();
         } catch (IOException e) {
             DriverStation.reportError("Failed to read version.dat in deploy directory!", e.getStackTrace());
         }

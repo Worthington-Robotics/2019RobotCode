@@ -8,7 +8,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.lib.VersionData;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.lib.statemachine.StateMachine;
+import frc.lib.util.DriveSignal;
+import frc.lib.util.VersionData;
+import frc.lib.loops.Looper;
+import frc.robot.autoactiongroups.GoTenFeet;
+import frc.robot.subsystems.*;
+
+import java.util.Arrays;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,38 +26,79 @@ import frc.lib.VersionData;
  * project.
  */
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
-  @Override
-  public void robotInit() {
-      VersionData.doVersionID();
+    /**
+    * This function is run when the robot is first started up and should be used
+    * for any initialization code.
+    */
+    private SubsystemManager Manager = new SubsystemManager(Arrays.asList(
+          Drive.getInstance(),
+          PoseEstimator.getInstance(),
+          Manipulator.getInstance(),
+          Arm.getInstance(),
+          Logger.getInstance()
+    ));
+    private Looper EnabledLoops = new Looper();
+    private Looper DisabledLoops = new Looper();
+    private OI Oi = new OI();
 
-  }
+    public void robotPeriodic(){
+    Manager.outputTelemetry();
+    }
 
-  @Override
-  public void autonomousInit() {
-  }
+    @Override
+    public void robotInit() {
+        VersionData.doVersionID();
+        Arm.getInstance().reset();
+        Manager.registerEnabledLoops(EnabledLoops);
+        Manager.registerDisabledLoops(DisabledLoops);
+        Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
+    }
 
-  @Override
-  public void autonomousPeriodic() {
-  }
+    @Override
+    public void autonomousInit() {
+        PoseEstimator.getInstance().reset();
+        Drive.getInstance().reset();
+        EnabledLoops.start();
+        DisabledLoops.stop();
+        StateMachine.runMachine(new GoTenFeet());
+        Arm.getInstance().reset();
+    }
 
-  @Override
-  public void teleopInit() {
-  }
+    @Override
+    public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
+    }
 
-  @Override
-  public void teleopPeriodic() {
-  }
+    @Override
+    public void teleopInit() {
+        PoseEstimator.getInstance().reset();
+        Drive.getInstance().reset();
+        EnabledLoops.start();
+        DisabledLoops.stop();
+        Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
+        Arm.getInstance().reset();
+    }
 
-  @Override
-  public void testInit() {
-  }
+    @Override
+    public void teleopPeriodic() {
+    Scheduler.getInstance().run();
+    }
 
-  @Override
-  public void testPeriodic() {
-  }
+    @Override
+    public void testInit() {
+        EnabledLoops.start();
+        DisabledLoops.stop();
+        Drive.getInstance().reset();
+    }
 
+    @Override
+    public void testPeriodic() {
+    Scheduler.getInstance().run();
+    }
+
+    @Override
+    public void disabledInit() {
+        EnabledLoops.stop();
+        DisabledLoops.start();
+    }
 }
