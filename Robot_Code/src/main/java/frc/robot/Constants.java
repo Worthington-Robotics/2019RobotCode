@@ -5,12 +5,12 @@ import frc.lib.util.HIDHelper;
 
 public class Constants {
     //Talon IDs
-    public static final int DRIVE_FRONT_LEFT_ID = 4;
+    public static final int DRIVE_FRONT_LEFT_ID = 6;
     public static final int DRIVE_MIDDLE_LEFT_ID = 5;
-    public static final int DRIVE_BACK_LEFT_ID = 6;
-    public static final int DRIVE_FRONT_RIGHT_ID = 1;
+    public static final int DRIVE_BACK_LEFT_ID = 4;
+    public static final int DRIVE_FRONT_RIGHT_ID = 3;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 2;
-    public static final int DRIVE_BACK_RIGHT_ID = 3;
+    public static final int DRIVE_BACK_RIGHT_ID = 1;
     public static final int ARM_PRONOMINAL = 7;
     public static final int ARM_DISTAL = 8;
 
@@ -51,8 +51,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 4385;
-    public static final double DistAbsoluteZero = -1919;
+    public static final double ProxAbsoluteZero = 4565;
+    public static final double DistAbsoluteZero = 1312;
 
 
     //Shot powers
@@ -104,7 +104,7 @@ public class Constants {
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final boolean IS_COMP_BOT = true;
-    public static final String NOMBRE = "It's The Alien...";
+    public static final String NOMBRE = "Wheeeeeeeelin and deeeeeeeelin";
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
             "Drive/Pose/Theta",
