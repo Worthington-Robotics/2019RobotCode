@@ -7,22 +7,20 @@ import frc.lib.trajectory.Trajectory;
 import frc.lib.trajectory.timing.CentripetalAccelerationConstraint;
 import frc.lib.trajectory.timing.TimedState;
 import frc.lib.trajectory.timing.TimingConstraint;
-import frc.robot.autoactiongroups.FrontLeftCargoShipHatch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TraGenerator {
-    private final static TraGenerator m_instance = new TraGenerator();
+public class DriveTrajectoryGenerator {
+    private static final DriveTrajectoryGenerator m_instance = new DriveTrajectoryGenerator();
     private final DriveMotionPlanner DMP;
 
-    private TraGenerator() {
+    private DriveTrajectoryGenerator() {
         DMP = new DriveMotionPlanner();
-        //DMP.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
     }
 
-    public static TraGenerator getInstance() {
+    public static DriveTrajectoryGenerator getInstance() {
         return m_instance;
     }
 
