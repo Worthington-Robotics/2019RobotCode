@@ -74,10 +74,8 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == 28)
-                    periodic.armDistPower = .25;
-                if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
-                    periodic.armDistPower = -.25;
+                /*if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
+                    periodic.armDistPower = -.25;*/
                 armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
                 armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
                 break;
@@ -250,13 +248,13 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         FWD_GROUND_CARGO(-1419, 1100),
-
-        FWD_LOW_HATCH(-1400, 800),
-        FWD_LOW_CARGO(-1300, 700),
-        FWD_MEDIUM_HATCH(-700, 700),
-        FWD_MEDIUM_CARGO(-512, 700),
-        FWD_HIGH_HATCH(-100, 575),
-        FWD_HIGH_CARGO(0, 300),
+        //TODO PROX,DIST BONEHEAD
+        FWD_LOW_HATCH(-1400, 1024),
+        FWD_LOW_CARGO(-1300, 924),
+        FWD_MEDIUM_HATCH(-1200, 700),
+        FWD_MEDIUM_CARGO(-800, 700),
+        FWD_HIGH_HATCH(-500, 575),
+        FWD_HIGH_CARGO(-100, 600),
 
         REV_MEDIUM_HATCH(0, 300),
         REV_MEDIUM_CARGO(0, 0),
@@ -264,8 +262,8 @@ public class Arm extends Subsystem {
         REV_HIGH_CARGO(0, 0),
         REV_GROUND_CARGO(0, 0),
 
-        GROUND_HATCH(0, 0),
-        STOW_ARM(-1000, 2048);
+        GROUND_HATCH(-1324, 1508),
+        STOW_ARM(-1400, 0);
 
         private double prox, dist;
 
