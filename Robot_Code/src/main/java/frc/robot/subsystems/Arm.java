@@ -41,6 +41,7 @@ public class Arm extends Subsystem {
     }
 
     public void readPeriodicInputs() {
+        periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
         periodic.proxPrev = periodic.proxRel;
         periodic.distPrev = periodic.distRel;
         periodic.US1Past = periodic.US1Dis;
@@ -74,10 +75,8 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == 28)
-                    periodic.armDistPower = .25;
-                if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
-                    periodic.armDistPower = -.25;
+                /*if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
+                    periodic.armDistPower = -.25;*/
                 armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
                 armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
                 break;
@@ -202,6 +201,11 @@ public class Arm extends Subsystem {
         }
     }
 
+    public boolean getSideShift()
+    {
+        return periodic.sideShift;
+    }
+
 
     public enum ArmModes {
         DirectControl,
@@ -215,6 +219,8 @@ public class Arm extends Subsystem {
     }
 
     public class PeriodicIO {
+        //Side Shift
+        boolean sideShift = false;
         //joint enable booleans
         boolean enableProx = false;
         boolean enableDist = false;
@@ -249,23 +255,23 @@ public class Arm extends Subsystem {
     }
 
     public enum ArmStates {
-        FWD_GROUND_CARGO(-1419, 1100),
-
-        FWD_LOW_HATCH(-1400, 800),
-        FWD_LOW_CARGO(-1300, 700),
-        FWD_MEDIUM_HATCH(-700, 700),
-        FWD_MEDIUM_CARGO(-512, 700),
-        FWD_HIGH_HATCH(-100, 575),
-        FWD_HIGH_CARGO(0, 300),
+        FWD_GROUND_CARGO(-1324, 1508),
+        //TODO PROX, DIST BONEHEAD
+        FWD_LOW_HATCH(-1400, 1024),
+        FWD_LOW_CARGO(-1300, 924),
+        FWD_MEDIUM_HATCH(-1200, 700),
+        FWD_MEDIUM_CARGO(-800, 700),
+        FWD_HIGH_HATCH(-500, 575),
+        FWD_HIGH_CARGO(-100, 600),
 
         REV_MEDIUM_HATCH(0, 300),
-        REV_MEDIUM_CARGO(0, 0),
+        REV_MEDIUM_CARGO(0, -700),
         REV_HIGH_HATCH(0, 0),
-        REV_HIGH_CARGO(0, 0),
+        REV_HIGH_CARGO(0, -200),
         REV_GROUND_CARGO(0, 0),
 
-        GROUND_HATCH(0, 0),
-        STOW_ARM(-1000, 2048);
+        GROUND_HATCH(-1324, 1508),
+        STOW_ARM(-1000, -700);
 
         private double prox, dist;
 
