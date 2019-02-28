@@ -41,6 +41,7 @@ public class Arm extends Subsystem {
     }
 
     public void readPeriodicInputs() {
+        periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
         periodic.proxPrev = periodic.proxRel;
         periodic.distPrev = periodic.distRel;
         periodic.US1Past = periodic.US1Dis;
@@ -200,6 +201,11 @@ public class Arm extends Subsystem {
         }
     }
 
+    public boolean getSideShift()
+    {
+        return periodic.sideShift;
+    }
+
 
     public enum ArmModes {
         DirectControl,
@@ -213,6 +219,8 @@ public class Arm extends Subsystem {
     }
 
     public class PeriodicIO {
+        //Side Shift
+        boolean sideShift = false;
         //joint enable booleans
         boolean enableProx = false;
         boolean enableDist = false;
@@ -247,8 +255,8 @@ public class Arm extends Subsystem {
     }
 
     public enum ArmStates {
-        FWD_GROUND_CARGO(-1419, 1100),
-        //TODO PROX,DIST BONEHEAD
+        FWD_GROUND_CARGO(-1324, 1508),
+        //TODO PROX, DIST BONEHEAD
         FWD_LOW_HATCH(-1400, 1024),
         FWD_LOW_CARGO(-1300, 924),
         FWD_MEDIUM_HATCH(-1200, 700),
@@ -257,13 +265,13 @@ public class Arm extends Subsystem {
         FWD_HIGH_CARGO(-100, 600),
 
         REV_MEDIUM_HATCH(0, 300),
-        REV_MEDIUM_CARGO(0, 0),
+        REV_MEDIUM_CARGO(0, -700),
         REV_HIGH_HATCH(0, 0),
-        REV_HIGH_CARGO(0, 0),
+        REV_HIGH_CARGO(0, -200),
         REV_GROUND_CARGO(0, 0),
 
         GROUND_HATCH(-1324, 1508),
-        STOW_ARM(-1400, 0);
+        STOW_ARM(-1000, -700);
 
         private double prox, dist;
 
