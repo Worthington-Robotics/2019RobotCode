@@ -13,10 +13,12 @@ public class OI{
         Button AllAction = new JoystickButton(Constants.MASTER, 1);
         Button Vision = new JoystickButton(Constants.MASTER, 8);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
+        Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
 
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
         Vision.whileHeld(Action.toCommand(new VisionTra()));
         AllAction.whileHeld(Action.toCommand(new StateMachineRunner(new AutoDockStateMachine())));
+        cameraSwitch.whileHeld(Action.toCommand(new CameraSwitchAction()));
 
         Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, 13);
         Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, 10);
