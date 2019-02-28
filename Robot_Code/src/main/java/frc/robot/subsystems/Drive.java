@@ -172,7 +172,7 @@ public class Drive extends Subsystem {
 
     public synchronized void setHeading(Rotation2d heading) {
         System.out.println("SET HEADING: " + heading.getDegrees());
-        periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
+        //periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
         System.out.println("Gyro offset: " + periodic.gyro_offset.getDegrees());
         periodic.gyro_heading = heading;
     }
@@ -231,18 +231,18 @@ public class Drive extends Subsystem {
         driveFrontLeft.config_kI(0, Constants.DRIVE_LEFT_KI, 0);
         driveFrontLeft.config_kD(0, Constants.DRIVE_LEFT_KD, 0);
         driveFrontLeft.config_IntegralZone(0, 300);
-        driveFrontLeft.setInverted(true);
+        driveFrontLeft.setInverted(false);
         driveFrontLeft.setNeutralMode(NeutralMode.Brake);
         driveFrontLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveFrontLeft.enableVoltageCompensation(true);
 
-        driveMiddleLeft.setInverted(true);
+        driveMiddleLeft.setInverted(false);
         driveMiddleLeft.setNeutralMode(NeutralMode.Brake);
         driveMiddleLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveMiddleLeft.enableVoltageCompensation(true);
         driveMiddleLeft.follow(driveFrontLeft);
 
-        driveBackLeft.setInverted(true);
+        driveBackLeft.setInverted(false);
         driveBackLeft.setNeutralMode(NeutralMode.Brake);
         driveBackLeft.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveBackLeft.enableVoltageCompensation(true);
@@ -256,18 +256,18 @@ public class Drive extends Subsystem {
         driveFrontRight.config_kI(0, Constants.DRIVE_RIGHT_KI, 0);
         driveFrontRight.config_kD(0, Constants.DRIVE_RIGHT_KD, 0);
         driveFrontRight.config_IntegralZone(0, 300);
-        driveFrontRight.setInverted(false);
+        driveFrontRight.setInverted(true);
         driveFrontRight.setNeutralMode(NeutralMode.Brake);
         driveFrontRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveFrontRight.enableVoltageCompensation(true);
 
-        driveMiddleRight.setInverted(false);
+        driveMiddleRight.setInverted(true);
         driveMiddleRight.setNeutralMode(NeutralMode.Brake);
         driveMiddleRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveMiddleRight.enableVoltageCompensation(true);
         driveMiddleRight.follow(driveFrontRight);
 
-        driveBackRight.setInverted(false);
+        driveBackRight.setInverted(true);
         driveBackRight.setNeutralMode(NeutralMode.Brake);
         driveBackRight.configVoltageCompSaturation(Constants.DRIVE_VCOMP);
         driveBackRight.enableVoltageCompensation(true);

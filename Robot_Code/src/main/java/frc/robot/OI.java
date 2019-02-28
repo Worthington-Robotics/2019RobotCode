@@ -35,7 +35,7 @@ public class OI{
         Button Stow = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
         GroundHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.GROUND_HATCH)));
-        GroundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO)));
+        GroundCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.REV_GROUND_CARGO)));
         BotCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO)));
         BotHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_HATCH)));
         MidHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_HATCH, Arm.ArmStates.REV_MEDIUM_HATCH)));

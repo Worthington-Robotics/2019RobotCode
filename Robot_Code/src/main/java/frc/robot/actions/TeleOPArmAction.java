@@ -5,18 +5,20 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class TeleOPArmAction extends Action {
-    private Arm.ArmStates a;
+    private Arm.ArmStates a, b, c;
     public TeleOPArmAction(Arm.ArmStates armState, Arm.ArmStates modified) {
+        b = armState;
+        c = modified;
 
-        if (!Arm.getInstance().getSideShift()){
-            a = armState;
-        } else {
-            a = modified;
-        }
     }
 
     @Override
     public void onStart() {
+        if (!Arm.getInstance().getSideShift()){
+            a = b;
+        } else {
+            a = c;
+        }
 
         Arm.getInstance().setPIDArmConfig(a);
     }
