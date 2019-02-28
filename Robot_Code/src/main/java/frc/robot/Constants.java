@@ -5,17 +5,18 @@ import frc.lib.util.HIDHelper;
 
 public class Constants {
     //Talon IDs
-    public static final int DRIVE_FRONT_LEFT_ID = 6;
+    public static final int DRIVE_FRONT_LEFT_ID = 4;
     public static final int DRIVE_MIDDLE_LEFT_ID = 5;
-    public static final int DRIVE_BACK_LEFT_ID = 4;
-    public static final int DRIVE_FRONT_RIGHT_ID = 3;
+    public static final int DRIVE_BACK_LEFT_ID = 6;
+    public static final int DRIVE_FRONT_RIGHT_ID = 1;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 2;
-    public static final int DRIVE_BACK_RIGHT_ID = 1;
+    public static final int DRIVE_BACK_RIGHT_ID = 3;
     public static final int ARM_PRONOMINAL = 7;
     public static final int ARM_DISTAL = 8;
 
     //Spark Ports
     public static final int BOTTOM_CARGOMANIP_ID = 1;
+    public static final int TOP_CARGOMANIP_ID = 2;
     public static final int LEFT_CLIMB_ID = 3;
 
     //Solenoid Ports
@@ -51,8 +52,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 4565;
-    public static final double DistAbsoluteZero = 1312;
+    public static final double ProxAbsoluteZero = 4700;
+    public static final double DistAbsoluteZero = 1600;
 
 
     //Shot powers
