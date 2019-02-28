@@ -7,10 +7,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
 import frc.lib.geometry.Pose2dWithCurvature;
@@ -40,7 +37,7 @@ public class Drive extends Subsystem {
     private PeriodicIO periodic;
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
     private PigeonIMU pigeonIMU;
-    //private DoubleSolenoid trans;
+    private DoubleSolenoid trans;
     private TalonSRX driveFrontLeft,  driveBackRight, driveFrontRight;
     private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackLeft;
     private Spark climb;
@@ -104,6 +101,7 @@ public class Drive extends Subsystem {
 
     @Override
     public synchronized void readPeriodicInputs() {
+        periodic.B1 = Constants.MASTER.getRawButton(1);
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
         periodic.left_error = driveFrontLeft.getClosedLoopError();
@@ -140,11 +138,11 @@ public class Drive extends Subsystem {
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
-        /*if (periodic.B2) {
-            trans.set(DoubleSolenoid.Value.kForward);
-        } else {
+        if (periodic.B1) {
             trans.set(DoubleSolenoid.Value.kReverse);
-        }*/
+        } else {
+            trans.set(DoubleSolenoid.Value.kForward);
+        }
             climb.set(periodic.climber_power);
     }
 
@@ -157,7 +155,7 @@ public class Drive extends Subsystem {
         driveMiddleRight = new VictorSPX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
         pigeonIMU = new PigeonIMU(driveBackRight);
-        //trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
+        trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
         climb = new Spark(Constants.LEFT_CLIMB_ID);
@@ -430,6 +428,7 @@ public class Drive extends Subsystem {
         Rotation2d gyro_heading = Rotation2d.identity();
         Rotation2d gyro_offset = Rotation2d.identity();
         Pose2d error = Pose2d.identity();
+        boolean B1 = false;
         boolean B2 = false;
         boolean B3 = false;
         boolean B5 = false;

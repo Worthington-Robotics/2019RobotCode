@@ -20,8 +20,8 @@ public class Constants {
     public static final int LEFT_CLIMB_ID = 3;
 
     //Solenoid Ports
-    //public static final int TRANS_LOW_ID = 0;
-    //public static final int TRANS_HIGH_ID = 1;
+    public static final int TRANS_LOW_ID = 0;
+    public static final int TRANS_HIGH_ID = 1;
     public static final int ALIEN_1_LOW_ID = 2;
     public static final int ALIEN_1_HIGH_ID = 3;
 
@@ -58,7 +58,7 @@ public class Constants {
 
     //Shot powers
     public static final double SHOOT_POWER = 1;
-    public static final double PICKUP_POWER = -.55;
+    public static final double PICKUP_POWER = -1;
     public static final double SLOWUP_POWER = -.35;
     public static final double STOP_POWER = 0;
     public static final double CLIMB_POWER = .5;
@@ -100,7 +100,7 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.6, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
