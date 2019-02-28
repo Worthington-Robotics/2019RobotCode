@@ -85,9 +85,11 @@ public class Constants {
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
 
-    public static final double ANGLE_KP = 0.04; // 0.065;
+    // Angle PID Constants
+    public static final double ANGLE_KP = 0.06; // 0.065;
     public static final double ANGLE_KI = 0; // 0.00125;
-    public static final double ANGLE_KD = 0; // 0.1;
+    public static final double ANGLE_KD = 0.1; // 0.1;
+
     //UltraSonic constants
     public static final double US_UPDATE_RATE = 1.2;
     public static final double US_SENSOR_OFFSET = 10;
