@@ -52,8 +52,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 4700;
-    public static final double DistAbsoluteZero = 1600;
+    public static final double ProxAbsoluteZero = 4550;
+    public static final double DistAbsoluteZero = 1527;
 
 
     //Shot powers
