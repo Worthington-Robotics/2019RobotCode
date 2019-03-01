@@ -7,8 +7,8 @@ import frc.robot.subsystems.Drive;
 
 public class AnglePIDOutput implements PIDOutput {
 
-    private static final double MIN_OUTPUT = 0.36;
-    private static final double THRESHOLD = 0.05;
+    private static final double MIN_OUTPUT = 0.31;
+    private static final double THRESHOLD = 0.13;
 
     @Override
     public void pidWrite(double output) {
@@ -18,6 +18,8 @@ public class AnglePIDOutput implements PIDOutput {
             if (negative) {
                 output *= -1;
             }
+        } else if (Math.abs(output) <= THRESHOLD) {
+            output = 0;
         }
 
         DriveSignal signal = new DriveSignal(output, -output,false);

@@ -48,7 +48,8 @@ public class AnglePID extends Action {
     public boolean isFinished() {
         if (angleController != null) {
             SmartDashboard.putBoolean("vision/On Target", angleController.onTarget());
-            return angleController.onTarget();
+            // return angleController.onTarget();
+            return false;
         }
         return true;
     }
