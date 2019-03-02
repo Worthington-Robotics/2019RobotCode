@@ -36,6 +36,7 @@ public class AnglePID extends Action {
             angleController.setSetpoint(desiredAngle);
             angleController.setAbsoluteTolerance(1.0);
             angleController.setOutputRange(-0.5, 0.5);
+            angleController.setContinuous();
             angleController.enable();
         }
     }

@@ -86,8 +86,8 @@ public class Constants {
      */
 
     // Arm Absolute Zeros
-    public static double PROX_ABSOLUTE_ZERO = 640;
-    public static double DIST_ABSOLUTE_ZERO = 1435;
+    public static double PROX_ABSOLUTE_ZERO = 4740;
+    public static double DIST_ABSOLUTE_ZERO = 1308;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -121,8 +121,8 @@ public class Constants {
      */
 
     //UltraSonic constants
-    public static final double US_UPDATE_RATE = 1.2;
-    public static final double US_SENSOR_OFFSET = 10;
+    //public static final double US_UPDATE_RATE = 1.2;
+    //public static final double US_SENSOR_OFFSET = 10;
 
     //Shot powers
     public static final double SHOOT_POWER = 1;

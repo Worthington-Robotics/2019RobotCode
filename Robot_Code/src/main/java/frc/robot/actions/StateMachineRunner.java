@@ -23,7 +23,7 @@ public class StateMachineRunner extends Action {
     }
 
     public boolean isFinished() {
-        return running;
+        return false;//running;
     }
 
     public void onStop() {

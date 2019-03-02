@@ -6,6 +6,7 @@ import frc.robot.subsystems.Arm;
 public class ModAction extends Action {
 
     Action main, function;
+    boolean sideShift;
 
     public ModAction(Action main, Action function){
         this.main = main;
@@ -14,17 +15,21 @@ public class ModAction extends Action {
 
     @Override
     public void onStart() {
-        if(!Arm.getInstance().getSideShift()){
+        System.out.println("Activated");
+        sideShift = Arm.getInstance().getSideShift();
+        if(!sideShift){
+            System.out.println("Normal");
             main.onStart();
         }
         else{
+            System.out.println("Alt");
             function.onStart();
         }
     }
 
     @Override
     public void onLoop() {
-        if(!Arm.getInstance().getSideShift()){
+        if(!sideShift){
             main.onLoop();
         }
         else{
@@ -34,7 +39,7 @@ public class ModAction extends Action {
 
     @Override
     public boolean isFinished() {
-        if(!Arm.getInstance().getSideShift()){
+        if(!sideShift){
             return main.isFinished();
         }
         else{
@@ -44,7 +49,7 @@ public class ModAction extends Action {
 
     @Override
     public void onStop() {
-        if(!Arm.getInstance().getSideShift()){
+        if(!sideShift){
             main.onStop();
         }
         else{

@@ -92,6 +92,7 @@ public class Arm extends Subsystem {
             case SAFETY_CATCH:
                 armProx.set(ControlMode.PercentOutput, 0);
                 armDist.set(ControlMode.PercentOutput, 0);
+                break;
             default:
                 System.out.println("Arm entered unexpected control state!");
         }
@@ -104,6 +105,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
         SmartDashboard.putNumber("Arm/Prox Point", periodic.proxRel - periodic.proxMod);
         SmartDashboard.putNumber("Arm/Prox Dial", periodic.operatorInput[0]);
+        SmartDashboard.putNumber("Arm/Prox Abs", periodic.proxAbsolute);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
@@ -111,6 +113,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Dist Rel", periodic.distRel);
         SmartDashboard.putNumber("Arm/Dist Point", periodic.distRel - periodic.distMod);
         SmartDashboard.putNumber("Arm/Dist Dial", periodic.operatorInput[1]);
+        SmartDashboard.putNumber("Arm/Dist Abs", periodic.distAbsolute);
         //
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
         SmartDashboard.putBoolean("Arm/Stowed", periodic.stowed);
@@ -288,7 +291,7 @@ public class Arm extends Subsystem {
         GROUND_HATCH(1248, -2477),
         CLIMB_TRANSPORT(-100,-1364),
         UNSTOW_ARM(-600, 1500),
-        STOW_ARM(-1000, -700);
+        STOW_ARM(-905, 2263);
 
         private double prox, dist;
 

@@ -42,7 +42,7 @@ public class OI{
         Button stow = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
 
-        groundHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.GROUND_HATCH)));
+        groundHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.GROUND_HATCH)));
         groundCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.GROUND_HATCH)));
         botCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), new ArmSoftCal())));
         botHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_HATCH)));
@@ -53,10 +53,10 @@ public class OI{
         cargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
         cargoOut.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         hatchOut.whileHeld(Action.toCommand(new AlienAction()));
-        climbFullUp.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
+        climbFullUp.whileHeld(Action.toCommand(new ArmAction(Arm.ArmStates.STOW_ARM)));
         climbFullDown.whileHeld(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         autoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        stow.whenPressed(Action.toCommand(new ModAction(new UnstowArmAction(), new StateMachineRunner(new StowProtocol()))));
+        stow.whileHeld(Action.toCommand(new ModAction(new UnstowArmAction(), new StateMachineRunner(new StowProtocol()))));
 
 
     }
