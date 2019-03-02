@@ -13,10 +13,14 @@ public class TeleOPArmAction extends Action {
 
     @Override
     public void onStart() {
-        if (!Arm.getInstance().getSideShift()){
-            Arm.getInstance().setPIDArmConfig(armState);
-        } else {
-            Arm.getInstance().setPIDArmConfig(modified);
+        if (!Arm.getInstance().getStowed()) {
+            if (!Arm.getInstance().getSideShift()) {
+                a = b;
+            } else {
+                a = c;
+            }
+
+            Arm.getInstance().setPIDArmConfig(a);
         }
     }
 
