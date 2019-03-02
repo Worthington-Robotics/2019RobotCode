@@ -4,9 +4,12 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
+import frc.robot.actions.buttonactions.ModAction;
+import frc.robot.autoactiongroups.StowProtocol;
 import frc.robot.actions.armactions.*;
 import frc.robot.actions.buttonactions.RunTestConditional;
 import frc.robot.autoactiongroups.AutoTestProtocol;
+
 import frc.robot.subsystems.Arm;
 
 public class OI{
@@ -38,9 +41,10 @@ public class OI{
         Button autoStopButton = new JoystickButton(Constants.LAUNCH_PAD, 1);
         Button stow = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
+
         groundHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.GROUND_HATCH)));
-        groundCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.REV_GROUND_CARGO)));
-        botCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO)));
+        groundCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.GROUND_HATCH)));
+        botCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), new ArmSoftCal())));
         botHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_HATCH)));
         midHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_HATCH, Arm.ArmStates.REV_MEDIUM_HATCH)));
         midCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO, Arm.ArmStates.REV_MEDIUM_CARGO)));
@@ -52,7 +56,8 @@ public class OI{
         climbFullUp.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
         climbFullDown.whileHeld(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         autoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        stow.whenPressed(Action.toCommand(new UnstowArmAction()));
+        stow.whenPressed(Action.toCommand(new ModAction(new UnstowArmAction(), new StateMachineRunner(new StowProtocol()))));
+
 
     }
 }

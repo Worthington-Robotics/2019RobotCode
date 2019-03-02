@@ -377,8 +377,8 @@ public class Drive extends Subsystem {
     public void outputTelemetry() {
         //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
-        SmartDashboard.putNumber("Drive/Heading", periodic.gyro_heading.getDegrees());
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
+
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
         SmartDashboard.putNumber("Drive/Error/Y", periodic.error.getTranslation().y());
         SmartDashboard.putNumber("Drive/Error/Theta", periodic.error.getRotation().getDegrees());
