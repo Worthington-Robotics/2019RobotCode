@@ -16,7 +16,7 @@ public class OI{
         Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
 
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
-        Vision.whileHeld(Action.toCommand(new VisionTra()));
+        //Vision.whileHeld(Action.toCommand(new VisionTra()));
         AllAction.whileHeld(Action.toCommand(new StateMachineRunner(new AutoDockStateMachine())));
         cameraSwitch.whenPressed(Action.toCommand(new CameraSwitchAction()));
 

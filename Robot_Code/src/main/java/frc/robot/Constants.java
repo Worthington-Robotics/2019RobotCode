@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.lib.geometry.Translation2d;
 import frc.lib.util.HIDHelper;
-import frc.lib.util.Units;
 
 public class Constants {
 
@@ -87,13 +86,12 @@ public class Constants {
      */
 
     //Arm Zeroes
-    public static final double ProxAbsoluteZero = 4385; //Talon units
-    public static final double DistAbsoluteZero = -1919; //Talon units
+    public static double ProxAbsoluteZero = 4385; //Talon units
+    public static double DistAbsoluteZero = -1919; //Talon units
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
     public static final double DIST_LENGTH = 0.4572; // m
-    public static final Translation2d PROX_TO_BASE = new Translation2d(0,0); // m TODO determine if necessary
     public static final double PROX_MOI = 0.1;
     public static final double DIST_MOI = 0.01;
 
