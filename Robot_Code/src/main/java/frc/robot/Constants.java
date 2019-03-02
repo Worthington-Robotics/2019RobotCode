@@ -68,7 +68,7 @@ public class Constants {
     //PID Constants
     public static final double ANGLE_KP = 0.04; // 0.065;
     public static final double ANGLE_KI = 0; // 0.00125;
-    public static final double ANGLE_KD = 0; // 0.1;
+    public static final double ANGLE_KD = 0; // 0.1
 
     public static final double DRIVE_RIGHT_KP = 1.2;
     public static final double DRIVE_RIGHT_KI = 0.0;
@@ -85,9 +85,9 @@ public class Constants {
      * Arm tuned values -----------------------------------------
      */
 
-    //Arm Zeroes
-    public static double ProxAbsoluteZero = 4385; //Talon units
-    public static double DistAbsoluteZero = -1919; //Talon units
+    // Arm Absolute Zeros
+    public static double PROX_ABSOLUTE_ZERO = 640;
+    public static double DIST_ABSOLUTE_ZERO = 1435;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m

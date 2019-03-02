@@ -5,10 +5,8 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.HIDHelper;
-import frc.lib.util.Ultrasonic;
 import frc.robot.Constants;
 
 /**
@@ -127,8 +125,8 @@ public class Arm extends Subsystem {
     }
 
     public void resetArmMod() {
-        periodic.proxMod = Constants.ProxAbsoluteZero - periodic.proxAbsolute;
-        periodic.distMod = Constants.DistAbsoluteZero - periodic.distAbsolute;
+        periodic.proxMod = Constants.PROX_ABSOLUTE_ZERO - periodic.proxAbsolute;
+        periodic.distMod = Constants.DIST_ABSOLUTE_ZERO - periodic.distAbsolute;
     }
 
     public void configTalons() {
@@ -214,6 +212,12 @@ public class Arm extends Subsystem {
     {
         return periodic.sideShift;
     }
+
+    public double[] getAbsolute()
+    {
+        return new double[]{periodic.proxAbsolute , periodic.distAbsolute};
+    }
+
 
 
     public enum ArmModes {
