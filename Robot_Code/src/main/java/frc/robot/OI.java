@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
 import frc.robot.autoactiongroups.AutoDockStateMachine;
+import frc.robot.autoactiongroups.StowProtocol;
 import frc.robot.subsystems.Arm;
 
 public class OI{
@@ -37,8 +38,8 @@ public class OI{
         Button Stow = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
         GroundHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.GROUND_HATCH)));
-        GroundCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.REV_GROUND_CARGO)));
-        BotCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO)));
+        GroundCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_GROUND_CARGO, Arm.ArmStates.GROUND_HATCH)));
+        BotCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), new ArmSoftCal())));
         BotHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_HATCH)));
         MidHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_HATCH, Arm.ArmStates.REV_MEDIUM_HATCH)));
         MidCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO, Arm.ArmStates.REV_MEDIUM_CARGO)));
@@ -50,7 +51,7 @@ public class OI{
         ClimbFullUp.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
         ClimbFullDown.whileHeld(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         AutoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        Stow.whenPressed(Action.toCommand(new UnstowArmAction()));
+        Stow.whenPressed(Action.toCommand(new ModAction(new UnstowArmAction(), new StateMachineRunner(new StowProtocol()))));
 
     }
 }

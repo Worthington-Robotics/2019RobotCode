@@ -99,16 +99,12 @@ public class Arm extends Subsystem {
 
     public void outputTelemetry() {
         SmartDashboard.putNumber("Arm/Prox Mod", periodic.proxMod);
-        SmartDashboard.putNumber("Arm/Prox Absolute", periodic.proxAbsolute);
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
         SmartDashboard.putNumber("Arm/Prox Point", periodic.proxRel - periodic.proxMod);
-        SmartDashboard.putNumber("Arm/Prox Amps", periodic.proxAmps);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
-        SmartDashboard.putNumber("Arm/Dist Amps", periodic.distAmps);
-        SmartDashboard.putNumber("Arm/Dist Absolute", periodic.distAbsolute);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
         SmartDashboard.putNumber("Arm/Dist Rel", periodic.distRel);
