@@ -1,19 +1,21 @@
-package frc.robot.actions;
+package frc.robot.actions.armactions;
 
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
 
 
-public class UnstowArmAction extends Action {
+public class ArmAction extends Action {
     private Arm.ArmStates a;
-    public UnstowArmAction() {
-        a = Arm.ArmStates.UNSTOW_ARM;
+
+    public ArmAction(Arm.ArmStates armState) {
+        a = armState;
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPIDArmConfig(a);
-        Arm.getInstance().setStowed(false);
+
+        if (!Arm.getInstance().getStowed())
+            Arm.getInstance().setPIDArmConfig(a);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package frc.robot.actions;
+package frc.robot.actions.armactions;
 
 import frc.lib.statemachine.Action;
 import frc.robot.Constants;
