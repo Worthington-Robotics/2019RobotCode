@@ -52,8 +52,8 @@ public class Constants {
     public static final double DRIVE_ENCODER_PPR = 4096.0; //encoder counts per revolution
 
     // Arm Absolute Zeros
-    public static final double ProxAbsoluteZero = 4550;
-    public static final double DistAbsoluteZero = 1527;
+    public static final double ProxAbsoluteZero = 640;
+    public static final double DistAbsoluteZero = 1435;
 
 
     //Shot powers
@@ -103,6 +103,7 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.8, 2);
+    public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.05, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds

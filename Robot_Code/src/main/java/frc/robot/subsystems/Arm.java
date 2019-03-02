@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.lib.util.HIDHelper;
 import frc.lib.util.Ultrasonic;
 import frc.robot.Constants;
 
@@ -27,6 +28,7 @@ public class Arm extends Subsystem {
     private TalonSRX armProx, armDist;
     private PeriodicIO periodic;
     private Ultrasonic US1, US2;
+    private double[] operatorInput;
 
     private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
@@ -41,6 +43,7 @@ public class Arm extends Subsystem {
     }
 
     public void readPeriodicInputs() {
+        periodic.operatorInput = HIDHelper.getAdjStick(Constants.LAUNCHPAD_STICK);
         periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
         periodic.proxPrev = periodic.proxRel;
         periodic.distPrev = periodic.distRel;
@@ -77,8 +80,8 @@ public class Arm extends Subsystem {
             case DirectControl:
                 /*if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
                     periodic.armDistPower = -.25;*/
-                armProx.set(ControlMode.PercentOutput, periodic.armProxPower);
-                armDist.set(ControlMode.PercentOutput, periodic.armDistPower);
+                armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
+                armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
             case PID:
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
@@ -101,7 +104,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
-        SmartDashboard.putNumber("Arm/Prox Point", periodic.proxAbsolute - periodic.proxMod);
+        SmartDashboard.putNumber("Arm/Prox Point", periodic.proxRel - periodic.proxMod);
         SmartDashboard.putNumber("Arm/Prox Amps", periodic.proxAmps);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
@@ -110,7 +113,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
         SmartDashboard.putNumber("Arm/Dist Rel", periodic.distRel);
-        SmartDashboard.putNumber("Arm/Dist Point", periodic.distAbsolute - periodic.distMod);
+        SmartDashboard.putNumber("Arm/Dist Point", periodic.distRel - periodic.distMod);
         //
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
     }
@@ -185,6 +188,16 @@ public class Arm extends Subsystem {
         periodic.armDistPower = dist;
     }
 
+    public boolean getStowed()
+    {
+        return periodic.stowed;
+    }
+
+    public void setStowed(boolean stowed)
+    {
+        periodic.stowed = stowed;
+    }
+
     public double getUltrasonicDistance() {
 
         if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
@@ -250,6 +263,9 @@ public class Arm extends Subsystem {
         //
         double proxAmps = 0;
         double distAmps = 0;
+        //
+        double[] operatorInput = {0,0};
+        boolean stowed = true;
 
         ArmModes armmode = ArmModes.SAFETY_CATCH;
     }
@@ -257,20 +273,22 @@ public class Arm extends Subsystem {
     public enum ArmStates {
         FWD_GROUND_CARGO(-1324, 1308),
         //TODO PROX, DIST BONEHEAD
-        FWD_LOW_HATCH(-1400, 624),
-        FWD_LOW_CARGO(-1300, 424),
-        FWD_MEDIUM_HATCH(-800, 300),
-        FWD_MEDIUM_CARGO(-700, 300),
-        FWD_HIGH_HATCH(-300, 275),
-        FWD_HIGH_CARGO(-300, 100),
+        FWD_LOW_HATCH(-1467, 795),
+        FWD_LOW_CARGO(-1464, 649),
+        FWD_MEDIUM_HATCH(-861, 670),
+        FWD_MEDIUM_CARGO(-691, 631),
+        FWD_HIGH_HATCH(-268, 450),
+        FWD_HIGH_CARGO(-339, 284),
 
-        REV_MEDIUM_HATCH(-500, -650),
-        REV_MEDIUM_CARGO(-1000, -550),
-        REV_HIGH_HATCH(-100, -600),
-        REV_HIGH_CARGO(-100, -400),
+        REV_MEDIUM_HATCH(-460, -1036),
+        REV_MEDIUM_CARGO(-554, -882),
+        REV_HIGH_HATCH(-237, -567),
+        REV_HIGH_CARGO(-236, -415),
         REV_GROUND_CARGO(1000, -200),
 
-        GROUND_HATCH(1000, -1800),
+        GROUND_HATCH(1248, -2477),
+        CLIMB_TRANSPORT(-100,-1364),
+        UNSTOW_ARM(-600, 1500),
         STOW_ARM(-1000, -700);
 
         private double prox, dist;
