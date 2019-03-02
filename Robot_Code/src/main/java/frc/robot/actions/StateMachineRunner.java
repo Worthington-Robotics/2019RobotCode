@@ -6,10 +6,11 @@ import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.subsystems.Drive;
 
 public class StateMachineRunner extends Action {
+
     private StateMachineDescriptor state;
     private boolean running = false;
-    public StateMachineRunner(StateMachineDescriptor state)
-    {
+
+    public StateMachineRunner(StateMachineDescriptor state) {
         this.state = state;
     }
 
@@ -27,6 +28,5 @@ public class StateMachineRunner extends Action {
 
     public void onStop() {
         StateMachine.assertStop();
-        Drive.getInstance().overrideTrajectory(true);
     }
 }
