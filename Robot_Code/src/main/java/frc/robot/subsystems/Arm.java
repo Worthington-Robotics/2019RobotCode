@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.HIDHelper;
 import frc.lib.util.Ultrasonic;
@@ -27,7 +28,7 @@ public class Arm extends Subsystem {
 
     private TalonSRX armProx, armDist;
     private PeriodicIO periodic;
-    private Ultrasonic US1, US2;
+    //private Ultrasonic US1, US2;
     private double[] operatorInput;
 
     private Arm() {
@@ -37,8 +38,8 @@ public class Arm extends Subsystem {
         armDist.configContinuousCurrentLimit(20);
         armDist.enableCurrentLimit(true);
         armProx.enableCurrentLimit(true);
-        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
-        US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
+        //US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
+        //US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
     }
 
@@ -49,8 +50,8 @@ public class Arm extends Subsystem {
         periodic.distPrev = periodic.distRel;
         periodic.US1Past = periodic.US1Dis;
         periodic.US2Past = periodic.US2Dis;
-        periodic.US1Dis = US1.getDistance();
-        periodic.US2Dis = US2.getDistance();
+        //periodic.US1Dis = US1.getDistance();
+        //periodic.US2Dis = US2.getDistance();
         periodic.proxAmps = armProx.getOutputCurrent();
         periodic.distAmps = armDist.getOutputCurrent();
         periodic.proxError = armProx.getClosedLoopError();
@@ -188,6 +189,17 @@ public class Arm extends Subsystem {
         periodic.armDistPower = dist;
     }
 
+    //public double getUltrasonicDistance() {
+
+        //if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+          //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
+            //    (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+            //return (periodic.US1Dis + periodic.US2Dis) / 2;
+        //} else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+          //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
+            //    (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+            //return periodic.US2Dis;
+        //} else {
     public boolean getStowed()
     {
         return periodic.stowed;
@@ -196,22 +208,6 @@ public class Arm extends Subsystem {
     public void setStowed(boolean stowed)
     {
         periodic.stowed = stowed;
-    }
-
-    public double getUltrasonicDistance() {
-
-        if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
-                && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
-                (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            return (periodic.US1Dis + periodic.US2Dis) / 2;
-        } else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
-                && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
-                (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            return periodic.US2Dis;
-        } else {
-
-            return periodic.US1Dis;
-        }
     }
 
     public boolean getSideShift()
