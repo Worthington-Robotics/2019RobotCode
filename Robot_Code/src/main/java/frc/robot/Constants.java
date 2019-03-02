@@ -26,10 +26,10 @@ public class Constants {
     public static final int ALIEN_1_HIGH_ID = 3;
 
     //Sensor Ports
-    public static final int ULTRASONIC_IN_1 = 0;
-    public static final int ULTRASONIC_OUT_1 = 1;
-    public static final int ULTRASONIC_IN_2 = 2;
-    public static final int ULTRASONIC_OUT_2 = 3;
+    //public static final int ULTRASONIC_IN_1 = 0;
+    //public static final int ULTRASONIC_OUT_1 = 1;
+    //public static final int ULTRASONIC_IN_2 = 2;
+    //public static final int ULTRASONIC_OUT_2 = 3;
 
     //Pure pursuit related values
     public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23;
@@ -103,6 +103,7 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.6, 2);
+    public static final HIDHelper.HIDConstants LAUNCH_PAD_POTENTIAMETER = new HIDHelper.HIDConstants(LAUNCH_PAD, .15,.99,.99,.6,2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds

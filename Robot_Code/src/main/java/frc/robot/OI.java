@@ -18,7 +18,7 @@ public class OI{
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
         Vision.whileHeld(Action.toCommand(new VisionTra()));
         AllAction.whileHeld(Action.toCommand(new StateMachineRunner(new AutoDockStateMachine())));
-        cameraSwitch.whileHeld(Action.toCommand(new CameraSwitchAction()));
+        cameraSwitch.whenPressed(Action.toCommand(new CameraSwitchAction()));
 
         Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, 13);
         Button GroundCargo = new JoystickButton(Constants.LAUNCH_PAD, 10);
