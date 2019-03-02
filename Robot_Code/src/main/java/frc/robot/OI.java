@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
-import frc.robot.autoactiongroups.AutoDockStateMachine;
+import frc.robot.actions.armactions.*;
 import frc.robot.subsystems.Arm;
 
 public class OI{
@@ -16,8 +16,6 @@ public class OI{
         Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
 
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
-        //Vision.whileHeld(Action.toCommand(new VisionTra()));
-        AllAction.whileHeld(Action.toCommand(new StateMachineRunner(new AutoDockStateMachine())));
         cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
 
         Button GroundHatch = new JoystickButton(Constants.LAUNCH_PAD, 13);

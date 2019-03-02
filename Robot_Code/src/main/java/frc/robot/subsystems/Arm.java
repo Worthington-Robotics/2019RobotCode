@@ -271,8 +271,8 @@ public class Arm extends Subsystem {
     }
 
     public enum ArmStates {
+        // Prox, Dist bonehead
         FWD_GROUND_CARGO(-1324, 1308),
-        //TODO PROX, DIST BONEHEAD
         FWD_LOW_HATCH(-1467, 795),
         FWD_LOW_CARGO(-1464, 649),
         FWD_MEDIUM_HATCH(-861, 670),
