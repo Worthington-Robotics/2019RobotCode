@@ -50,7 +50,7 @@ public class OI{
         ClimbFullUp.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
         ClimbFullDown.whileHeld(Action.toCommand(new ClimbAction(Constants.CLIMB_POWER)));
         AutoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        Stow.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.STOW_ARM)));
+        Stow.whenPressed(Action.toCommand(new UnstowArmAction()));
 
     }
 
