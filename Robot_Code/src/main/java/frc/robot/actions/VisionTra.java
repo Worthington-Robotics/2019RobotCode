@@ -27,6 +27,7 @@ public class VisionTra extends Action {
     private static final double minDist = 8;
     private static final double maxDist = 100;
 
+    @Deprecated
     public VisionTra() {
         //US.setAutomaticMode(true);
         //US.setEnabled(true);
@@ -34,7 +35,8 @@ public class VisionTra extends Action {
 
     public void onStart() {
         Pose2d currentPose = new Pose2d(PoseEstimator.getInstance().getLatestFieldToVehicle().getValue());
-        distance = Arm.getInstance().getUltrasonicDistance();
+        //distance = Arm.getInstance().getUltrasonicDistance();
+        distance = 0;
         Points = new ArrayList<>();
         Points.add(currentPose);
         if (distance > 0) {
@@ -55,7 +57,7 @@ public class VisionTra extends Action {
     }
 
     public void onLoop() {
-        distance = Arm.getInstance().getUltrasonicDistance();
+        distance = 0; //Arm.getInstance().getUltrasonicDistance();
         SmartDashboard.putNumber("ultrasonic/Distance", distance);
     }
 
