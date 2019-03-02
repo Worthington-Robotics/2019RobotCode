@@ -5,9 +5,14 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.lib.geometry.Rotation2d;
+import frc.lib.loops.Loop;
+import frc.lib.util.DriveSignal;
 import frc.lib.util.HIDHelper;
 import frc.robot.Constants;
+import frc.robot.planners.ArmMotionPlanner;
 
 /**
  * The code for governing the three-axis arm
@@ -28,6 +33,8 @@ public class Arm extends Subsystem {
     private PeriodicIO periodic;
     //private Ultrasonic US1, US2;
     private double[] operatorInput;
+    private ArmMotionPlanner armMotionPlanner;
+    private boolean mOverrideTrajectory = false;
 
     private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
@@ -38,16 +45,37 @@ public class Arm extends Subsystem {
         armProx.enableCurrentLimit(true);
         //US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
         //US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
+        armMotionPlanner = new ArmMotionPlanner();
         reset();
     }
+
+    private Loop m_loop = new Loop() {
+        @Override
+        public void onStart(double timestamp) {
+
+        }
+
+        @Override
+        public void onLoop(double timestamp) {
+            switch (periodic.armmode) {
+                case PID: break;
+                case VELOCITY_CONTROL: break;
+            }
+        }
+
+        @Override
+        public void onStop(double timestamp) {
+
+        }
+    };
 
     public void readPeriodicInputs() {
         periodic.operatorInput = HIDHelper.getAdjStick(Constants.LAUNCHPAD_STICK);
         periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
         periodic.proxPrev = periodic.proxRel;
         periodic.distPrev = periodic.distRel;
-        periodic.US1Past = periodic.US1Dis;
-        periodic.US2Past = periodic.US2Dis;
+        //periodic.US1Past = periodic.US1Dis;
+        //periodic.US2Past = periodic.US2Dis;
         //periodic.US1Dis = US1.getDistance();
         //periodic.US2Dis = US2.getDistance();
         periodic.proxAmps = armProx.getOutputCurrent();
@@ -61,7 +89,7 @@ public class Arm extends Subsystem {
 
         periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
         periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
-        if (periodic.armmode == ArmModes.DirectControl) {
+        if (periodic.armmode == ArmModes.DIRECT_CONTROL) {
             if (periodic.enableProx) {
                 periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
             }
@@ -76,9 +104,7 @@ public class Arm extends Subsystem {
 
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
-            case DirectControl:
-                /*if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
-                    periodic.armDistPower = -.25;*/
+            case DIRECT_CONTROL:
                 armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
@@ -86,12 +112,13 @@ public class Arm extends Subsystem {
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
                 armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod/*, DemandType.ArbitraryFeedForward, Math.sin(periodic.armDistPower + periodic.distMod / 2048 * Math.PI)*/);
                 break;
-            case STATE_SPACE:
-
-                break;
             case SAFETY_CATCH:
                 armProx.set(ControlMode.PercentOutput, 0);
                 armDist.set(ControlMode.PercentOutput, 0);
+                break;
+            case VELOCITY_CONTROL:
+                armProx.set(ControlMode.Velocity, periodic.armProxPower, DemandType.ArbitraryFeedForward, (periodic.proxVoltage + Constants.ARM_PROX_KD * periodic.proxAccel / 1023.0));
+                armDist.set(ControlMode.Velocity, periodic.armDistPower, DemandType.ArbitraryFeedForward, (periodic.distVoltage + Constants.ARM_DIST_KD * periodic.distAccel / 1023.0));
             default:
                 System.out.println("Arm entered unexpected control state!");
         }
@@ -99,22 +126,19 @@ public class Arm extends Subsystem {
 
     public void outputTelemetry() {
         SmartDashboard.putNumber("Arm/Prox Mod", periodic.proxMod);
-        SmartDashboard.putNumber("Arm/Prox Absolute", periodic.proxAbsolute);
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
         SmartDashboard.putNumber("Arm/Prox Point", periodic.proxRel - periodic.proxMod);
-        SmartDashboard.putNumber("Arm/Prox Amps", periodic.proxAmps);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
-        SmartDashboard.putNumber("Arm/Dist Amps", periodic.distAmps);
-        SmartDashboard.putNumber("Arm/Dist Absolute", periodic.distAbsolute);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
         SmartDashboard.putNumber("Arm/Dist Rel", periodic.distRel);
         SmartDashboard.putNumber("Arm/Dist Point", periodic.distRel - periodic.distMod);
         //
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
+        SmartDashboard.putBoolean("Arm/Stowed", periodic.stowed);
     }
 
 
@@ -167,21 +191,14 @@ public class Arm extends Subsystem {
         periodic.armDistPower = state.dist;
     }
 
-    public void setSSArmConfig(ArmStates state) {
-        if (periodic.armmode != ArmModes.STATE_SPACE) {
-            periodic.armmode = ArmModes.STATE_SPACE;
-        }
-        periodic.armProxPower = state.prox;
-        periodic.armDistPower = state.dist;
-    }
 
     public void safeMode() {
         periodic.armmode = ArmModes.SAFETY_CATCH;
     }
 
     public void setVelocitymConfig(double prox, double dist) {
-        if (periodic.armmode != ArmModes.DirectControl) {
-            periodic.armmode = ArmModes.DirectControl;
+        if (periodic.armmode != ArmModes.DIRECT_CONTROL) {
+            periodic.armmode = ArmModes.DIRECT_CONTROL;
         }
         periodic.armProxPower = prox;
         periodic.armDistPower = dist;
@@ -189,15 +206,42 @@ public class Arm extends Subsystem {
 
     //public double getUltrasonicDistance() {
 
-        //if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
-          //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
-            //    (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            //return (periodic.US1Dis + periodic.US2Dis) / 2;
-        //} else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
-          //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
-            //    (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            //return periodic.US2Dis;
-        //} else {
+    //if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+    //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
+    //    (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+    //return (periodic.US1Dis + periodic.US2Dis) / 2;
+    //} else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+    //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
+    //    (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+    //return periodic.US2Dis;
+    //} else {
+
+    public Rotation2d ticksToRotation2D(double ticks) {
+        double radians = (ticks/4096) * (2 * Math.PI);
+        return Rotation2d.fromRadians(radians);
+    }
+
+    public void updateArmMotionPlanner() {
+        final double now = Timer.getFPGATimestamp();
+        ArmMotionPlanner.Output armMotionPlannerOutput = armMotionPlanner.update(now,
+                ticksToRotation2D(periodic.proxRel - periodic.proxMod),
+                ticksToRotation2D(periodic.distRel - periodic.distMod));
+        periodic.armProxPower = armMotionPlannerOutput.proxVel;
+        periodic.armDistPower = armMotionPlannerOutput.distVel;
+        periodic.proxVoltage = armMotionPlannerOutput.proxVoltage;
+        periodic.distVoltage = armMotionPlannerOutput.distVoltage;
+        periodic.proxAccel = armMotionPlannerOutput.proxAccel;
+        periodic.distAccel = armMotionPlannerOutput.distAccel;
+    }
+    public synchronized void setTrajectory(ArmMotionPlanner.ArmTrajectory trajectory) {
+        if (armMotionPlanner != null) {
+            mOverrideTrajectory = false;
+            armMotionPlanner.reset();
+            armMotionPlanner.setTrajectory(trajectory);
+            periodic.armmode = ArmModes.VELOCITY_CONTROL;
+        }
+    }
+
     public boolean getStowed()
     {
         return periodic.stowed;
@@ -221,9 +265,9 @@ public class Arm extends Subsystem {
 
 
     public enum ArmModes {
-        DirectControl,
+        DIRECT_CONTROL,
         PID,
-        STATE_SPACE,
+        VELOCITY_CONTROL,
         SAFETY_CATCH;
 
         public String toString() {
@@ -250,10 +294,10 @@ public class Arm extends Subsystem {
         double proxError = armProx.getClosedLoopError();
         double distError = armDist.getClosedLoopError();
         //PRIOR DISTANCE
-        double US1Past = 0;
-        double US2Past = 0;
-        double US1Dis = 0;
-        double US2Dis = 0;
+        //double US1Past = 0;
+        //double US2Past = 0;
+        //double US1Dis = 0;
+        //double US2Dis = 0;
         //TALON RELS
         double proxRel = 0;
         double distRel = 0;
@@ -263,6 +307,11 @@ public class Arm extends Subsystem {
         //
         double proxAmps = 0;
         double distAmps = 0;
+        //V Control Things
+        double proxAccel = 0;
+        double distAccel = 0;
+        double proxVoltage = 0;
+        double distVoltage = 0;
         //
         double[] operatorInput = {0,0};
         boolean stowed = true;
@@ -271,8 +320,8 @@ public class Arm extends Subsystem {
     }
 
     public enum ArmStates {
+        // Prox, Dist bonehead
         FWD_GROUND_CARGO(-1324, 1308),
-        //TODO PROX, DIST BONEHEAD
         FWD_LOW_HATCH(-1467, 795),
         FWD_LOW_CARGO(-1464, 649),
         FWD_MEDIUM_HATCH(-861, 670),
