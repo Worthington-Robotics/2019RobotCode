@@ -50,7 +50,7 @@ public class ArmMotionPlanner implements CSVWritable {
         followerType = type;
     }
 
-    public static ArmTrajectory generateTrajectory(
+    /*public static ArmTrajectory generateTrajectory(
             final List<Pose2d> waypoints,
             final List<TimingConstraint<Rotation2d>> constraints,
             double start_vel,
@@ -70,7 +70,7 @@ public class ArmMotionPlanner implements CSVWritable {
         final Trajectory<TimedState<Rotation2d>> prox_timed = TimingUtil.timeParameterizeTrajectory(false, prox_waypts, constraints, start_vel, end_vel, max_vel, max_accel);
         final Trajectory<TimedState<Rotation2d>> dist_timed = TimingUtil.timeParameterizeTrajectory(false, dist_waypts, constraints, start_vel, end_vel, max_vel, max_accel );
         return new ArmTrajectory(prox_timed, dist_timed);
-    }
+    }*/
 
     public static ArmTrajectory generateTrajectory(
             final List<Rotation2d> proxWaypoints,

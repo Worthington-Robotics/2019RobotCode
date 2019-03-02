@@ -10,7 +10,7 @@ import frc.lib.trajectory.Trajectory;
 import frc.lib.trajectory.TrajectoryIterator;
 import frc.lib.trajectory.timing.CentripetalAccelerationConstraint;
 import frc.lib.trajectory.timing.TimedState;
-import frc.robot.planners.TraGenerator;
+import frc.robot.planners.DriveTrajectoryGenerator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PoseEstimator;
@@ -42,7 +42,7 @@ public class VisionTra extends Action {
                     currentPose.getTranslation().y() + distance * currentPose.getRotation().sin(), currentPose.getRotation());
             Points.add(targetPose);
 
-            visionTra = TraGenerator.getInstance().generateTrajectory(false, Points,
+            visionTra = DriveTrajectoryGenerator.getInstance().generateTrajectory(false, Points,
                     Arrays.asList(new CentripetalAccelerationConstraint(60)), 24, 12, 10);
             Drive.getInstance().setTrajectory(new TrajectoryIterator<>(new TimedView<>(visionTra)));
 

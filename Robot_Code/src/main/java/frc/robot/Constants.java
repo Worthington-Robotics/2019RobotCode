@@ -27,8 +27,8 @@ public class Constants {
     public static final int LEFT_CLIMB_ID = 3;
 
     //Solenoid Ports
-    //public static final int TRANS_LOW_ID = 0;
-    //public static final int TRANS_HIGH_ID = 1;
+    public static final int TRANS_LOW_ID = 0;
+    public static final int TRANS_HIGH_ID = 1;
     public static final int ALIEN_1_LOW_ID = 2;
     public static final int ALIEN_1_HIGH_ID = 3;
 
