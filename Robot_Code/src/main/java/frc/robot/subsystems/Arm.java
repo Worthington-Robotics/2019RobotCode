@@ -115,6 +115,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Dist Point", periodic.distRel - periodic.distMod);
         //
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
+        SmartDashboard.putBoolean("Arm/Stowed", periodic.stowed);
     }
 
 
