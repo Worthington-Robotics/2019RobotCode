@@ -103,14 +103,14 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
         SmartDashboard.putNumber("Arm/Prox Point", periodic.proxRel - periodic.proxMod);
-        SmartDashboard.putNumber("Arm/Prox Dial", periodic.operatorInput[0])
+        SmartDashboard.putNumber("Arm/Prox Dial", periodic.operatorInput[0]);
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
         SmartDashboard.putNumber("Arm/Distal Arm Error", periodic.distError);
         SmartDashboard.putNumber("Arm/Dist Rel", periodic.distRel);
         SmartDashboard.putNumber("Arm/Dist Point", periodic.distRel - periodic.distMod);
-        SmartDashboard.putNumber("Arm/Dist Dial", periodic.operatorInput[1])
+        SmartDashboard.putNumber("Arm/Dist Dial", periodic.operatorInput[1]);
         //
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
         SmartDashboard.putBoolean("Arm/Stowed", periodic.stowed);

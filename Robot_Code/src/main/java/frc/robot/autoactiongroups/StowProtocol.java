@@ -2,7 +2,7 @@ package frc.robot.autoactiongroups;
 
 import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachineDescriptor;
-import frc.robot.actions.ArmAction;
+import frc.robot.actions.armactions.ArmAction;
 import frc.robot.subsystems.Arm;
 
 public class StowProtocol extends StateMachineDescriptor {
