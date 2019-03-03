@@ -22,12 +22,11 @@ public class Vision extends Subsystem {
     }
 
     private Vision() {
-
+        SmartDashboard.clearPersistent(TABLE_NAME);
     }
 
     @Override
     public synchronized void readPeriodicInputs() {
-        SmartDashboard.clearPersistent(TABLE_NAME);
 
         String status = SmartDashboard.getString(TABLE_NAME, NOT_INIT);
 
@@ -62,13 +61,11 @@ public class Vision extends Subsystem {
             break;
         }
 
-        SmartDashboard.putString("vision/rioStatus", this.connectionStatus);
-
     }
 
     @Override
     public void outputTelemetry() {
-
+        SmartDashboard.putString("vision/rioStatus", this.connectionStatus);
     }
 
     @Override
