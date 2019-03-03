@@ -15,7 +15,7 @@ import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
 import frc.robot.autoactiongroups.GoTenFeet;
 import frc.robot.subsystems.*;
-
+import frc.robot.subsystems.vision.*;
 import java.util.Arrays;
 
 /**
@@ -35,7 +35,8 @@ public class Robot extends TimedRobot {
           PoseEstimator.getInstance(),
           Manipulator.getInstance(),
           Arm.getInstance(),
-          Logger.getInstance()
+          Logger.getInstance(),
+          Vision.getInstance()
     ));
     private Looper EnabledLoops = new Looper();
     private Looper DisabledLoops = new Looper();
