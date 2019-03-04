@@ -189,6 +189,14 @@ public class Arm extends Subsystem {
         periodic.armDistPower = dist;
     }
 
+    public double getProxPoint() {
+        return periodic.proxRel - periodic.proxMod;
+    }
+
+    public double getDistPoint() {
+        return periodic.distRel - periodic.distMod;
+    }
+
     //public double getUltrasonicDistance() {
 
         //if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
@@ -219,6 +227,8 @@ public class Arm extends Subsystem {
     {
         return new double[]{periodic.proxAbsolute , periodic.distAbsolute};
     }
+
+
 
 
 

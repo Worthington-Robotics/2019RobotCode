@@ -10,6 +10,13 @@ public class TeleOPArmAction extends Action {
         this.armState = armState;
         this.modified = modified;
     }
+    public Arm.ArmStates getArmState() {
+        if (!Arm.getInstance().getSideShift()) {
+            return armState;
+        } else {
+            return modified;
+        }
+    }
 
     @Override
     public void onStart() {
