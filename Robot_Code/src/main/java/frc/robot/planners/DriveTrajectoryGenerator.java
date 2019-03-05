@@ -8,6 +8,7 @@ import frc.lib.trajectory.timing.CentripetalAccelerationConstraint;
 import frc.lib.trajectory.timing.TimedState;
 import frc.lib.trajectory.timing.TimingConstraint;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +61,23 @@ public class DriveTrajectoryGenerator {
         Points.add(new Pose2d(0,0,Rotation2d.identity()));
         Points.add(new Pose2d(140,0, Rotation2d.fromDegrees(0)));
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),36,60,10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> hatchLeftHighAndMid1() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(0,0 , Rotation2d.identity())); //TODO Fix Please
+        return generateTrajectory(true,Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36,60,10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> hatchLeftHighAndMid2() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),  36, 60, 10);
+    }public Trajectory<TimedState<Pose2dWithCurvature>> hatchLeftHighAndMid3() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),  36, 60, 10);
     }
 
 }

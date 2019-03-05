@@ -10,6 +10,9 @@ public class ArmAction extends Action {
     public ArmAction(Arm.ArmStates armState) {
         a = armState;
     }
+    public Arm.ArmStates getArmState() {
+        return a;
+    }
 
     @Override
     public void onStart() {
