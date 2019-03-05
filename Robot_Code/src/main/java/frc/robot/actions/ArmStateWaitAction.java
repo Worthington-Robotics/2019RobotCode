@@ -1,6 +1,5 @@
 package frc.robot.actions;
 
-import frc.lib.physics.ArmModel;
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
 
