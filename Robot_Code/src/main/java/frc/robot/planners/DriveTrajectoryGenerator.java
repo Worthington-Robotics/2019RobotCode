@@ -79,5 +79,21 @@ public class DriveTrajectoryGenerator {
         Points.add(new Pose2d(0,0, Rotation2d.identity()));
         return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),  36, 60, 10);
     }
-
+    public Trajectory<TimedState<Pose2dWithCurvature>> hatchRightHighAndMid1() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(0,0 , Rotation2d.identity())); //TODO Fix Please
+        return generateTrajectory(true,Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36,60,10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> hatchRightHighAndMid2() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),  36, 60, 10);
+    }public Trajectory<TimedState<Pose2dWithCurvature>> hatchRightHighAndMid3() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),  36, 60, 10);
+    }
 }
