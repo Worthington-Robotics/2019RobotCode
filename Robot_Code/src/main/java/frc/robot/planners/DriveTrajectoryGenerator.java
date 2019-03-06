@@ -49,6 +49,32 @@ public class DriveTrajectoryGenerator {
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
     }
 
+    public Trajectory<TimedState<Pose2dWithCurvature>> HabToRocketMidpoint()
+    {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0,Rotation2d.fromDegrees(0)));
+        Points.add(new Pose2d(163,-48,Rotation2d.fromDegrees(0)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+
+    public Trajectory<TimedState<Pose2dWithCurvature>> PointToRocketMidpoint()
+    {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(223,-75,Rotation2d.fromDegrees(45)));
+        Points.add(new Pose2d(185,-94,Rotation2d.fromDegrees(30)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+
+    public Trajectory<TimedState<Pose2dWithCurvature>> RocketMidpointToHatchPickup()
+    {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(163,-48,Rotation2d.fromDegrees(0)));
+        Points.add(new Pose2d(163-210, -48-44, Rotation2d.fromDegrees(0)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+
+
+
     public Trajectory<TimedState<Pose2dWithCurvature>> autoTestProcedure() {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));

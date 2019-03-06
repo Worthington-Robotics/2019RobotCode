@@ -1,5 +1,6 @@
 package frc.robot.actions;
 
+import frc.lib.geometry.State;
 import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachine;
 import frc.lib.statemachine.StateMachineDescriptor;
@@ -15,15 +16,15 @@ public class StateMachineRunner extends Action {
     }
 
     public void onStart() {
-
+        StateMachine.runMachine(state);
     }
 
     public void onLoop() {
-        running = StateMachine.runMachine(state);
+
     }
 
     public boolean isFinished() {
-        return false;//running;
+        return !StateMachine.isRunning();//running;
     }
 
     public void onStop() {
