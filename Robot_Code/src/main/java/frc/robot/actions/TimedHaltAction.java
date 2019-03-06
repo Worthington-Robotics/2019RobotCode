@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.lib.statemachine.Action;
 
 public class TimedHaltAction extends Action {
-    private TimedHaltAction(double timewanted) {timeWanted = timewanted;}
+    public TimedHaltAction(double timewanted) {timeWanted = timewanted;}
     private double timeStart, timeStop, timeWanted;
     private boolean done = false;
 

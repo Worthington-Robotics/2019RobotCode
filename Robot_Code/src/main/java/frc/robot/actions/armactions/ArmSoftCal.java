@@ -11,6 +11,7 @@ public class ArmSoftCal extends Action {
         double[] absolutes  =  Arm.getInstance().getAbsolute();
         Constants.PROX_ABSOLUTE_ZERO = absolutes[0] - Arm.ArmStates.FWD_LOW_CARGO.getProx();
         Constants.DIST_ABSOLUTE_ZERO = absolutes[1] - Arm.ArmStates.FWD_LOW_CARGO.getDist();
+        Arm.getInstance().resetArmMod();
     }
 
     @Override
@@ -20,7 +21,7 @@ public class ArmSoftCal extends Action {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
