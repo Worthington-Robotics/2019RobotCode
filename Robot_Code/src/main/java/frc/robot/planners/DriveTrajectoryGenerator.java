@@ -96,4 +96,40 @@ public class DriveTrajectoryGenerator {
         Points.add(new Pose2d(0,0, Rotation2d.identity()));
         return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)),  36, 60, 10);
     }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LeftHabToFrontLeftOfHatch1() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(0,0, Rotation2d.identity()));
+        Points.add(new Pose2d(36,132, Rotation2d.identity()));
+        return generateTrajectory(false,Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LeftHabToFrontLeftOfHatch2() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(36,132, Rotation2d.identity()));
+        Points.add(new Pose2d(-40,108, Rotation2d.fromDegrees(90)));
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LeftHabToFrontLeftOfHatch3() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(-40, 108, Rotation2d.fromDegrees(90)));
+        Points.add(new Pose2d(-80, 132, Rotation2d.fromDegrees(180)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LeftHabToFrontLeftOfHatch4() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(-80, 132, Rotation2d.fromDegrees(180)));
+        Points.add(new Pose2d(-80,-50,Rotation2d.fromDegrees(165)));
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LeftHabToFrontLeftOfHatch5() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(-80, -50, Rotation2d.fromDegrees(165)));
+        Points.add(new Pose2d(-40,66,Rotation2d.fromDegrees(180)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LeftHabToFrontLeftOfHatch6() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(new Pose2d(-80, -50, Rotation2d.fromDegrees(165)));
+        Points.add(new Pose2d(0,132,Rotation2d.fromDegrees(180)));
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36, 60, 10);
+    }
 }
