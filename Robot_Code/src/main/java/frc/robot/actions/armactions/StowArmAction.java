@@ -1,23 +1,20 @@
-package frc.robot.actions;
+package frc.robot.actions.armactions;
+
 
 import frc.lib.statemachine.Action;
-import frc.robot.Constants;
+import frc.lib.statemachine.StateMachine;
 import frc.robot.subsystems.Arm;
 
-public class TeleOPArmAction extends Action {
+public class StowArmAction extends Action {
     private Arm.ArmStates a;
-    public TeleOPArmAction(Arm.ArmStates armState, Arm.ArmStates modified) {
-        if (Constants.LAUNCH_PAD.getRawButton(9)){
-            a = modified;
-        } else {
-            a = armState;
-        }
-
+    public StowArmAction() {
+        a = Arm.ArmStates.STOW_ARM;
     }
 
     @Override
     public void onStart() {
         Arm.getInstance().setPIDArmConfig(a);
+        Arm.getInstance().setStowed(true);
     }
 
     @Override
@@ -32,6 +29,7 @@ public class TeleOPArmAction extends Action {
 
     @Override
     public void onStop() {
-
+        StateMachine.assertStop();
     }
+
 }

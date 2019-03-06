@@ -2,12 +2,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
@@ -40,8 +39,8 @@ public class Drive extends Subsystem {
     private PeriodicIO periodic;
     private double[] operatorInput = {0, 0, 0}; //last input set from joystick update
     private PigeonIMU pigeonIMU;
-    //private DoubleSolenoid trans;
-    private TalonSRX driveFrontLeft,  driveBackRight, driveFrontRight;
+    private DoubleSolenoid trans;
+    private TalonSRX driveFrontLeft, driveBackRight, driveFrontRight;
     private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackLeft;
     private Spark climb;
 
@@ -67,7 +66,7 @@ public class Drive extends Subsystem {
                         break;
                     case PROFILING_TEST:
                         if (Constants.RAMPUP) {
-                            periodic.left_demand = -(periodic.ramp_Up_Counter  * .0025 + .01);
+                            periodic.left_demand = -(periodic.ramp_Up_Counter * .0025 + .01);
                             periodic.right_demand = -(periodic.ramp_Up_Counter * .0025 + .01);
                             periodic.ramp_Up_Counter++;
                         } else if (DriverStation.getInstance().isTest()) {
@@ -104,14 +103,17 @@ public class Drive extends Subsystem {
 
     @Override
     public synchronized void readPeriodicInputs() {
+        if (periodic.flaggyflag) {
+            periodic.B1 = false;
+        } else {
+            periodic.B1 = Constants.MASTER.getRawButton(1);
+        }
         double prevLeftTicks = periodic.left_pos_ticks;
         double prevRightTicks = periodic.right_pos_ticks;
         periodic.left_error = driveFrontLeft.getClosedLoopError();
         periodic.right_error = driveFrontRight.getClosedLoopError();
 
         periodic.B2 = Constants.MASTER.getRawButton(2);
-        periodic.B3 = Constants.MASTER.getRawButton(3);
-        periodic.B5 = Constants.MASTER.getRawButton(5);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
@@ -142,12 +144,12 @@ public class Drive extends Subsystem {
             driveBackRight.set(ControlMode.Follower, driveFrontRight.getDeviceID());
         }
         //gearShift();
-        /*if (periodic.B2) {
+        if (periodic.B1) {
             trans.set(DoubleSolenoid.Value.kForward);
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
-        }*/
-            climb.set(periodic.climber_power);
+        }
+        climb.set(periodic.climber_power);
     }
 
     private Drive() {
@@ -159,7 +161,7 @@ public class Drive extends Subsystem {
         driveMiddleRight = new VictorSPX(Constants.DRIVE_MIDDLE_RIGHT_ID);
         driveBackRight = new TalonSRX(Constants.DRIVE_BACK_RIGHT_ID);
         pigeonIMU = new PigeonIMU(driveBackRight);
-        //trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
+        trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
         climb = new Spark(Constants.LEFT_CLIMB_ID);
@@ -172,7 +174,7 @@ public class Drive extends Subsystem {
 
     public synchronized void setHeading(Rotation2d heading) {
         System.out.println("SET HEADING: " + heading.getDegrees());
-        periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
+        //periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
         System.out.println("Gyro offset: " + periodic.gyro_offset.getDegrees());
         periodic.gyro_heading = heading;
     }
@@ -216,14 +218,17 @@ public class Drive extends Subsystem {
         periodic = new PeriodicIO();
         setHeading(Rotation2d.fromDegrees(0));
         resetEncoders();
+
+        // Set the camera selection to the front drive camera
+        SmartDashboard.putString("CameraSelection", "Front");
     }
 
-    private void resetEncoders(){
+    private void resetEncoders() {
         driveFrontRight.setSelectedSensorPosition(0, 0, 0);
         driveFrontLeft.setSelectedSensorPosition(0, 0, 0);
     }
 
-    private void configTalons(){
+    private void configTalons() {
         driveFrontLeft.setSensorPhase(true);
         driveFrontLeft.selectProfileSlot(0, 0);
         driveFrontLeft.config_kF(0, Constants.DRIVE_LEFT_KF, 0);
@@ -309,6 +314,7 @@ public class Drive extends Subsystem {
 
     /**
      * Configure talons for open loop control
+     *
      * @param signal input to drive train
      */
     public synchronized void setOpenLoop(DriveSignal signal) {
@@ -354,8 +360,7 @@ public class Drive extends Subsystem {
 
     }
 
-    public void setMotorPower(double MP)
-    {
+    public void setMotorPower(double MP) {
         periodic.climber_power = MP;
     }
 
@@ -378,8 +383,8 @@ public class Drive extends Subsystem {
     public void outputTelemetry() {
         //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
-        SmartDashboard.putNumber("Drive/Heading", periodic.gyro_heading.getDegrees());
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
+
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
         SmartDashboard.putNumber("Drive/Error/Y", periodic.error.getTranslation().y());
         SmartDashboard.putNumber("Drive/Error/Theta", periodic.error.getRotation().getDegrees());
@@ -387,29 +392,22 @@ public class Drive extends Subsystem {
         //SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
         //SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
 
-        SmartDashboard.putNumber("Drive/Left Demand", periodic.left_demand);
-        SmartDashboard.putNumber("Drive/Left Talon Velocity", periodic.left_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Drive/Error/Left Talon Error", periodic.left_error);
-        SmartDashboard.putNumber("Drive/Left Talon Voltage Out", driveFrontLeft.getMotorOutputVoltage());
-        SmartDashboard.putNumber("Drive/Left Encoder Counts", periodic.left_pos_ticks);
+        SmartDashboard.putNumber("Drive/Left/Demand", periodic.left_demand);
+        SmartDashboard.putNumber("Drive/Left/Talon Velocity", periodic.left_velocity_ticks_per_100ms);
+        SmartDashboard.putNumber("Drive/Left/Talon Error", periodic.left_error);
+        SmartDashboard.putNumber("Drive/Left/Talon Voltage Out", driveFrontLeft.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Left/Encoder Counts", periodic.left_pos_ticks);
         //SmartDashboard.putNumber("Drive/Misc/Left FeedForward", periodic.left_feedforward);
         //SmartDashboard.putNumber("Drive/Misc/Left Acceleration", periodic.left_accl);
 
 
-        SmartDashboard.putNumber("Drive/Right Demand", periodic.right_demand);
-        SmartDashboard.putNumber("Drive/Right Talon Velocity", periodic.right_velocity_ticks_per_100ms);
-        SmartDashboard.putNumber("Drive/Error/Right Talon Error", periodic.right_error);
-        SmartDashboard.putNumber("Drive/Right Talon Voltage Out", driveFrontRight.getMotorOutputVoltage());
-        SmartDashboard.putNumber("Drive/Right Encoder Counts", periodic.right_pos_ticks);
+        SmartDashboard.putNumber("Drive/Right/Demand", periodic.right_demand);
+        SmartDashboard.putNumber("Drive/Right/Talon Velocity", periodic.right_velocity_ticks_per_100ms);
+        SmartDashboard.putNumber("Drive/Right/Talon Error", periodic.right_error);
+        SmartDashboard.putNumber("Drive/Right/Talon Voltage Out", driveFrontRight.getMotorOutputVoltage());
+        SmartDashboard.putNumber("Drive/Right/Encoder Counts", periodic.right_pos_ticks);
         //SmartDashboard.putNumber("Drive/Misc/Right FeedForward", periodic.right_feedforward);
         //SmartDashboard.putNumber("Drive/Misc/Right Acceleration", periodic.right_accl);
-        SmartDashboard.putString("Drive/Vision/camSource", "Front");
-        if (periodic.B3 == true) {
-            SmartDashboard.putString("Drive/Vision/camSource", "Back");
-        }
-        if (periodic.B5 == true) {
-            SmartDashboard.putString("Drive/Vision/camSource", "Front");
-        }
     }
 
     public void registerEnabledLoops(ILooper enabledLooper) {
@@ -436,6 +434,8 @@ public class Drive extends Subsystem {
         Rotation2d gyro_heading = Rotation2d.identity();
         Rotation2d gyro_offset = Rotation2d.identity();
         Pose2d error = Pose2d.identity();
+        boolean flaggyflag = false;
+        boolean B1 = false;
         boolean B2 = false;
         boolean B3 = false;
         boolean B5 = false;
@@ -466,7 +466,7 @@ public class Drive extends Subsystem {
      **/
 
     private static double rotationsToInches(double rotations) {
-        return rotations * Math.PI * Constants.DRIVE_WHEEL_DIAMETER_INCHES ;
+        return rotations * Math.PI * Constants.DRIVE_WHEEL_DIAMETER_INCHES;
     }
 
     private static double rpmToInchesPerSecond(double rpm) {
@@ -485,7 +485,7 @@ public class Drive extends Subsystem {
         return rad_s / (Math.PI * 2.0) * 4096.0 / 10.0;
     }
 
-    private static double inchesPerSecondToRadiansPerSecond(double in_sec){
+    private static double inchesPerSecondToRadiansPerSecond(double in_sec) {
         return in_sec / (Constants.DRIVE_WHEEL_DIAMETER_INCHES * Math.PI) * 2 * Math.PI;
     }
 

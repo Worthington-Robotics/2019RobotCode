@@ -1,4 +1,4 @@
-package frc.robot.actions;
+package frc.robot.actions.armactions;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;

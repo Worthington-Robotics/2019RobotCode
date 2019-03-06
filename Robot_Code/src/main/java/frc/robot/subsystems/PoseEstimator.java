@@ -101,7 +101,7 @@ public class PoseEstimator extends Subsystem {
         Pose2d odometry = getLatestFieldToVehicle().getValue();
         SmartDashboard.putNumber("Drive/Pose/X", odometry.getTranslation().x());
         SmartDashboard.putNumber("Drive/Pose/Y", odometry.getTranslation().y());
-        SmartDashboard.putNumber("Drive/Pose/Theta", odometry.getRotation().getDegrees());
+        SmartDashboard.putNumber("Drive/Pose/Theta", (odometry.getRotation().getDegrees()+360)%360);
     }
 
     @Override

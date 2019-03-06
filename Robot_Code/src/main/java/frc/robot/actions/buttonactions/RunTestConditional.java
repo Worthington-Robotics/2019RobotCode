@@ -1,32 +1,37 @@
-package frc.robot.actions;
+package frc.robot.actions.buttonactions;
 
-import frc.lib.geometry.State;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachine;
 import frc.lib.statemachine.StateMachineDescriptor;
-import frc.robot.subsystems.Drive;
 
-public class StateMachineRunner extends Action {
+public class RunTestConditional extends Action {
 
     private StateMachineDescriptor state;
     private boolean running = false;
 
-    public StateMachineRunner(StateMachineDescriptor state) {
+    public RunTestConditional(StateMachineDescriptor state){
         this.state = state;
     }
 
+    @Override
     public void onStart() {
-        StateMachine.runMachine(state);
+        if(DriverStation.getInstance().isTest()){
+            StateMachine.runMachine(state);
+        }
     }
 
+    @Override
     public void onLoop() {
 
     }
 
+    @Override
     public boolean isFinished() {
-        return !StateMachine.isRunning();//running;
+        return false;
     }
 
+    @Override
     public void onStop() {
         StateMachine.assertStop();
     }

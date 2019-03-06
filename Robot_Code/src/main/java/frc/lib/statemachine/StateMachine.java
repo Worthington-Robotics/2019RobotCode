@@ -48,6 +48,7 @@ public class StateMachine {
     };
 
     public static boolean runMachine(StateMachineDescriptor descriptor) {
+        SmartDashboard.putNumber("StateMachine/state", -1);
         if(stateLock.get()) return false;
         stateLock.set(true);
         wantStop.set(false);
@@ -62,6 +63,7 @@ public class StateMachine {
     }
 
     public static void assertStop(){
+        SmartDashboard.putNumber("StateMachine/state", -1);
         if(!wantStop.get()){
             wantStop.set(true);
             System.out.println("State Machine Halting");
