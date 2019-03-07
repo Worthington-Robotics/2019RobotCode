@@ -78,9 +78,7 @@ public class Drive extends Subsystem {
 
 
                     case OPEN_LOOP:
-                        if (DriverStation.getInstance().isOperatorControl())
-                            operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
-                        else operatorInput = new double[]{0, 0, 0};
+                        operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
                         SmartDashboard.putNumberArray("stick", operatorInput);
                         setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
                         break;
