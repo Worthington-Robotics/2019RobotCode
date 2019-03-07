@@ -299,7 +299,8 @@ public class Arm extends Subsystem {
         REV_GROUND_CARGO(1000, -200),
 
         GROUND_HATCH(1248, -2477),
-        CLIMB_TRANSPORT(-100,-1364),
+        CLIMB_TRANSPORT(-1397, -161),
+        CLIMB_READY(1118, -2400),
         UNSTOW_ARM(-600, 1500),
         STOW_ARM(-905, 2263);
 
