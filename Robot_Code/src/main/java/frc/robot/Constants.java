@@ -59,7 +59,7 @@ public class Constants {
     public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches
 
     //Electrical Constants
-    public static final double DRIVE_V_INTERCEPT = 1.2;  // V //1.6 for practice......................
+    public static final double DRIVE_V_INTERCEPT = 1.6;  // V //1.6 for practice......................
     public static final double DRIVE_Kv = 0.316426;  // V per rad/s -.335
     public static final double DRIVE_Ka = 0.0801;  // V per rad/s^2    0.0801
     public static final double DRIVE_VCOMP = 10.0; //V

@@ -15,7 +15,7 @@ import frc.robot.subsystems.Arm;
 public class AutoTestProtocol extends StateMachineDescriptor {
     public AutoTestProtocol(){
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.Shoot),
-                new DriveTra(DriveTrajectoryGenerator.getInstance().autoTestProcedure(), false),
+                new DriveTra(DriveTrajectoryGenerator.getInstance().getTenFeet(), false),
                 new ArmAction(Arm.ArmStates.UNSTOW_ARM)},3000);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 2000);
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.PickUp),

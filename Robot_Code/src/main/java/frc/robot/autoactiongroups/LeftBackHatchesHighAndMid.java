@@ -7,7 +7,7 @@ import frc.robot.actions.armactions.AlienAction;
 import frc.robot.actions.armactions.ArmAction;
 import frc.robot.planners.DriveTrajectoryGenerator;
 import frc.robot.subsystems.Arm;
-
+/*
 public class LeftBackHatchesHighAndMid extends StateMachineDescriptor {
     public LeftBackHatchesHighAndMid() {
         long timems = 10000;
@@ -17,3 +17,4 @@ public class LeftBackHatchesHighAndMid extends StateMachineDescriptor {
         addParallel(new Action[] {new DriveTra(DriveTrajectoryGenerator.getInstance().hatchLeftHighAndMid3()), new ArmAction(Arm.ArmStates.UNSTOW_ARM)}, timems);
     }
 }
+*/

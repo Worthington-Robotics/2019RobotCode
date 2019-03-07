@@ -174,7 +174,7 @@ public class Drive extends Subsystem {
 
     public synchronized void setHeading(Rotation2d heading) {
         System.out.println("SET HEADING: " + heading.getDegrees());
-        //periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
+        periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
         System.out.println("Gyro offset: " + periodic.gyro_offset.getDegrees());
         periodic.gyro_heading = heading;
     }

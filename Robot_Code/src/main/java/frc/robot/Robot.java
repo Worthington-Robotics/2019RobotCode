@@ -14,6 +14,7 @@ import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
 import frc.robot.autoactiongroups.GoTenFeet;
+import frc.robot.autoactiongroups.Rocket;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.vision.*;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class Robot extends TimedRobot {
         Drive.getInstance().reset();
         EnabledLoops.start();
         DisabledLoops.stop();
-        //StateMachine.runMachine(new GoTenFeet());
+        StateMachine.runMachine(new Rocket());
         Arm.getInstance().reset();
     }
 
