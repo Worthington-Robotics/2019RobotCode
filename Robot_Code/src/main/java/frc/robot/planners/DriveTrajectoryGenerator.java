@@ -16,7 +16,7 @@ import java.util.List;
 public class DriveTrajectoryGenerator {
     private static final DriveTrajectoryGenerator m_instance = new DriveTrajectoryGenerator();
     private final DriveMotionPlanner DMP;
-    private Pose2d HabStart, RocketMidPoint, RocketApproch, Rocket, HatchPickup;
+    private final Pose2d HabStart, RocketMidPoint, RocketApproch, Rocket, HatchPickup, LRocketMidPoint, LRocketApproch, LRocket, LHatchPickup;
 
     private DriveTrajectoryGenerator() {
         DMP = new DriveMotionPlanner();
@@ -25,6 +25,10 @@ public class DriveTrajectoryGenerator {
         RocketApproch = new Pose2d(-223, -96, Rotation2d.fromDegrees(-30));
         Rocket = new Pose2d(-185, -110, Rotation2d.fromDegrees(-30));
         HatchPickup = new Pose2d(48, -91, Rotation2d.fromDegrees(0));
+        LRocketMidPoint = new Pose2d(-163, 48, Rotation2d.fromDegrees(0));
+        LRocketApproch = new Pose2d(-223, 96, Rotation2d.fromDegrees(30));
+        LRocket = new Pose2d(-185, 110, Rotation2d.fromDegrees(30));
+        LHatchPickup = new Pose2d(48, 91, Rotation2d.fromDegrees(0));
     }
 
     public static DriveTrajectoryGenerator getInstance() {
@@ -84,10 +88,53 @@ public class DriveTrajectoryGenerator {
         Points.add(HatchPickup);
         return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevRocketMidPointToHatchPickup() {
+    public Trajectory<TimedState<Pose2dWithCurvature>> RevHatchPickupToRocketMidPoint() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(HatchPickup);
+        Points.add(RocketMidPoint);
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+
+    public Trajectory<TimedState<Pose2dWithCurvature>> RevHabToLRocketMid() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(HabStart);
+        Points.add(RocketMidPoint);
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> RevLRocketMidToLRocketApproch() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(RocketMidPoint);
+        Points.add(RocketApproch);
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LRocketApprochToLRocket() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(RocketApproch);
+        Points.add(Rocket);
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> RevLRocketToLRocketApproch() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(Rocket);
+        Points.add(RocketApproch);
+        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LRocketApprochToLRocketMidpoint() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(RocketApproch);
+        Points.add(RocketMidPoint);
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> LRocketMidPointToLHatchPickup() {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(RocketMidPoint);
         Points.add(HatchPickup);
+        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+    }
+    public Trajectory<TimedState<Pose2dWithCurvature>> RevLHatchPickupToLRocketMidPoint() {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(HatchPickup);
+        Points.add(RocketMidPoint);
         return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
 
