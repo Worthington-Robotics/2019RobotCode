@@ -86,8 +86,8 @@ public class Constants {
      */
 
     // Arm Absolute Zeros
-    public static double PROX_ABSOLUTE_ZERO = 4382;
-    public static double DIST_ABSOLUTE_ZERO = 687;
+    public static double PROX_ABSOLUTE_ZERO = 4760;
+    public static double DIST_ABSOLUTE_ZERO = 1281;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -126,6 +126,7 @@ public class Constants {
 
     //Shot powers
     public static final double SHOOT_POWER = 1;
+    public static final double SLOW_SHOOT_POWER = .5;
     public static final double PICKUP_POWER = -.55;
     public static final double SLOWUP_POWER = -.35;
     public static final double STOP_POWER = 0;
@@ -139,7 +140,7 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.6, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.5, 2);
     public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.05, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants
