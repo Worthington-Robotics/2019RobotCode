@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
         Drive.getInstance().reset();
         EnabledLoops.start();
         DisabledLoops.stop();
-        StateMachine.runMachine(new Rocket());
+        //StateMachine.runMachine(new Rocket());
         Arm.getInstance().reset();
     }
 

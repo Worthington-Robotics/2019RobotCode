@@ -59,7 +59,7 @@ public class Constants {
     public static final double PATH_MIN_LOOK_AHEAD_DISTANCE = 24.0;  // inches
 
     //Electrical Constants
-    public static final double DRIVE_V_INTERCEPT = 1.6;  // V //1.6 for practice......................
+    public static final double DRIVE_V_INTERCEPT = 1.2;  // V //1.6 for practice......................
     public static final double DRIVE_Kv = 0.316426;  // V per rad/s -.335
     public static final double DRIVE_Ka = 0.0801;  // V per rad/s^2    0.0801
     public static final double DRIVE_VCOMP = 10.0; //V
@@ -86,8 +86,8 @@ public class Constants {
      */
 
     // Arm Absolute Zeros
-    public static double PROX_ABSOLUTE_ZERO = 1400;
-    public static double DIST_ABSOLUTE_ZERO = 1100;
+    public static double PROX_ABSOLUTE_ZERO = 4382;
+    public static double DIST_ABSOLUTE_ZERO = 687;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -129,7 +129,7 @@ public class Constants {
     public static final double PICKUP_POWER = -.55;
     public static final double SLOWUP_POWER = -.35;
     public static final double STOP_POWER = 0;
-    public static final double CLIMB_POWER = .5;
+    public static final double CLIMB_POWER = .25;
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes

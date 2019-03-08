@@ -9,7 +9,7 @@ public class Manipulator extends Subsystem {
     private Spark bottomMotor, topMotor;
     private DoubleSolenoid AlienOne;
     private double ShotPower = 0.0;
-    private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
+    private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kReverse;
 
 
     public Manipulator() {
@@ -35,7 +35,7 @@ public class Manipulator extends Subsystem {
 
      public void writePeriodicOutputs (){
         bottomMotor.set(-ShotPower);
-        topMotor.set(ShotPower);
+        topMotor.set(-ShotPower);
         AlienOne.set(tState);
     }
 
