@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachine;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
@@ -43,10 +44,6 @@ public class Robot extends TimedRobot {
     private Looper DisabledLoops = new Looper();
     private OI Oi = new OI();
 
-    public void robotPeriodic(){
-    Manager.outputTelemetry();
-    }
-
     @Override
     public void robotInit() {
         VersionData.doVersionID();
@@ -56,13 +53,25 @@ public class Robot extends TimedRobot {
         Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
     }
 
+    public void robotPeriodic(){
+        Manager.outputTelemetry();
+    }
+
+    @Override
+    public void disabledInit() {
+        // publishes the auto list to the dashboard "Auto Selector"
+        SmartDashboard.putStringArray("Auto List", AutoSelector.buildArray());
+        EnabledLoops.stop();
+        DisabledLoops.start();
+    }
+
     @Override
     public void autonomousInit() {
         PoseEstimator.getInstance().reset();
         Drive.getInstance().reset();
         EnabledLoops.start();
         DisabledLoops.stop();
-        StateMachine.runMachine(new Rocket());
+        StateMachine.runMachine();
         Arm.getInstance().reset();
     }
 
@@ -98,9 +107,4 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     }
 
-    @Override
-    public void disabledInit() {
-        EnabledLoops.stop();
-        DisabledLoops.start();
-    }
 }
