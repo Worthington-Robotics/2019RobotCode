@@ -32,6 +32,7 @@ public class ManipulatorAction extends Action {
 
     public enum ShotPower {
         Shoot(Constants.SHOOT_POWER),
+        SlowShoot(Constants.SLOW_SHOOT_POWER),
         PickUp(Constants.PICKUP_POWER),
         Stop(Constants.STOP_POWER);
         private double shotpower;

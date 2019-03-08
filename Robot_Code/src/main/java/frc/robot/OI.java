@@ -52,7 +52,7 @@ public class OI{
         topHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_HIGH_HATCH, Arm.ArmStates.REV_HIGH_HATCH)));
         topCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_HIGH_CARGO, Arm.ArmStates.REV_HIGH_CARGO)));
         cargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
-        cargoOut.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
+        cargoOut.whileHeld(Action.toCommand(new ModAction (new ManipulatorAction(ManipulatorAction.ShotPower.SlowShoot), new ManipulatorAction(ManipulatorAction.ShotPower.Shoot))));
         hatchOut.whileHeld(Action.toCommand(new AlienAction()));
         climbFullUp.whileHeld(Action.toCommand(new ModAction(new ClimbAction(Constants.CLIMB_POWER), new StateMachineRunner(new ClimbReady()))));
         climbFullDown.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
