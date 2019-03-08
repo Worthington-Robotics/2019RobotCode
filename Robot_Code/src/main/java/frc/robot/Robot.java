@@ -101,11 +101,11 @@ public class Robot extends TimedRobot {
         //Stop the disabled looper
         DisabledLoops.stop();
 
-        //TODO INVESTIGATE but likely a bad thing to do 
+        //TODO INVESTIGATE but likely a bad thing to do
         //May want to remove these given that the robot was likely already running. may cause issues on field mode switch
-        PoseEstimator.getInstance().reset();
-        Drive.getInstance().reset();
-        Arm.getInstance().reset();
+        //PoseEstimator.getInstance().reset();
+        //Drive.getInstance().reset();
+        //Arm.getInstance().reset();
 
         //Start the enabled looper
         EnabledLoops.start();
