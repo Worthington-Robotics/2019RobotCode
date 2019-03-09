@@ -9,7 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachine;
+import frc.lib.statemachine.StateMachineDescriptor;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
@@ -43,27 +45,50 @@ public class Robot extends TimedRobot {
     private Looper DisabledLoops = new Looper();
     private OI Oi = new OI();
 
-    public void robotPeriodic(){
-    Manager.outputTelemetry();
-    }
-
     @Override
     public void robotInit() {
         VersionData.doVersionID();
-        Arm.getInstance().reset();
+        Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
         Manager.registerEnabledLoops(EnabledLoops);
         Manager.registerDisabledLoops(DisabledLoops);
-        Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
+
+    }
+
+    public void robotPeriodic(){
+        Manager.outputTelemetry();
+    }
+
+    @Override
+    public void disabledInit() {
+        // publishes the auto list to the dashboard "Auto Selector"
+        SmartDashboard.putStringArray("Auto List", AutoSelector.buildArray());
+        //Stop the disabled looper
+        DisabledLoops.stop();
+        //Start the enabled looper
+        EnabledLoops.start();
     }
 
     @Override
     public void autonomousInit() {
+        //Stop the disabled looper
+        DisabledLoops.stop();
+
+        //Reset all important subsystems
         PoseEstimator.getInstance().reset();
         Drive.getInstance().reset();
-        DisabledLoops.stop();
-        EnabledLoops.start();
-        //StateMachine.runMachine(new Rocket());
         Arm.getInstance().reset();
+
+        //Start the enabled looper
+        EnabledLoops.start();
+
+        //pulls auto selector from labview DB
+        final String[] autoList = AutoSelector.buildArray();
+        //Default to last entry if Dashboard not found
+        final String autoSelected = SmartDashboard.getString("Auto Selector", autoList[autoList.length - 1]);
+        //get selected auto as a state machine descriptor
+        final StateMachineDescriptor auto = AutoSelector.autoSelect(autoSelected);
+        //perform a null check on the auto to see if it is valid
+        if(auto != null) StateMachine.runMachine(auto);
     }
 
     @Override
@@ -73,12 +98,20 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        //Stop the disabled looper
+        DisabledLoops.stop();
+
+        //TODO INVESTIGATE but likely a bad thing to do
+        //May want to remove these given that the robot was likely already running. may cause issues on field mode switch
         //PoseEstimator.getInstance().reset();
         //Drive.getInstance().reset();
-        DisabledLoops.stop();
-        EnabledLoops.start();
-        Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
         //Arm.getInstance().reset();
+
+        //Start the enabled looper
+        EnabledLoops.start();
+
+        //for saftey reasons switch drivetrain into open loop forcibly
+        Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
     }
 
     @Override
@@ -88,9 +121,17 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
+        //Stop the disabled looper
         DisabledLoops.stop();
-        EnabledLoops.start();
+
+        //May want to remove these given that the robot was likely already running. may cause issues on field mode switch
+        PoseEstimator.getInstance().reset();
         Drive.getInstance().reset();
+        Arm.getInstance().reset();
+
+        //Start the enabled looper
+        EnabledLoops.start();
+
     }
 
     @Override
@@ -98,9 +139,4 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     }
 
-    @Override
-    public void disabledInit() {
-        EnabledLoops.stop();
-        DisabledLoops.start();
-    }
 }
