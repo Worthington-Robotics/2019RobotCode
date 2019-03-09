@@ -60,8 +60,8 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         PoseEstimator.getInstance().reset();
         Drive.getInstance().reset();
-        EnabledLoops.start();
         DisabledLoops.stop();
+        EnabledLoops.start();
         //StateMachine.runMachine(new Rocket());
         Arm.getInstance().reset();
     }
@@ -73,12 +73,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        PoseEstimator.getInstance().reset();
-        Drive.getInstance().reset();
-        EnabledLoops.start();
+        //PoseEstimator.getInstance().reset();
+        //Drive.getInstance().reset();
         DisabledLoops.stop();
+        EnabledLoops.start();
         Drive.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
-        Arm.getInstance().reset();
+        //Arm.getInstance().reset();
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
-        EnabledLoops.start();
         DisabledLoops.stop();
+        EnabledLoops.start();
         Drive.getInstance().reset();
     }
 

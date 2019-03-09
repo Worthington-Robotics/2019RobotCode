@@ -143,7 +143,8 @@ public class Arm extends Subsystem {
         armProx.setNeutralMode(NeutralMode.Brake);
         armProx.configVoltageCompSaturation(10);
         armProx.enableVoltageCompensation(true);
-        armProx.setSensorPhase(false);
+        armProx.setInverted(false);
+        armProx.setSensorPhase(true);
         armProx.setSelectedSensorPosition(0);
         //
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -157,6 +158,7 @@ public class Arm extends Subsystem {
         armDist.setNeutralMode(NeutralMode.Brake);
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
+        armDist.setInverted(true);
         armDist.setSensorPhase(false);
         armDist.setSelectedSensorPosition(0);
     }
@@ -284,13 +286,13 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1586, 1200),
-        FWD_LOW_HATCH(-1397, 781),
-        FWD_LOW_CARGO(-1464, 649),
-        FWD_MEDIUM_HATCH(-724, 690),
-        FWD_MEDIUM_CARGO(-691, 631),
-        FWD_HIGH_HATCH(-181, 450),
-        FWD_HIGH_CARGO(-339, 284),
+        FWD_GROUND_CARGO(-1467, 1447),
+        FWD_LOW_HATCH(-1529, 990),//
+        FWD_LOW_CARGO(-1455, 975),
+        FWD_MEDIUM_HATCH(-1000, 937),//
+        FWD_MEDIUM_CARGO(-610, 981),
+        FWD_HIGH_HATCH(0, 977),//
+        FWD_HIGH_CARGO(-305, 576),
 
         REV_MEDIUM_HATCH(-460, -1036),
         REV_MEDIUM_CARGO(-554, -882),
@@ -298,11 +300,14 @@ public class Arm extends Subsystem {
         REV_HIGH_CARGO(-236, -415),
         REV_GROUND_CARGO(1000, -200),
 
+        CARGO_SHIP_CARGO(-484, 1403),
+
         GROUND_HATCH(1248, -2477),
         CLIMB_TRANSPORT(-1397, -161),
         CLIMB_READY(1118, -2400),
         UNSTOW_ARM(-600, 1500),
         STOW_ARM(-905, 2263);
+
 
         private double prox, dist;
 
