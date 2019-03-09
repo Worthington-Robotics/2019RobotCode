@@ -87,8 +87,8 @@ public class Constants {
 
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 1175;
-    public static double PROX_ABSOLUTE_ZERO = 4009;
+    public static double DIST_ABSOLUTE_ZERO = 1380;
+    public static double PROX_ABSOLUTE_ZERO = 4000;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m

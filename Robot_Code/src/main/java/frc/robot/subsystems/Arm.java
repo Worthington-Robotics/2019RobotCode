@@ -133,7 +133,6 @@ public class Arm extends Subsystem {
 
     public void configTalons() {
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        armProx.setSensorPhase(true);
         armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
         armProx.config_kF(0, Constants.ARM_PROX_KF, 0);
         armProx.config_kP(0, Constants.ARM_PROX_KP, 0);
@@ -143,12 +142,11 @@ public class Arm extends Subsystem {
         armProx.setNeutralMode(NeutralMode.Brake);
         armProx.configVoltageCompSaturation(10);
         armProx.enableVoltageCompensation(true);
-        armProx.setInverted(false);
+        armProx.setInverted(true);
         armProx.setSensorPhase(true);
         armProx.setSelectedSensorPosition(0);
         //
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        armDist.setSensorPhase(true);
         armDist.selectProfileSlot(0, 0);
         armDist.config_kF(0, Constants.ARM_DIST_KF, 0);
         armDist.config_kP(0, Constants.ARM_DIST_KP, 0);
@@ -158,7 +156,7 @@ public class Arm extends Subsystem {
         armDist.setNeutralMode(NeutralMode.Brake);
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
-        armDist.setInverted(true);
+        armDist.setInverted(false);
         armDist.setSensorPhase(false);
         armDist.setSelectedSensorPosition(0);
     }
@@ -286,13 +284,13 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1467, 1447),
-        FWD_LOW_HATCH(-1529, 990),//
-        FWD_LOW_CARGO(-1455, 975),
-        FWD_MEDIUM_HATCH(-1000, 937),//
-        FWD_MEDIUM_CARGO(-610, 981),
-        FWD_HIGH_HATCH(0, 977),//
-        FWD_HIGH_CARGO(-305, 576),
+        FWD_GROUND_CARGO(-1400, 1181),
+        FWD_LOW_HATCH(-1472, 650),
+        FWD_LOW_CARGO(-1332, 550),
+        FWD_MEDIUM_HATCH(-747, 557),
+        FWD_MEDIUM_CARGO(-609, 550),
+        FWD_HIGH_HATCH(-65, 558),
+        FWD_HIGH_CARGO(-199, 307),
 
         REV_MEDIUM_HATCH(-460, -1036),
         REV_MEDIUM_CARGO(-554, -882),
@@ -300,13 +298,13 @@ public class Arm extends Subsystem {
         REV_HIGH_CARGO(-236, -415),
         REV_GROUND_CARGO(1000, -200),
 
-        CARGO_SHIP_CARGO(-484, 1403),
+        CARGO_SHIP_CARGO(-535, 1000),
 
         GROUND_HATCH(1248, -2477),
         CLIMB_TRANSPORT(-1397, -161),
         CLIMB_READY(1118, -2400),
-        UNSTOW_ARM(-600, 1500),
-        STOW_ARM(-905, 2263);
+        UNSTOW_ARM(-626, 1400),
+        STOW_ARM(-846, 2106);
 
 
         private double prox, dist;
