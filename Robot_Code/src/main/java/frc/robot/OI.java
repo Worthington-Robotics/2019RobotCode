@@ -48,7 +48,7 @@ public class OI{
         Button autoStopButton = new JoystickButton(Constants.LAUNCH_PAD, 1);
         Button velocity = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
-        ////////////Actions Time////////////
+        ////////////Actions Tied To Buttons////////////
         //Safety Routines
         autoStopButton.whenPressed(Action.toCommand(new AStopAction()));
         velocity.whenPressed(Action.toCommand(new VelocityAction()));

@@ -10,8 +10,8 @@ import frc.robot.actions.buttonactions.ButtonWaitAction;
 import frc.robot.planners.DriveTrajectoryGenerator;
 import frc.robot.subsystems.Arm;
 
-public class CargoShipRight extends StateMachineDescriptor {
-    public CargoShipRight(boolean isRight) {
+public class CargoShip extends StateMachineDescriptor {
+    public CargoShip(boolean isRight) {
         Arm.getInstance().setStowed(false);
         addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().HabToOffHab(false, false), false), new ButtonWaitAction(new Joystick(2), 1)}, 10000);
         addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().OffHabToHab(false, false), false), new ButtonWaitAction(new Joystick(2), 1)}, 10000);
