@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
@@ -16,49 +17,58 @@ import frc.robot.subsystems.Arm;
 public class OI{
 
     public OI(){
-        //Button allAction = new JoystickButton(Constants.MASTER, 1);
+        ////////////Scary Vision Stuff////////////
         Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
-        //Button vision = new JoystickButton(Constants.MASTER, 8);
         Button selfCheck = new JoystickButton(Constants.MASTER, 12);
 
         cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
         selfCheck.whileHeld(Action.toCommand(new RunTestConditional(new AutoTestProtocol())));
-
-        Button groundHatch = new JoystickButton(Constants.LAUNCH_PAD, 13);
+        ////////////End Scary Stuff////////////
+        ////////////Button Decelerations////////////
+        //Arm Poses
+        Button cargoShip = new JoystickButton(Constants.LAUNCH_PAD, 13);
         Button groundCargo = new JoystickButton(Constants.LAUNCH_PAD, 10);
-        Button botHatch = new JoystickButton(Constants.LAUNCH_PAD, 15);
         Button botCargo = new JoystickButton(Constants.LAUNCH_PAD, 12);
-        Button midHatch = new JoystickButton(Constants.LAUNCH_PAD, 16);
         Button midCargo = new JoystickButton(Constants.LAUNCH_PAD, 4);
-        Button topHatch = new JoystickButton(Constants.LAUNCH_PAD, 6);
         Button topCargo = new JoystickButton(Constants.LAUNCH_PAD, 2);
-        Button cargoIn = new JoystickButton(Constants.LAUNCH_PAD, 5);
-        Button cargoOut = new JoystickButton(Constants.LAUNCH_PAD, 11);
-        Button hatchOut = new JoystickButton(Constants.LAUNCH_PAD,14);
-        Button climbFullUp = new JoystickButton(Constants.LAUNCH_PAD, 7);
-        Button climbFullDown = new JoystickButton(Constants.LAUNCH_PAD, 8);
+        //Climb Stuff
+        Button frontClimb = new JoystickButton(Constants.LAUNCH_PAD, 16);
+        Button backClimb = new JoystickButton(Constants.LAUNCH_PAD, 15);
+        Button bothClimb = new JoystickButton(Constants.LAUNCH_PAD, 6);
+        //Cargo Manipulator
+        Button cargoRollout = new JoystickButton(Constants.LAUNCH_PAD, 5);
+        Button cargoShoot = new JoystickButton(Constants.LAUNCH_PAD, 11);
+        Button intake = new JoystickButton(Constants.LAUNCH_PAD,14);
+        //Stow/Unstow
+        Button stow = new JoystickButton(Constants.LAUNCH_PAD, 8);
+        Button unstow = new JoystickButton(Constants.LAUNCH_PAD, 7);
+        //Safety Things
         Button autoStopButton = new JoystickButton(Constants.LAUNCH_PAD, 1);
-        Button stow = new JoystickButton(Constants.LAUNCH_PAD, 3);
+        Button velocity = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
-
-        groundHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO)));
-        groundCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO), new StateMachineRunner(new ClimbReady()))));
-        botCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), new ArmSoftCal())));
-        botHatch.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_LOW_HATCH)));
-        midHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_HATCH, Arm.ArmStates.REV_MEDIUM_HATCH)));
-        midCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO, Arm.ArmStates.REV_MEDIUM_CARGO)));
-        topHatch.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_HIGH_HATCH, Arm.ArmStates.REV_HIGH_HATCH)));
-        topCargo.whenPressed(Action.toCommand(new TeleOPArmAction(Arm.ArmStates.FWD_HIGH_CARGO, Arm.ArmStates.REV_HIGH_CARGO)));
-        cargoIn.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
-        cargoOut.whileHeld(Action.toCommand(new ModAction (new ManipulatorAction(ManipulatorAction.ShotPower.SlowShoot), new ManipulatorAction(ManipulatorAction.ShotPower.Shoot))));
-        hatchOut.whileHeld(Action.toCommand(new AlienAction()));
-        climbFullUp.whileHeld(Action.toCommand(new ModAction(new ClimbAction(Constants.CLIMB_POWER), new StateMachineRunner(new ClimbReady()))));
-        climbFullDown.whileHeld(Action.toCommand(new ClimbAction(-Constants.CLIMB_POWER)));
+        ////////////Actions Time////////////
+        //Safety Routines
         autoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        stow.whenPressed(Action.toCommand(new ModAction(new UnstowArmAction(), new StateMachineRunner(new StowProtocol()))));
-
+        velocity.whenPressed(Action.toCommand(new VelocityAction()));
+        //Climb Stuff
+        bothClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kForward), new ClimbAction(DoubleSolenoid.Value.kReverse, DoubleSolenoid.Value.kReverse))));
+        frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
+        backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
+        //Arm Poses
+        cargoShip.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO)));
+        groundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO)));
+        botCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), new ArmSoftCal())));
+        midCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO)));
+        topCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_HIGH_CARGO)));
+        //Cargo Manipulator
+        cargoRollout.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.SlowShoot)));
+        cargoShoot.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
+        intake.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
+        // Stow/Unstow
+        unstow.whenPressed(Action.toCommand(new UnstowArmAction()));
+        stow.whenPressed(Action.toCommand(new StateMachineRunner(new StowProtocol())));
 
     }
 }

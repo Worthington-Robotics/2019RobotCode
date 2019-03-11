@@ -28,8 +28,10 @@ public class Constants {
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
-    public static final int ALIEN_1_LOW_ID = 2;
-    public static final int ALIEN_1_HIGH_ID = 3;
+    public static final int CLIMB_FRONT_LOW_ID = 2;
+    public static final int CLIMB_FRONT_HIGH_ID = 3;
+    public static final int CLIMB_BACK_LOW_ID = 4;
+    public static final int CLIMB_BACK_HIGH_ID = 5;
 
     //Sensor Ports
     //public static final int ULTRASONIC_IN_1 = 0;

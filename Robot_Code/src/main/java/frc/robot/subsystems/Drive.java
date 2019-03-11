@@ -42,7 +42,6 @@ public class Drive extends Subsystem {
     private DoubleSolenoid trans;
     private TalonSRX driveFrontLeft, driveBackRight, driveFrontRight;
     private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackLeft;
-    private Spark climb;
 
     private final Loop mLoop = new Loop() {
 
@@ -147,7 +146,6 @@ public class Drive extends Subsystem {
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
         }
-        climb.set(periodic.climber_power);
     }
 
     private Drive() {
@@ -162,7 +160,6 @@ public class Drive extends Subsystem {
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
-        climb = new Spark(Constants.LEFT_CLIMB_ID);
 
     }
 
