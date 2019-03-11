@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachineDescriptor;
+import frc.robot.autoactiongroups.CargoShipRight;
 import frc.robot.autoactiongroups.Rocket;
 
 /**
@@ -13,8 +14,8 @@ import frc.robot.autoactiongroups.Rocket;
  */
 enum UserSelection {
 
-    Auto1("", 1),
-    Auto2("", 2),
+    Auto1("Cargo Ship Right", 1),
+    Auto2("Cargo Ship Left", 2),
     Auto3("", 3),
     Auto4("", 4),
     Auto5("", 5),
@@ -85,9 +86,9 @@ public class AutoSelector {
         SmartDashboard.putString("Final Auto Choice", usrAuto.toString());
         switch (usrAuto) {
 
-            case Auto1: return new Rocket();
+            case Auto1: return new CargoShipRight(true);
 
-            case Auto2: return null;
+            case Auto2: return new CargoShipRight(false);
 
             case Auto3: return null;
 
