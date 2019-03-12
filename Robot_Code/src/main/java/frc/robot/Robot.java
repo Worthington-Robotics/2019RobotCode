@@ -15,6 +15,7 @@ import frc.lib.statemachine.StateMachineDescriptor;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
 import frc.lib.loops.Looper;
+import frc.robot.actions.DriveTra;
 import frc.robot.autoactiongroups.GoTenFeet;
 import frc.robot.autoactiongroups.Rocket;
 import frc.robot.subsystems.*;
@@ -62,6 +63,8 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         // publishes the auto list to the dashboard "Auto Selector"
         SmartDashboard.putStringArray("Auto List", AutoSelector.buildArray());
+        StateMachine.assertStop();
+        Drive.getInstance().overrideTrajectory(true);
         //Stop the disabled looper
         DisabledLoops.stop();
         //Start the enabled looper

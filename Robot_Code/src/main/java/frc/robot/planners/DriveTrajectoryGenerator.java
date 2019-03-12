@@ -24,15 +24,15 @@ public class DriveTrajectoryGenerator {
         Cargo = new Pose2d(0, 60, Rotation2d.fromDegrees(-135));
         HairpinTurn = new Pose2d(221, 60, Rotation2d.fromDegrees(-135));
         CargoHoldMid = new Pose2d(176, 15, Rotation2d.fromDegrees(-180));
-        CargoShip1 = new Pose2d(191, 0, Rotation2d.fromDegrees(-90));
-        CargoShip2 = new Pose2d(215, 0, Rotation2d.fromDegrees(-90));
-        CargoShipMid = new Pose2d(131, 60, Rotation2d.fromDegrees(-90));
+        CargoShip1 = new Pose2d(197, 0, Rotation2d.fromDegrees(-90));
+        CargoShip2 = new Pose2d(227, 0, Rotation2d.fromDegrees(-90));
+        CargoShipMid = new Pose2d(131, 60, Rotation2d.fromDegrees(0));
         RCargo = new Pose2d(0, -60, Rotation2d.fromDegrees(135));
         RHairpinTurn = new Pose2d(221, -60, Rotation2d.fromDegrees(135));
         RCargoHoldMid = new Pose2d(176, -15, Rotation2d.fromDegrees(180));
-        RCargoShip1 = new Pose2d(191, 0, Rotation2d.fromDegrees(90));
-        RCargoShip2 = new Pose2d(215, 0, Rotation2d.fromDegrees(90));
-        RCargoShipMid = new Pose2d(131, -60, Rotation2d.fromDegrees(90));
+        RCargoShip1 = new Pose2d(197, 0, Rotation2d.fromDegrees(90));
+        RCargoShip2 = new Pose2d(227, 0, Rotation2d.fromDegrees(90));
+        RCargoShipMid = new Pose2d(131, -60, Rotation2d.fromDegrees(0));
         HabStart = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
         //
         RocketMidPoint = new Pose2d(-163, -48, Rotation2d.fromDegrees(0));
