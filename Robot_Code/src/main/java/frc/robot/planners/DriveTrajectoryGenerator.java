@@ -16,7 +16,7 @@ public class DriveTrajectoryGenerator {
     private static final DriveTrajectoryGenerator m_instance = new DriveTrajectoryGenerator();
     private final DriveMotionPlanner DMP;
     private final Pose2d HabStart, RocketMidPoint, RocketApproch, Rocket, HatchPickup, LRocketMidPoint, LRocketApproch, LRocket, LHatchPickup;
-    private final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip, RHairpinTurn;
+    private final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip1, RCargoShip2, RHairpinTurn;
 
     private DriveTrajectoryGenerator() {
         DMP = new DriveMotionPlanner();
@@ -24,14 +24,17 @@ public class DriveTrajectoryGenerator {
         Cargo = new Pose2d(0, 60, Rotation2d.fromDegrees(-135));
         HairpinTurn = new Pose2d(221, 60, Rotation2d.fromDegrees(-135));
         CargoHoldMid = new Pose2d(176, 15, Rotation2d.fromDegrees(-180));
-        CargoShip = new Pose2d(191, 0, Rotation2d.fromDegrees(-90));
+        CargoShip1 = new Pose2d(191, 0, Rotation2d.fromDegrees(-90));
+        CargoShip2 = new Pose2d(215, 0, Rotation2d.fromDegrees(-90));
         CargoShipMid = new Pose2d(131, 60, Rotation2d.fromDegrees(-90));
         RCargo = new Pose2d(0, -60, Rotation2d.fromDegrees(135));
         RHairpinTurn = new Pose2d(221, -60, Rotation2d.fromDegrees(135));
         RCargoHoldMid = new Pose2d(176, -15, Rotation2d.fromDegrees(180));
-        RCargoShip = new Pose2d(191, 0, Rotation2d.fromDegrees(90));
+        RCargoShip1 = new Pose2d(191, 0, Rotation2d.fromDegrees(90));
+        RCargoShip2 = new Pose2d(215, 0, Rotation2d.fromDegrees(90));
         RCargoShipMid = new Pose2d(131, -60, Rotation2d.fromDegrees(90));
         HabStart = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
+        //
         RocketMidPoint = new Pose2d(-163, -48, Rotation2d.fromDegrees(0));
         RocketApproch = new Pose2d(-223, -96, Rotation2d.fromDegrees(-30));
         Rocket = new Pose2d(-185, -110, Rotation2d.fromDegrees(-30));
@@ -72,18 +75,17 @@ public class DriveTrajectoryGenerator {
 
     public Trajectory<TimedState<Pose2dWithCurvature>> OffHabToHab(boolean reversed, boolean isRight) {
         List<Pose2d> Points = new ArrayList<>();
-            Points.add(HabOff);
-            Points.add(HabStart);
+        Points.add(HabOff);
+        Points.add(HabStart);
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
 
     public Trajectory<TimedState<Pose2dWithCurvature>> CargoToCargoMid(boolean reversed, boolean isRight) {
         List<Pose2d> Points = new ArrayList<>();
-        if(isRight)
-        {
-        Points.add(Cargo);
-        Points.add(CargoHoldMid);}
-        else{
+        if (isRight) {
+            Points.add(Cargo);
+            Points.add(CargoHoldMid);
+        } else {
             Points.add(RCargo);
             Points.add(RCargoHoldMid);
         }
@@ -93,26 +95,39 @@ public class DriveTrajectoryGenerator {
 
     public Trajectory<TimedState<Pose2dWithCurvature>> HabToCargoShipMid(boolean reversed, boolean isRight) {
         List<Pose2d> Points = new ArrayList<>();
-        if(isRight)
-        {
-        Points.add(HabStart);
-        Points.add(CargoShipMid);}
-        else{
+        if (isRight) {
+            Points.add(HabStart);
+            Points.add(CargoShipMid);
+        } else {
             Points.add(HabStart);
             Points.add(RCargoShipMid);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
 
-    public Trajectory<TimedState<Pose2dWithCurvature>> CargoShipMidToCargoShip(boolean reversed, boolean isRight) {
+    public Trajectory<TimedState<Pose2dWithCurvature>> CargoShipMidToCargoShip(boolean reversed, boolean isRight, int bay) {
         List<Pose2d> Points = new ArrayList<>();
-        if (isRight) {
-            Points.add(CargoShipMid);
-            Points.add(CargoShip);
-        } else {
-            Points.add(RCargoShipMid);
-            Points.add(RCargoShip);
+        switch (bay) {
+            case 1:
+                if (isRight) {
+                    Points.add(CargoShipMid);
+                    Points.add(CargoShip1);
+                } else {
+                    Points.add(RCargoShipMid);
+                    Points.add(RCargoShip1);
 
+                }
+                break;
+            case 2:
+                if (isRight) {
+                    Points.add(CargoShipMid);
+                    Points.add(CargoShip2);
+                } else {
+                    Points.add(RCargoShipMid);
+                    Points.add(RCargoShip2);
+
+                }
+                break;
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
@@ -129,28 +144,55 @@ public class DriveTrajectoryGenerator {
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
 
-    public Trajectory<TimedState<Pose2dWithCurvature>> HairpinToCargoShip(boolean reversed, boolean isRight) {
+    public Trajectory<TimedState<Pose2dWithCurvature>> HairpinToCargoShip(boolean reversed, boolean isRight, int bay) {
         List<Pose2d> Points = new ArrayList<>();
-        if (isRight) {
-            Points.add(HairpinTurn);
-            Points.add(CargoShip);
-        } else {
-            Points.add(RHairpinTurn);
-            Points.add(RCargoShip);
+        switch (bay) {
+            case 1:
+                if (isRight) {
+                    Points.add(HairpinTurn);
+                    Points.add(CargoShip1);
+                } else {
+                    Points.add(RHairpinTurn);
+                    Points.add(RCargoShip1);
+                }
+                break;
+            case 2:
+                if (isRight) {
+                    Points.add(HairpinTurn);
+                    Points.add(CargoShip2);
+                } else {
+                    Points.add(RHairpinTurn);
+                    Points.add(RCargoShip2);
+                }
+                break;
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+
     }
 
-    public Trajectory<TimedState<Pose2dWithCurvature>> CargoShipToHairpin(boolean reversed, boolean isRight) {
+    public Trajectory<TimedState<Pose2dWithCurvature>> CargoShipToHairpin(boolean reversed, boolean isRight, int bay) {
         List<Pose2d> Points = new ArrayList<>();
-        if (isRight) {
-            Points.add(CargoShip);
-            Points.add(HairpinTurn);
-        } else {
-            Points.add(RCargoShip);
-            Points.add(RHairpinTurn);
-        }
+        switch (bay) {
+            case 1:
+                if (isRight) {
+                    Points.add(CargoShip1);
+                    Points.add(HairpinTurn);
+                } else {
+                    Points.add(RCargoShip1);
+                    Points.add(RHairpinTurn);
+                }
+                break;
+            case 2:
+                if (isRight) {
+                    Points.add(CargoShip2);
+                    Points.add(HairpinTurn);
+                } else {
+                    Points.add(RCargoShip2);
+                    Points.add(RHairpinTurn);
+                }
+                break;
 
+        }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
 
