@@ -15,21 +15,21 @@ import java.util.List;
 public class DriveTrajectoryGenerator {
     private static final DriveTrajectoryGenerator m_instance = new DriveTrajectoryGenerator();
     private final DriveMotionPlanner DMP;
-    private final Pose2d HabStart, RocketMidPoint, RocketApproch, Rocket, HatchPickup, LRocketMidPoint, LRocketApproch, LRocket, LHatchPickup;
-    private final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip1, RCargoShip2, RHairpinTurn;
+    public final Pose2d HabStart, RocketMidPoint, RocketApproch, Rocket, HatchPickup, LRocketMidPoint, LRocketApproch, LRocket, LHatchPickup;
+    public final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip1, RCargoShip2, RHairpinTurn;
 
     private DriveTrajectoryGenerator() {
         DMP = new DriveMotionPlanner();
         HabOff = new Pose2d(0, 20, Rotation2d.fromDegrees(0));
         Cargo = new Pose2d(0, 60, Rotation2d.fromDegrees(-135));
         HairpinTurn = new Pose2d(221, 60, Rotation2d.fromDegrees(-135));
-        CargoHoldMid = new Pose2d(176, 15, Rotation2d.fromDegrees(-180));
+        CargoHoldMid = new Pose2d(176, 45, Rotation2d.fromDegrees(-180));
         CargoShip1 = new Pose2d(197, 0, Rotation2d.fromDegrees(-90));
         CargoShip2 = new Pose2d(227, 0, Rotation2d.fromDegrees(-90));
         CargoShipMid = new Pose2d(131, 60, Rotation2d.fromDegrees(0));
         RCargo = new Pose2d(0, -60, Rotation2d.fromDegrees(135));
         RHairpinTurn = new Pose2d(221, -60, Rotation2d.fromDegrees(135));
-        RCargoHoldMid = new Pose2d(176, -15, Rotation2d.fromDegrees(180));
+        RCargoHoldMid = new Pose2d(176, -45, Rotation2d.fromDegrees(180));
         RCargoShip1 = new Pose2d(197, 0, Rotation2d.fromDegrees(90));
         RCargoShip2 = new Pose2d(227, 0, Rotation2d.fromDegrees(90));
         RCargoShipMid = new Pose2d(131, -60, Rotation2d.fromDegrees(0));
