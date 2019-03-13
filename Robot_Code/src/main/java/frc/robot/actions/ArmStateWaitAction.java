@@ -13,6 +13,7 @@ public class ArmStateWaitAction extends Action {
         this.armState = armState;
         this.kEpsilon = kEpsilon;
     }
+
     @Override
     public void onStart() {
 
@@ -20,10 +21,8 @@ public class ArmStateWaitAction extends Action {
 
     @Override
     public void onLoop() {
-        if ((armState.getProx() >= Arm.getInstance().getProxPoint() - kEpsilon &&
-                armState.getProx() <= Arm.getInstance().getProxPoint() + kEpsilon) &&
-                (armState.getDist() >= Arm.getInstance().getDistPoint() - kEpsilon &&
-                armState.getDist() <= Arm.getInstance().getDistPoint() + kEpsilon)) {
+        if ((Math.abs(armState.getProx() - Arm.getInstance().getProxPoint()) <= kEpsilon) &&
+                (Math.abs(armState.getDist() - Arm.getInstance().getDistPoint()) <= kEpsilon)) {
             end = true;
         }
     }

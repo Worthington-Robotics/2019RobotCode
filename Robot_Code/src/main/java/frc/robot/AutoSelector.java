@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.autoactiongroups.CargoShip;
-import frc.robot.autoactiongroups.Rocket;
 
 /**
  * @author Cole Tucker This enum encompasses all user selectable autonomous

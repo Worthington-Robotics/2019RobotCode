@@ -15,34 +15,26 @@ import java.util.List;
 public class DriveTrajectoryGenerator {
     private static final DriveTrajectoryGenerator m_instance = new DriveTrajectoryGenerator();
     private final DriveMotionPlanner DMP;
-    public final Pose2d HabStart, RocketMidPoint, RocketApproch, Rocket, HatchPickup, LRocketMidPoint, LRocketApproch, LRocket, LHatchPickup;
-    public final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip1, RCargoShip2, RHairpinTurn;
+    public final Pose2d HabStart;
+    public final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, LCargoShipMid, LCargoHoldMid, LCargo, LCargoShip1, LCargoShip2, LHairpinTurn;
 
     private DriveTrajectoryGenerator() {
         DMP = new DriveMotionPlanner();
-        HabOff = new Pose2d(0, 20, Rotation2d.fromDegrees(0));
-        Cargo = new Pose2d(0, 60, Rotation2d.fromDegrees(-135));
-        HairpinTurn = new Pose2d(221, 60, Rotation2d.fromDegrees(-135));
-        CargoHoldMid = new Pose2d(176, 45, Rotation2d.fromDegrees(-180));
-        CargoShip1 = new Pose2d(197, 0, Rotation2d.fromDegrees(-90));
-        CargoShip2 = new Pose2d(227, 0, Rotation2d.fromDegrees(-90));
-        CargoShipMid = new Pose2d(131, 60, Rotation2d.fromDegrees(0));
-        RCargo = new Pose2d(0, -60, Rotation2d.fromDegrees(135));
-        RHairpinTurn = new Pose2d(221, -60, Rotation2d.fromDegrees(135));
-        RCargoHoldMid = new Pose2d(176, -45, Rotation2d.fromDegrees(180));
-        RCargoShip1 = new Pose2d(197, 0, Rotation2d.fromDegrees(90));
-        RCargoShip2 = new Pose2d(227, 0, Rotation2d.fromDegrees(90));
-        RCargoShipMid = new Pose2d(131, -60, Rotation2d.fromDegrees(0));
-        HabStart = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
+        HabOff       /**/ = new Pose2d(0, 20, Rotation2d.fromDegrees(0));
+        Cargo        /**/ = new Pose2d(0, 60, Rotation2d.fromDegrees(-135));
+        HairpinTurn  /**/ = new Pose2d(221, 60, Rotation2d.fromDegrees(-135));
+        CargoHoldMid /**/ = new Pose2d(176, 45, Rotation2d.fromDegrees(-180));
+        CargoShip1   /**/ = new Pose2d(197, 0, Rotation2d.fromDegrees(-90));
+        CargoShip2   /**/ = new Pose2d(227, 0, Rotation2d.fromDegrees(-90));
+        CargoShipMid /**/ = new Pose2d(131, 60, Rotation2d.fromDegrees(0));
+        LCargo       /**/ = new Pose2d(0, -60, Rotation2d.fromDegrees(135));
+        LHairpinTurn /**/ = new Pose2d(221, -60, Rotation2d.fromDegrees(135));
+        LCargoHoldMid/**/ = new Pose2d(176, -45, Rotation2d.fromDegrees(180));
+        LCargoShip1  /**/ = new Pose2d(197, 0, Rotation2d.fromDegrees(90));
+        LCargoShip2  /**/ = new Pose2d(227, 0, Rotation2d.fromDegrees(90));
+        LCargoShipMid/**/ = new Pose2d(131, -60, Rotation2d.fromDegrees(0));
+        HabStart     /**/ = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
         //
-        RocketMidPoint = new Pose2d(-163, -48, Rotation2d.fromDegrees(0));
-        RocketApproch = new Pose2d(-223, -96, Rotation2d.fromDegrees(-30));
-        Rocket = new Pose2d(-185, -110, Rotation2d.fromDegrees(-30));
-        HatchPickup = new Pose2d(48, -91, Rotation2d.fromDegrees(0));
-        LRocketMidPoint = new Pose2d(-163, 48, Rotation2d.fromDegrees(0));
-        LRocketApproch = new Pose2d(-223, 96, Rotation2d.fromDegrees(30));
-        LRocket = new Pose2d(-185, 110, Rotation2d.fromDegrees(30));
-        LHatchPickup = new Pose2d(48, 91, Rotation2d.fromDegrees(0));
     }
 
     public static DriveTrajectoryGenerator getInstance() {
@@ -86,8 +78,8 @@ public class DriveTrajectoryGenerator {
             Points.add(Cargo);
             Points.add(CargoHoldMid);
         } else {
-            Points.add(RCargo);
-            Points.add(RCargoHoldMid);
+            Points.add(LCargo);
+            Points.add(LCargoHoldMid);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
@@ -100,7 +92,7 @@ public class DriveTrajectoryGenerator {
             Points.add(CargoShipMid);
         } else {
             Points.add(HabStart);
-            Points.add(RCargoShipMid);
+            Points.add(LCargoShipMid);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
@@ -113,8 +105,8 @@ public class DriveTrajectoryGenerator {
                     Points.add(CargoShipMid);
                     Points.add(CargoShip1);
                 } else {
-                    Points.add(RCargoShipMid);
-                    Points.add(RCargoShip1);
+                    Points.add(LCargoShipMid);
+                    Points.add(LCargoShip1);
 
                 }
                 break;
@@ -123,8 +115,8 @@ public class DriveTrajectoryGenerator {
                     Points.add(CargoShipMid);
                     Points.add(CargoShip2);
                 } else {
-                    Points.add(RCargoShipMid);
-                    Points.add(RCargoShip2);
+                    Points.add(LCargoShipMid);
+                    Points.add(LCargoShip2);
 
                 }
                 break;
@@ -138,8 +130,8 @@ public class DriveTrajectoryGenerator {
             Points.add(CargoHoldMid);
             Points.add(HairpinTurn);
         } else {
-            Points.add(RCargoHoldMid);
-            Points.add(RHairpinTurn);
+            Points.add(LCargoHoldMid);
+            Points.add(LHairpinTurn);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
@@ -152,8 +144,8 @@ public class DriveTrajectoryGenerator {
                     Points.add(HairpinTurn);
                     Points.add(CargoShip1);
                 } else {
-                    Points.add(RHairpinTurn);
-                    Points.add(RCargoShip1);
+                    Points.add(LHairpinTurn);
+                    Points.add(LCargoShip1);
                 }
                 break;
             case 2:
@@ -161,8 +153,8 @@ public class DriveTrajectoryGenerator {
                     Points.add(HairpinTurn);
                     Points.add(CargoShip2);
                 } else {
-                    Points.add(RHairpinTurn);
-                    Points.add(RCargoShip2);
+                    Points.add(LHairpinTurn);
+                    Points.add(LCargoShip2);
                 }
                 break;
         }
@@ -178,8 +170,8 @@ public class DriveTrajectoryGenerator {
                     Points.add(CargoShip1);
                     Points.add(HairpinTurn);
                 } else {
-                    Points.add(RCargoShip1);
-                    Points.add(RHairpinTurn);
+                    Points.add(LCargoShip1);
+                    Points.add(LHairpinTurn);
                 }
                 break;
             case 2:
@@ -187,8 +179,8 @@ public class DriveTrajectoryGenerator {
                     Points.add(CargoShip2);
                     Points.add(HairpinTurn);
                 } else {
-                    Points.add(RCargoShip2);
-                    Points.add(RHairpinTurn);
+                    Points.add(LCargoShip2);
+                    Points.add(LHairpinTurn);
                 }
                 break;
 
@@ -202,8 +194,8 @@ public class DriveTrajectoryGenerator {
             Points.add(HairpinTurn);
             Points.add(CargoHoldMid);
         } else {
-            Points.add(RHairpinTurn);
-            Points.add(RCargoHoldMid);
+            Points.add(LHairpinTurn);
+            Points.add(LCargoHoldMid);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
@@ -215,109 +207,9 @@ public class DriveTrajectoryGenerator {
             Points.add(Cargo);
         } else {
 
-            Points.add(RCargoHoldMid);
-            Points.add(RCargo);
+            Points.add(LCargoHoldMid);
+            Points.add(LCargo);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevHabToRocketMid() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(HabStart);
-        Points.add(RocketMidPoint);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevRocketMidToRocketApproch() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketMidPoint);
-        Points.add(RocketApproch);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RocketApprochToRocket() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketApproch);
-        Points.add(Rocket);
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevRocketToRocketApproch() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(Rocket);
-        Points.add(RocketApproch);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RocketApprochToRocketMidpoint() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketApproch);
-        Points.add(RocketMidPoint);
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RocketMidPointToHatchPickup() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketMidPoint);
-        Points.add(HatchPickup);
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevHatchPickupToRocketMidPoint() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(HatchPickup);
-        Points.add(RocketMidPoint);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevHabToLRocketMid() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(HabStart);
-        Points.add(RocketMidPoint);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevLRocketMidToLRocketApproch() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketMidPoint);
-        Points.add(RocketApproch);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> LRocketApprochToLRocket() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketApproch);
-        Points.add(Rocket);
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevLRocketToLRocketApproch() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(Rocket);
-        Points.add(RocketApproch);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> LRocketApprochToLRocketMidpoint() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketApproch);
-        Points.add(RocketMidPoint);
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> LRocketMidPointToLHatchPickup() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(RocketMidPoint);
-        Points.add(HatchPickup);
-        return generateTrajectory(false, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-    public Trajectory<TimedState<Pose2dWithCurvature>> RevLHatchPickupToLRocketMidPoint() {
-        List<Pose2d> Points = new ArrayList<>();
-        Points.add(HatchPickup);
-        Points.add(RocketMidPoint);
-        return generateTrajectory(true, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
-    }
-
-
 }

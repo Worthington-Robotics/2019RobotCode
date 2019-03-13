@@ -24,7 +24,6 @@ public class PointCloudWait extends Action {
 
     }
 
-    @Override
     public void onLoop() {
         double mX = PoseEstimator.getInstance().getPoseX();
         double mY = PoseEstimator.getInstance().getPoseY();
@@ -34,12 +33,10 @@ public class PointCloudWait extends Action {
         isTheta = Math.abs(Theta-mTheta) <= epsilonTheta;
     }
 
-    @Override
     public boolean isFinished() {
-        return isX && isY && isTheta;
+        return (isX && isY)&& isTheta;
     }
 
-    @Override
     public void onStop() {
 
     }
