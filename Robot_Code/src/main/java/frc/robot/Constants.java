@@ -28,10 +28,10 @@ public class Constants {
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
-    public static final int CLIMB_FRONT_LOW_ID = 2;
-    public static final int CLIMB_FRONT_HIGH_ID = 3;
-    public static final int CLIMB_BACK_LOW_ID = 4;
-    public static final int CLIMB_BACK_HIGH_ID = 5;
+    public static final int CLIMB_FRONT_LOW_ID = 4;
+    public static final int CLIMB_FRONT_HIGH_ID = 5;
+    public static final int CLIMB_BACK_LOW_ID = 2;
+    public static final int CLIMB_BACK_HIGH_ID = 3;
 
     //Sensor Ports
     //public static final int ULTRASONIC_IN_1 = 0;
@@ -48,7 +48,7 @@ public class Constants {
     public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.225; // 6
     public static final double DRIVE_WHEEL_RADIUS_INCHES = DRIVE_WHEEL_DIAMETER_INCHES / 2.0;
     public static final double TRACK_SCRUB_FACTOR = 1.0;  // TODO tune
-    public static final double ROBOT_LINEAR_INERTIA = 59;  // kg TODO tune
+    public static final double ROBOT_LINEAR_INERTIA = 75;  // kg TODO tune
     public static final double ROBOT_ANGULAR_INERTIA = 10.0;  // kg m^2 TODO tune
     public static final double ROBOT_ANGULAR_DRAG = 12.0;  // N*m / (rad/sec) TODO tune
 

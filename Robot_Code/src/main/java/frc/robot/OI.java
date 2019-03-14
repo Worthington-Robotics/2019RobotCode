@@ -26,7 +26,8 @@ public class OI{
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
         selfCheck.whileHeld(Action.toCommand(new RunTestConditional(new AutoTestProtocol())));
         ////////////End Scary Stuff////////////
-        ////////////Button Decelerations////////////
+
+        ///////////Button Declarations///////////
         //Arm Poses
         Button cargoShip = new JoystickButton(Constants.LAUNCH_PAD, 13);
         Button groundCargo = new JoystickButton(Constants.LAUNCH_PAD, 10);
@@ -66,7 +67,7 @@ public class OI{
         cargoRollout.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.SlowShoot)));
         cargoShoot.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         intake.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
-        // Stow/Unstow
+        //Stow/Unstow
         unstow.whenPressed(Action.toCommand(new UnstowArmAction()));
         stow.whenPressed(Action.toCommand(new StateMachineRunner(new StowProtocol())));
 
