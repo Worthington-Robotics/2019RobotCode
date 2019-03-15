@@ -7,7 +7,7 @@ public class VelocityAction extends Action {
 
     @Override
     public void onStart() {
-        Arm.getInstance().setVelocitymConfig(0,0);
+        Arm.getInstance().setVelocitymConfig();
     }
 
     @Override
@@ -17,7 +17,7 @@ public class VelocityAction extends Action {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

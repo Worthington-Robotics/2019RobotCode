@@ -59,9 +59,11 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         // publishes the auto list to the dashboard "Auto Selector"
+        Arm.getInstance().safeMode();
         SmartDashboard.putStringArray("Auto List", AutoSelector.buildArray());
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
+        Manipulator.getInstance().reset();
         //Stop the disabled looper
         DisabledLoops.stop();
         //Start the enabled looper

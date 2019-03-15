@@ -9,8 +9,8 @@ public class Manipulator extends Subsystem {
     private Spark bottomMotor, topMotor;
     private DoubleSolenoid ClimbFront, ClimbBack;
     private double ShotPower = 0.0;
-    private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kReverse;
-    private DoubleSolenoid.Value bState = DoubleSolenoid.Value.kReverse;
+    private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kForward;
+    private DoubleSolenoid.Value bState = DoubleSolenoid.Value.kForward;
 
 
     public Manipulator() {

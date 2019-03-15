@@ -1,17 +1,16 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
 import frc.robot.actions.buttonactions.ModAction;
-import frc.robot.autoactiongroups.ClimbReady;
 import frc.robot.autoactiongroups.StowProtocol;
 import frc.robot.actions.armactions.*;
 import frc.robot.actions.buttonactions.RunTestConditional;
 import frc.robot.autoactiongroups.AutoTestProtocol;
 
+import frc.robot.planners.DriveTrajectoryGenerator;
 import frc.robot.subsystems.Arm;
 
 public class OI{
@@ -20,12 +19,12 @@ public class OI{
         ////////////Scary Vision Stuff////////////
         Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
-        Button selfCheck = new JoystickButton(Constants.MASTER, 12);
+        Button selfCheck = new JoystickButton(Constants.MASTER, 11);
 
         cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
         selfCheck.whileHeld(Action.toCommand(new RunTestConditional(new AutoTestProtocol())));
-        ////////////End Scary Stuff////////////
+         ////////////End Scary Stuff////////////
 
         ///////////Button Declarations///////////
         //Arm Poses
@@ -54,9 +53,14 @@ public class OI{
         autoStopButton.whenPressed(Action.toCommand(new AStopAction()));
         velocity.whenPressed(Action.toCommand(new VelocityAction()));
         //Climb Stuff
-        bothClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kForward), new ClimbAction(DoubleSolenoid.Value.kReverse, DoubleSolenoid.Value.kReverse))));
+        /*bothClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kForward), new ClimbAction(DoubleSolenoid.Value.kReverse, DoubleSolenoid.Value.kReverse))));
         frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
         backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
+        */
+        bothClimb.toggleWhenPressed(Action.toCommand(new climb(false)));
+        bothClimb.toggleWhenPressed(Action.toCommand(new climb(true)));
+        frontClimb.toggleWhenPressed(Action.toCommand(new climb(true)));
+        backClimb.toggleWhenPressed(Action.toCommand(new climb(false)));
         //Arm Poses
         cargoShip.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO)));
         groundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO)));
@@ -67,6 +71,7 @@ public class OI{
         cargoRollout.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.SlowShoot)));
         cargoShoot.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));
         intake.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp)));
+
         //Stow/Unstow
         unstow.whenPressed(Action.toCommand(new UnstowArmAction()));
         stow.whenPressed(Action.toCommand(new StateMachineRunner(new StowProtocol())));

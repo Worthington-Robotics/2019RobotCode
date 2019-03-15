@@ -6,18 +6,20 @@ import frc.robot.subsystems.Manipulator;
 
 public class ClimbAction extends Action {
     private DoubleSolenoid.Value fPwr, bPwr;
-    private boolean isOne = false;
+    private boolean isOne;
     private boolean isFront = false;
 
     public ClimbAction(DoubleSolenoid.Value fpwr, DoubleSolenoid.Value bpwr) {
         fPwr = fpwr;
         bPwr = bpwr;
+        isOne = false;
+
     }
 
     public ClimbAction(boolean isFront, DoubleSolenoid.Value pwr) {
         if (isFront) {
             fPwr = pwr;
-            this.isFront = isFront;
+            this.isFront = true;
         } else {
             bPwr = pwr;
         }
@@ -26,16 +28,15 @@ public class ClimbAction extends Action {
 
     @Override
     public void onStart() {
-        if(!isOne) {
+        if (!isOne) {
             Manipulator.getInstance().setFrontState(fPwr);
             Manipulator.getInstance().setBackState(bPwr);
-        }
-        else
-        {
-            if(isFront)
-            {Manipulator.getInstance().setFrontState(fPwr);}
-            else
-            {Manipulator.getInstance().setBackState(bPwr);}
+        } else {
+            if (isFront) {
+                Manipulator.getInstance().setFrontState(fPwr);
+            } else {
+                Manipulator.getInstance().setBackState(bPwr);
+            }
         }
     }
 

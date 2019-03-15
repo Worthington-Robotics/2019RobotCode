@@ -3,6 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.autoactiongroups.CargoShip;
+import frc.robot.autoactiongroups.CargoShip1;
+import frc.robot.autoactiongroups.CargoShip2;
+import frc.robot.autoactiongroups.GoTenFeet;
 
 /**
  * @author Cole Tucker This enum encompasses all user selectable autonomous
@@ -15,7 +18,7 @@ enum UserSelection {
 
     Auto1("Cargo Ship Left", 1),
     Auto2("Cargo Ship Right", 2),
-    Auto3("", 3),
+    Auto3("\"Get Ten\" Feat Cube Crusher", 3),
     Auto4("", 4),
     Auto5("", 5),
     Auto6("",6),
@@ -85,11 +88,11 @@ public class AutoSelector {
         SmartDashboard.putString("Final Auto Choice", usrAuto.toString());
         switch (usrAuto) {
 
-            case Auto1: return new CargoShip(true);
+            case Auto1: return new CargoShip2();
 
-            case Auto2: return new CargoShip(false);
+            case Auto2: return new CargoShip1(false);
 
-            case Auto3: return null;
+            case Auto3: return new GoTenFeet();
 
             case Auto4: return null;
 

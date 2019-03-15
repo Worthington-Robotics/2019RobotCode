@@ -77,14 +77,12 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                /*if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
-                    periodic.armDistPower = -.25;*/
                 armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
             case PID:
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod/*, DemandType.ArbitraryFeedForward, Math.sin(periodic.armDistPower + periodic.distMod / 2048 * Math.PI)*/);
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
 
@@ -178,15 +176,14 @@ public class Arm extends Subsystem {
     }
 
     public void safeMode() {
+        if(periodic.armmode != ArmModes.SAFETY_CATCH)
         periodic.armmode = ArmModes.SAFETY_CATCH;
     }
 
-    public void setVelocitymConfig(double prox, double dist) {
+    public void setVelocitymConfig() {
         if (periodic.armmode != ArmModes.DirectControl) {
             periodic.armmode = ArmModes.DirectControl;
         }
-        periodic.armProxPower = prox;
-        periodic.armDistPower = dist;
     }
 
     public double getProxPoint() {
@@ -284,27 +281,13 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1400, 1181),
-        FWD_LOW_HATCH(-1472, 650),
-        FWD_LOW_CARGO(-1332, 550),
-        FWD_MEDIUM_HATCH(-747, 557),
-        FWD_MEDIUM_CARGO(-609, 550),
-        FWD_HIGH_HATCH(-65, 558),
-        FWD_HIGH_CARGO(-199, 307),
-
-        REV_MEDIUM_HATCH(-460, -1036),
-        REV_MEDIUM_CARGO(-554, -882),
-        REV_HIGH_HATCH(-237, -567),
-        REV_HIGH_CARGO(-236, -415),
-        REV_GROUND_CARGO(1000, -200),
-
-        CARGO_SHIP_CARGO(-535, 1000),
-
-        GROUND_HATCH(1248, -2477),
-        CLIMB_TRANSPORT(-1397, -161),
-        CLIMB_READY(1118, -2400),
-        UNSTOW_ARM(-626, 1400),
-        STOW_ARM(-846, 2106);
+        FWD_GROUND_CARGO(-1632, 79),
+        FWD_LOW_CARGO(-1411, 270),
+        FWD_MEDIUM_CARGO(-1069, 269),
+        FWD_HIGH_CARGO(-621, 100),
+        CARGO_SHIP_CARGO(-587, -854),
+        UNSTOW_ARM(-511, -1137),
+        STOW_ARM(-1073, -968);
 
 
         private double prox, dist;

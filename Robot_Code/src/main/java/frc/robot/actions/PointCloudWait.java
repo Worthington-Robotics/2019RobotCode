@@ -1,7 +1,9 @@
 package frc.robot.actions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
 import frc.lib.statemachine.Action;
+import frc.lib.util.Util;
 import frc.robot.subsystems.PoseEstimator;
 
 public class PointCloudWait extends Action {
@@ -25,12 +27,15 @@ public class PointCloudWait extends Action {
     }
 
     public void onLoop() {
-        double mX = PoseEstimator.getInstance().getPoseX();
-        double mY = PoseEstimator.getInstance().getPoseY();
-        double mTheta = PoseEstimator.getInstance().getPoseTheta();
-        isX = Math.abs(X-mX) <= epsilonX;
-        isY = Math.abs(Y-mY) <= epsilonY;
-        isTheta = Math.abs(Theta-mTheta) <= epsilonTheta;
+        double mX = PoseEstimator.getInstance().getLatestFieldToVehicle().getValue().getTranslation().x();
+        double mY = PoseEstimator.getInstance().getLatestFieldToVehicle().getValue().getTranslation().y();
+        double mTheta = PoseEstimator.getInstance().getLatestFieldToVehicle().getValue().getRotation().getDegrees();
+        isX = Util.epsilonEquals(X, mX, epsilonX);
+        isY = Util.epsilonEquals(Y, mY, epsilonY);
+        isTheta = Util.epsilonEquals(Theta, mTheta, epsilonTheta);
+        SmartDashboard.putBoolean("isX", isX);
+        SmartDashboard.putBoolean("isY", isY);
+        SmartDashboard.putBoolean("isTheta", isTheta);
     }
 
     public boolean isFinished() {

@@ -209,7 +209,7 @@ public class Drive extends Subsystem {
     public void reset() {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
-        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.PURE_PURSUIT);
+        mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.NONLINEAR_FEEDBACK);
         periodic = new PeriodicIO();
         setHeading(Rotation2d.fromDegrees(0));
         resetEncoders();

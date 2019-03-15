@@ -18,7 +18,7 @@ public class ActionGroup {
     }
 
     ActionGroup(Action action, long timeout_ms) {
-        t_Timeout = (double) timeout_ms / 1000.00000000;
+        t_Timeout = (double) timeout_ms / 1000.00000000000000000000000000000000000000000000000000000000000000000000000000000000;
         group = new LinkedList<>();
         group.add(action);
     }

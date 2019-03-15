@@ -34,7 +34,7 @@ public class ArmMotionPlanner implements CSVWritable {
 
 
     public ArmMotionPlanner() {
-        final DCMotorTransmission proxTransmission = new DCMotorTransmission(1 / Constants.PROX_Kv,Constants.PROX_Kt, Constants.PROX_V_INTERCEPT); //TODO calculate odd ka value
+        final DCMotorTransmission proxTransmission = new DCMotorTransmission(1 / Constants.PROX_Kv, Constants.PROX_Kt, Constants.PROX_V_INTERCEPT); //TODO calculate odd ka value
         final DCMotorTransmission distTransmission = new DCMotorTransmission(1 / Constants.DIST_Kv, Constants.DIST_Kt, Constants.DIST_V_INTERCEPT); //TODO calculate odd ka value
         mModel = new ArmModel(Constants.PROX_MOI, Constants.DIST_MOI, proxTransmission, distTransmission);
 
