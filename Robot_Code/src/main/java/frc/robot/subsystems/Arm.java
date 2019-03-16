@@ -281,13 +281,13 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1632, 79),
-        FWD_LOW_CARGO(-1411, 270),
-        FWD_MEDIUM_CARGO(-1069, 269),
-        FWD_HIGH_CARGO(-621, 100),
-        CARGO_SHIP_CARGO(-587, -854),
-        UNSTOW_ARM(-511, -1137),
-        STOW_ARM(-1073, -968);
+        FWD_GROUND_CARGO(-1449, -9),
+        FWD_LOW_CARGO(-1255, 235),
+        FWD_MEDIUM_CARGO(-897, 201),
+        FWD_HIGH_CARGO(-537, 216),
+        CARGO_SHIP_CARGO(-400, -974),//
+        UNSTOW_ARM(-531, -1572),
+        STOW_ARM(-846, -1242);
 
 
         private double prox, dist;
