@@ -89,9 +89,8 @@ public class Constants {
 
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 1500;
-    public static double PROX_ABSOLUTE_ZERO = 1841
-            ;
+    public static double DIST_ABSOLUTE_ZERO = 1425;
+    public static double PROX_ABSOLUTE_ZERO = 1690;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -145,7 +144,7 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.5, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.2, 0.99, 0.99, 0.5, 2);
     public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.05, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants
