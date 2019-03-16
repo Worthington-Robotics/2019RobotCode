@@ -14,10 +14,12 @@ import frc.robot.subsystems.Arm;
 public class CargoShip1 extends StateMachineDescriptor {
     public CargoShip1(boolean isLeft)
     {
-        Arm.getInstance().setStowed(false);
-        /* addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().HabToOffHab(false, false), false), new ButtonWaitAction(new Joystick(2), 1)}, 10000);
-        addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().OffHabToHab(false, false), false), new ButtonWaitAction(new Joystick(2), 1)}, 10000);
-*/
+        Arm.getInstance().setStowed(false); /*
+        addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToOffHab(false, false), false), 1000);
+        addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().HabOff,1,100,180), 3000);
+        addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().OffHabToHab(true, false), false), 1000);
+        addSequential(new PointCloudWait(new Pose2d(987,987, Rotation2d.fromDegrees(0)),0,0,0), 1000);
+        */
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToCargoShip(false, isLeft, 1)), 1);
         addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().LCargoShipMid , 10,100000,180), 10000);
         addSequential(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO), 1);

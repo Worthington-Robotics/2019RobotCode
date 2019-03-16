@@ -3,10 +3,12 @@ package frc.robot.planners;
 import frc.lib.geometry.Pose2d;
 import frc.lib.geometry.Pose2dWithCurvature;
 import frc.lib.geometry.Rotation2d;
+import frc.lib.geometry.Translation2d;
 import frc.lib.trajectory.Trajectory;
 import frc.lib.trajectory.timing.CentripetalAccelerationConstraint;
 import frc.lib.trajectory.timing.TimedState;
 import frc.lib.trajectory.timing.TimingConstraint;
+import frc.lib.trajectory.timing.VelocityLimitRegionConstraint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,15 +22,15 @@ public class DriveTrajectoryGenerator {
 
     private DriveTrajectoryGenerator() {
         DMP = new DriveMotionPlanner();
-        HabOff       /**/ = new Pose2d(0, 20, Rotation2d.fromDegrees(0));
-        Cargo        /**/ = new Pose2d(-10, 65, Rotation2d.fromDegrees(-135));
+        HabOff       /**/ = new Pose2d(42, 0, Rotation2d.fromDegrees(0));
+        Cargo        /**/ = new Pose2d(-24, 40, Rotation2d.fromDegrees(-160));
         HairpinTurn  /**/ = new Pose2d(231, 70, Rotation2d.fromDegrees(-135));
         CargoHoldMid /**/ = new Pose2d(176, 45, Rotation2d.fromDegrees(-180));
         CargoShip1   /**/ = new Pose2d(197, 5, Rotation2d.fromDegrees(-90));
         CargoShip2   /**/ = new Pose2d(210, 5, Rotation2d.fromDegrees(-90));
         CargoShipMid /**/ = new Pose2d(131, 60, Rotation2d.fromDegrees(0));
 
-        LCargo       /**/ = new Pose2d(0, -60, Rotation2d.fromDegrees(135));
+        LCargo       /**/ = new Pose2d(0, -60, Rotation2d.fromDegrees(160));
         LHairpinTurn /**/ = new Pose2d(231, -70, Rotation2d.fromDegrees(135));
         LCargoHoldMid/**/ = new Pose2d(176, -45, Rotation2d.fromDegrees(180));
         LCargoShip1  /**/ = new Pose2d(197, -5, Rotation2d.fromDegrees(90));
@@ -69,7 +71,7 @@ public class DriveTrajectoryGenerator {
     public Trajectory<TimedState<Pose2dWithCurvature>> OffHabToHab(boolean reversed, boolean isRight) {
         List<Pose2d> Points = new ArrayList<>();
         Points.add(HabOff);
-        Points.add(new Pose2d(18, 0, Rotation2d.fromDegrees(0)));
+        Points.add(new Pose2d(37, 0, Rotation2d.fromDegrees(0)));
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
 
@@ -154,7 +156,8 @@ public class DriveTrajectoryGenerator {
                 }
                 break;
         }
-        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60),
+                new VelocityLimitRegionConstraint(new Translation2d(30,30), new Translation2d(-72,-120), 48)), 96.0, 60, 10.0);
     }
 
     public Trajectory<TimedState<Pose2dWithCurvature>> CargoMidToHairpin(boolean reversed, boolean isRight) {
@@ -180,7 +183,7 @@ public class DriveTrajectoryGenerator {
             Points.add(LCargoHoldMid);
             Points.add(LHairpinTurn);
         }
-        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30,30), new Translation2d(-72,-120), 48)), 96.0, 60, 10.0);
     }
 
     public Trajectory<TimedState<Pose2dWithCurvature>> HairpinToCargoShip(boolean reversed, boolean isRight, int bay) {
@@ -271,6 +274,6 @@ public class DriveTrajectoryGenerator {
             Points.add(LCargoHoldMid);
             Points.add(LCargo);
         }
-        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
+        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60),new VelocityLimitRegionConstraint(new Translation2d(30,30), new Translation2d(-72,-120), 48)), 96.0, 60, 10.0);
     }
 }
