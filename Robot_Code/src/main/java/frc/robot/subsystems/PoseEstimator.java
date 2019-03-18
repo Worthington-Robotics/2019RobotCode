@@ -24,6 +24,7 @@ public class PoseEstimator extends Subsystem {
     private double left_encoder_prev_distance_ = 0.0;
     private double right_encoder_prev_distance_ = 0.0;
     private double distance_driven_= 0.0;
+    //private PeriodicIO periodic;
 
     private Loop mLoop = new Loop(){
 
@@ -62,6 +63,7 @@ public class PoseEstimator extends Subsystem {
 
     private PoseEstimator(){
         reset(0, Pose2d.identity());
+        //periodic = new PeriodicIO();
     }
 
     public void reset(double start_time, Pose2d initial_field_to_vehicle){
@@ -98,10 +100,9 @@ public class PoseEstimator extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        Pose2d odometry = getLatestFieldToVehicle().getValue();
-        SmartDashboard.putNumber("Drive/Pose/X", odometry.getTranslation().x());
-        SmartDashboard.putNumber("Drive/Pose/Y", odometry.getTranslation().y());
-        SmartDashboard.putNumber("Drive/Pose/Theta", (odometry.getRotation().getDegrees()+360)%360);
+        SmartDashboard.putNumber("Drive/Pose/X", getLatestFieldToVehicle().getValue().getTranslation().x());
+        SmartDashboard.putNumber("Drive/Pose/Y", getLatestFieldToVehicle().getValue().getTranslation().y());
+        SmartDashboard.putNumber("Drive/Pose/Theta", (getLatestFieldToVehicle().getValue().getRotation().getDegrees()+360)%360);
     }
 
     @Override
@@ -109,8 +110,25 @@ public class PoseEstimator extends Subsystem {
         reset(Timer.getFPGATimestamp(), Pose2d.identity());
     }
 
+    /*public double getPoseX(){
+        return periodic.odometry.getTranslation().x();
+    }
+    public double getPoseY()
+    {
+        return periodic.odometry.getTranslation().y();
+    }
+    public double getPoseTheta()
+    {
+        return periodic.odometry.getRotation().getDegrees();
+    }
+*/
     @Override
     public void registerEnabledLoops(ILooper looper){
         looper.register(mLoop);
     }
+  /*
+    public static class PeriodicIO
+    {
+        Pose2d odometry;
+    }*/
 }

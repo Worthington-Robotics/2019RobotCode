@@ -1,5 +1,7 @@
 package frc.robot.subsystems.vision;
 
+import frc.lib.util.Ultrasonic;
+import frc.robot.Constants;
 import frc.robot.subsystems.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,6 +18,7 @@ public class Vision extends Subsystem {
     private static Vision m_VisionInstance = new Vision();
 
     private String connectionStatus = NOT_INIT;
+    private Ultrasonic US1;
 
     public static Vision getInstance() {
         return m_VisionInstance;
@@ -23,8 +26,18 @@ public class Vision extends Subsystem {
 
     private Vision() {
         SmartDashboard.clearPersistent(TABLE_NAME);
+        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
     }
 
+    public double getDis()
+    {
+        double dis = US1.getDistance();
+        if(dis >= 120)
+        {
+            return -1;
+        }
+        return dis;
+    }
     @Override
     public synchronized void readPeriodicInputs() {
 
@@ -66,6 +79,7 @@ public class Vision extends Subsystem {
     @Override
     public void outputTelemetry() {
         SmartDashboard.putString("vision/rioStatus", this.connectionStatus);
+        SmartDashboard.putNumber("Vision/Ultrasonic", getDis());// 15 for cargo // 34 for rocket
     }
 
     @Override

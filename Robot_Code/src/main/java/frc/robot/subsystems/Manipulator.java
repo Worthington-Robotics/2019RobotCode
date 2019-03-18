@@ -7,15 +7,17 @@ import frc.robot.Constants;
 public class Manipulator extends Subsystem {
     private static final Manipulator m_instance = new Manipulator();
     private Spark bottomMotor, topMotor;
-    private DoubleSolenoid AlienOne;
+    private DoubleSolenoid ClimbFront, ClimbBack;
     private double ShotPower = 0.0;
-    private DoubleSolenoid.Value tState = DoubleSolenoid.Value.kForward;
+    private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kForward;
+    private DoubleSolenoid.Value bState = DoubleSolenoid.Value.kForward;
 
 
     public Manipulator() {
         bottomMotor = new Spark(Constants.BOTTOM_CARGOMANIP_ID);
         topMotor = new Spark(Constants.TOP_CARGOMANIP_ID);
-        AlienOne = new DoubleSolenoid(Constants.ALIEN_1_LOW_ID, Constants.ALIEN_1_HIGH_ID);
+        ClimbFront = new DoubleSolenoid(Constants.CLIMB_FRONT_LOW_ID, Constants.CLIMB_FRONT_HIGH_ID);
+        ClimbBack = new DoubleSolenoid(Constants.CLIMB_BACK_LOW_ID, Constants.CLIMB_BACK_HIGH_ID);
         reset();
     }
 
@@ -23,20 +25,29 @@ public class Manipulator extends Subsystem {
         return m_instance;
     }
 
-    public void setAlienState(DoubleSolenoid.Value state) {
-        tState = state;
+    public void setFrontState(DoubleSolenoid.Value state) {
+        fState = state;
     }
 
-    public DoubleSolenoid.Value GetAlienState() {
-        return tState;
+    public DoubleSolenoid.Value GetFrontState() {
+        return fState;
+    }
+
+    public void setBackState(DoubleSolenoid.Value state) {
+        bState = state;
+    }
+
+    public DoubleSolenoid.Value GetBackState() {
+        return bState;
     }
 
     public void setShotPower (double Power) {ShotPower = Power;}
 
      public void writePeriodicOutputs (){
         bottomMotor.set(-ShotPower);
-        topMotor.set(ShotPower);
-        AlienOne.set(tState);
+        topMotor.set(-ShotPower);
+        ClimbFront.set(fState);
+        ClimbBack.set(bState);
     }
 
     public void outputTelemetry() {
@@ -45,6 +56,7 @@ public class Manipulator extends Subsystem {
     public void reset() {
         topMotor.set(0);
         bottomMotor.set(0);
-        AlienOne.set(DoubleSolenoid.Value.kOff);
+        ClimbBack.set(DoubleSolenoid.Value.kOff);
+        ClimbFront.set(DoubleSolenoid.Value.kOff);
     }
 }

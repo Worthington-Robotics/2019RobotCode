@@ -42,7 +42,6 @@ public class Drive extends Subsystem {
     private DoubleSolenoid trans;
     private TalonSRX driveFrontLeft, driveBackRight, driveFrontRight;
     private VictorSPX driveMiddleLeft, driveMiddleRight, driveBackLeft;
-    private Spark climb;
 
     private final Loop mLoop = new Loop() {
 
@@ -78,9 +77,7 @@ public class Drive extends Subsystem {
 
 
                     case OPEN_LOOP:
-                        if (DriverStation.getInstance().isOperatorControl())
-                            operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
-                        else operatorInput = new double[]{0, 0, 0};
+                        operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
                         SmartDashboard.putNumberArray("stick", operatorInput);
                         setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
                         break;
@@ -149,7 +146,6 @@ public class Drive extends Subsystem {
         } else {
             trans.set(DoubleSolenoid.Value.kReverse);
         }
-        climb.set(periodic.climber_power);
     }
 
     private Drive() {
@@ -164,7 +160,6 @@ public class Drive extends Subsystem {
         trans = new DoubleSolenoid(Constants.TRANS_LOW_ID, Constants.TRANS_HIGH_ID);
         configTalons();
         reset();
-        climb = new Spark(Constants.LEFT_CLIMB_ID);
 
     }
 
@@ -174,7 +169,7 @@ public class Drive extends Subsystem {
 
     public synchronized void setHeading(Rotation2d heading) {
         System.out.println("SET HEADING: " + heading.getDegrees());
-        //periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
+        periodic.gyro_offset = heading.rotateBy(Rotation2d.fromDegrees(pigeonIMU.getFusedHeading()).inverse());
         System.out.println("Gyro offset: " + periodic.gyro_offset.getDegrees());
         periodic.gyro_heading = heading;
     }

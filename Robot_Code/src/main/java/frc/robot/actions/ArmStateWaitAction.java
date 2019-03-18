@@ -12,6 +12,7 @@ public class ArmStateWaitAction extends Action {
         this.armState = armState;
         this.kEpsilon = kEpsilon;
     }
+
     @Override
     public void onStart() {
 
@@ -21,7 +22,6 @@ public class ArmStateWaitAction extends Action {
     public void onLoop() {
 
     }
-
     @Override
     public boolean isFinished() {
         if ((armState.getProx() >= Arm.getInstance().getProxPoint() - kEpsilon &&

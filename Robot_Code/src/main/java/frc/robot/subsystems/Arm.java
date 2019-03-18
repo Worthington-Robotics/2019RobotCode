@@ -77,14 +77,12 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                /*if((Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI)*27)+(Math.sin((periodic.armDistPower + periodic.distMod) / 2048 * Math.PI)*21) == -28)
-                    periodic.armDistPower = -.25;*/
                 armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
             case PID:
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod/*, DemandType.ArbitraryFeedForward, Math.sin(periodic.armDistPower + periodic.distMod / 2048 * Math.PI)*/);
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
 
@@ -132,8 +130,11 @@ public class Arm extends Subsystem {
     }
 
     public void configTalons() {
+        boolean proxCal = true;
+        boolean distCal = false;
+        armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armProx.setSensorPhase(proxCal);
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        armProx.setSensorPhase(true);
         armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
         armProx.config_kF(0, Constants.ARM_PROX_KF, 0);
         armProx.config_kP(0, Constants.ARM_PROX_KP, 0);
@@ -143,11 +144,13 @@ public class Arm extends Subsystem {
         armProx.setNeutralMode(NeutralMode.Brake);
         armProx.configVoltageCompSaturation(10);
         armProx.enableVoltageCompensation(true);
-        armProx.setSensorPhase(false);
+        armProx.setInverted(true);
+        armProx.setSensorPhase(proxCal);
         armProx.setSelectedSensorPosition(0);
         //
+        armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armDist.setSensorPhase(distCal);
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        armDist.setSensorPhase(true);
         armDist.selectProfileSlot(0, 0);
         armDist.config_kF(0, Constants.ARM_DIST_KF, 0);
         armDist.config_kP(0, Constants.ARM_DIST_KP, 0);
@@ -157,7 +160,8 @@ public class Arm extends Subsystem {
         armDist.setNeutralMode(NeutralMode.Brake);
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
-        armDist.setSensorPhase(false);
+        armDist.setInverted(false);
+        armDist.setSensorPhase(distCal);
         armDist.setSelectedSensorPosition(0);
     }
 
@@ -178,15 +182,14 @@ public class Arm extends Subsystem {
     }
 
     public void safeMode() {
+        if(periodic.armmode != ArmModes.SAFETY_CATCH)
         periodic.armmode = ArmModes.SAFETY_CATCH;
     }
 
-    public void setVelocitymConfig(double prox, double dist) {
+    public void setVelocitymConfig() {
         if (periodic.armmode != ArmModes.DirectControl) {
             periodic.armmode = ArmModes.DirectControl;
         }
-        periodic.armProxPower = prox;
-        periodic.armDistPower = dist;
     }
 
     public double getProxPoint() {
@@ -284,24 +287,14 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1586, 1024),
-        FWD_LOW_HATCH(-1542, 656),
-        FWD_LOW_CARGO(-1464, 649),
-        FWD_MEDIUM_HATCH(-861, 670),
-        FWD_MEDIUM_CARGO(-691, 631),
-        FWD_HIGH_HATCH(-268, 450),
-        FWD_HIGH_CARGO(-339, 284),
+        FWD_GROUND_CARGO(-1449, -9),
+        FWD_LOW_CARGO(-1255, 235),
+        FWD_MEDIUM_CARGO(-897, 201),
+        FWD_HIGH_CARGO(-537, 216),
+        CARGO_SHIP_CARGO(-320, -1020),
+        UNSTOW_ARM(-531, -1572),
+        STOW_ARM(-846, -1242);
 
-        REV_MEDIUM_HATCH(-460, -1036),
-        REV_MEDIUM_CARGO(-554, -882),
-        REV_HIGH_HATCH(-237, -567),
-        REV_HIGH_CARGO(-236, -415),
-        REV_GROUND_CARGO(1000, -200),
-
-        GROUND_HATCH(1248, -2477),
-        CLIMB_TRANSPORT(-100,-1364),
-        UNSTOW_ARM(-600, 1500),
-        STOW_ARM(-905, 2263);
 
         private double prox, dist;
 

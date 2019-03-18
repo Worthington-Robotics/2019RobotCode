@@ -28,12 +28,14 @@ public class Constants {
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
-    public static final int ALIEN_1_LOW_ID = 2;
-    public static final int ALIEN_1_HIGH_ID = 3;
+    public static final int CLIMB_FRONT_LOW_ID = 2;
+    public static final int CLIMB_FRONT_HIGH_ID = 3;
+    public static final int CLIMB_BACK_LOW_ID = 4;
+    public static final int CLIMB_BACK_HIGH_ID = 5;
 
     //Sensor Ports
-    //public static final int ULTRASONIC_IN_1 = 0;
-    //public static final int ULTRASONIC_OUT_1 = 1;
+    public static final int ULTRASONIC_IN_1 = 0;
+    public static final int ULTRASONIC_OUT_1 = 1;
     //public static final int ULTRASONIC_IN_2 = 2;
     //public static final int ULTRASONIC_OUT_2 = 3;
 
@@ -46,7 +48,7 @@ public class Constants {
     public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.225; // 6
     public static final double DRIVE_WHEEL_RADIUS_INCHES = DRIVE_WHEEL_DIAMETER_INCHES / 2.0;
     public static final double TRACK_SCRUB_FACTOR = 1.0;  // TODO tune
-    public static final double ROBOT_LINEAR_INERTIA = 59;  // kg TODO tune
+    public static final double ROBOT_LINEAR_INERTIA = 75;  // kg TODO tune
     public static final double ROBOT_ANGULAR_INERTIA = 10.0;  // kg m^2 TODO tune
     public static final double ROBOT_ANGULAR_DRAG = 12.0;  // N*m / (rad/sec) TODO tune
 
@@ -86,8 +88,9 @@ public class Constants {
      */
 
     // Arm Absolute Zeros
-    public static double PROX_ABSOLUTE_ZERO = 1400;
-    public static double DIST_ABSOLUTE_ZERO = 1100;
+            //TODO CHECK TWICE BONEHEAD!!!!!!!
+    public static double DIST_ABSOLUTE_ZERO = 1444;
+    public static double PROX_ABSOLUTE_ZERO = 3194;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -105,16 +108,17 @@ public class Constants {
     public static final double DIST_V_INTERCEPT = 0.1; // V
 
     //PID Constants
-    public static final double ARM_PROX_KP = 5.5;//10
+    public static final double ARM_PROX_KP = 4.5;//10
     public static final double ARM_PROX_KI = 0;
-    public static final double ARM_PROX_KD = 400;//200
+    public static final double ARM_PROX_KD = 40;//200
     public static final double ARM_PROX_KF = 0;
-    public static final double ARM_PROX_A_FEEDFORWARD = .552;
+    public static final double ARM_PROX_A_FEEDFORWARD = .345;
 
-    public static final double ARM_DIST_KP = 4;//7.5
+    public static final double ARM_DIST_KP = 2;//7.5
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
+    public static final double ARM_DIST_A_FEEDFORWARD = 0; //.16
 
     /**
      * General Configuration --------------------------------------
@@ -126,10 +130,11 @@ public class Constants {
 
     //Shot powers
     public static final double SHOOT_POWER = 1;
+    public static final double SLOW_SHOOT_POWER = .5;
     public static final double PICKUP_POWER = -.55;
     public static final double SLOWUP_POWER = -.35;
     public static final double STOP_POWER = 0;
-    public static final double CLIMB_POWER = .5;
+    public static final double CLIMB_POWER = .25;
 
     //MP Test mode values
     public static final boolean ENABLE_MP_TEST_MODE = true; //enables motion profiling test across all modes
@@ -139,7 +144,7 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.15, 0.99, 0.99, 0.6, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.2, 0.99, 0.99, 0.5, 2);
     public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.05, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants

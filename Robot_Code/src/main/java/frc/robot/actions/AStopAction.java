@@ -11,7 +11,7 @@ public class AStopAction extends Action {
     public void onStart() {
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
-        Arm.getInstance().setVelocitymConfig(0,0);
+        Arm.getInstance().safeMode();
         finished = true;
     }
 

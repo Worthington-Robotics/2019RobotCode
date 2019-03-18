@@ -11,8 +11,7 @@ import frc.robot.subsystems.Arm;
 
 public class GoTenFeet extends StateMachineDescriptor {
     public GoTenFeet() {
-        addSequential(new UnstowArmAction(), 10000);
-        addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().getTenFeet(), false), new ArmAction(Arm.ArmStates.FWD_LOW_HATCH) } , 3000);
+        addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().getTenFeet(), false) } , 3000);
 
 
     }

@@ -1,16 +1,43 @@
 package frc.robot.actions;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;
-import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Manipulator;
 
 public class ClimbAction extends Action {
-    private double motorpower;
-    public ClimbAction(double motorpower) {
-        this.motorpower = motorpower;
+    private DoubleSolenoid.Value fPwr, bPwr;
+    private boolean isOne;
+    private boolean isFront = false;
+
+    public ClimbAction(DoubleSolenoid.Value fpwr, DoubleSolenoid.Value bpwr) {
+        fPwr = fpwr;
+        bPwr = bpwr;
+        isOne = false;
+
     }
+
+    public ClimbAction(boolean isFront, DoubleSolenoid.Value pwr) {
+        if (isFront) {
+            fPwr = pwr;
+            this.isFront = true;
+        } else {
+            bPwr = pwr;
+        }
+        isOne = true;
+    }
+
     @Override
     public void onStart() {
-        Drive.getInstance().setMotorPower(motorpower);
+        if (!isOne) {
+            Manipulator.getInstance().setFrontState(fPwr);
+            Manipulator.getInstance().setBackState(bPwr);
+        } else {
+            if (isFront) {
+                Manipulator.getInstance().setFrontState(fPwr);
+            } else {
+                Manipulator.getInstance().setBackState(bPwr);
+            }
+        }
     }
 
     @Override
@@ -25,6 +52,5 @@ public class ClimbAction extends Action {
 
     @Override
     public void onStop() {
-        Drive.getInstance().setMotorPower(0);
     }
 }
