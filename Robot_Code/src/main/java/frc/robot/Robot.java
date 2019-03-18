@@ -49,6 +49,9 @@ public class Robot extends TimedRobot {
         Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
         Manager.registerEnabledLoops(EnabledLoops);
         Manager.registerDisabledLoops(DisabledLoops);
+        Arm.getInstance().reset();
+        Drive.getInstance().reset();
+        PoseEstimator.getInstance().reset();
 
     }
 

@@ -130,6 +130,10 @@ public class Arm extends Subsystem {
     }
 
     public void configTalons() {
+        boolean proxCal = true;
+        boolean distCal = false;
+        armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armProx.setSensorPhase(proxCal);
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
         armProx.config_kF(0, Constants.ARM_PROX_KF, 0);
@@ -141,9 +145,11 @@ public class Arm extends Subsystem {
         armProx.configVoltageCompSaturation(10);
         armProx.enableVoltageCompensation(true);
         armProx.setInverted(true);
-        armProx.setSensorPhase(true);
+        armProx.setSensorPhase(proxCal);
         armProx.setSelectedSensorPosition(0);
         //
+        armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        armDist.setSensorPhase(distCal);
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.selectProfileSlot(0, 0);
         armDist.config_kF(0, Constants.ARM_DIST_KF, 0);
@@ -155,7 +161,7 @@ public class Arm extends Subsystem {
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
         armDist.setInverted(false);
-        armDist.setSensorPhase(false);
+        armDist.setSensorPhase(distCal);
         armDist.setSelectedSensorPosition(0);
     }
 
@@ -285,7 +291,7 @@ public class Arm extends Subsystem {
         FWD_LOW_CARGO(-1255, 235),
         FWD_MEDIUM_CARGO(-897, 201),
         FWD_HIGH_CARGO(-537, 216),
-        CARGO_SHIP_CARGO(-400, -974),//
+        CARGO_SHIP_CARGO(-320, -1020),
         UNSTOW_ARM(-531, -1572),
         STOW_ARM(-846, -1242);
 

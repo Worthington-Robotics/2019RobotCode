@@ -17,7 +17,7 @@ enum UserSelection {
 
     Auto1("Cargo Ship Left", 1),
     Auto2("Cargo Ship Right", 2),
-    Auto3("\"Get Ten\" Feat Cube Crusher", 3),
+    Auto3("", 3),
     Auto4("", 4),
     Auto5("", 5),
     Auto6("",6),
@@ -91,7 +91,7 @@ public class AutoSelector {
 
             case Auto2: return new CargoShip1(false);
 
-            case Auto3: return new GoTenFeet();
+            case Auto3: return null;
 
             case Auto4: return null;
 

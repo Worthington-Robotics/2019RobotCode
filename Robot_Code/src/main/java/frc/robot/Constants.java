@@ -34,8 +34,8 @@ public class Constants {
     public static final int CLIMB_BACK_HIGH_ID = 5;
 
     //Sensor Ports
-    //public static final int ULTRASONIC_IN_1 = 0;
-    //public static final int ULTRASONIC_OUT_1 = 1;
+    public static final int ULTRASONIC_IN_1 = 0;
+    public static final int ULTRASONIC_OUT_1 = 1;
     //public static final int ULTRASONIC_IN_2 = 2;
     //public static final int ULTRASONIC_OUT_2 = 3;
 
@@ -89,8 +89,8 @@ public class Constants {
 
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 1425;
-    public static double PROX_ABSOLUTE_ZERO = 1690;
+    public static double DIST_ABSOLUTE_ZERO = 1444;
+    public static double PROX_ABSOLUTE_ZERO = 3194;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m

@@ -17,13 +17,18 @@ public class OI{
 
     public OI(){
         ////////////Scary Vision Stuff////////////
-        Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
+        //Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         Button selfCheck = new JoystickButton(Constants.MASTER, 11);
+        Button ForceField = new JoystickButton(Constants.MASTER, 8);
 
-        cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
+        Button ForceFieldR = new JoystickButton(Constants.MASTER, 9);
+
+        //cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
         selfCheck.whileHeld(Action.toCommand(new RunTestConditional(new AutoTestProtocol())));
+        ForceField.whileHeld(Action.toCommand(new ForceField(34)));
+        ForceFieldR.whileHeld(Action.toCommand(new ForceField(15)));
          ////////////End Scary Stuff////////////
 
         ///////////Button Declarations///////////
@@ -35,8 +40,8 @@ public class OI{
         Button topCargo = new JoystickButton(Constants.LAUNCH_PAD, 2);
         //Climb Stuff
         Button frontClimb = new JoystickButton(Constants.LAUNCH_PAD, 16);
-        Button backClimb = new JoystickButton(Constants.LAUNCH_PAD, 15);
-        Button bothClimb = new JoystickButton(Constants.LAUNCH_PAD, 6);
+        Button backClimb = new JoystickButton(Constants.LAUNCH_PAD, 6);
+        Button bothClimb = new JoystickButton(Constants.LAUNCH_PAD, 15);
         //Cargo Manipulator
         Button cargoRollout = new JoystickButton(Constants.LAUNCH_PAD, 5);
         Button cargoShoot = new JoystickButton(Constants.LAUNCH_PAD, 11);
