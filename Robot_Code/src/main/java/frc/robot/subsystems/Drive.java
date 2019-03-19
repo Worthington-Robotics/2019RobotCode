@@ -74,7 +74,13 @@ public class Drive extends Subsystem {
                         }
 
                         break;
-
+//TODO Change z input to PID
+                    case GYRO_LOCK:
+                        operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
+                        SmartDashboard.putNumberArray("stick", operatorInput);
+                        operatorInput[2] = (periodic.gyro_heading.getDegrees() - periodic.gyro_pid_angle) / 720;
+                        setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
+                        break;
 
                     case OPEN_LOOP:
                         operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
@@ -323,6 +329,18 @@ public class Drive extends Subsystem {
         periodic.right_demand = signal.getRight();
     }
 
+    public synchronized void setGyroLock(DriveSignal signal) {
+        if (mDriveControlState != DriveControlState.GYRO_LOCK) {
+            System.out.println("Switching to open loop");
+            driveFrontLeft.set(ControlMode.PercentOutput, 0);
+            driveFrontRight.set(ControlMode.PercentOutput, 0);
+            mDriveControlState = DriveControlState.GYRO_LOCK;
+        }
+        periodic.gyro_pid_angle = periodic.gyro_heading.getDegrees();
+        periodic.left_demand = signal.getLeft();
+        periodic.right_demand = signal.getRight();
+    }
+
     /**
      * Configure talons for Angle PID control
      */
@@ -355,6 +373,8 @@ public class Drive extends Subsystem {
 
     }
 
+
+
     public void setMotorPower(double MP) {
         periodic.climber_power = MP;
     }
@@ -376,7 +396,6 @@ public class Drive extends Subsystem {
     }
 
     public void outputTelemetry() {
-        //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
 
@@ -413,6 +432,7 @@ public class Drive extends Subsystem {
         OPEN_LOOP,
         PATH_FOLLOWING,
         PROFILING_TEST,
+        GYRO_LOCK,
         ANGLE_PID;
 
         public String toString() {
@@ -436,6 +456,7 @@ public class Drive extends Subsystem {
         boolean B5 = false;
         double right_error = 0;
         double left_error = 0;
+        double gyro_pid_angle = 0;
         boolean climbLimit = false;
 
         // OUTPUTS

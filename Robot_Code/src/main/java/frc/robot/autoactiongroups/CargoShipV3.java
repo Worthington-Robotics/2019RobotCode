@@ -1,8 +1,8 @@
 package frc.robot.autoactiongroups;
 
 import frc.lib.statemachine.StateMachineDescriptor;
-import frc.robot.actions.DriveTra;
-import frc.robot.actions.LineCrossWait;
+import frc.robot.actions.driveactions.DriveTra;
+import frc.robot.actions.waitactions.LineCrossWait;
 import frc.robot.actions.armactions.ManipulatorAction;
 import frc.robot.planners.DriveTrajectoryGenerator;
 import frc.robot.subsystems.Arm;

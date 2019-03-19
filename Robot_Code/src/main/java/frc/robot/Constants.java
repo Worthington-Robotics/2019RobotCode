@@ -89,8 +89,8 @@ public class Constants {
 
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 1444;
-    public static double PROX_ABSOLUTE_ZERO = 3194;
+    public static double DIST_ABSOLUTE_ZERO = 1420;
+    public static double PROX_ABSOLUTE_ZERO = 3146;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -114,7 +114,7 @@ public class Constants {
     public static final double ARM_PROX_KF = 0;
     public static final double ARM_PROX_A_FEEDFORWARD = .345;
 
-    public static final double ARM_DIST_KP = 2;//7.5
+    public static final double ARM_DIST_KP = 2.4;//7.5
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;

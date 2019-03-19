@@ -169,8 +169,14 @@ public class Arm extends Subsystem {
         if (periodic.armmode != ArmModes.PID) {
             periodic.armmode = ArmModes.PID;
         }
+        periodic.armstate = state;
         periodic.armProxPower = state.prox;
         periodic.armDistPower = state.dist;
+    }
+    public ArmStates getArmState()
+    {
+        if(periodic.armmode.equals(ArmModes.PID)) return periodic.armstate;
+        return null;
     }
 
     public void setSSArmConfig(ArmStates state) {
@@ -235,6 +241,7 @@ public class Arm extends Subsystem {
 
 
 
+
     public enum ArmModes {
         DirectControl,
         PID,
@@ -281,19 +288,19 @@ public class Arm extends Subsystem {
         //
         double[] operatorInput = {0,0};
         boolean stowed = true;
-
+        ArmStates armstate = ArmStates.STOW_ARM;
         ArmModes armmode = ArmModes.SAFETY_CATCH;
     }
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1449, -9),
-        FWD_LOW_CARGO(-1255, 235),
-        FWD_MEDIUM_CARGO(-897, 201),
-        FWD_HIGH_CARGO(-537, 216),
-        CARGO_SHIP_CARGO(-320, -1020),
-        UNSTOW_ARM(-531, -1572),
-        STOW_ARM(-846, -1242);
+        FWD_GROUND_CARGO(-1505, -22),
+        FWD_LOW_CARGO(-1544, 525),
+        FWD_MEDIUM_CARGO(-961, 78),
+        FWD_HIGH_CARGO(-553, 0),
+        CARGO_SHIP_CARGO(-400, -997),
+        UNSTOW_ARM(-534, -1200), //1556
+        STOW_ARM(-930, -1200);
 
 
         private double prox, dist;

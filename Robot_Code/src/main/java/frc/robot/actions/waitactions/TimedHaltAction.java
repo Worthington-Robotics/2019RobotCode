@@ -1,4 +1,4 @@
-package frc.robot.actions;
+package frc.robot.actions.waitactions;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.lib.statemachine.Action;

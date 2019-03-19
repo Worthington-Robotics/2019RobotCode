@@ -1,9 +1,7 @@
 package frc.robot.autoactiongroups;
 
-import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachineDescriptor;
-import frc.robot.actions.ArmStateWaitAction;
-import frc.robot.actions.TimedHaltAction;
+import frc.robot.actions.waitactions.ArmStateWaitAction;
 import frc.robot.actions.armactions.ArmAction;
 import frc.robot.actions.armactions.StowArmAction;
 import frc.robot.subsystems.Arm;

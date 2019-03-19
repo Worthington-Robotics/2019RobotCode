@@ -13,6 +13,7 @@ public class Vision extends Subsystem {
     public static final String CONNECTED = "CONNECTED";
     public static final String RESET = "RESET";
     public static final String TABLE_NAME = "vision/connect";
+    private static double DIS = 0;
 
     // construct one and only 1 instance of this class
     private static Vision m_VisionInstance = new Vision();
@@ -27,16 +28,13 @@ public class Vision extends Subsystem {
     private Vision() {
         SmartDashboard.clearPersistent(TABLE_NAME);
         US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
+        US1.update();
     }
+
 
     public double getDis()
     {
-        double dis = US1.getDistance();
-        if(dis >= 120)
-        {
-            return -1;
-        }
-        return dis;
+        return DIS;
     }
     @Override
     public synchronized void readPeriodicInputs() {
@@ -55,6 +53,12 @@ public class Vision extends Subsystem {
             break;
         default:
             break;
+
+        }
+        DIS = US1.getDistance();
+        if(DIS >= 120)
+        {
+            DIS = -1;
         }
     }
 

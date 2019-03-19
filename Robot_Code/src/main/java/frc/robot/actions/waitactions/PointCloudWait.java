@@ -1,4 +1,4 @@
-package frc.robot.actions;
+package frc.robot.actions.waitactions;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
