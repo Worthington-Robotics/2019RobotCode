@@ -6,7 +6,7 @@ import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
 import frc.robot.actions.buttonactions.ModAction;
 import frc.robot.actions.driveactions.AnglePID;
-import frc.robot.actions.driveactions.ForceField;
+//import frc.robot.actions.driveactions.ForceField;
 import frc.robot.autoactiongroups.StowProtocol;
 import frc.robot.actions.armactions.*;
 import frc.robot.actions.buttonactions.RunTestConditional;
@@ -20,16 +20,18 @@ public class OI{
         ////////////Scary Vision Stuff////////////
         //Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
-        Button selfCheck = new JoystickButton(Constants.MASTER, 11);
+        //Button selfCheck = new JoystickButton(Constants.MASTER, 11);
         Button ForceField = new JoystickButton(Constants.MASTER, 8);
 
         Button ForceFieldR = new JoystickButton(Constants.MASTER, 9);
 
         //cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
         anglePidButton.whileHeld(Action.toCommand(new AnglePID()));
-        selfCheck.whileHeld(Action.toCommand(new RunTestConditional(new AutoTestProtocol())));
+        //selfCheck.whileHeld(Action.toCommand(new RunTestConditional(new AutoTestProtocol())));
+        /*
         ForceField.whileHeld(Action.toCommand(new ForceField(34)));
         ForceFieldR.whileHeld(Action.toCommand(new ForceField(15)));
+        */
          ////////////End Scary Stuff////////////
 
         ///////////Button Declarations///////////

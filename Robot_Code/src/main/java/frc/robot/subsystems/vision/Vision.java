@@ -13,13 +13,13 @@ public class Vision extends Subsystem {
     public static final String CONNECTED = "CONNECTED";
     public static final String RESET = "RESET";
     public static final String TABLE_NAME = "vision/connect";
-    private static double DIS = 0;
+    //private static double DIS = 0;
 
     // construct one and only 1 instance of this class
     private static Vision m_VisionInstance = new Vision();
 
     private String connectionStatus = NOT_INIT;
-    private Ultrasonic US1;
+    //private Ultrasonic US1;
 
     public static Vision getInstance() {
         return m_VisionInstance;
@@ -27,15 +27,15 @@ public class Vision extends Subsystem {
 
     private Vision() {
         SmartDashboard.clearPersistent(TABLE_NAME);
-        US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
-        US1.update();
+        //US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
+        //US1.update();
     }
 
 
-    public double getDis()
+    /*public double getDis()
     {
         return DIS;
-    }
+    }*/
     @Override
     public synchronized void readPeriodicInputs() {
 
@@ -55,11 +55,11 @@ public class Vision extends Subsystem {
             break;
 
         }
-        DIS = US1.getDistance();
+       /* DIS = US1.getDistance();
         if(DIS >= 120)
         {
             DIS = -1;
-        }
+        }*/
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Vision extends Subsystem {
     @Override
     public void outputTelemetry() {
         SmartDashboard.putString("vision/rioStatus", this.connectionStatus);
-        SmartDashboard.putNumber("Vision/Ultrasonic", getDis());// 15 for cargo // 34 for rocket
+        //SmartDashboard.putNumber("Vision/Ultrasonic", getDis());// 15 for cargo // 34 for rocket
     }
 
     @Override
