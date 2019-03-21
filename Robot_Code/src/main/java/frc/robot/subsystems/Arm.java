@@ -131,7 +131,6 @@ public class Arm extends Subsystem {
 
     public void configTalons() {
         boolean proxCal = true;
-        boolean distCal = false;
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         armProx.setSensorPhase(proxCal);
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -149,7 +148,7 @@ public class Arm extends Subsystem {
         armProx.setSelectedSensorPosition(0);
         //
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        armDist.setSensorPhase(distCal);
+        armDist.setSensorPhase(false);
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armDist.selectProfileSlot(0, 0);
         armDist.config_kF(0, Constants.ARM_DIST_KF, 0);
@@ -161,7 +160,7 @@ public class Arm extends Subsystem {
         armDist.configVoltageCompSaturation(10);
         armDist.enableVoltageCompensation(true);
         armDist.setInverted(false);
-        armDist.setSensorPhase(distCal);
+        armDist.setSensorPhase(false);
         armDist.setSelectedSensorPosition(0);
     }
 
@@ -294,12 +293,13 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1505, -22),
-        FWD_LOW_CARGO(-1544, 525),
-        FWD_MEDIUM_CARGO(-961, 78),
-        FWD_HIGH_CARGO(-553, 0),
-        CARGO_SHIP_CARGO(-400, -997),
-        UNSTOW_ARM(-534, -1200), //1556
+        FWD_GROUND_CARGO(-1426, -73),
+        FWD_LOW_CARGO(-1399, 367),
+        FWD_MEDIUM_CARGO(-864, -71),
+        FWD_HIGH_CARGO(-600, -13),
+        CARGO_SHIP_CARGO(-948, -180),
+        A_CARGO_SHIP_CARGO(-625,-965),
+        UNSTOW_ARM(-797, -1148), //1556
         STOW_ARM(-930, -1200);
 
 

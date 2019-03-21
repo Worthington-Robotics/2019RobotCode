@@ -402,9 +402,9 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
         SmartDashboard.putNumber("Drive/Error/Y", periodic.error.getTranslation().y());
         SmartDashboard.putNumber("Drive/Error/Theta", periodic.error.getRotation().getDegrees());
-        //SmartDashboard.putNumber("Drive/Setpoint/X", periodic.path_setpoint.state().getTranslation().x());
-        //SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
-        //SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
+        SmartDashboard.putNumber("Drive/Setpoint/X", periodic.path_setpoint.state().getTranslation().x());
+        SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
+        SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
 
         SmartDashboard.putNumber("Drive/Left/Demand", periodic.left_demand);
         SmartDashboard.putNumber("Drive/Left/Talon Velocity", periodic.left_velocity_ticks_per_100ms);

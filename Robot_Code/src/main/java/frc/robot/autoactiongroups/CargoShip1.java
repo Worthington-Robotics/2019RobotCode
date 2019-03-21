@@ -23,7 +23,7 @@ public class CargoShip1 extends StateMachineDescriptor {
         addSequential(new PointCloudWait(new Pose2d(987,987, Rotation2d.fromDegrees(0)),0,0,0), 500);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToCargoShip(false, false, 1), true), 1000);
         addSequential(new LineCrossWait(72, true), 10000);
-        addSequential(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO), 20);
+        addSequential(new ArmAction(Arm.ArmStates.A_CARGO_SHIP_CARGO), 20);
         addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().RCargoShip1, 30, 5, 360), 10000);
         addSequential(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot), 500);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().CargoShipToHairpin(true, false, 1)), 21);

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachineDescriptor;
+import frc.robot.autoactiongroups.AutoTestProtocol;
 import frc.robot.autoactiongroups.CargoShip1;
 import frc.robot.autoactiongroups.CargoShip2;
 import frc.robot.autoactiongroups.GoTenFeet;
@@ -18,7 +19,7 @@ enum UserSelection {
     Auto1("Cargo Ship Left", 1),
     Auto2("Cargo Ship Right", 2),
     Auto3("", 3),
-    Auto4("", 4),
+    Auto4("Auto Test Protocol", 4),
     Auto5("", 5),
     Auto6("",6),
     Auto20("Remote Operation", 20);
@@ -93,7 +94,7 @@ public class AutoSelector {
 
             case Auto3: return null;
 
-            case Auto4: return null;
+            case Auto4: return new AutoTestProtocol();
 
             case Auto5: return null;
 

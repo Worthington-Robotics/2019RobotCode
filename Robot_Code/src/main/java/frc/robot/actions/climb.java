@@ -13,11 +13,11 @@ public class climb extends Action {
     public void onStart() {
         if(IsFront)
         {
-            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
+            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
         }
         else
         {
-            Manipulator.getInstance().setBackState(DoubleSolenoid.Value.kReverse);
+            Manipulator.getInstance().setBackState(DoubleSolenoid.Value.kForward);
         }
     }
 
@@ -35,11 +35,11 @@ public class climb extends Action {
     public void onStop() {
         if(IsFront)
         {
-            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
+            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
         }
         else
         {
-            Manipulator.getInstance().setBackState(DoubleSolenoid.Value.kForward);
+            Manipulator.getInstance().setBackState(DoubleSolenoid.Value.kReverse);
         }
 
     }
