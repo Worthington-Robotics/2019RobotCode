@@ -21,6 +21,8 @@ public class Vision extends Subsystem {
     private String connectionStatus = NOT_INIT;
     //private Ultrasonic US1;
 
+    private int timesConnected = 0;
+
     public static Vision getInstance() {
         return m_VisionInstance;
     }
@@ -73,6 +75,7 @@ public class Vision extends Subsystem {
         case PONG:
             SmartDashboard.putString(TABLE_NAME, CONNECTED);
             this.connectionStatus = CONNECTED;
+            this.timesConnected++;
             break;
         default:
             break;
@@ -82,7 +85,7 @@ public class Vision extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putString("vision/rioStatus", this.connectionStatus);
+        SmartDashboard.putNumber("vision/rioStatus", this.timesConnected);
         //SmartDashboard.putNumber("Vision/Ultrasonic", getDis());// 15 for cargo // 34 for rocket
     }
 
