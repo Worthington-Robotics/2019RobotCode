@@ -85,7 +85,7 @@ public class Vision extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        SmartDashboard.putNumber("vision/rioStatus", this.timesConnected);
+        SmartDashboard.putNumber("Vision/rioStatus", this.timesConnected);
         //SmartDashboard.putNumber("Vision/Ultrasonic", getDis());// 15 for cargo // 34 for rocket
     }
 

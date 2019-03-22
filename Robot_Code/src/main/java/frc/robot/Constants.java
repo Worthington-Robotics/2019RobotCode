@@ -89,8 +89,8 @@ public class Constants {
 
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 4207;//3690
-    public static double PROX_ABSOLUTE_ZERO = 3620;
+    public static double DIST_ABSOLUTE_ZERO = 3000;//8293
+    public static double PROX_ABSOLUTE_ZERO = 3147;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -173,7 +173,9 @@ public class Constants {
             "Drive/Left/Talon Voltage Out",
             "Drive/Right/Talon Voltage Out",
             "Arm/Prox Point",
-            "Arm/Dist Point"
+            "Arm/Dist Point",
+            "Vision/rioStatus",
+            "StateMachine/state"
     };
 }
 

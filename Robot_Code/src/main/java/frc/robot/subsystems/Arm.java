@@ -58,19 +58,6 @@ public class Arm extends Subsystem {
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
         periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
-
-        periodic.enableProx = SmartDashboard.getBoolean("DB/Button 0", false);
-        periodic.enableDist = SmartDashboard.getBoolean("DB/Button 1", false);
-        if (periodic.armmode == ArmModes.DirectControl) {
-            if (periodic.enableProx) {
-                periodic.armProxPower = (SmartDashboard.getNumber("DB/Slider 0", 2.5) - 2.5) / 2.5;
-            }
-            if (periodic.enableDist) {
-                periodic.armDistPower = (SmartDashboard.getNumber("DB/Slider 1", 2.5) - 2.5) / 2.5;
-            }
-        }
-
-
     }
 
 
@@ -120,8 +107,8 @@ public class Arm extends Subsystem {
 
     public void reset() {
         periodic = new PeriodicIO();
-        resetArmMod();
         configTalons();
+        resetArmMod();
     }
 
     public void resetArmMod() {
@@ -172,9 +159,9 @@ public class Arm extends Subsystem {
         periodic.armProxPower = state.prox;
         periodic.armDistPower = state.dist;
     }
-    public ArmStates getArmState()
-    {
-        if(periodic.armmode.equals(ArmModes.PID)) return periodic.armstate;
+
+    public ArmStates getArmState() {
+        if (periodic.armmode.equals(ArmModes.PID)) return periodic.armstate;
         return null;
     }
 
@@ -187,8 +174,8 @@ public class Arm extends Subsystem {
     }
 
     public void safeMode() {
-        if(periodic.armmode != ArmModes.SAFETY_CATCH)
-        periodic.armmode = ArmModes.SAFETY_CATCH;
+        if (periodic.armmode != ArmModes.SAFETY_CATCH)
+            periodic.armmode = ArmModes.SAFETY_CATCH;
     }
 
     public void setVelocitymConfig() {
@@ -207,38 +194,30 @@ public class Arm extends Subsystem {
 
     //public double getUltrasonicDistance() {
 
-        //if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
-          //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
-            //    (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            //return (periodic.US1Dis + periodic.US2Dis) / 2;
-        //} else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
-          //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
-            //    (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
-            //return periodic.US2Dis;
-        //} else {
-    public boolean getStowed()
-    {
+    //if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+    //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) &&
+    //    (periodic.US1Dis > Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+    //return (periodic.US1Dis + periodic.US2Dis) / 2;
+    //} else if ((periodic.US1Dis - periodic.US1Past > -Constants.US_UPDATE_RATE && periodic.US1Dis - periodic.US1Past < Constants.US_UPDATE_RATE)
+    //      && (periodic.US2Dis - periodic.US2Past > -Constants.US_UPDATE_RATE && periodic.US2Dis - periodic.US2Past < Constants.US_UPDATE_RATE) ||
+    //    (periodic.US1Dis < Constants.US_SENSOR_OFFSET && periodic.US2Dis > Constants.US_SENSOR_OFFSET)) {
+    //return periodic.US2Dis;
+    //} else {
+    public boolean getStowed() {
         return periodic.stowed;
     }
 
-    public void setStowed(boolean stowed)
-    {
+    public void setStowed(boolean stowed) {
         periodic.stowed = stowed;
     }
 
-    public boolean getSideShift()
-    {
+    public boolean getSideShift() {
         return periodic.sideShift;
     }
 
-    public double[] getAbsolute()
-    {
-        return new double[]{periodic.proxAbsolute , periodic.distAbsolute};
+    public double[] getAbsolute() {
+        return new double[]{periodic.proxAbsolute, periodic.distAbsolute};
     }
-
-
-
-
 
 
     public enum ArmModes {
@@ -285,7 +264,7 @@ public class Arm extends Subsystem {
         double proxAmps = 0;
         double distAmps = 0;
         //
-        double[] operatorInput = {0,0};
+        double[] operatorInput = {0, 0};
         boolean stowed = true;
         ArmStates armstate = ArmStates.STOW_ARM;
         ArmModes armmode = ArmModes.SAFETY_CATCH;
@@ -293,14 +272,14 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1426, -73),
-        FWD_LOW_CARGO(-1399, 367),
-        FWD_MEDIUM_CARGO(-864, -71),
-        FWD_HIGH_CARGO(-600, -13),
-        CARGO_SHIP_CARGO(-948, -180),
-        A_CARGO_SHIP_CARGO(-625,-965),
-        UNSTOW_ARM(-797, -1148), //1556
-        STOW_ARM(-930, -1200);
+        FWD_GROUND_CARGO(-1487, -37),
+        FWD_LOW_CARGO(-1486, 538),// 468 add 70 dis for gravity
+        FWD_MEDIUM_CARGO(-643, -460),
+        FWD_HIGH_CARGO(-378, -276),
+        CARGO_SHIP_CARGO(-354, -1096),
+        A_CARGO_SHIP_CARGO(-510, -930),
+        UNSTOW_ARM(-526, -1211), //1556
+        STOW_ARM(-1015, -1156);
 
 
         private double prox, dist;
