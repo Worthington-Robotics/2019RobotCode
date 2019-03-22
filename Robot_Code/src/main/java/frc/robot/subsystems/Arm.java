@@ -58,6 +58,8 @@ public class Arm extends Subsystem {
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
         periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
+        periodic.distAdjPower = periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100);
+        periodic.proxAdjPower = periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100);
     }
 
 
@@ -68,8 +70,8 @@ public class Arm extends Subsystem {
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
             case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
+                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
 
@@ -243,6 +245,9 @@ public class Arm extends Subsystem {
         //->||\TALON ANGLES ABSOLUTE
         double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
         double distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
+        //ADJ POWERS
+        double proxAdjPower = 0;
+        double distAdjPower = 0;
         //TALON MODS
         double proxMod = 0;
         double distMod = 0;
