@@ -20,7 +20,7 @@ public class CargoShip1 extends StateMachineDescriptor {
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToOffHab(false), false), 1000);
         addSequential(new LineCrossWait(52, true),2000);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().OffHabToHab(true), false), 1000);
-        addSequential(new PointCloudWait(new Pose2d(987,987, Rotation2d.fromDegrees(0)),0,0,0), 500);
+        addSequential(new PointCloudWait(new Pose2d(987,987, Rotation2d.fromDegrees(0)),0,0,0), 1000);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToCargoShip(false, false, 1), true), 1000);
         addSequential(new LineCrossWait(72, true), 10000);
         addSequential(new ArmAction(Arm.ArmStates.A_CARGO_SHIP_CARGO), 20);

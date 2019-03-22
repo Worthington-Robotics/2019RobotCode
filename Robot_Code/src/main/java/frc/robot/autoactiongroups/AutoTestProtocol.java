@@ -16,7 +16,7 @@ import frc.robot.subsystems.Arm;
 public class AutoTestProtocol extends StateMachineDescriptor {
     public AutoTestProtocol(){
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.Shoot),
-                new DriveTra(DriveTrajectoryGenerator.getInstance().getTenFeet(), false),
+                new DriveTra(DriveTrajectoryGenerator.getInstance().getTenInch(), false),
                 new UnstowArmAction()},2000);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.PickUp),
@@ -25,6 +25,10 @@ public class AutoTestProtocol extends StateMachineDescriptor {
         addSequential(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addSequential(new ArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO), 20);
+        addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
+        addSequential(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO), 20);
+        addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
+        addSequential(new ArmAction(Arm.ArmStates.A_CARGO_SHIP_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addSequential(new ArmAction(Arm.ArmStates.FWD_HIGH_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
