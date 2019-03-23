@@ -18,7 +18,7 @@ public class PoseEstimator extends Subsystem {
 
     private static PoseEstimator m_instance = new PoseEstimator();
 
-    private static final int observation_buffer_size_ = 100;
+    private static final int observation_buffer_size_ = 10;
 
     private InterpolatingTreeMap<InterpolatingDouble, Pose2d> field_to_vehicle_;
     private double left_encoder_prev_distance_ = 0.0;
