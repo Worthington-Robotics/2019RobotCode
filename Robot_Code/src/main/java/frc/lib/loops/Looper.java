@@ -1,8 +1,10 @@
 package frc.lib.loops;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.AutoSelector;
 import frc.robot.Constants;
 
 import java.util.ArrayList;
@@ -30,15 +32,30 @@ public class Looper implements ILooper {
 
     private final Runnable runnable_ = () -> {
         synchronized (taskRunningLock_) {
-            if (running_ ) {
-                double now = Timer.getFPGATimestamp();
+            try {
+                if (running_ ) {
+                    double now = Timer.getFPGATimestamp();
 
-                for (Loop loop : loops_) {
-                    loop.onLoop(now);
+                    for (Loop loop : loops_) {
+                        loop.onLoop(now);
+                    }
+
+                    dt_ = now - timestamp_;
+                    timestamp_ = now;
                 }
+            } catch(Exception e) {
+                System.out.println("-------------- EXCEPTION IN LOOPER --------------");
+                e.printStackTrace();
 
-                dt_ = now - timestamp_;
-                timestamp_ = now;
+                DriverStation.reportError("ROBOT HAS CRASHED! REBOOTING...", false);
+
+                // Set the auto selection to a safe selection
+                String[] selections = AutoSelector.buildArray();
+                String safeSelection = selections[selections.length - 1];
+                SmartDashboard.putString("Auto Selector", safeSelection);
+
+                // Exit to allow the entire code to reboot
+                System.exit(-1);
             }
         }
     };

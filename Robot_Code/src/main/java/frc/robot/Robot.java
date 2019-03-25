@@ -36,8 +36,8 @@ public class Robot extends TimedRobot {
           PoseEstimator.getInstance(),
           Manipulator.getInstance(),
           Arm.getInstance(),
-          Logger.getInstance(),
-          Vision.getInstance()
+          Vision.getInstance(),
+          Logger.getInstance()
     ));
     private Looper EnabledLoops = new Looper();
     private Looper DisabledLoops = new Looper();
