@@ -10,7 +10,7 @@ public class StowProtocol extends StateMachineDescriptor {
    public StowProtocol()
    {
        addSequential(new ArmAction(Arm.ArmStates.UNSTOW_ARM), 1000);
-       addSequential(new ArmStateWaitAction(Arm.ArmStates.UNSTOW_ARM, 100), 3000);
+       addSequential(new ArmStateWaitAction(Arm.ArmStates.UNSTOW_ARM, 200), 3000);
        addSequential(new StowArmAction(), 1000);
    }
 }

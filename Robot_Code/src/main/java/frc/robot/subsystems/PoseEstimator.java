@@ -18,7 +18,7 @@ public class PoseEstimator extends Subsystem {
 
     private static PoseEstimator m_instance = new PoseEstimator();
 
-    private static final int observation_buffer_size_ = 100;
+    private static final int observation_buffer_size_ = 10;
 
     private InterpolatingTreeMap<InterpolatingDouble, Pose2d> field_to_vehicle_;
     private double left_encoder_prev_distance_ = 0.0;
@@ -66,7 +66,7 @@ public class PoseEstimator extends Subsystem {
         //periodic = new PeriodicIO();
     }
 
-    public void reset(double start_time, Pose2d initial_field_to_vehicle){
+    public synchronized void reset(double start_time, Pose2d initial_field_to_vehicle){
         field_to_vehicle_ = new InterpolatingTreeMap<>(observation_buffer_size_);
         field_to_vehicle_.put(new InterpolatingDouble(start_time), initial_field_to_vehicle);
         distance_driven_ = 0.0;
