@@ -45,6 +45,8 @@ public class OI{
         Button frontClimb = new JoystickButton(Constants.LAUNCH_PAD, 16);
         Button backClimb = new JoystickButton(Constants.LAUNCH_PAD, 6);
         Button bothClimb = new JoystickButton(Constants.LAUNCH_PAD, 15);
+        Button crawlerForward = new JoystickButton(Constants.MASTER, 6);
+        Button crawlerBackward = new JoystickButton(Constants.MASTER, 4);
         //Cargo Manipulator
         Button cargoRollout = new JoystickButton(Constants.LAUNCH_PAD, 5);
         Button cargoShoot = new JoystickButton(Constants.LAUNCH_PAD, 11);
@@ -69,6 +71,8 @@ public class OI{
         bothClimb.toggleWhenPressed(Action.toCommand(new climb(true)));
         frontClimb.toggleWhenPressed(Action.toCommand(new climb(true)));
         backClimb.toggleWhenPressed(Action.toCommand(new climb(false)));
+        crawlerForward.whileHeld(Action.toCommand(new Crawl(0.5)));
+        crawlerBackward.whileHeld(Action.toCommand(new Crawl(-0.5)));
         //Arm Poses
         cargoShip.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO)));
         groundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO)));

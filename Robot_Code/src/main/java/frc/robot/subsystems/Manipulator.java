@@ -6,18 +6,21 @@ import frc.robot.Constants;
 
 public class Manipulator extends Subsystem {
     private static final Manipulator m_instance = new Manipulator();
-    private Spark bottomMotor, topMotor;
-    private DoubleSolenoid ClimbFront, ClimbBack;
+    private Spark bottomMotor, topMotor, climberCrawl, climberElevator;
+    private DoubleSolenoid ClimbFront/*, ClimbBack*/;
     private double ShotPower = 0.0;
     private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kReverse;
     private DoubleSolenoid.Value bState = DoubleSolenoid.Value.kReverse;
+    private double elevatorPower, crawlPower;
 
 
     public Manipulator() {
         bottomMotor = new Spark(Constants.BOTTOM_CARGOMANIP_ID);
         topMotor = new Spark(Constants.TOP_CARGOMANIP_ID);
         ClimbFront = new DoubleSolenoid(Constants.CLIMB_FRONT_LOW_ID, Constants.CLIMB_FRONT_HIGH_ID);
-        ClimbBack = new DoubleSolenoid(Constants.CLIMB_BACK_LOW_ID, Constants.CLIMB_BACK_HIGH_ID);
+        climberCrawl = new Spark(Constants.CLIMBER_CRAWL_ID);
+        climberElevator = new Spark(Constants.CLIMBER_ELEVATOR_ID);
+        //ClimbBack = new DoubleSolenoid(Constants.CLIMB_BACK_LOW_ID, Constants.CLIMB_BACK_HIGH_ID);
         reset();
     }
 
@@ -42,12 +45,16 @@ public class Manipulator extends Subsystem {
     }
 
     public void setShotPower (double Power) {ShotPower = Power;}
+    public void setCrawlPower (double Power) {crawlPower = Power;}
+    public void setElevatorPower (double Power) {elevatorPower = Power;}
 
      public void writePeriodicOutputs (){
         bottomMotor.set(-ShotPower);
         topMotor.set(-ShotPower);
         ClimbFront.set(fState);
-        ClimbBack.set(bState);
+        //ClimbBack.set(bState);
+        climberElevator.set(elevatorPower);
+        climberCrawl.set(crawlPower);
     }
 
     public void outputTelemetry() {
@@ -56,7 +63,7 @@ public class Manipulator extends Subsystem {
     public void reset() {
         topMotor.set(0);
         bottomMotor.set(0);
-        ClimbBack.set(DoubleSolenoid.Value.kOff);
+        //ClimbBack.set(DoubleSolenoid.Value.kOff);
         ClimbFront.set(DoubleSolenoid.Value.kOff);
     }
 }
