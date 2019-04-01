@@ -23,16 +23,16 @@ public class Constants {
     //Spark Ports
     public static final int BOTTOM_CARGOMANIP_ID = 1;
     public static final int TOP_CARGOMANIP_ID = 2;
-    public static final int CLIMBER_CRAWL_ID = 3;
-    public static final int CLIMBER_ELEVATOR_ID = 4;
+    public static final int CLIMBER_CRAWL_ID = 4;
+    public static final int CLIMBER_ELEVATOR_ID = 3;
 
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
-    public static final int CLIMB_FRONT_LOW_ID = 4;
-    public static final int CLIMB_FRONT_HIGH_ID = 5;
-    public static final int CLIMB_BACK_LOW_ID = 2;
-    public static final int CLIMB_BACK_HIGH_ID = 3;
+    public static final int CLIMB_FRONT_LOW_ID = 2;
+    public static final int CLIMB_FRONT_HIGH_ID = 3;
+    public static final int CLIMB_BACK_LOW_ID = 4;
+    public static final int CLIMB_BACK_HIGH_ID = 5;
 
     //Sensor Ports
     //public static final int ULTRASONIC_IN_1 = 0;
@@ -45,7 +45,7 @@ public class Constants {
      */
 
     //Physical Constants
-    public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23;
+    public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 21.75;
     public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.225; // 6
     public static final double DRIVE_WHEEL_RADIUS_INCHES = DRIVE_WHEEL_DIAMETER_INCHES / 2.0;
     public static final double TRACK_SCRUB_FACTOR = 1.0;  // TODO tune
@@ -90,8 +90,8 @@ public class Constants {
 
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 3000;//8293
-    public static double PROX_ABSOLUTE_ZERO = 3147;
+    public static double DIST_ABSOLUTE_ZERO = 2953;//8293
+    public static double PROX_ABSOLUTE_ZERO = 3789;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -115,7 +115,7 @@ public class Constants {
     public static final double ARM_PROX_KF = 0;
     public static final double ARM_PROX_A_FEEDFORWARD = .345;
 
-    public static final double ARM_DIST_KP = 2.4;//7.5
+    public static final double ARM_DIST_KP = 3;//7.5
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
@@ -147,7 +147,7 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.2, 0.99, 0.99, 0.5, 2);
-    public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.05, 0.99, 0.99, 0.8, 2);
+    public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.2, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds

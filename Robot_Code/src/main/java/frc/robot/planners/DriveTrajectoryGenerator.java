@@ -22,21 +22,21 @@ public class DriveTrajectoryGenerator {
 
     private DriveTrajectoryGenerator() {
         DMP          /**/ = new DriveMotionPlanner();
-        HabOff       /**/ = new Pose2d(37, 0, Rotation2d.fromDegrees(0));//42 at home
+        HabOff       /**/ = new Pose2d(39, 0, Rotation2d.fromDegrees(0));//42 at home
         HabStart     /**/ = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
 
         Cargo        /**/ = new Pose2d(12, 33, Rotation2d.fromDegrees(-180));
         HairpinTurn  /**/ = new Pose2d(231, 65, Rotation2d.fromDegrees(-135));
         CargoHoldMid /**/ = new Pose2d(176, 35, Rotation2d.fromDegrees(-180));
-        CargoShip1   /**/ = new Pose2d(206, 0, Rotation2d.fromDegrees(-90));
-        CargoShip2   /**/ = new Pose2d(219, 0, Rotation2d.fromDegrees(-90));
+        CargoShip1   /**/ = new Pose2d(200, -10, Rotation2d.fromDegrees(-90));
+        CargoShip2   /**/ = new Pose2d(213, -10, Rotation2d.fromDegrees(-90));
         CargoShipMid /**/ = new Pose2d(131, 60, Rotation2d.fromDegrees(0));
 
         RCargo       /**/ = new Pose2d(12, -33, Rotation2d.fromDegrees(180));
         RHairpinTurn /**/ = new Pose2d(231, -65, Rotation2d.fromDegrees(135));
         RCargoHoldMid/**/ = new Pose2d(176, -35, Rotation2d.fromDegrees(180));
-        RCargoShip1  /**/ = new Pose2d(206, 0, Rotation2d.fromDegrees(90));
-        RCargoShip2  /**/ = new Pose2d(219, 0, Rotation2d.fromDegrees(90));
+        RCargoShip1  /**/ = new Pose2d(200, 10, Rotation2d.fromDegrees(90));
+        RCargoShip2  /**/ = new Pose2d(213, 10, Rotation2d.fromDegrees(90));
         RCargoShipMid/**/ = new Pose2d(131, -60, Rotation2d.fromDegrees(0));
         //
     }

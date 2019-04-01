@@ -39,6 +39,6 @@ public class Elevator extends Action {
      */
     @Override
     public void onStop() {
-        Manipulator.getInstance().setElevatorPower(0);
+Manipulator.getInstance().setElevatorPower(0);
     }
 }

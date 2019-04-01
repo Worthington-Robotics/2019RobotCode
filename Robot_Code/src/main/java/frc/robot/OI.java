@@ -42,9 +42,9 @@ public class OI{
         Button midCargo = new JoystickButton(Constants.LAUNCH_PAD, 4);
         Button topCargo = new JoystickButton(Constants.LAUNCH_PAD, 2);
         //Climb Stuff
-        Button frontClimb = new JoystickButton(Constants.LAUNCH_PAD, 16);
-        Button backClimb = new JoystickButton(Constants.LAUNCH_PAD, 6);
-        Button bothClimb = new JoystickButton(Constants.LAUNCH_PAD, 15);
+        Button ElevatorUp = new JoystickButton(Constants.LAUNCH_PAD, 6);
+        Button DistCargoship = new JoystickButton(Constants.LAUNCH_PAD, 16);
+        Button DistPickup = new JoystickButton(Constants.LAUNCH_PAD, 15);
         Button crawlerForward = new JoystickButton(Constants.MASTER, 6);
         Button crawlerBackward = new JoystickButton(Constants.MASTER, 4);
         //Cargo Manipulator
@@ -67,10 +67,9 @@ public class OI{
         frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
         backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
         */
-        bothClimb.toggleWhenPressed(Action.toCommand(new climb(false)));
-        bothClimb.toggleWhenPressed(Action.toCommand(new climb(true)));
-        frontClimb.toggleWhenPressed(Action.toCommand(new climb(true)));
-        backClimb.toggleWhenPressed(Action.toCommand(new climb(false)));
+        DistPickup.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_PICKUP)));
+        ElevatorUp.whileHeld(Action.toCommand(new Elevator(1)));
+        DistCargoship.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_CARGOSHIP)));
         crawlerForward.whileHeld(Action.toCommand(new Crawl(0.5)));
         crawlerBackward.whileHeld(Action.toCommand(new Crawl(-0.5)));
         //Arm Poses

@@ -1,9 +1,11 @@
 package frc.robot.actions;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachine;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Manipulator;
 
 public class AStopAction extends Action {
     boolean finished = false;
@@ -12,6 +14,7 @@ public class AStopAction extends Action {
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
         Arm.getInstance().safeMode();
+        Manipulator.getInstance().setElevatorPower(0);
         finished = true;
     }
 

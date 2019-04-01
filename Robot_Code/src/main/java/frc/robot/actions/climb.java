@@ -6,19 +6,13 @@ import frc.robot.subsystems.Manipulator;
 
 public class climb extends Action {
     private boolean IsFront;
-    public climb(boolean isFront){
-        IsFront = isFront;
+    public climb(boolean isFront){ IsFront = isFront;
     }
     @Override
     public void onStart() {
-        if(IsFront)
-        {
             Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
-        }
-        else
-        {
-            Manipulator.getInstance().setBackState(DoubleSolenoid.Value.kForward);
-        }
+
+
     }
 
     @Override
@@ -33,14 +27,6 @@ public class climb extends Action {
 
     @Override
     public void onStop() {
-        if(IsFront)
-        {
-            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
-        }
-        else
-        {
-            Manipulator.getInstance().setBackState(DoubleSolenoid.Value.kReverse);
-        }
-
+        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
     }
 }

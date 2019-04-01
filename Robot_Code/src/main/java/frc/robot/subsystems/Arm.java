@@ -70,8 +70,12 @@ public class Arm extends Subsystem {
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
             case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
+                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100)*/, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
+                break;
+            case DPID:
+                armProx.set(ControlMode.Velocity, 0);
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
 
@@ -162,6 +166,14 @@ public class Arm extends Subsystem {
         periodic.armDistPower = state.dist;
     }
 
+    public void setDistPIDArmConfig(ArmStates state) {
+        if (periodic.armmode != ArmModes.DPID) {
+            periodic.armmode = ArmModes.DPID;
+        }
+        periodic.armstate = state;
+        periodic.armDistPower = state.dist;
+    }
+
     public ArmStates getArmState() {
         if (periodic.armmode.equals(ArmModes.PID)) return periodic.armstate;
         return null;
@@ -225,6 +237,7 @@ public class Arm extends Subsystem {
     public enum ArmModes {
         DirectControl,
         PID,
+        DPID,
         STATE_SPACE,
         SAFETY_CATCH;
 
@@ -277,14 +290,18 @@ public class Arm extends Subsystem {
 
     public enum ArmStates {
         // Prox, Dist bonehead
-        FWD_GROUND_CARGO(-1487, -37),
-        FWD_LOW_CARGO(-1486, 538),// 468 add 70 dis for gravity
-        FWD_MEDIUM_CARGO(-643, -460),
-        FWD_HIGH_CARGO(-378, -276),
-        CARGO_SHIP_CARGO(-802, -375),
-        A_CARGO_SHIP_CARGO(-510, -930),
-        UNSTOW_ARM(-526, -1211), //1556
-        STOW_ARM(-1015, -1156);
+        // +60
+        DIST_PICKUP(0,-335),
+        DIST_CARGOSHIP(0,640),
+        FWD_GROUND_CARGO(-1287, -242),
+        FWD_LOW_CARGO(-1232, 356),// 468 add 100 dis for gravity
+        FWD_MEDIUM_CARGO(-323, -788),
+        FWD_HIGH_CARGO(-410, -46),
+        CARGO_SHIP_CARGO(-629, -589),
+        A_CARGO_SHIP_CARGO(-393, -1111),
+        UNSTOW_ARM(-568, -971), //1556
+        CLIMB_MID_CHECK(-1024,0),
+        STOW_ARM(-1043, -1059);
 
 
         private double prox, dist;

@@ -3,11 +3,10 @@ package frc.robot.actions.armactions;
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
 
-
-public class ArmAction extends Action {
+public class DistAction extends Action {
     private Arm.ArmStates a;
 
-    public ArmAction(Arm.ArmStates armState) {
+    public DistAction(Arm.ArmStates armState) {
         a = armState;
     }
 
@@ -15,7 +14,7 @@ public class ArmAction extends Action {
     public void onStart() {
 
         if (!Arm.getInstance().getStowed())
-            Arm.getInstance().setPIDArmConfig(a);
+            Arm.getInstance().setDistPIDArmConfig(a);
     }
 
     @Override

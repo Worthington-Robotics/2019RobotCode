@@ -113,7 +113,7 @@ public class Drive extends Subsystem {
         periodic.left_error = driveFrontLeft.getClosedLoopError();
         periodic.right_error = driveFrontRight.getClosedLoopError();
 
-        periodic.B2 = Constants.MASTER.getRawButton(2);
+        //periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
@@ -129,11 +129,11 @@ public class Drive extends Subsystem {
 
     @Override
     public synchronized void writePeriodicOutputs() {
-        if (periodic.B2) {
+        /*if (periodic.B2) {
             periodic.left_demand = -periodic.left_demand;
             periodic.right_demand = -periodic.right_demand;
         } else {
-        }
+        }*/
         if (mDriveControlState == DriveControlState.OPEN_LOOP || mDriveControlState == DriveControlState.ANGLE_PID || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
             driveFrontLeft.set(ControlMode.PercentOutput, periodic.left_demand);
             driveFrontRight.set(ControlMode.PercentOutput, periodic.right_demand);
@@ -449,9 +449,9 @@ public class Drive extends Subsystem {
         Pose2d error = Pose2d.identity();
         boolean flaggyflag = false;
         boolean B1 = false;
-        boolean B2 = false;
-        boolean B3 = false;
-        boolean B5 = false;
+        //boolean B2 = false;
+        //boolean B3 = false;
+        //boolean B5 = false;
         double right_error = 0;
         double left_error = 0;
         double gyro_pid_angle = 0;
