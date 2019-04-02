@@ -60,6 +60,7 @@ public class AnglePID extends Action {
     public void onStop() {
         if (angleController != null) {
             angleController.disable();
+            angleController.close();
         }
         Drive.getInstance().setOpenLoop(new DriveSignal(0, 0));
 

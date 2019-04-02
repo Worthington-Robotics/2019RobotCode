@@ -46,6 +46,7 @@ public class GyroLock extends Action {
 
         if (angleController != null) {
             angleController.disable();
+            angleController.close();
         }
         Drive.getInstance().setOpenLoop(new DriveSignal(0, 0));
 
