@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.HIDHelper;
 import frc.robot.Constants;
@@ -25,6 +26,7 @@ public class Arm extends Subsystem {
     }
 
     private TalonSRX armProx, armDist;
+    private DoubleSolenoid proxPist;
     private PeriodicIO periodic;
     //private Ultrasonic US1, US2;
     private double[] operatorInput;
@@ -32,10 +34,7 @@ public class Arm extends Subsystem {
     private Arm() {
         armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
-        armProx.configContinuousCurrentLimit(20);
-        armDist.configContinuousCurrentLimit(20);
-        armDist.enableCurrentLimit(true);
-        armProx.enableCurrentLimit(true);
+        proxPist = new DoubleSolenoid(Constants.PROX_LOW, Constants.PROX_HIGH);
         //US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
         //US2 = new Ultrasonic(Constants.ULTRASONIC_IN_2, Constants.ULTRASONIC_OUT_2);
         reset();
@@ -44,10 +43,10 @@ public class Arm extends Subsystem {
     public void readPeriodicInputs() {
         periodic.operatorInput = HIDHelper.getAdjStick(Constants.LAUNCHPAD_STICK);
         periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
-        periodic.proxPrev = periodic.proxRel;
-        periodic.distPrev = periodic.distRel;
-        periodic.US1Past = periodic.US1Dis;
-        periodic.US2Past = periodic.US2Dis;
+        //periodic.proxPrev = periodic.proxRel;
+        //periodic.distPrev = periodic.distRel;
+        //periodic.US1Past = periodic.US1Dis;
+        //periodic.US2Past = periodic.US2Dis;
         //periodic.US1Dis = US1.getDistance();
         //periodic.US2Dis = US2.getDistance();
         periodic.proxAmps = armProx.getOutputCurrent();
@@ -58,8 +57,8 @@ public class Arm extends Subsystem {
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
         periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
-        periodic.distAdjPower = periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100);
-        periodic.proxAdjPower = periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100);
+        //periodic.distAdjPower = periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100);
+        //periodic.proxAdjPower = periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100);
     }
 
 
@@ -69,12 +68,13 @@ public class Arm extends Subsystem {
                 armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                 break;
-            case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100)*/, DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
-                break;
-            case DPID:
+            /*case PID:
+                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI));
+                break;*/
+            case PPID:
                 armProx.set(ControlMode.Velocity, 0);
+                proxPist.set(periodic.ProxPiston);
                 armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
@@ -157,36 +157,43 @@ public class Arm extends Subsystem {
         armDist.setSelectedSensorPosition(0);
     }
 
-    public void setPIDArmConfig(ArmStates state) {
+    /*public void setPIDArmConfig(ArmStates state) {
         if (periodic.armmode != ArmModes.PID) {
             periodic.armmode = ArmModes.PID;
         }
         periodic.armstate = state;
         periodic.armProxPower = state.prox;
         periodic.armDistPower = state.dist;
-    }
+    }*/
 
-    public void setDistPIDArmConfig(ArmStates state) {
-        if (periodic.armmode != ArmModes.DPID) {
-            periodic.armmode = ArmModes.DPID;
+    public void setPistPIDArmConfig(PistonArmStates state) {
+        if (periodic.armmode != ArmModes.PPID) {
+            periodic.armmode = ArmModes.PPID;
         }
-        periodic.armstate = state;
+        periodic.PArmStates = state;
+        if (state.getProx()) {
+            periodic.ProxPiston = DoubleSolenoid.Value.kForward;
+        }
+            else
+        {
+            periodic.ProxPiston = DoubleSolenoid.Value.kReverse;
+        }
         periodic.armDistPower = state.dist;
     }
 
-    public ArmStates getArmState() {
+    /*public ArmStates getArmState() {
         if (periodic.armmode.equals(ArmModes.PID)) return periodic.armstate;
         return null;
-    }
+    }*/
 
-    public void setSSArmConfig(ArmStates state) {
+   /* public void setSSArmConfig(ArmStates state) {
         if (periodic.armmode != ArmModes.STATE_SPACE) {
             periodic.armmode = ArmModes.STATE_SPACE;
         }
         periodic.armProxPower = state.prox;
         periodic.armDistPower = state.dist;
     }
-
+*/
     public void safeMode() {
         if (periodic.armmode != ArmModes.SAFETY_CATCH)
             periodic.armmode = ArmModes.SAFETY_CATCH;
@@ -236,8 +243,8 @@ public class Arm extends Subsystem {
 
     public enum ArmModes {
         DirectControl,
-        PID,
-        DPID,
+        /*PID,*/
+        PPID,
         STATE_SPACE,
         SAFETY_CATCH;
 
@@ -249,18 +256,16 @@ public class Arm extends Subsystem {
     public class PeriodicIO {
         //Side Shift
         boolean sideShift = false;
-        //joint enable booleans
-        boolean enableProx = false;
-        boolean enableDist = false;
         //TALON POWERS
         double armProxPower = 0;
         double armDistPower = 0;
+        DoubleSolenoid.Value ProxPiston = DoubleSolenoid.Value.kOff;
         //->||\TALON ANGLES ABSOLUTE
         double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
         double distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         //ADJ POWERS
-        double proxAdjPower = 0;
-        double distAdjPower = 0;
+        //double proxAdjPower = 0;
+        //double distAdjPower = 0;
         //TALON MODS
         double proxMod = 0;
         double distMod = 0;
@@ -268,31 +273,32 @@ public class Arm extends Subsystem {
         double proxError = armProx.getClosedLoopError();
         double distError = armDist.getClosedLoopError();
         //PRIOR DISTANCE
-        double US1Past = 0;
+        /*double US1Past = 0;
         double US2Past = 0;
         double US1Dis = 0;
-        double US2Dis = 0;
+        double US2Dis = 0;*/
         //TALON RELS
         double proxRel = 0;
         double distRel = 0;
         //past counts
-        double proxPrev = 0;
-        double distPrev = 0;
+        //double proxPrev = 0;
+        //double distPrev = 0;
         //
         double proxAmps = 0;
         double distAmps = 0;
         //
         double[] operatorInput = {0, 0};
         boolean stowed = true;
-        ArmStates armstate = ArmStates.STOW_ARM;
+        //ArmStates armstate = ArmStates.STOW_ARM;
+        PistonArmStates PArmStates = PistonArmStates.STOW_ARM;
         ArmModes armmode = ArmModes.SAFETY_CATCH;
     }
 
-    public enum ArmStates {
+   /* public enum ArmStates {
         // Prox, Dist bonehead
         // +60
-        DIST_PICKUP(0,-335),
-        DIST_CARGOSHIP(0,640),
+        DIST_PICKUP(0, -335),
+        DIST_CARGOSHIP(0, 640),
         FWD_GROUND_CARGO(-1287, -242),
         FWD_LOW_CARGO(-1232, 356),// 468 add 100 dis for gravity
         FWD_MEDIUM_CARGO(-323, -788),
@@ -300,7 +306,7 @@ public class Arm extends Subsystem {
         CARGO_SHIP_CARGO(-629, -589),
         A_CARGO_SHIP_CARGO(-393, -1111),
         UNSTOW_ARM(-568, -971), //1556
-        CLIMB_MID_CHECK(-1024,0),
+        CLIMB_MID_CHECK(-1024, 0),
         STOW_ARM(-1043, -1059);
 
 
@@ -318,8 +324,36 @@ public class Arm extends Subsystem {
         public double getDist() {
             return dist;
         }
-    }
+    }*/
 
+    public enum PistonArmStates {
+        // Prox, Dist bonehead
+        // +60
+        FWD_GROUND_CARGO(false, -242),
+        FWD_LOW_CARGO(false, 356),// 468 add 100 dis for gravity
+        FWD_MEDIUM_CARGO(true, -788),
+        CARGO_SHIP_CARGO(true, -589),
+        A_CARGO_SHIP_CARGO(false, -1111),
+        UNSTOW_ARM(true, -971),
+        STOW_ARM(true, -1059);
+
+
+        private double dist;
+        private boolean prox;
+
+        PistonArmStates(boolean prox, double dist) {
+            this.prox = prox;
+            this.dist = dist;
+        }
+
+        public boolean getProx() {
+            return prox;
+        }
+
+        public double getDist() {
+            return dist;
+        }
+    }
 }
 
 

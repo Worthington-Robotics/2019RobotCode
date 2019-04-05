@@ -3,17 +3,18 @@ package frc.robot.actions.armactions;
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
 
-
-public class UnstowArmAction extends Action {
+public class PistonArmAction extends Action {
     private Arm.PistonArmStates a;
-    public UnstowArmAction() {
-        a = Arm.PistonArmStates.UNSTOW_ARM;
+
+    public PistonArmAction(Arm.PistonArmStates armState) {
+        a = armState;
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPistPIDArmConfig(a);
-        Arm.getInstance().setStowed(false);
+
+        if (!Arm.getInstance().getStowed())
+            Arm.getInstance().setPistPIDArmConfig(a);
     }
 
     @Override

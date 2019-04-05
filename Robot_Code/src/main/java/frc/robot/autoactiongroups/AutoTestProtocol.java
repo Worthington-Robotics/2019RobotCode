@@ -3,8 +3,8 @@ package frc.robot.autoactiongroups;
 import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.Constants;
-import frc.robot.actions.armactions.ArmAction;
 import frc.robot.actions.armactions.ManipulatorAction;
+import frc.robot.actions.armactions.PistonArmAction;
 import frc.robot.actions.armactions.StowArmAction;
 import frc.robot.actions.armactions.UnstowArmAction;
 import frc.robot.actions.buttonactions.ButtonWaitAction;
@@ -20,17 +20,15 @@ public class AutoTestProtocol extends StateMachineDescriptor {
                 new UnstowArmAction()},2000);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.PickUp),
-                new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO)},2000);
+                new PistonArmAction(Arm.PistonArmStates.FWD_GROUND_CARGO)},2000);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
-        addSequential(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), 20);
+        addSequential(new PistonArmAction(Arm.PistonArmStates.FWD_LOW_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
-        addSequential(new ArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO), 20);
+        addSequential(new PistonArmAction(Arm.PistonArmStates.FWD_MEDIUM_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
-        addSequential(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO), 20);
+        addSequential(new PistonArmAction(Arm.PistonArmStates.CARGO_SHIP_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
-        addSequential(new ArmAction(Arm.ArmStates.A_CARGO_SHIP_CARGO), 20);
-        addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
-        addSequential(new ArmAction(Arm.ArmStates.FWD_HIGH_CARGO), 20);
+        addSequential(new PistonArmAction(Arm.PistonArmStates.A_CARGO_SHIP_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addSequential(new StowArmAction(), 3000);
     }

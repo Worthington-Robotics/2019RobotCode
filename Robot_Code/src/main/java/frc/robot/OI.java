@@ -67,17 +67,16 @@ public class OI{
         frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
         backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
         */
-        DistPickup.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_PICKUP)));
+        //DistPickup.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_PICKUP)));
         ElevatorUp.whileHeld(Action.toCommand(new Elevator(1)));
-        DistCargoship.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_CARGOSHIP)));
+        //DistCargoship.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_CARGOSHIP)));
         crawlerForward.whileHeld(Action.toCommand(new Crawl(0.5)));
         crawlerBackward.whileHeld(Action.toCommand(new Crawl(-0.5)));
         //Arm Poses
-        cargoShip.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.CARGO_SHIP_CARGO)));
-        groundCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_GROUND_CARGO)));
-        botCargo.whenPressed(Action.toCommand(new ModAction(new ArmAction(Arm.ArmStates.FWD_LOW_CARGO), new ArmSoftCal())));
-        midCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_MEDIUM_CARGO)));
-        topCargo.whenPressed(Action.toCommand(new ArmAction(Arm.ArmStates.FWD_HIGH_CARGO)));
+        cargoShip.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.CARGO_SHIP_CARGO)));
+        groundCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_GROUND_CARGO)));
+        botCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_LOW_CARGO)));
+        midCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_MEDIUM_CARGO)));
         //Cargo Manipulator
         cargoRollout.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.SlowShoot)));
         cargoShoot.whileHeld(Action.toCommand(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot)));

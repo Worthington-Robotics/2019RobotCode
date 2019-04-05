@@ -1,15 +1,14 @@
-/*package frc.robot.actions.waitactions;
+package frc.robot.actions.waitactions;
 
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
 
-
-public class ArmStateWaitAction extends Action {
-    Arm.ArmStates armState;
+public class PistonArmStateWait extends Action {
+    Arm.PistonArmStates armState;
     boolean end = false;
     double kEpsilon;
 
-    public ArmStateWaitAction(Arm.ArmStates armState, double kEpsilon) {
+    public PistonArmStateWait(Arm.PistonArmStates armState, double kEpsilon) {
         this.armState = armState;
         this.kEpsilon = kEpsilon;
     }
@@ -21,8 +20,7 @@ public class ArmStateWaitAction extends Action {
 
     @Override
     public void onLoop() {
-        if ((Math.abs(armState.getProx() - Arm.getInstance().getProxPoint()) <= kEpsilon) &&
-                (Math.abs(armState.getDist() - Arm.getInstance().getDistPoint()) <= kEpsilon)) {
+        if ((Math.abs(armState.getDist() - Arm.getInstance().getDistPoint()) <= kEpsilon)) {
             end = true;
         }
     }
@@ -36,4 +34,3 @@ public class ArmStateWaitAction extends Action {
     public void onStop() {
     }
 }
-*/
