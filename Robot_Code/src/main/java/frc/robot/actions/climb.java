@@ -5,9 +5,6 @@ import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Manipulator;
 
 public class climb extends Action {
-    private boolean IsFront;
-    public climb(boolean isFront){ IsFront = isFront;
-    }
     @Override
     public void onStart() {
             Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);

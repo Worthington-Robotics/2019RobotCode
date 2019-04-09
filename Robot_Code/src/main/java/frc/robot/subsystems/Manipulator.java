@@ -12,7 +12,7 @@ public class Manipulator extends Subsystem {
     private double ShotPower = 0.0;
     private boolean B2 = false;
     private double [] OperatorInput;
-    private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kReverse;
+    private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kForward;
     /*private DoubleSolenoid.Value bState = DoubleSolenoid.Value.kReverse;*/
     private double elevatorPower, crawlPower;
 

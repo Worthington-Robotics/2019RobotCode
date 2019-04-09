@@ -28,8 +28,6 @@ public class AutoTestProtocol extends StateMachineDescriptor {
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addSequential(new PistonArmAction(Arm.PistonArmStates.CARGO_SHIP_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
-        addSequential(new PistonArmAction(Arm.PistonArmStates.A_CARGO_SHIP_CARGO), 20);
-        addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addSequential(new StowArmAction(), 3000);
     }
 }

@@ -11,7 +11,10 @@ import frc.lib.util.HIDHelper;
 import frc.robot.Constants;
 
 /**
- * The code for governing the three-axis arm
+ * ~~The code for governing the three-axis arm~~
+ * ~~The code for governing the two-axis arm~~
+ * ~~The code for governing the one-and-a-half axis arm~~
+ * The code for governing our arm
  * using a set of position PIDs with absolute and relative MagEncoder Values
  */
 public class Arm extends Subsystem {
@@ -25,14 +28,14 @@ public class Arm extends Subsystem {
         return m_Arm;
     }
 
-    private TalonSRX armProx, armDist;
+    private TalonSRX /*armProx,*/ armDist;
     private DoubleSolenoid proxPist;
     private PeriodicIO periodic;
     //private Ultrasonic US1, US2;
     private double[] operatorInput;
 
     private Arm() {
-        armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
+        //armProx = new TalonSRX(Constants.ARM_PRONOMINAL);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         proxPist = new DoubleSolenoid(Constants.PROX_LOW, Constants.PROX_HIGH);
         //US1 = new Ultrasonic(Constants.ULTRASONIC_IN_1, Constants.ULTRASONIC_OUT_1);
@@ -49,14 +52,14 @@ public class Arm extends Subsystem {
         //periodic.US2Past = periodic.US2Dis;
         //periodic.US1Dis = US1.getDistance();
         //periodic.US2Dis = US2.getDistance();
-        periodic.proxAmps = armProx.getOutputCurrent();
+        //periodic.proxAmps = armProx.getOutputCurrent();
         periodic.distAmps = armDist.getOutputCurrent();
-        periodic.proxError = armProx.getClosedLoopError();
+        //periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();
-        periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
+        //periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
         periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
-        periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
+        //periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
         //periodic.distAdjPower = periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100);
         //periodic.proxAdjPower = periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100);
     }
@@ -65,23 +68,23 @@ public class Arm extends Subsystem {
     public void writePeriodicOutputs() {
         switch (periodic.armmode) {
             case DirectControl:
-                armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
+                //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                 armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
+                proxPist.set(periodic.ProxPiston);
                 break;
             /*case PID:
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
                 armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI));
                 break;*/
             case PPID:
-                armProx.set(ControlMode.Velocity, 0);
-                proxPist.set(periodic.ProxPiston);
+                //armProx.set(ControlMode.Velocity, 0);
                 armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
                 break;
             case STATE_SPACE:
 
                 break;
             case SAFETY_CATCH:
-                armProx.set(ControlMode.PercentOutput, 0);
+                //armProx.set(ControlMode.PercentOutput, 0);
                 armDist.set(ControlMode.PercentOutput, 0);
                 break;
             default:
@@ -90,13 +93,13 @@ public class Arm extends Subsystem {
     }
 
     public void outputTelemetry() {
-        SmartDashboard.putNumber("Arm/Prox Mod", periodic.proxMod);
+        /*SmartDashboard.putNumber("Arm/Prox Mod", periodic.proxMod);
         SmartDashboard.putNumber("Arm/Proximal Arm Power", periodic.armProxPower);
-        SmartDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
+        //martDashboard.putNumber("Arm/Proximal Arm Error", periodic.proxError);
         SmartDashboard.putNumber("Arm/Prox Rel", periodic.proxRel);
         SmartDashboard.putNumber("Arm/Prox Point", periodic.proxRel - periodic.proxMod);
         SmartDashboard.putNumber("Arm/Prox Dial", periodic.operatorInput[0]);
-        SmartDashboard.putNumber("Arm/Prox Abs", periodic.proxAbsolute);
+        //SmartDashboard.putNumber("Arm/Prox Abs", periodic.proxAbsolute);*/
         //
         SmartDashboard.putNumber("Arm/Dist Mod", periodic.distMod);
         SmartDashboard.putNumber("Arm/Distal Arm Power", periodic.armDistPower);
@@ -118,13 +121,13 @@ public class Arm extends Subsystem {
     }
 
     public void resetArmMod() {
-        periodic.proxMod = Constants.PROX_ABSOLUTE_ZERO - periodic.proxAbsolute;
+        //periodic.proxMod = Constants.PROX_ABSOLUTE_ZERO - periodic.proxAbsolute;
         periodic.distMod = Constants.DIST_ABSOLUTE_ZERO - periodic.distAbsolute;
     }
 
     public void configTalons() {
         boolean proxCal = true;
-        armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        /*armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         armProx.setSensorPhase(proxCal);
         armProx.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         armProx.selectProfileSlot(0, 0);//TODO tune all PIDs
@@ -138,7 +141,7 @@ public class Arm extends Subsystem {
         armProx.enableVoltageCompensation(true);
         armProx.setInverted(true);
         armProx.setSensorPhase(proxCal);
-        armProx.setSelectedSensorPosition(0);
+        armProx.setSelectedSensorPosition(0);*/
         //
         armDist.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
         armDist.setSensorPhase(false);
@@ -172,11 +175,11 @@ public class Arm extends Subsystem {
         }
         periodic.PArmStates = state;
         if (state.getProx()) {
-            periodic.ProxPiston = DoubleSolenoid.Value.kForward;
+            setProxPistPID(DoubleSolenoid.Value.kReverse);
         }
             else
         {
-            periodic.ProxPiston = DoubleSolenoid.Value.kReverse;
+            setProxPistPID(DoubleSolenoid.Value.kForward);
         }
         periodic.armDistPower = state.dist;
     }
@@ -203,11 +206,12 @@ public class Arm extends Subsystem {
         if (periodic.armmode != ArmModes.DirectControl) {
             periodic.armmode = ArmModes.DirectControl;
         }
+        periodic.ProxPiston = DoubleSolenoid.Value.kOff;
     }
 
-    public double getProxPoint() {
+    /*public double getProxPoint() {
         return periodic.proxRel - periodic.proxMod;
-    }
+    }*/
 
     public double getDistPoint() {
         return periodic.distRel - periodic.distMod;
@@ -236,8 +240,19 @@ public class Arm extends Subsystem {
         return periodic.sideShift;
     }
 
-    public double[] getAbsolute() {
-        return new double[]{periodic.proxAbsolute, periodic.distAbsolute};
+    public double getAbsolute() {
+        return periodic.distAbsolute;
+    }
+    public boolean getProxExtend(){
+        return periodic.ProxPiston.equals(DoubleSolenoid.Value.kForward);
+    }
+
+    public void setProxPist(DoubleSolenoid.Value proxPist) {
+        periodic.ProxPiston = proxPist;
+    }
+
+    public void setProxPistPID(DoubleSolenoid.Value proxPist) {
+        this.proxPist.set(proxPist);
     }
 
 
@@ -257,20 +272,20 @@ public class Arm extends Subsystem {
         //Side Shift
         boolean sideShift = false;
         //TALON POWERS
-        double armProxPower = 0;
+        //double armProxPower = 0;
         double armDistPower = 0;
         DoubleSolenoid.Value ProxPiston = DoubleSolenoid.Value.kOff;
         //->||\TALON ANGLES ABSOLUTE
-        double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
+        //double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
         double distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         //ADJ POWERS
         //double proxAdjPower = 0;
         //double distAdjPower = 0;
         //TALON MODS
-        double proxMod = 0;
+        //double proxMod = 0;
         double distMod = 0;
         //TALON ERROR
-        double proxError = armProx.getClosedLoopError();
+        //double proxError = armProx.getClosedLoopError();
         double distError = armDist.getClosedLoopError();
         //PRIOR DISTANCE
         /*double US1Past = 0;
@@ -278,13 +293,13 @@ public class Arm extends Subsystem {
         double US1Dis = 0;
         double US2Dis = 0;*/
         //TALON RELS
-        double proxRel = 0;
+        //double proxRel = 0;
         double distRel = 0;
         //past counts
         //double proxPrev = 0;
         //double distPrev = 0;
         //
-        double proxAmps = 0;
+        //double proxAmps = 0;
         double distAmps = 0;
         //
         double[] operatorInput = {0, 0};
@@ -329,12 +344,12 @@ public class Arm extends Subsystem {
     public enum PistonArmStates {
         // Prox, Dist bonehead
         // +60
-        FWD_GROUND_CARGO(false, -242),
-        FWD_LOW_CARGO(false, 356),// 468 add 100 dis for gravity
-        FWD_MEDIUM_CARGO(true, -788),
-        CARGO_SHIP_CARGO(true, -589),
-        A_CARGO_SHIP_CARGO(false, -1111),
-        UNSTOW_ARM(true, -971),
+        // true is piston extended
+        FWD_GROUND_CARGO(false, -200),
+        FWD_LOW_CARGO(false, 367),// 468 add 100 dis for gravity
+        FWD_MEDIUM_CARGO(true, 265),
+        CARGO_SHIP_CARGO(true, 0),
+        UNSTOW_ARM(true, 0),
         STOW_ARM(true, -1059);
 
 

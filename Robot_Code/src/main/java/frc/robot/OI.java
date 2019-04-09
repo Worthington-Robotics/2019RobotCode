@@ -22,7 +22,6 @@ public class OI{
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
         //Button selfCheck = new JoystickButton(Constants.MASTER, 11);
         Button ForceField = new JoystickButton(Constants.MASTER, 8);
-
         Button ForceFieldR = new JoystickButton(Constants.MASTER, 9);
 
         //cameraSwitch.toggleWhenPressed(Action.toCommand(new CameraSwitchAction()));
@@ -40,11 +39,11 @@ public class OI{
         Button groundCargo = new JoystickButton(Constants.LAUNCH_PAD, 10);
         Button botCargo = new JoystickButton(Constants.LAUNCH_PAD, 12);
         Button midCargo = new JoystickButton(Constants.LAUNCH_PAD, 4);
-        Button topCargo = new JoystickButton(Constants.LAUNCH_PAD, 2);
+        Button ArmProx = new JoystickButton(Constants.LAUNCH_PAD, 2);
         //Climb Stuff
         Button ElevatorUp = new JoystickButton(Constants.LAUNCH_PAD, 6);
-        Button DistCargoship = new JoystickButton(Constants.LAUNCH_PAD, 16);
-        Button DistPickup = new JoystickButton(Constants.LAUNCH_PAD, 15);
+        Button Pistons = new JoystickButton(Constants.LAUNCH_PAD, 16);
+        Button ElevatorDown = new JoystickButton(Constants.LAUNCH_PAD, 15);
         Button crawlerForward = new JoystickButton(Constants.MASTER, 6);
         Button crawlerBackward = new JoystickButton(Constants.MASTER, 4);
         //Cargo Manipulator
@@ -67,9 +66,11 @@ public class OI{
         frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
         backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
         */
-        //DistPickup.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_PICKUP)));
+        ArmProx.whenPressed(Action.toCommand(new ProxToggle()));
+        Pistons.toggleWhenPressed(Action.toCommand(new climb()));
+        Pistons.whileHeld(Action.toCommand(new Elevator(-1)));
         ElevatorUp.whileHeld(Action.toCommand(new Elevator(1)));
-        //DistCargoship.whenPressed(Action.toCommand(new DistAction(Arm.ArmStates.DIST_CARGOSHIP)));
+        ElevatorDown.whileHeld(Action.toCommand(new Elevator(-1)));
         crawlerForward.whileHeld(Action.toCommand(new Crawl(0.5)));
         crawlerBackward.whileHeld(Action.toCommand(new Crawl(-0.5)));
         //Arm Poses
