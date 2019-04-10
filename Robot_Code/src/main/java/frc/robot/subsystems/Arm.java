@@ -66,29 +66,98 @@ public class Arm extends Subsystem {
 
 
     public void writePeriodicOutputs() {
-        switch (periodic.armmode) {
-            case DirectControl:
-                //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
-                armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
-                proxPist.set(periodic.ProxPiston);
-                break;
+
+        if (periodic.ProxPiston.equals(DoubleSolenoid.Value.kForward)) {
+            switch (periodic.armmode) {
+                case DirectControl:
+                    //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
+                    if (periodic.operatorInput[1] < 0 && periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                        proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, 0);
+                        break;
+                    }
+                    if (periodic.operatorInput[1] > 0 && periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                        proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, 0);
+                    } else {
+                        armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
+                        proxPist.set(periodic.ProxPiston);
+                        break;
+                    }
             /*case PID:
                 armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
                 armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI));
                 break;*/
-            case PPID:
-                //armProx.set(ControlMode.Velocity, 0);
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
-                break;
-            case STATE_SPACE:
 
-                break;
-            case SAFETY_CATCH:
-                //armProx.set(ControlMode.PercentOutput, 0);
-                armDist.set(ControlMode.PercentOutput, 0);
-                break;
-            default:
-                System.out.println("Arm entered unexpected control state!");
+                case PPID:
+                    //armProx.set(ControlMode.Velocity, 0);
+                    if (periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                        proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, -10);
+                        break;
+                    }
+                    if (periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                        proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, 10);
+                    } else {
+                        armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
+                        break;
+                    }
+                case STATE_SPACE:
+
+                    break;
+                case SAFETY_CATCH:
+                    //armProx.set(ControlMode.PercentOutput, 0);
+                    armDist.set(ControlMode.PercentOutput, 0);
+                    break;
+                default:
+                    System.out.println("Arm entered unexpected control state!");
+            }
+        } else {
+            switch (periodic.armmode) {
+                case DirectControl:
+                            //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
+                    if (periodic.operatorInput[1] < 0 && periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                        proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, 0);
+                        break;
+                    }
+                    if (periodic.operatorInput[1] > 0 && periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                        proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, 0);
+                    } else {
+                        armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
+                        proxPist.set(periodic.ProxPiston);
+                        break;
+                    }
+            /*case PID:
+                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
+                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI));
+                break;*/
+                    case PPID:
+                    //armProx.set(ControlMode.Velocity, 0);
+                        if (periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                            proxPist.set(periodic.ProxPiston);
+                            armDist.set(ControlMode.PercentOutput, 0);
+                            break;
+                        }
+                        if (periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                            proxPist.set(periodic.ProxPiston);
+                            armDist.set(ControlMode.PercentOutput, 0);
+                        } else {
+                            armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
+                            break;
+                        }
+                case STATE_SPACE:
+
+                            break;
+                        case SAFETY_CATCH:
+                            //armProx.set(ControlMode.PercentOutput, 0);
+                            armDist.set(ControlMode.PercentOutput, 0);
+                            break;
+                        default:
+                            System.out.println("Arm entered unexpected control state!");
+                    }
         }
     }
 
