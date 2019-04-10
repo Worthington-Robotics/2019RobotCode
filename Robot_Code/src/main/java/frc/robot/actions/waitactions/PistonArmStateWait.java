@@ -11,6 +11,7 @@ public class PistonArmStateWait extends Action {
     public PistonArmStateWait(Arm.PistonArmStates armState, double kEpsilon) {
         this.armState = armState;
         this.kEpsilon = kEpsilon;
+        this.end = false;
     }
 
     @Override
@@ -32,5 +33,6 @@ public class PistonArmStateWait extends Action {
 
     @Override
     public void onStop() {
+    this.end = false;
     }
 }

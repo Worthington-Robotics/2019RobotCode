@@ -21,7 +21,7 @@ public class Constants {
     public static final int ARM_DISTAL = 8;
 
     //Spark Ports
-    public static final int BOTTOM_CARGOMANIP_ID = 1;
+    public static final int BOTTOM_CARGOMANIP_ID = 5;
     public static final int TOP_CARGOMANIP_ID = 2;
     public static final int CLIMBER_CRAWL_ID = 4;
     public static final int CLIMBER_ELEVATOR_ID = 3;
@@ -120,8 +120,10 @@ public class Constants {
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
     //public static final double ARM_DIST_A_FEEDFORWARD = 0; //.16
-
-
+    public static final double ARM_U_U_LIMIT = 2000;
+    public static final double ARM_U_L_LIMIT = -2000;
+    public static final double ARM_L_U_LIMIT = 3000;
+    public static final double ARM_L_L_LIMIT = -1000;
     /**
      * General Configuration --------------------------------------
      */

@@ -44,24 +44,14 @@ public class Arm extends Subsystem {
     }
 
     public void readPeriodicInputs() {
+
+        periodic.distPoint = periodic.armDistPower + periodic.distMod;
         periodic.operatorInput = HIDHelper.getAdjStick(Constants.LAUNCHPAD_STICK);
         periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
-        //periodic.proxPrev = periodic.proxRel;
-        //periodic.distPrev = periodic.distRel;
-        //periodic.US1Past = periodic.US1Dis;
-        //periodic.US2Past = periodic.US2Dis;
-        //periodic.US1Dis = US1.getDistance();
-        //periodic.US2Dis = US2.getDistance();
-        //periodic.proxAmps = armProx.getOutputCurrent();
         periodic.distAmps = armDist.getOutputCurrent();
-        //periodic.proxError = armProx.getClosedLoopError();
         periodic.distError = armDist.getClosedLoopError();
-        //periodic.proxRel = armProx.getSensorCollection().getQuadraturePosition();
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
         periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
-        //periodic.proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
-        //periodic.distAdjPower = periodic.armDistPower + periodic.distMod + (periodic.operatorInput[1]*100);
-        //periodic.proxAdjPower = periodic.armProxPower + periodic.proxMod + (periodic.operatorInput[0]*100);
     }
 
 
@@ -71,12 +61,12 @@ public class Arm extends Subsystem {
             switch (periodic.armmode) {
                 case DirectControl:
                     //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
-                    if (periodic.operatorInput[1] < 0 && periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                    if (periodic.operatorInput[1] < 0 && periodic.distPoint > Constants.ARM_U_U_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                         break;
                     }
-                    if (periodic.operatorInput[1] > 0 && periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                    if (periodic.operatorInput[1] > 0 && periodic.distPoint < Constants.ARM_U_L_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                     } else {
@@ -91,12 +81,12 @@ public class Arm extends Subsystem {
 
                 case PPID:
                     //armProx.set(ControlMode.Velocity, 0);
-                    if (periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                    if (periodic.distPoint > Constants.ARM_U_U_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, -10);
                         break;
                     }
-                    if (periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                    if (periodic.distPoint < Constants.ARM_U_L_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 10);
                     } else {
@@ -117,12 +107,12 @@ public class Arm extends Subsystem {
             switch (periodic.armmode) {
                 case DirectControl:
                             //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
-                    if (periodic.operatorInput[1] < 0 && periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                    if (periodic.operatorInput[1] < 0 && periodic.distPoint > Constants.ARM_L_U_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                         break;
                     }
-                    if (periodic.operatorInput[1] > 0 && periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                    if (periodic.operatorInput[1] > 0 && periodic.distPoint < Constants.ARM_L_L_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                     } else {
@@ -136,12 +126,12 @@ public class Arm extends Subsystem {
                 break;*/
                     case PPID:
                     //armProx.set(ControlMode.Velocity, 0);
-                        if (periodic.distPoint > Constants.ARM_UPPER_LIMIT) {
+                        if (periodic.distPoint > Constants.ARM_L_U_LIMIT) {
                             proxPist.set(periodic.ProxPiston);
                             armDist.set(ControlMode.PercentOutput, 0);
                             break;
                         }
-                        if (periodic.distPoint < Constants.ARM_UP_LOWER_LIMIT) {
+                        if (periodic.distPoint < Constants.ARM_L_L_LIMIT) {
                             proxPist.set(periodic.ProxPiston);
                             armDist.set(ControlMode.PercentOutput, 0);
                         } else {
@@ -340,37 +330,14 @@ public class Arm extends Subsystem {
     public class PeriodicIO {
         //Side Shift
         boolean sideShift = false;
-        //TALON POWERS
-        //double armProxPower = 0;
         double armDistPower = 0;
         DoubleSolenoid.Value ProxPiston = DoubleSolenoid.Value.kOff;
-        //->||\TALON ANGLES ABSOLUTE
-        //double proxAbsolute = armProx.getSensorCollection().getPulseWidthPosition();
         double distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
-        //ADJ POWERS
-        //double proxAdjPower = 0;
-        //double distAdjPower = 0;
-        //TALON MODS
-        //double proxMod = 0;
+        double distPoint = periodic.armDistPower + periodic.distMod;
         double distMod = 0;
-        //TALON ERROR
-        //double proxError = armProx.getClosedLoopError();
         double distError = armDist.getClosedLoopError();
-        //PRIOR DISTANCE
-        /*double US1Past = 0;
-        double US2Past = 0;
-        double US1Dis = 0;
-        double US2Dis = 0;*/
-        //TALON RELS
-        //double proxRel = 0;
         double distRel = 0;
-        //past counts
-        //double proxPrev = 0;
-        //double distPrev = 0;
-        //
-        //double proxAmps = 0;
         double distAmps = 0;
-        //
         double[] operatorInput = {0, 0};
         boolean stowed = true;
         //ArmStates armstate = ArmStates.STOW_ARM;
