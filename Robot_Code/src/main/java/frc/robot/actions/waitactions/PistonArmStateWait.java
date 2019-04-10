@@ -5,11 +5,10 @@ import frc.robot.subsystems.Arm;
 
 public class PistonArmStateWait extends Action {
     Arm.PistonArmStates armState;
-    boolean end;
+    boolean end = false;
     double kEpsilon;
 
     public PistonArmStateWait(Arm.PistonArmStates armState, double kEpsilon) {
-        this.end = false;
         this.armState = armState;
         this.kEpsilon = kEpsilon;
     }
