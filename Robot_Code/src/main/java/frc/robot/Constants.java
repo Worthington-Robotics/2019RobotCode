@@ -176,7 +176,6 @@ public class Constants {
             "Drive/Misc/Right FeedForward",
             "Drive/Left/Talon Voltage Out",
             "Drive/Right/Talon Voltage Out",
-            "Arm/Prox Point",
             "Arm/Dist Point",
             "Vision/rioStatus",
             "StateMachine/state"
