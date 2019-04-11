@@ -124,6 +124,7 @@ public class Constants {
     public static final double ARM_U_L_LIMIT = -1100;
     public static final double ARM_L_U_LIMIT = 650;
     public static final double ARM_L_L_LIMIT = -250;
+    public static final double ARM_NO_DOWN_LIMIT = -1100;
     /**
      * General Configuration --------------------------------------
      */

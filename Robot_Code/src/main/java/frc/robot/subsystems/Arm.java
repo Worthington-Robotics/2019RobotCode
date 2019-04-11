@@ -59,16 +59,25 @@ public class Arm extends Subsystem {
                 case DirectControl:
                     //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                     if (periodic.operatorInput[1] > 0 && periodic.distPoint > Constants.ARM_U_U_LIMIT) {
-                        proxPist.set(periodic.ProxPiston);
+                        if (!(periodic.distPoint == Constants.ARM_NO_DOWN_LIMIT)) {
+                        } else {
+                            proxPist.set(periodic.ProxPiston);
+                        }
                         armDist.set(ControlMode.PercentOutput, 0);
                         break;
                     }
                     if (periodic.operatorInput[1] < 0 && periodic.distPoint < Constants.ARM_U_L_LIMIT) {
-                        proxPist.set(periodic.ProxPiston);
+                        if (!(periodic.distPoint == Constants.ARM_NO_DOWN_LIMIT)) {
+                        } else {
+                            proxPist.set(periodic.ProxPiston);
+                        }
                         armDist.set(ControlMode.PercentOutput, 0);
                     } else {
+                        if (!(periodic.distPoint == Constants.ARM_NO_DOWN_LIMIT)) {
+                        } else {
+                            proxPist.set(periodic.ProxPiston);
+                        }
                         armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
-                        proxPist.set(periodic.ProxPiston);
                         break;
                     }
             /*case PID:
@@ -111,8 +120,8 @@ public class Arm extends Subsystem {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                     } else {
-                        armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                         proxPist.set(periodic.ProxPiston);
+                        armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                         break;
                     }
             /*case PID:
