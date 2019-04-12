@@ -39,7 +39,7 @@ public class OI{
         Button groundCargo = new JoystickButton(Constants.LAUNCH_PAD, 10);
         Button botCargo = new JoystickButton(Constants.LAUNCH_PAD, 12);
         Button midCargo = new JoystickButton(Constants.LAUNCH_PAD, 4);
-        Button ArmProx = new JoystickButton(Constants.LAUNCH_PAD, 2);
+        Button highCargo = new JoystickButton(Constants.LAUNCH_PAD, 2);
         //Climb Stuff
         Button ElevatorUp = new JoystickButton(Constants.LAUNCH_PAD, 6);
         Button Pistons = new JoystickButton(Constants.LAUNCH_PAD, 16);
@@ -55,18 +55,18 @@ public class OI{
         Button unstow = new JoystickButton(Constants.LAUNCH_PAD, 7);
         //Safety Things
         Button autoStopButton = new JoystickButton(Constants.LAUNCH_PAD, 1);
-        Button velocity = new JoystickButton(Constants.LAUNCH_PAD, 3);
+        Button ArmProx = new JoystickButton(Constants.LAUNCH_PAD, 3);
 
         ////////////Actions Tied To Buttons////////////
         //Safety Routines
         autoStopButton.whenPressed(Action.toCommand(new AStopAction()));
-        velocity.whenPressed(Action.toCommand(new VelocityAction()));
+        ArmProx.whenPressed(Action.toCommand(new ProxToggle()));
         //Climb Stuff
         /*bothClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kForward), new ClimbAction(DoubleSolenoid.Value.kReverse, DoubleSolenoid.Value.kReverse))));
         frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
         backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
         */
-        ArmProx.whenPressed(Action.toCommand(new ProxToggle()));
+        highCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_HIGH_CARGO)));
         Pistons.toggleWhenPressed(Action.toCommand(new climb()));
         Pistons.whileHeld(Action.toCommand(new Elevator(-1)));
         ElevatorUp.whileHeld(Action.toCommand(new Elevator(1)));

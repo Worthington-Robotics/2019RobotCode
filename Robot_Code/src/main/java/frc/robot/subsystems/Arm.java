@@ -386,7 +386,9 @@ public class Arm extends Subsystem {
         FWD_GROUND_CARGO(false, -200),
         FWD_LOW_CARGO(false, 367),// 468 add 100 dis for gravity
         FWD_MEDIUM_CARGO(true, 265),
-        CARGO_SHIP_CARGO(true, 0),
+        FWD_HIGH_CARGO(true, 650),
+        CARGO_SHIP_CARGO(false, 500),
+        A_CARGO_SHIP_CARGO(true, 0),
         UNSTOW_ARM(true, 0),
         STOW_ARM(true, -1059);
 

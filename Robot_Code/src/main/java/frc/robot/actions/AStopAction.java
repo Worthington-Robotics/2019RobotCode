@@ -13,7 +13,7 @@ public class AStopAction extends Action {
     public void onStart() {
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
-        Arm.getInstance().safeMode();
+        Arm.getInstance().setVelocitymConfig();
         Manipulator.getInstance().setElevatorPower(0);
         finished = true;
     }
