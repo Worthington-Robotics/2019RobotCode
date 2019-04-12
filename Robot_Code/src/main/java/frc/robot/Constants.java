@@ -91,7 +91,6 @@ public class Constants {
     // Arm Absolute Zeros
             //TODO CHECK TWICE BONEHEAD!!!!!!!
     public static double DIST_ABSOLUTE_ZERO = 2865;//8293
-    public static double PROX_ABSOLUTE_ZERO = 3789;
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -108,13 +107,6 @@ public class Constants {
     public static final double DIST_Kt = 0.5; // V per rad/s^2 //not currently correct usage
     public static final double DIST_V_INTERCEPT = 0.1; // V
 
-    //PID Constants
-    public static final double ARM_PROX_KP = 4.5;//10
-    public static final double ARM_PROX_KI = 0;
-    public static final double ARM_PROX_KD = 40;//200
-    public static final double ARM_PROX_KF = 0;
-    public static final double ARM_PROX_A_FEEDFORWARD = .345;
-
     public static final double ARM_DIST_KP = 3;//7.5
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;//75
@@ -124,7 +116,7 @@ public class Constants {
     public static final double ARM_U_L_LIMIT = -1200;
     public static final double ARM_L_U_LIMIT = 650;
     public static final double ARM_L_L_LIMIT = -250;
-    public static final double ARM_NO_DOWN_LIMIT = -1100;
+    public static final double ARM_NO_DOWN_LIMIT = -500;
     /**
      * General Configuration --------------------------------------
      */

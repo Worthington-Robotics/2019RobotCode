@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -59,31 +58,18 @@ public class Arm extends Subsystem {
                 case DirectControl:
                     //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                     if (periodic.operatorInput[1] > 0 && periodic.distPoint > Constants.ARM_U_U_LIMIT) {
-                        if (!(periodic.distPoint == Constants.ARM_NO_DOWN_LIMIT)) {
-                        } else {
-                            proxPist.set(periodic.ProxPiston);
-                        }
+                        proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                         break;
                     }
                     if (periodic.operatorInput[1] < 0 && periodic.distPoint < Constants.ARM_U_L_LIMIT) {
-                        if (!(periodic.distPoint == Constants.ARM_NO_DOWN_LIMIT)) {
-                        } else {
-                            proxPist.set(periodic.ProxPiston);
-                        }
+                        proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                     } else {
-                        if (!(periodic.distPoint == Constants.ARM_NO_DOWN_LIMIT)) {
-                        } else {
-                            proxPist.set(periodic.ProxPiston);
-                        }
+                        proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                         break;
                     }
-            /*case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI));
-                break;*/
 
                 case PPID:
                     //armProx.set(ControlMode.Velocity, 0);
@@ -110,7 +96,7 @@ public class Arm extends Subsystem {
         } else {
             switch (periodic.armmode) {
                 case DirectControl:
-                            //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
+                    //armProx.set(ControlMode.PercentOutput, periodic.operatorInput[0]);
                     if (periodic.operatorInput[1] > 0 && periodic.distPoint > Constants.ARM_L_U_LIMIT) {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
@@ -124,32 +110,28 @@ public class Arm extends Subsystem {
                         armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
                         break;
                     }
-            /*case PID:
-                armProx.set(ControlMode.Position, periodic.armProxPower + periodic.proxMod/* + (periodic.operatorInput[0]*100), DemandType.ArbitraryFeedForward, Constants.ARM_PROX_A_FEEDFORWARD * Math.sin((periodic.armProxPower + periodic.proxMod) / 2048 * Math.PI));
-                armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI));
-                break;*/
-                    case PPID:
+                case PPID:
                     //armProx.set(ControlMode.Velocity, 0);
-                        if (periodic.distPoint > Constants.ARM_L_U_LIMIT) {
-                            periodic.armmode = ArmModes.DirectControl;
-                            break;
-                        }
-                        if (periodic.distPoint < Constants.ARM_L_L_LIMIT) {
-                            periodic.armmode = ArmModes.DirectControl;
-                        } else {
-                            armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
-                            break;
-                        }
+                    if (periodic.distPoint > Constants.ARM_L_U_LIMIT) {
+                        periodic.armmode = ArmModes.DirectControl;
+                        break;
+                    }
+                    if (periodic.distPoint < Constants.ARM_L_L_LIMIT) {
+                        periodic.armmode = ArmModes.DirectControl;
+                    } else {
+                        armDist.set(ControlMode.Position, periodic.armDistPower + periodic.distMod /*+ (periodic.operatorInput[1]*100) /*DemandType.ArbitraryFeedForward, Constants.ARM_DIST_A_FEEDFORWARD * Math.sin((periodic.armDistPower + periodic.distMod + periodic.proxMod + periodic.armProxPower) / 2048 * Math.PI)*/);
+                        break;
+                    }
                 case STATE_SPACE:
 
-                            break;
-                        case SAFETY_CATCH:
-                            //armProx.set(ControlMode.PercentOutput, 0);
-                            armDist.set(ControlMode.PercentOutput, 0);
-                            break;
-                        default:
-                            System.out.println("Arm entered unexpected control state!");
-                    }
+                    break;
+                case SAFETY_CATCH:
+                    //armProx.set(ControlMode.PercentOutput, 0);
+                    armDist.set(ControlMode.PercentOutput, 0);
+                    break;
+                default:
+                    System.out.println("Arm entered unexpected control state!");
+            }
         }
     }
 
@@ -237,9 +219,8 @@ public class Arm extends Subsystem {
         periodic.PArmStates = state;
         if (state.getProx()) {
             setProxPistPID(DoubleSolenoid.Value.kReverse);
-        }
-            else
-        {
+        } else if ((periodic.ProxPiston.equals(DoubleSolenoid.Value.kReverse) && periodic.distPoint <= Constants.ARM_NO_DOWN_LIMIT)) {
+        } else {
             setProxPistPID(DoubleSolenoid.Value.kForward);
         }
         periodic.armDistPower = state.dist;
@@ -250,14 +231,14 @@ public class Arm extends Subsystem {
         return null;
     }*/
 
-   /* public void setSSArmConfig(ArmStates state) {
-        if (periodic.armmode != ArmModes.STATE_SPACE) {
-            periodic.armmode = ArmModes.STATE_SPACE;
-        }
-        periodic.armProxPower = state.prox;
-        periodic.armDistPower = state.dist;
-    }
-*/
+    /* public void setSSArmConfig(ArmStates state) {
+         if (periodic.armmode != ArmModes.STATE_SPACE) {
+             periodic.armmode = ArmModes.STATE_SPACE;
+         }
+         periodic.armProxPower = state.prox;
+         periodic.armDistPower = state.dist;
+     }
+ */
     public void safeMode() {
         if (periodic.armmode != ArmModes.SAFETY_CATCH)
             periodic.armmode = ArmModes.SAFETY_CATCH;
@@ -304,12 +285,16 @@ public class Arm extends Subsystem {
     public double getAbsolute() {
         return periodic.distAbsolute;
     }
-    public boolean getProxExtend(){
+
+    public boolean getProxExtend() {
         return periodic.ProxPiston.equals(DoubleSolenoid.Value.kForward);
     }
 
     public void setProxPist(DoubleSolenoid.Value proxPist) {
-        periodic.ProxPiston = proxPist;
+        if ((periodic.ProxPiston.equals(DoubleSolenoid.Value.kReverse) && periodic.distPoint <= Constants.ARM_NO_DOWN_LIMIT)) {
+        } else {
+            periodic.ProxPiston = proxPist;
+        }
     }
 
     public void setProxPistPID(DoubleSolenoid.Value proxPist) {
@@ -344,7 +329,7 @@ public class Arm extends Subsystem {
         //ArmStates armstate = ArmStates.STOW_ARM;
         PistonArmStates PArmStates = PistonArmStates.STOW_ARM;
         ArmModes armmode = ArmModes.SAFETY_CATCH;
-        double distPoint =  distRel - distMod;
+        double distPoint = distRel - distMod;
     }
 
    /* public enum ArmStates {
