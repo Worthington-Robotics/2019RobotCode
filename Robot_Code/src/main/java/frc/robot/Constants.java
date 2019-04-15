@@ -17,7 +17,7 @@ public class Constants {
     public static final int DRIVE_FRONT_RIGHT_ID = 1;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 2;
     public static final int DRIVE_BACK_RIGHT_ID = 3;
-    public static final int ARM_PRONOMINAL = 7;
+    //public static final int ARM_PRONOMINAL = 7;
     public static final int ARM_DISTAL = 8;
 
     //Spark Ports
@@ -112,7 +112,7 @@ public class Constants {
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
     //public static final double ARM_DIST_A_FEEDFORWARD = 0; //.16
-    public static final double ARM_U_U_LIMIT = 500;
+    public static final double ARM_U_U_LIMIT = 750;
     public static final double ARM_U_L_LIMIT = -1200;
     public static final double ARM_L_U_LIMIT = 650;
     public static final double ARM_L_L_LIMIT = -250;

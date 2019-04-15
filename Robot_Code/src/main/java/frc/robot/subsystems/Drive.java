@@ -81,6 +81,10 @@ public class Drive extends Subsystem {
 
                     case OPEN_LOOP:
                         operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
+                        if(Constants.MASTER.getRawButton(9))
+                        {
+                            operatorInput[1] = operatorInput[1] / 7 * 10;
+                        }
                         SmartDashboard.putNumberArray("stick", operatorInput);
                         setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
                         break;
