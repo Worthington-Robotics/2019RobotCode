@@ -149,28 +149,28 @@ public class Constants {
     public static final boolean IS_COMP_BOT = true;
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
-            "Drive/Pose/Theta",
-            "Drive/Pose/X",
-            "Drive/Pose/Y",
-            "Drive/Error/Theta",
-            "Drive/Error/X",
-            "Drive/Error/Y",
-            "Drive/Setpoint/Theta",
-            "Drive/Setpoint/X",
-            "Drive/Setpoint/Y",
-            "Drive/Left/Demand",
-            "Drive/Right/Demand",
-            "Drive/Left/Talon Velocity",
-            "Drive/Right/Talon Velocity",
-            "Drive/Error/Left Talon Error",
-            "Drive/Error/Right Talon Error",
-            "Drive/Misc/Left FeedForward",
-            "Drive/Misc/Right FeedForward",
-            "Drive/Left/Talon Voltage Out",
-            "Drive/Right/Talon Voltage Out",
-            "Arm/Dist Point",
-            "Vision/rioStatus",
-            "StateMachine/state"
+            "Drive/Pose/Theta", //2
+            "Drive/Pose/X", //3
+            "Drive/Pose/Y", //4
+            "Drive/Error/Theta", //5
+            "Drive/Error/X", //6
+            "Drive/Error/Y", //7
+            "Drive/Setpoint/Theta", //8
+            "Drive/Setpoint/X", //9
+            "Drive/Setpoint/Y", //10
+            "Drive/Left/Demand", //11
+            "Drive/Right/Demand", //12
+            "Drive/Left/Talon Velocity", //13
+            "Drive/Right/Talon Velocity", //14
+            "Drive/Error/Left Talon Error", //15
+            "Drive/Error/Right Talon Error", //16
+            "Drive/Misc/Left FeedForward", //17
+            "Drive/Misc/Right FeedForward", //18
+            "Drive/Left/Talon Voltage Out", //19
+            "Drive/Right/Talon Voltage Out", //20
+            "Arm/Dist Point", // 21
+            "Vision/rioStatus", //22
+            "StateMachine/state" //23
     };
 }
 

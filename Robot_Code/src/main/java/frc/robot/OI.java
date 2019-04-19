@@ -7,6 +7,7 @@ import frc.robot.actions.*;
 import frc.robot.actions.buttonactions.ModAction;
 import frc.robot.actions.driveactions.AnglePID;
 //import frc.robot.actions.driveactions.ForceField;
+import frc.robot.actions.driveactions.GyroLock;
 import frc.robot.autoactiongroups.StowProtocol;
 import frc.robot.actions.armactions.*;
 import frc.robot.actions.buttonactions.RunTestConditional;
@@ -46,6 +47,7 @@ public class OI{
         Button ElevatorDown = new JoystickButton(Constants.LAUNCH_PAD, 15);
         Button crawlerForward = new JoystickButton(Constants.MASTER, 6);
         Button crawlerBackward = new JoystickButton(Constants.MASTER, 4);
+        Button gyroLock = new JoystickButton(Constants.MASTER, 3);
         //Cargo Manipulator
         Button cargoRollout = new JoystickButton(Constants.LAUNCH_PAD, 5);
         Button cargoShoot = new JoystickButton(Constants.LAUNCH_PAD, 11);
@@ -66,6 +68,7 @@ public class OI{
         frontClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(true, DoubleSolenoid.Value.kForward), new ClimbAction(true, DoubleSolenoid.Value.kReverse))));
         backClimb.whenPressed(Action.toCommand(new ModAction(new ClimbAction(false, DoubleSolenoid.Value.kForward), new ClimbAction(false, DoubleSolenoid.Value.kReverse))));
         */
+        gyroLock.whileHeld(Action.toCommand(new GyroLock()));
         highCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_HIGH_CARGO)));
         Pistons.toggleWhenPressed(Action.toCommand(new climb()));
         Pistons.whileHeld(Action.toCommand(new Elevator(-1)));
