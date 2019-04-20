@@ -10,13 +10,13 @@ public class RunTestConditional extends Action {
     private StateMachineDescriptor state;
     private boolean running = false;
 
-    public RunTestConditional(StateMachineDescriptor state){
+    public RunTestConditional(StateMachineDescriptor state) {
         this.state = state;
     }
 
     @Override
     public void onStart() {
-        if(DriverStation.getInstance().isTest()){
+        if (DriverStation.getInstance().isTest()) {
             StateMachine.runMachine(state);
         }
     }

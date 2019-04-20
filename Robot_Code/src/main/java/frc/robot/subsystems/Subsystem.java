@@ -23,7 +23,6 @@ public abstract class Subsystem {
     public abstract void outputTelemetry();
 
 
-
     /**
      * Called to reset and configure the subsystem
      */
@@ -32,6 +31,7 @@ public abstract class Subsystem {
     /**
      * Required for the subsystem's looper to be registered to the state machine
      * not required for subsystems that do not use looper
+     *
      * @param enabledLooper the subsystem's Looper
      */
     public void registerEnabledLoops(ILooper enabledLooper) {

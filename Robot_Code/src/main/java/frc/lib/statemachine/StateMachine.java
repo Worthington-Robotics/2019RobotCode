@@ -41,6 +41,7 @@ public class StateMachine {
             }
             stateLock.set(false);
         }catch (Exception e){
+            System.out.println(e.getMessage());
             state.set(-3);
             SmartDashboard.putNumber("StateMachine/state", state.get());
             stateLock.set(false);

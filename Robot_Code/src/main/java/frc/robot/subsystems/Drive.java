@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
@@ -74,10 +73,19 @@ public class Drive extends Subsystem {
                         }
 
                         break;
-
+//TODO Change z input to PID
+                    case GYRO_LOCK:
+                        operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
+                        SmartDashboard.putNumberArray("stick", operatorInput);
+                        operatorInput[2] = (periodic.gyro_heading.getDegrees() - periodic.gyro_pid_angle) / 720;
+                        setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
+                        break;
 
                     case OPEN_LOOP:
                         operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
+                        if (Constants.MASTER.getRawButton(9)) {
+                            operatorInput[1] = operatorInput[1] / 7 * 10;
+                        }
                         SmartDashboard.putNumberArray("stick", operatorInput);
                         setOpenLoop(arcadeDrive(operatorInput[1], operatorInput[2]));
                         break;
@@ -110,7 +118,7 @@ public class Drive extends Subsystem {
         periodic.left_error = driveFrontLeft.getClosedLoopError();
         periodic.right_error = driveFrontRight.getClosedLoopError();
 
-        periodic.B2 = Constants.MASTER.getRawButton(2);
+        //periodic.B2 = Constants.MASTER.getRawButton(2);
         periodic.left_pos_ticks = -driveFrontLeft.getSelectedSensorPosition(0);
         periodic.right_pos_ticks = -driveFrontRight.getSelectedSensorPosition(0);
         periodic.left_velocity_ticks_per_100ms = -driveFrontLeft.getSelectedSensorVelocity(0);
@@ -126,11 +134,11 @@ public class Drive extends Subsystem {
 
     @Override
     public synchronized void writePeriodicOutputs() {
-        if (periodic.B2) {
+        /*if (periodic.B2) {
             periodic.left_demand = -periodic.left_demand;
             periodic.right_demand = -periodic.right_demand;
         } else {
-        }
+        }*/
         if (mDriveControlState == DriveControlState.OPEN_LOOP || mDriveControlState == DriveControlState.ANGLE_PID || (mDriveControlState == DriveControlState.PROFILING_TEST && Constants.RAMPUP)) {
             driveFrontLeft.set(ControlMode.PercentOutput, periodic.left_demand);
             driveFrontRight.set(ControlMode.PercentOutput, periodic.right_demand);
@@ -209,6 +217,7 @@ public class Drive extends Subsystem {
     public void reset() {
         mOverrideTrajectory = false;
         mMotionPlanner.reset();
+        //pigeonIMU.enterCalibrationMode(PigeonIMU.CalibrationMode.Temperature);
         mMotionPlanner.setFollowerType(DriveMotionPlanner.FollowerType.NONLINEAR_FEEDBACK);
         periodic = new PeriodicIO();
         setHeading(Rotation2d.fromDegrees(0));
@@ -323,6 +332,18 @@ public class Drive extends Subsystem {
         periodic.right_demand = signal.getRight();
     }
 
+    public synchronized void setGyroLock(DriveSignal signal) {
+        if (mDriveControlState != DriveControlState.GYRO_LOCK) {
+            System.out.println("Switching to open loop");
+            driveFrontLeft.set(ControlMode.PercentOutput, 0);
+            driveFrontRight.set(ControlMode.PercentOutput, 0);
+            mDriveControlState = DriveControlState.GYRO_LOCK;
+        }
+        periodic.gyro_pid_angle = periodic.gyro_heading.getDegrees();
+        periodic.left_demand = signal.getLeft();
+        periodic.right_demand = signal.getRight();
+    }
+
     /**
      * Configure talons for Angle PID control
      */
@@ -355,6 +376,7 @@ public class Drive extends Subsystem {
 
     }
 
+
     public void setMotorPower(double MP) {
         periodic.climber_power = MP;
     }
@@ -376,16 +398,15 @@ public class Drive extends Subsystem {
     }
 
     public void outputTelemetry() {
-        //TODO REMOVE ALL SENSOR CALLS FROM HERE
         //literally breaks the purpose of the design pattern
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
 
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
         SmartDashboard.putNumber("Drive/Error/Y", periodic.error.getTranslation().y());
         SmartDashboard.putNumber("Drive/Error/Theta", periodic.error.getRotation().getDegrees());
-        //SmartDashboard.putNumber("Drive/Setpoint/X", periodic.path_setpoint.state().getTranslation().x());
-        //SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
-        //SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
+        SmartDashboard.putNumber("Drive/Setpoint/X", periodic.path_setpoint.state().getTranslation().x());
+        SmartDashboard.putNumber("Drive/Setpoint/Y", periodic.path_setpoint.state().getTranslation().y());
+        SmartDashboard.putNumber("Drive/Setpoint/Theta", periodic.path_setpoint.state().getRotation().getDegrees());
 
         SmartDashboard.putNumber("Drive/Left/Demand", periodic.left_demand);
         SmartDashboard.putNumber("Drive/Left/Talon Velocity", periodic.left_velocity_ticks_per_100ms);
@@ -413,6 +434,7 @@ public class Drive extends Subsystem {
         OPEN_LOOP,
         PATH_FOLLOWING,
         PROFILING_TEST,
+        GYRO_LOCK,
         ANGLE_PID;
 
         public String toString() {
@@ -431,11 +453,12 @@ public class Drive extends Subsystem {
         Pose2d error = Pose2d.identity();
         boolean flaggyflag = false;
         boolean B1 = false;
-        boolean B2 = false;
-        boolean B3 = false;
-        boolean B5 = false;
+        //boolean B2 = false;
+        //boolean B3 = false;
+        //boolean B5 = false;
         double right_error = 0;
         double left_error = 0;
+        double gyro_pid_angle = 0;
         boolean climbLimit = false;
 
         // OUTPUTS
@@ -515,4 +538,5 @@ public class Drive extends Subsystem {
         }
         return new DriveSignal(rightMotorOutput, leftMotorOutput);
     }
+
 }

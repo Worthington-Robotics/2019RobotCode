@@ -1,4 +1,4 @@
-package frc.robot.actions;
+package frc.robot.actions.driveactions;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.lib.geometry.Pose2dWithCurvature;
@@ -18,14 +18,12 @@ public class DriveTra extends Action {
     private final TrajectoryIterator<TimedState<Pose2dWithCurvature>> mTra;
     private final boolean mResetPose;
 
-    public DriveTra(Trajectory<TimedState<Pose2dWithCurvature>> Tra)
-    {
+    public DriveTra(Trajectory<TimedState<Pose2dWithCurvature>> Tra) {
         mTra = new TrajectoryIterator<>(new TimedView<>(Tra));
         mResetPose = false;
     }
 
-    public DriveTra(Trajectory<TimedState<Pose2dWithCurvature>> Tra, boolean resetpos)
-    {
+    public DriveTra(Trajectory<TimedState<Pose2dWithCurvature>> Tra, boolean resetpos) {
         mTra = new TrajectoryIterator<>(new TimedView<>(Tra));
         mResetPose = resetpos;
     }
@@ -33,8 +31,9 @@ public class DriveTra extends Action {
     @Override
     public void onStart() {
         System.out.println("Starting Tra");
-        if(mResetPose)
-        {mRobotState.reset(Timer.getFPGATimestamp(), mTra.getState().state().getPose());}
+        if (mResetPose) {
+            mRobotState.reset(Timer.getFPGATimestamp(), mTra.getState().state().getPose());
+        }
         mDrive.setTrajectory(mTra);
     }
 

@@ -5,14 +5,15 @@ import frc.robot.subsystems.Arm;
 
 
 public class UnstowArmAction extends Action {
-    private Arm.ArmStates a;
+    private Arm.PistonArmStates a;
+
     public UnstowArmAction() {
-        a = Arm.ArmStates.UNSTOW_ARM;
+        a = Arm.PistonArmStates.UNSTOW_ARM;
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPIDArmConfig(a);
+        Arm.getInstance().setPistPIDArmConfig(a);
         Arm.getInstance().setStowed(false);
     }
 

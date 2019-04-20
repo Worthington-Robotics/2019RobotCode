@@ -1,21 +1,20 @@
 package frc.robot.actions.armactions;
 
-
 import frc.lib.statemachine.Action;
-import frc.lib.statemachine.StateMachine;
 import frc.robot.subsystems.Arm;
 
-public class StowArmAction extends Action {
+public class PistonArmAction extends Action {
     private Arm.PistonArmStates a;
 
-    public StowArmAction() {
-        a = Arm.PistonArmStates.STOW_ARM;
+    public PistonArmAction(Arm.PistonArmStates armState) {
+        a = armState;
     }
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPistPIDArmConfig(a);
-        Arm.getInstance().setStowed(true);
+
+        if (!Arm.getInstance().getStowed())
+            Arm.getInstance().setPistPIDArmConfig(a);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class StowArmAction extends Action {
 
     @Override
     public void onStop() {
-        StateMachine.assertStop();
+
     }
 
 }

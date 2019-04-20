@@ -1,4 +1,4 @@
-package frc.robot.actions;
+/*package frc.robot.actions.waitactions;
 
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
@@ -35,3 +35,4 @@ public class ArmStateWaitAction extends Action {
     public void onStop() {
     }
 }
+*/

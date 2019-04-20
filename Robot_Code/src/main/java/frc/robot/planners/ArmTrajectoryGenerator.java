@@ -2,7 +2,6 @@ package frc.robot.planners;
 
 import frc.lib.geometry.Pose2d;
 import frc.lib.geometry.Pose2dWithCurvature;
-import frc.lib.geometry.Translation2d;
 import frc.lib.trajectory.Trajectory;
 import frc.lib.trajectory.timing.TimedState;
 import frc.lib.trajectory.timing.TimingConstraint;
@@ -13,13 +12,13 @@ public class ArmTrajectoryGenerator {
 
     private static final ArmTrajectoryGenerator generator = new ArmTrajectoryGenerator();
 
-    public ArmTrajectoryGenerator getInstance(){
+    public ArmTrajectoryGenerator getInstance() {
         return generator;
     }
 
     private final ArmMotionPlanner AMP;
 
-    private ArmTrajectoryGenerator(){
+    private ArmTrajectoryGenerator() {
         AMP = new ArmMotionPlanner();
     }
 
@@ -31,7 +30,6 @@ public class ArmTrajectoryGenerator {
 
         return null; //AMP.generateTrajectory(waypoints, constraints, 0.0, 0.0, max_vel, max_accel); //TODO FIX
     }
-
 
 
 }

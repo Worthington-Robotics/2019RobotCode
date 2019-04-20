@@ -2,9 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachineDescriptor;
+import frc.robot.autoactiongroups.AutoTestProtocol;
 import frc.robot.autoactiongroups.CargoShip1;
 import frc.robot.autoactiongroups.CargoShip2;
-import frc.robot.autoactiongroups.GoTenFeet;
 
 /**
  * @author Cole Tucker This enum encompasses all user selectable autonomous
@@ -18,9 +18,9 @@ enum UserSelection {
     Auto1("Cargo Ship Left", 1),
     Auto2("Cargo Ship Right", 2),
     Auto3("", 3),
-    Auto4("", 4),
+    Auto4("Auto Test Protocol", 4),
     Auto5("", 5),
-    Auto6("",6),
+    Auto6("", 6),
     Auto20("Remote Operation", 20);
 
     private String name;
@@ -70,7 +70,7 @@ public class AutoSelector {
             }
         }
         // return the last possible enum by default
-        return UserSelection.values()[UserSelection.values().length-1];
+        return UserSelection.values()[UserSelection.values().length - 1];
     }
 
 
@@ -87,19 +87,26 @@ public class AutoSelector {
         SmartDashboard.putString("Final Auto Choice", usrAuto.toString());
         switch (usrAuto) {
 
-            case Auto1: return new CargoShip2();
+            case Auto1:
+                return new CargoShip2();
 
-            case Auto2: return new CargoShip1(false);
+            case Auto2:
+                return new CargoShip1(false);
 
-            case Auto3: return null;
+            case Auto3:
+                return null;
 
-            case Auto4: return null;
+            case Auto4:
+                return new AutoTestProtocol();
 
-            case Auto5: return null;
+            case Auto5:
+                return null;
 
-            case Auto6: return null;
+            case Auto6:
+                return null;
 
-            default: return null;
+            default:
+                return null;
         }
     }
 }

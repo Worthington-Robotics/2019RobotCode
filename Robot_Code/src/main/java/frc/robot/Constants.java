@@ -1,7 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.lib.geometry.Translation2d;
 import frc.lib.util.HIDHelper;
 
 public class Constants {
@@ -17,25 +16,26 @@ public class Constants {
     public static final int DRIVE_FRONT_RIGHT_ID = 1;
     public static final int DRIVE_MIDDLE_RIGHT_ID = 2;
     public static final int DRIVE_BACK_RIGHT_ID = 3;
-    public static final int ARM_PRONOMINAL = 7;
+    //public static final int ARM_PRONOMINAL = 7;
     public static final int ARM_DISTAL = 8;
 
     //Spark Ports
-    public static final int BOTTOM_CARGOMANIP_ID = 1;
+    public static final int BOTTOM_CARGOMANIP_ID = 5;
     public static final int TOP_CARGOMANIP_ID = 2;
-    public static final int LEFT_CLIMB_ID = 3;
+    public static final int CLIMBER_CRAWL_ID = 4;
+    public static final int CLIMBER_ELEVATOR_ID = 3;
 
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
     public static final int CLIMB_FRONT_LOW_ID = 2;
     public static final int CLIMB_FRONT_HIGH_ID = 3;
-    public static final int CLIMB_BACK_LOW_ID = 4;
-    public static final int CLIMB_BACK_HIGH_ID = 5;
+    public static final int PROX_LOW = 4;
+    public static final int PROX_HIGH = 5;
 
     //Sensor Ports
-    public static final int ULTRASONIC_IN_1 = 0;
-    public static final int ULTRASONIC_OUT_1 = 1;
+    //public static final int ULTRASONIC_IN_1 = 0;
+    //public static final int ULTRASONIC_OUT_1 = 1;
     //public static final int ULTRASONIC_IN_2 = 2;
     //public static final int ULTRASONIC_OUT_2 = 3;
 
@@ -44,7 +44,7 @@ public class Constants {
      */
 
     //Physical Constants
-    public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 23;
+    public static final double DRIVE_WHEEL_TRACK_WIDTH_INCHES = 21.75;
     public static final double DRIVE_WHEEL_DIAMETER_INCHES = 6.225; // 6
     public static final double DRIVE_WHEEL_RADIUS_INCHES = DRIVE_WHEEL_DIAMETER_INCHES / 2.0;
     public static final double TRACK_SCRUB_FACTOR = 1.0;  // TODO tune
@@ -88,9 +88,8 @@ public class Constants {
      */
 
     // Arm Absolute Zeros
-            //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 1444;
-    public static double PROX_ABSOLUTE_ZERO = 3194;
+    //TODO CHECK TWICE BONEHEAD!!!!!!!
+    public static double DIST_ABSOLUTE_ZERO = 2865;//8293
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -107,19 +106,16 @@ public class Constants {
     public static final double DIST_Kt = 0.5; // V per rad/s^2 //not currently correct usage
     public static final double DIST_V_INTERCEPT = 0.1; // V
 
-    //PID Constants
-    public static final double ARM_PROX_KP = 4.5;//10
-    public static final double ARM_PROX_KI = 0;
-    public static final double ARM_PROX_KD = 40;//200
-    public static final double ARM_PROX_KF = 0;
-    public static final double ARM_PROX_A_FEEDFORWARD = .345;
-
-    public static final double ARM_DIST_KP = 2;//7.5
+    public static final double ARM_DIST_KP = 3;//7.5
     public static final double ARM_DIST_KI = 0;
     public static final double ARM_DIST_KD = 0;//75
     public static final double ARM_DIST_KF = 0;
-    public static final double ARM_DIST_A_FEEDFORWARD = 0; //.16
-
+    //public static final double ARM_DIST_A_FEEDFORWARD = 0; //.16
+    public static final double ARM_U_U_LIMIT = 750;
+    public static final double ARM_U_L_LIMIT = -1200;
+    public static final double ARM_L_U_LIMIT = 650;
+    public static final double ARM_L_L_LIMIT = -250;
+    public static final double ARM_NO_DOWN_LIMIT = -500;
     /**
      * General Configuration --------------------------------------
      */
@@ -145,34 +141,35 @@ public class Constants {
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
     public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.2, 0.99, 0.99, 0.5, 2);
-    public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.05, 0.99, 0.99, 0.8, 2);
+    public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.2, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants
     public static final double LOOPER_DT = 0.01; //dt in seconds
     public static final boolean IS_COMP_BOT = true;
     public static final String DATA_SEPARATOR = ",";
     public static final String[] NUMBER_KEYS = {
-            "Drive/Pose/Theta",
-            "Drive/Pose/X",
-            "Drive/Pose/Y",
-            "Drive/Error/Theta",
-            "Drive/Error/X",
-            "Drive/Error/Y",
-            "Drive/Setpoint/Theta",
-            "Drive/Setpoint/X",
-            "Drive/Setpoint/Y",
-            "Drive/Left Demand",
-            "Drive/Right Demand",
-            "Drive/Left Talon Velocity",
-            "Drive/Right Talon Velocity",
-            "Drive/Error/Left Talon Error",
-            "Drive/Error/Right Talon Error",
-            "Drive/Misc/Left FeedForward",
-            "Drive/Misc/Right FeedForward",
-            "Drive/Left Talon Voltage Out",
-            "Drive/Right Talon Voltage Out",
-            "Arm/Prox Amps",
-            "Arm/Dist Amps"
+            "Drive/Pose/Theta", //2
+            "Drive/Pose/X", //3
+            "Drive/Pose/Y", //4
+            "Drive/Error/Theta", //5
+            "Drive/Error/X", //6
+            "Drive/Error/Y", //7
+            "Drive/Setpoint/Theta", //8
+            "Drive/Setpoint/X", //9
+            "Drive/Setpoint/Y", //10
+            "Drive/Left/Demand", //11
+            "Drive/Right/Demand", //12
+            "Drive/Left/Talon Velocity", //13
+            "Drive/Right/Talon Velocity", //14
+            "Drive/Error/Left Talon Error", //15
+            "Drive/Error/Right Talon Error", //16
+            "Drive/Misc/Left FeedForward", //17
+            "Drive/Misc/Right FeedForward", //18
+            "Drive/Left/Talon Voltage Out", //19
+            "Drive/Right/Talon Voltage Out", //20
+            "Arm/Dist Point", // 21
+            "Vision/rioStatus", //22
+            "StateMachine/state" //23
     };
 }
 

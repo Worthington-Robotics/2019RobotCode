@@ -1,4 +1,4 @@
-package frc.robot.actions;
+package frc.robot.actions.driveactions;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,8 +23,7 @@ public class AnglePID extends Action {
             double desiredAngle = (angleOffset + currentAngle);
             if (desiredAngle > 180) {
                 desiredAngle -= 360;
-            }
-            else if (desiredAngle < -180) {
+            } else if (desiredAngle < -180) {
                 desiredAngle += 360;
             }
 
@@ -36,7 +35,7 @@ public class AnglePID extends Action {
             angleController.setSetpoint(desiredAngle);
             angleController.setAbsoluteTolerance(1.0);
             angleController.setOutputRange(-0.5, 0.5);
-            angleController.setInputRange(-180,180);
+            angleController.setInputRange(-180, 180);
             angleController.setContinuous();
             angleController.enable();
         }
@@ -60,6 +59,7 @@ public class AnglePID extends Action {
     public void onStop() {
         if (angleController != null) {
             angleController.disable();
+            angleController.close();
         }
         Drive.getInstance().setOpenLoop(new DriveSignal(0, 0));
 
