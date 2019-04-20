@@ -14,13 +14,13 @@ import frc.robot.subsystems.Arm;
 
 
 public class AutoTestProtocol extends StateMachineDescriptor {
-    public AutoTestProtocol(){
+    public AutoTestProtocol() {
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.Shoot),
                 new DriveTra(DriveTrajectoryGenerator.getInstance().getTenInch(), false),
-                new UnstowArmAction()},2000);
+                new UnstowArmAction()}, 2000);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addParallel(new Action[]{new ManipulatorAction(ManipulatorAction.ShotPower.PickUp),
-                new PistonArmAction(Arm.PistonArmStates.FWD_GROUND_CARGO)},2000);
+                new PistonArmAction(Arm.PistonArmStates.FWD_GROUND_CARGO)}, 2000);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);
         addSequential(new PistonArmAction(Arm.PistonArmStates.FWD_LOW_CARGO), 20);
         addSequential(new ButtonWaitAction(Constants.MASTER, 11), 4000);

@@ -4,20 +4,18 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
-import frc.robot.actions.buttonactions.ModAction;
+import frc.robot.actions.armactions.ManipulatorAction;
+import frc.robot.actions.armactions.PistonArmAction;
+import frc.robot.actions.armactions.ProxToggle;
+import frc.robot.actions.armactions.UnstowArmAction;
 import frc.robot.actions.driveactions.AnglePID;
-//import frc.robot.actions.driveactions.ForceField;
 import frc.robot.actions.driveactions.GyroLock;
 import frc.robot.autoactiongroups.StowProtocol;
-import frc.robot.actions.armactions.*;
-import frc.robot.actions.buttonactions.RunTestConditional;
-import frc.robot.autoactiongroups.AutoTestProtocol;
-
 import frc.robot.subsystems.Arm;
 
-public class OI{
+public class OI {
 
-    public OI(){
+    public OI() {
         ////////////Scary Vision Stuff////////////
         //Button cameraSwitch = new JoystickButton(Constants.MASTER, 3);
         Button anglePidButton = new JoystickButton(Constants.MASTER, 7);
@@ -32,7 +30,7 @@ public class OI{
         ForceField.whileHeld(Action.toCommand(new ForceField(34)));
         ForceFieldR.whileHeld(Action.toCommand(new ForceField(15)));
         */
-         ////////////End Scary Stuff////////////
+        ////////////End Scary Stuff////////////
 
         ///////////Button Declarations///////////
         //Arm Poses
@@ -51,7 +49,7 @@ public class OI{
         //Cargo Manipulator
         Button cargoRollout = new JoystickButton(Constants.LAUNCH_PAD, 5);
         Button cargoShoot = new JoystickButton(Constants.LAUNCH_PAD, 11);
-        Button intake = new JoystickButton(Constants.LAUNCH_PAD,14);
+        Button intake = new JoystickButton(Constants.LAUNCH_PAD, 14);
         //Stow/Unstow
         Button stow = new JoystickButton(Constants.LAUNCH_PAD, 8);
         Button unstow = new JoystickButton(Constants.LAUNCH_PAD, 7);

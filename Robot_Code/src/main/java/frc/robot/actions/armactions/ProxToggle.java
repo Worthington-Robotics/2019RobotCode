@@ -8,12 +8,10 @@ public class ProxToggle extends Action {
     @Override
     public void onStart() {
         System.out.println("Action Started");
-        if(!Arm.getInstance().getProxExtend()) {
+        if (!Arm.getInstance().getProxExtend()) {
             System.out.println("Reverse");
             Arm.getInstance().setProxPist(DoubleSolenoid.Value.kForward);
-        }
-        else
-        {
+        } else {
             System.out.println("Forward");
             Arm.getInstance().setProxPist(DoubleSolenoid.Value.kReverse);
         }

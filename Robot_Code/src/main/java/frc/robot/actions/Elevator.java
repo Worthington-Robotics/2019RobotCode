@@ -6,7 +6,10 @@ import frc.robot.subsystems.Manipulator;
 public class Elevator extends Action {
     private double elevatorPower;
 
-    public Elevator (double elevatorPower) {this.elevatorPower = elevatorPower;}
+    public Elevator(double elevatorPower) {
+        this.elevatorPower = elevatorPower;
+    }
+
     /**
      * code to run on action start
      */
@@ -39,6 +42,6 @@ public class Elevator extends Action {
      */
     @Override
     public void onStop() {
-Manipulator.getInstance().setElevatorPower(0);
+        Manipulator.getInstance().setElevatorPower(0);
     }
 }

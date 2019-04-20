@@ -1,9 +1,7 @@
 package frc.robot.subsystems.vision;
 
-import frc.lib.util.Ultrasonic;
-import frc.robot.Constants;
-import frc.robot.subsystems.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Subsystem;
 
 public class Vision extends Subsystem {
 
@@ -44,17 +42,17 @@ public class Vision extends Subsystem {
         String status = SmartDashboard.getString(TABLE_NAME, NOT_INIT);
 
         switch (status) {
-        case NOT_INIT:
-            this.connectionStatus = NOT_INIT;
-            break;
-        case PONG:
-            this.connectionStatus = PONG;
-            break;
-        case RESET:
-            this.connectionStatus = NOT_INIT;
-            break;
-        default:
-            break;
+            case NOT_INIT:
+                this.connectionStatus = NOT_INIT;
+                break;
+            case PONG:
+                this.connectionStatus = PONG;
+                break;
+            case RESET:
+                this.connectionStatus = NOT_INIT;
+                break;
+            default:
+                break;
 
         }
        /* DIS = US1.getDistance();
@@ -68,17 +66,17 @@ public class Vision extends Subsystem {
     public synchronized void writePeriodicOutputs() {
 
         switch (this.connectionStatus) {
-        case NOT_INIT:
-            SmartDashboard.putString(TABLE_NAME, PING);
-            this.connectionStatus = PING;
-            break;
-        case PONG:
-            SmartDashboard.putString(TABLE_NAME, CONNECTED);
-            this.connectionStatus = CONNECTED;
-            this.timesConnected++;
-            break;
-        default:
-            break;
+            case NOT_INIT:
+                SmartDashboard.putString(TABLE_NAME, PING);
+                this.connectionStatus = PING;
+                break;
+            case PONG:
+                SmartDashboard.putString(TABLE_NAME, CONNECTED);
+                this.connectionStatus = CONNECTED;
+                this.timesConnected++;
+                break;
+            default:
+                break;
         }
 
     }

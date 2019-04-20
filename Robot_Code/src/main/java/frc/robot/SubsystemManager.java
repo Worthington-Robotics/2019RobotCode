@@ -13,11 +13,11 @@ public class SubsystemManager implements ILooper {
     private final List<Subsystem> mAllSubsystems;
     private List<Loop> mLoops = new ArrayList<>();
 
-    public SubsystemManager(List<Subsystem> allSubsystems){
+    public SubsystemManager(List<Subsystem> allSubsystems) {
         mAllSubsystems = allSubsystems;
     }
 
-    public void outputTelemetry(){
+    public void outputTelemetry() {
         mAllSubsystems.forEach((s) -> s.outputTelemetry());
     }
 

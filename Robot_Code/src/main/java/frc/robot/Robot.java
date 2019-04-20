@@ -10,13 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.lib.loops.Looper;
 import frc.lib.statemachine.StateMachine;
 import frc.lib.statemachine.StateMachineDescriptor;
 import frc.lib.util.DriveSignal;
 import frc.lib.util.VersionData;
-import frc.lib.loops.Looper;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.vision.*;
+import frc.robot.subsystems.vision.Vision;
+
 import java.util.Arrays;
 
 /**
@@ -28,16 +29,16 @@ import java.util.Arrays;
  */
 public class Robot extends TimedRobot {
     /**
-    * This function is run when the robot is first started up and should be used
-    * for any initialization code.
-    */
+     * This function is run when the robot is first started up and should be used
+     * for any initialization code.
+     */
     private SubsystemManager Manager = new SubsystemManager(Arrays.asList(
-          Drive.getInstance(),
-          PoseEstimator.getInstance(),
-          Manipulator.getInstance(),
-          Arm.getInstance(),
-          Vision.getInstance(),
-          Logger.getInstance()
+            Drive.getInstance(),
+            PoseEstimator.getInstance(),
+            Manipulator.getInstance(),
+            Arm.getInstance(),
+            Vision.getInstance(),
+            Logger.getInstance()
     ));
     private Looper EnabledLoops = new Looper();
     private Looper DisabledLoops = new Looper();
@@ -55,7 +56,7 @@ public class Robot extends TimedRobot {
 
     }
 
-    public void robotPeriodic(){
+    public void robotPeriodic() {
         Manager.outputTelemetry();
     }
 
@@ -93,12 +94,12 @@ public class Robot extends TimedRobot {
         //get selected auto as a state machine descriptor
         final StateMachineDescriptor auto = AutoSelector.autoSelect(autoSelected);
         //perform a null check on the auto to see if it is valid
-        if(auto != null) StateMachine.runMachine(auto);
+        if (auto != null) StateMachine.runMachine(auto);
     }
 
     @Override
     public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
     }
 
     @Override
@@ -121,7 +122,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-    Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
     }
 
     @Override
@@ -141,7 +142,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testPeriodic() {
-    Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
     }
 
 }

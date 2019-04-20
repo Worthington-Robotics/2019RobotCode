@@ -9,8 +9,8 @@ import frc.robot.subsystems.PoseEstimator;
 public class PointCloudWait extends Action {
     private boolean isX, isY, isTheta;
     private double epsilonX, epsilonY, epsilonTheta, X, Y, Theta;
-    public PointCloudWait(Pose2d pose, double epsilonX, double epsilonY, double epsilonTheta)
-    {
+
+    public PointCloudWait(Pose2d pose, double epsilonX, double epsilonY, double epsilonTheta) {
         Theta = pose.getRotation().getDegrees();
         X = pose.getTranslation().x();
         Y = pose.getTranslation().y();
@@ -18,6 +18,7 @@ public class PointCloudWait extends Action {
         this.epsilonY = epsilonY;
         this.epsilonTheta = epsilonTheta;
     }
+
     @Override
     public void onStart() {
         isX = false;
@@ -39,7 +40,7 @@ public class PointCloudWait extends Action {
     }
 
     public boolean isFinished() {
-        return (isX && isY)&& isTheta;
+        return (isX && isY) && isTheta;
     }
 
     public void onStop() {

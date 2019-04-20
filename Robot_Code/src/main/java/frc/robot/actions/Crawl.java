@@ -6,7 +6,10 @@ import frc.robot.subsystems.Manipulator;
 public class Crawl extends Action {
     private double crawlPower;
 
-    public Crawl (double crawlPower) {this.crawlPower = crawlPower;}
+    public Crawl(double crawlPower) {
+        this.crawlPower = crawlPower;
+    }
+
     /**
      * code to run on action start
      */

@@ -6,7 +6,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.geometry.Pose2d;
 import frc.lib.geometry.Pose2dWithCurvature;
@@ -81,8 +83,7 @@ public class Drive extends Subsystem {
 
                     case OPEN_LOOP:
                         operatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
-                        if(Constants.MASTER.getRawButton(9))
-                        {
+                        if (Constants.MASTER.getRawButton(9)) {
                             operatorInput[1] = operatorInput[1] / 7 * 10;
                         }
                         SmartDashboard.putNumberArray("stick", operatorInput);
@@ -374,7 +375,6 @@ public class Drive extends Subsystem {
 
 
     }
-
 
 
     public void setMotorPower(double MP) {

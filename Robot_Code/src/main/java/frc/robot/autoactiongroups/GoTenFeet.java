@@ -7,7 +7,7 @@ import frc.robot.planners.DriveTrajectoryGenerator;
 
 public class GoTenFeet extends StateMachineDescriptor {
     public GoTenFeet() {
-        addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().getTenFeet(), false) } , 3000);
+        addParallel(new Action[]{new DriveTra(DriveTrajectoryGenerator.getInstance().getTenFeet(), false)}, 3000);
 
 
     }
