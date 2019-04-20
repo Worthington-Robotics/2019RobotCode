@@ -33,6 +33,6 @@ public class PistonArmStateWait extends Action {
 
     @Override
     public void onStop() {
-    this.end = false;
+        this.end = false;
     }
 }

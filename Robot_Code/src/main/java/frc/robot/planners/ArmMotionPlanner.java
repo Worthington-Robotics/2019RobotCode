@@ -1,17 +1,17 @@
 package frc.robot.planners;
 
-import frc.lib.geometry.Pose2d;
-import frc.lib.geometry.Pose2dWithCurvature;
 import frc.lib.geometry.Rotation2d;
 import frc.lib.geometry.Translation2d;
 import frc.lib.physics.ArmModel;
 import frc.lib.physics.DCMotorTransmission;
-import frc.lib.trajectory.*;
+import frc.lib.trajectory.TimedView;
+import frc.lib.trajectory.Trajectory;
+import frc.lib.trajectory.TrajectoryIterator;
+import frc.lib.trajectory.TrajectorySamplePoint;
 import frc.lib.trajectory.timing.TimedState;
 import frc.lib.trajectory.timing.TimingConstraint;
 import frc.lib.trajectory.timing.TimingUtil;
 import frc.lib.util.CSVWritable;
-import frc.lib.util.Units;
 import frc.robot.Constants;
 
 import java.text.DecimalFormat;
@@ -46,7 +46,7 @@ public class ArmMotionPlanner implements CSVWritable {
         lastTime = Double.POSITIVE_INFINITY;
     }
 
-    public void setFollowerType(FollowerType type){
+    public void setFollowerType(FollowerType type) {
         followerType = type;
     }
 
@@ -79,7 +79,7 @@ public class ArmMotionPlanner implements CSVWritable {
             double start_vel,
             double end_vel,
             double max_vel,  // inches/s
-            double max_accel ){  // inches/s^2
+            double max_accel) {  // inches/s^2
 
         final Trajectory<TimedState<Rotation2d>> prox_timed = TimingUtil.timeParameterizeTrajectory(false, interpoltate(proxWaypoints, MAX_DTHETA), constraints, start_vel, end_vel, max_vel, max_accel);
         final Trajectory<TimedState<Rotation2d>> dist_timed = TimingUtil.timeParameterizeTrajectory(false, interpoltate(distWaypoints, MAX_DTHETA), constraints, start_vel, end_vel, max_vel, max_accel);
@@ -110,7 +110,7 @@ public class ArmMotionPlanner implements CSVWritable {
             final ArmModel.ArmDynamics dynamics = mModel.solveInverseDynamics(position, velocity, accel);
             error = ArmModel.solveForwardKinematics(mProxSetpoint.state(), mDistSetpoint.state()).inverse().translateBy(ArmModel.solveForwardKinematics(prox, dist));
             //System.out.println(dynamics.toString());
-            switch(followerType){
+            switch (followerType) {
                 case FEEDBACK_CONTROLER:
                     //TODO implement feedback controller
                     output = new Output();
@@ -131,12 +131,12 @@ public class ArmMotionPlanner implements CSVWritable {
     }
 
 
-    public static class Output{
+    public static class Output {
 
         public double proxVel = 0.0, proxAccel = 0.0, proxVoltage = 0.0;
         public double distVel = 0.0, distAccel = 0.0, distVoltage = 0.0;
 
-        public Output(double proxVel, double proxAccel, double proxVoltage, double distVel, double distAccel, double distVoltage){
+        public Output(double proxVel, double proxAccel, double proxVoltage, double distVel, double distAccel, double distVoltage) {
             this.proxVel = proxVel;
             this.proxAccel = proxAccel;
             this.proxVoltage = proxVoltage;
@@ -145,15 +145,15 @@ public class ArmMotionPlanner implements CSVWritable {
             this.distVoltage = distVoltage;
         }
 
-        public Output(){
+        public Output() {
         }
 
     }
 
-    public static class ArmTrajectory implements CSVWritable{
+    public static class ArmTrajectory implements CSVWritable {
         private Trajectory<TimedState<Rotation2d>> proxTraj, distTraj;
 
-        public ArmTrajectory(Trajectory<TimedState<Rotation2d>> proxTraj, Trajectory<TimedState<Rotation2d>> distTraj){
+        public ArmTrajectory(Trajectory<TimedState<Rotation2d>> proxTraj, Trajectory<TimedState<Rotation2d>> distTraj) {
             this.proxTraj = proxTraj;
             this.distTraj = distTraj;
         }
@@ -162,7 +162,7 @@ public class ArmMotionPlanner implements CSVWritable {
         @Override
         public String toCSV() {
             StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < proxTraj.length(); i++){
+            for (int i = 0; i < proxTraj.length(); i++) {
                 sb.append(proxTraj.getState(i).toCSV());
                 sb.append(", ");
                 sb.append(distTraj.getState(i).toCSV());
@@ -171,9 +171,9 @@ public class ArmMotionPlanner implements CSVWritable {
             return sb.toString();
         }
 
-        public String toString(){
+        public String toString() {
             StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < proxTraj.length(); i++){
+            for (int i = 0; i < proxTraj.length(); i++) {
                 sb.append("Prox: ");
                 sb.append(proxTraj.getState(i).toString());
                 sb.append(" Dist: ");
@@ -194,7 +194,7 @@ public class ArmMotionPlanner implements CSVWritable {
     }
 
 
-    enum FollowerType{
+    enum FollowerType {
         FEEDBACK_CONTROLER,
         FEED_FORWARD_ONLY
     }
@@ -208,7 +208,7 @@ public class ArmMotionPlanner implements CSVWritable {
         return error;
     }
 
-    public Translation2d setpoint(){
+    public Translation2d setpoint() {
         return ArmModel.solveForwardKinematics(mProxSetpoint.state(), mDistSetpoint.state()).scale(39.3701);
     }
 
@@ -216,22 +216,19 @@ public class ArmMotionPlanner implements CSVWritable {
         return mProxSetpoint;
     }
 
-    public TimedState<Rotation2d> distalSetpoint(){
+    public TimedState<Rotation2d> distalSetpoint() {
         return mDistSetpoint;
     }
 
-    private static ArrayList<Rotation2d> interpoltate(List<Rotation2d> x, double y)
-    {
+    private static ArrayList<Rotation2d> interpoltate(List<Rotation2d> x, double y) {
         ArrayList<Rotation2d> a = new ArrayList<>();
-        for(int i = 0; i < x.size()-1; i++)
-        {
-            double z = y/Math.abs(x.get(i).getDegrees() - x.get(i+1).getDegrees());
-            for(double j = 0; j <= 1; j += z )
-            {
-                a.add(x.get(i).interpolate(x.get(i+1), j));
+        for (int i = 0; i < x.size() - 1; i++) {
+            double z = y / Math.abs(x.get(i).getDegrees() - x.get(i + 1).getDegrees());
+            for (double j = 0; j <= 1; j += z) {
+                a.add(x.get(i).interpolate(x.get(i + 1), j));
             }
         }
-        a.add(x.get(x.size()- 1));
+        a.add(x.get(x.size() - 1));
         return a;
     }
 

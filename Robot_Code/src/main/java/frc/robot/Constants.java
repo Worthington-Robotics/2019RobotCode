@@ -1,7 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.lib.geometry.Translation2d;
 import frc.lib.util.HIDHelper;
 
 public class Constants {
@@ -89,7 +88,7 @@ public class Constants {
      */
 
     // Arm Absolute Zeros
-            //TODO CHECK TWICE BONEHEAD!!!!!!!
+    //TODO CHECK TWICE BONEHEAD!!!!!!!
     public static double DIST_ABSOLUTE_ZERO = 2865;//8293
 
     //Arm Physical Constants

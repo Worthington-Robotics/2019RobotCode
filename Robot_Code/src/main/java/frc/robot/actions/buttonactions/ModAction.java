@@ -8,7 +8,7 @@ public class ModAction extends Action {
     Action main, function;
     boolean sideShift;
 
-    public ModAction(Action main, Action function){
+    public ModAction(Action main, Action function) {
         this.main = main;
         this.function = function;
     }
@@ -17,11 +17,10 @@ public class ModAction extends Action {
     public void onStart() {
         System.out.println("Activated");
         sideShift = Arm.getInstance().getSideShift();
-        if(!sideShift){
+        if (!sideShift) {
             System.out.println("Normal");
             main.onStart();
-        }
-        else{
+        } else {
             System.out.println("Alt");
             function.onStart();
         }
@@ -29,30 +28,27 @@ public class ModAction extends Action {
 
     @Override
     public void onLoop() {
-        if(!sideShift){
+        if (!sideShift) {
             main.onLoop();
-        }
-        else{
+        } else {
             function.onLoop();
         }
     }
 
     @Override
     public boolean isFinished() {
-        if(!sideShift){
+        if (!sideShift) {
             return main.isFinished();
-        }
-        else{
+        } else {
             return function.isFinished();
         }
     }
 
     @Override
     public void onStop() {
-        if(!sideShift){
+        if (!sideShift) {
             main.onStop();
-        }
-        else{
+        } else {
             function.onStop();
         }
     }

@@ -7,6 +7,7 @@ import frc.robot.subsystems.Arm;
 
 public class StowArmAction extends Action {
     private Arm.PistonArmStates a;
+
     public StowArmAction() {
         a = Arm.PistonArmStates.STOW_ARM;
     }

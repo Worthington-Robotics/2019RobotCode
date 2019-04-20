@@ -6,6 +6,7 @@ import frc.robot.subsystems.Arm;
 
 public class UnstowArmAction extends Action {
     private Arm.PistonArmStates a;
+
     public UnstowArmAction() {
         a = Arm.PistonArmStates.UNSTOW_ARM;
     }

@@ -11,7 +11,7 @@ public class Manipulator extends Subsystem {
     private DoubleSolenoid ClimbFront/*, ClimbBack*/;
     private double ShotPower = 0.0;
     private boolean B2 = false;
-    private double [] OperatorInput;
+    private double[] OperatorInput;
     private DoubleSolenoid.Value fState = DoubleSolenoid.Value.kForward;
     /*private DoubleSolenoid.Value bState = DoubleSolenoid.Value.kReverse;*/
     private double elevatorPower, crawlPower;
@@ -47,18 +47,27 @@ public class Manipulator extends Subsystem {
         return bState;
     }*/
 
-    public void setShotPower (double Power) {ShotPower = Power;}
-    public void setCrawlPower (double Power) {crawlPower = Power;}
-    public void setElevatorPower (double Power) {elevatorPower = Power;}
+    public void setShotPower(double Power) {
+        ShotPower = Power;
+    }
 
-    public void readPeriodicInputs(){
+    public void setCrawlPower(double Power) {
+        crawlPower = Power;
+    }
+
+    public void setElevatorPower(double Power) {
+        elevatorPower = Power;
+    }
+
+    public void readPeriodicInputs() {
         B2 = Constants.MASTER.getRawButton(2);
         OperatorInput = HIDHelper.getAdjStick(Constants.MASTER_STICK);
 
     }
-     public void writePeriodicOutputs (){
-        if(B2)
-           climberCrawl.set(OperatorInput[1]);
+
+    public void writePeriodicOutputs() {
+        if (B2)
+            climberCrawl.set(OperatorInput[1]);
         else
             climberCrawl.set(crawlPower);
         bottomMotor.set(-ShotPower);

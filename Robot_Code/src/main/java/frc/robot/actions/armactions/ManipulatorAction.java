@@ -7,7 +7,7 @@ import frc.robot.subsystems.Manipulator;
 public class ManipulatorAction extends Action {
     private ShotPower speed;
 
-    public ManipulatorAction (ShotPower shotPower) {
+    public ManipulatorAction(ShotPower shotPower) {
         speed = shotPower;
     }
 

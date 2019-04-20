@@ -24,7 +24,7 @@ public class GyroPIDOutput implements PIDOutput {
             output = 0;
         }
 
-        DriveSignal signal = new DriveSignal(output+ (drive * 1), -output+ (drive * 1),false);
+        DriveSignal signal = new DriveSignal(output + (drive * 1), -output + (drive * 1), false);
         Drive.getInstance().setAnglePidLoop(signal);
     }
 }

@@ -96,7 +96,6 @@ public class DriveTrajectoryGenerator {
     }
 
 
-
     public Trajectory<TimedState<Pose2dWithCurvature>> HabToCargoShipMid(boolean reversed, boolean isLeft) {
         List<Pose2d> Points = new ArrayList<>();
         if (isLeft) {
@@ -165,7 +164,7 @@ public class DriveTrajectoryGenerator {
                 break;
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60),
-                new VelocityLimitRegionConstraint(new Translation2d(30,30), new Translation2d(-72,-120), 48)), 96.0, 60, 10.0);
+                new VelocityLimitRegionConstraint(new Translation2d(30, 30), new Translation2d(-72, -120), 48)), 96.0, 60, 10.0);
     }
 
     public Trajectory<TimedState<Pose2dWithCurvature>> CargoMidToHairpin(boolean reversed, boolean isLeft) {
@@ -192,7 +191,7 @@ public class DriveTrajectoryGenerator {
             Points.add(RHairpinTurn);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(
-                new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30,30), new Translation2d(-72,-120)
+                new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30, 30), new Translation2d(-72, -120)
                         , 48)), 96.0, 60, 10.0);
     }
 
@@ -273,6 +272,7 @@ public class DriveTrajectoryGenerator {
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60)), 36.0, 60, 10.0);
     }
+
     public Trajectory<TimedState<Pose2dWithCurvature>> HairpinToCargo(boolean reversed, boolean isLeft) {
         List<Pose2d> Points = new ArrayList<>();
         if (isLeft) {
@@ -284,6 +284,6 @@ public class DriveTrajectoryGenerator {
             Points.add(RCargoHoldMid);
             Points.add(RCargo);
         }
-        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60),new VelocityLimitRegionConstraint(new Translation2d(30,30), new Translation2d(-72,-120), 48)), 96.0, 60, 10.0);
+        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30, 30), new Translation2d(-72, -120), 48)), 96.0, 60, 10.0);
     }
 }

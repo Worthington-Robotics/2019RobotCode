@@ -7,10 +7,9 @@ import frc.robot.actions.waitactions.PistonArmStateWait;
 import frc.robot.subsystems.Arm;
 
 public class StowProtocol extends StateMachineDescriptor {
-   public StowProtocol()
-   {
-       addSequential(new PistonArmAction(Arm.PistonArmStates.UNSTOW_ARM), 1000);
-       addSequential(new PistonArmStateWait(Arm.PistonArmStates.UNSTOW_ARM, 200), 3000);
-       addSequential(new StowArmAction(), 1000);
-   }
+    public StowProtocol() {
+        addSequential(new PistonArmAction(Arm.PistonArmStates.UNSTOW_ARM), 1000);
+        addSequential(new PistonArmStateWait(Arm.PistonArmStates.UNSTOW_ARM, 200), 3000);
+        addSequential(new StowArmAction(), 1000);
+    }
 }

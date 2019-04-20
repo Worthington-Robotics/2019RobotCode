@@ -9,7 +9,7 @@ public class ButtonWaitAction extends Action {
     private Joystick stick;
     private int button;
 
-    public ButtonWaitAction(Joystick stick, int button){
+    public ButtonWaitAction(Joystick stick, int button) {
         this.stick = stick;
         this.button = button;
     }
