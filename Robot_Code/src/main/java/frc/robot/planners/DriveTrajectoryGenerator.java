@@ -10,6 +10,7 @@ import frc.lib.trajectory.timing.TimedState;
 import frc.lib.trajectory.timing.TimingConstraint;
 import frc.lib.trajectory.timing.VelocityLimitRegionConstraint;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ public class DriveTrajectoryGenerator {
     private static final DriveTrajectoryGenerator m_instance = new DriveTrajectoryGenerator();
     private final DriveMotionPlanner DMP;
     public final Pose2d HabStart;
-    public final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip1, RCargoShip2, RHairpinTurn;
+    public final Pose2d HabOff, CargoShipMid, CargoHoldMid, Cargo, CargoShip1, CargoShip2, HairpinTurn, RCargoShipMid, RCargoHoldMid, RCargo, RCargoShip1, RCargoShip2, RHairpinTurn, LCargoFirst, LCargoMid, PickupDepot;
 
     private DriveTrajectoryGenerator() {
         DMP          /**/ = new DriveMotionPlanner();
@@ -38,6 +39,10 @@ public class DriveTrajectoryGenerator {
         RCargoShip1  /**/ = new Pose2d(188, -15, Rotation2d.fromDegrees(90));
         RCargoShip2  /**/ = new Pose2d(213, -9, Rotation2d.fromDegrees(90));
         RCargoShipMid/**/ = new Pose2d(131, -60, Rotation2d.fromDegrees(0));
+
+        LCargoFirst  /**/ = new Pose2d(191,-9, Rotation2d.fromDegrees(90));
+        LCargoMid    /**/ = new Pose2d(214, -9, Rotation2d.fromDegrees(90));
+        PickupDepot  /**/ = new Pose2d(-12,-60, Rotation2d.fromDegrees(325));
         //
     }
 
@@ -338,6 +343,20 @@ public class DriveTrajectoryGenerator {
             Points.add(RCargo);
         }
         return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30, 30), new Translation2d(-72, -120), 48)), 96.0, 60, 10.0);
+    }
+
+    public Trajectory<TimedState<Pose2dWithCurvature>> HabtoCargoBay1(boolean reversed) {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(HabStart);
+        Points.add(LCargoFirst);
+        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30, 30), new Translation2d(-72, -120), 48)), 96,60,10);
+    }
+
+    public Trajectory<TimedState<Pose2dWithCurvature>> DepottoCargoBay2(boolean reversed) {
+        List<Pose2d> Points = new ArrayList<>();
+        Points.add(PickupDepot);
+        Points.add(LCargoFirst);
+        return generateTrajectory(reversed, Points, Arrays.asList(new CentripetalAccelerationConstraint(60), new VelocityLimitRegionConstraint(new Translation2d(30, 30), new Translation2d(-72, -120), 48)), 96,60,10);
     }
 }
 
