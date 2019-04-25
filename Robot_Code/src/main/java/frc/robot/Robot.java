@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        Arm.getInstance().setIgnoreSafety(false);
         VersionData.doVersionID();
         Logger.getInstance().addNumberKeys(Constants.NUMBER_KEYS);
         Manager.registerEnabledLoops(EnabledLoops);
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         // publishes the auto list to the dashboard "Auto Selector"
         Arm.getInstance().safeMode();
+        Arm.getInstance().setIgnoreSafety(false);
         SmartDashboard.putStringArray("Auto List", AutoSelector.buildArray());
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
@@ -78,11 +80,11 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         //Stop the disabled looper
         DisabledLoops.stop();
-
         //Reset all important subsystems
         PoseEstimator.getInstance().reset();
         Drive.getInstance().reset();
         Arm.getInstance().reset();
+        Arm.getInstance().setIgnoreSafety(true);
 
         //Start the enabled looper
         EnabledLoops.start();

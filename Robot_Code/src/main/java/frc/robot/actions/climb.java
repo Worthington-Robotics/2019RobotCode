@@ -7,7 +7,7 @@ import frc.robot.subsystems.Manipulator;
 public class climb extends Action {
     @Override
     public void onStart() {
-        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
+        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
 
 
     }
@@ -24,6 +24,6 @@ public class climb extends Action {
 
     @Override
     public void onStop() {
-        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
+        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
     }
 }

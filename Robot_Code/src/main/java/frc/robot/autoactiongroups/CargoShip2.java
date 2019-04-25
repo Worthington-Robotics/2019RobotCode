@@ -15,7 +15,7 @@ import frc.robot.subsystems.Arm;
 
 public class CargoShip2 extends StateMachineDescriptor {
     public CargoShip2() {
-
+        Arm.getInstance().setIgnoreSafety(true);
         Arm.getInstance().setStowed(false);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToOffHab(false), false), 1000);
         addSequential(new LineCrossWait(52, true), 2000);
@@ -25,7 +25,7 @@ public class CargoShip2 extends StateMachineDescriptor {
         addSequential(new LineCrossWait(72, true), 10000);
         addSequential(new PistonArmAction(Arm.PistonArmStates.A_CARGO_SHIP_CARGO), 20);
         addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().CargoShip1, 20, 4, 360), 12000);
-        addSequential(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot), 500);
+        addSequential(new ManipulatorAction(ManipulatorAction.ShotPower.Shoot), 1000);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().CargoShipToHairpin(true, true, 1)), 21);
         addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().HairpinTurn, 30, 30, 45), 10000);
         addSequential(new PistonArmAction(Arm.PistonArmStates.FWD_GROUND_CARGO), 20);
@@ -33,6 +33,7 @@ public class CargoShip2 extends StateMachineDescriptor {
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HairpinToCargo(false, true)), 21);
         addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().Cargo, 20, 20, 180), 5000);
         addSequential(new ManipulatorAction(ManipulatorAction.ShotPower.PickUp), 1500);
+
         /*
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().CargoToHairpin(true, false)), 21);
         addSequential(new PointCloudWait(DriveTrajectoryGenerator.getInstance().RHairpinTurn, 20, 200, 45), 10000);

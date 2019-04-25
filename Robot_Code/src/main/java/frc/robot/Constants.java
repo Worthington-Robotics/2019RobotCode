@@ -20,18 +20,18 @@ public class Constants {
     public static final int ARM_DISTAL = 8;
 
     //Spark Ports
-    public static final int BOTTOM_CARGOMANIP_ID = 5;
+    public static final int BOTTOM_CARGOMANIP_ID = 1;
     public static final int TOP_CARGOMANIP_ID = 2;
-    public static final int CLIMBER_CRAWL_ID = 4;
-    public static final int CLIMBER_ELEVATOR_ID = 3;
+    public static final int CLIMBER_CRAWL_ID = 3;
+    public static final int CLIMBER_ELEVATOR_ID = 4;
 
     //Solenoid Ports
     public static final int TRANS_LOW_ID = 0;
     public static final int TRANS_HIGH_ID = 1;
     public static final int CLIMB_FRONT_LOW_ID = 2;
     public static final int CLIMB_FRONT_HIGH_ID = 3;
-    public static final int PROX_LOW = 4;
-    public static final int PROX_HIGH = 5;
+    public static final int PROX_LOW = 6;
+    public static final int PROX_HIGH = 7;
 
     //Sensor Ports
     //public static final int ULTRASONIC_IN_1 = 0;
@@ -89,7 +89,7 @@ public class Constants {
 
     // Arm Absolute Zeros
     //TODO CHECK TWICE BONEHEAD!!!!!!!
-    public static double DIST_ABSOLUTE_ZERO = 2865;//8293
+    public static double DIST_ABSOLUTE_ZERO = 2980;//8293
 
     //Arm Physical Constants
     public static final double PROX_LENGTH = 0.6096; // m
@@ -114,7 +114,7 @@ public class Constants {
     public static final double ARM_U_U_LIMIT = 750;
     public static final double ARM_U_L_LIMIT = -1200;
     public static final double ARM_L_U_LIMIT = 650;
-    public static final double ARM_L_L_LIMIT = -250;
+    public static final double ARM_L_L_LIMIT = -350;
     public static final double ARM_NO_DOWN_LIMIT = -500;
     /**
      * General Configuration --------------------------------------

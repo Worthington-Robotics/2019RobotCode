@@ -150,9 +150,9 @@ public class Drive extends Subsystem {
         }
         //gearShift();
         if (periodic.B1) {
-            trans.set(DoubleSolenoid.Value.kForward);
-        } else {
             trans.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            trans.set(DoubleSolenoid.Value.kForward);
         }
     }
 
@@ -398,7 +398,6 @@ public class Drive extends Subsystem {
     }
 
     public void outputTelemetry() {
-        //literally breaks the purpose of the design pattern
         SmartDashboard.putString("Drive/Drive State", mDriveControlState.toString());
 
         SmartDashboard.putNumber("Drive/Error/X", periodic.error.getTranslation().x());
@@ -453,13 +452,9 @@ public class Drive extends Subsystem {
         Pose2d error = Pose2d.identity();
         boolean flaggyflag = false;
         boolean B1 = false;
-        //boolean B2 = false;
-        //boolean B3 = false;
-        //boolean B5 = false;
         double right_error = 0;
         double left_error = 0;
         double gyro_pid_angle = 0;
-        boolean climbLimit = false;
 
         // OUTPUTS
         double ramp_Up_Counter = 0;

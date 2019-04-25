@@ -1,27 +1,21 @@
-package frc.robot.actions;
-/*
+package frc.robot.actions.armactions;
+
 import frc.lib.statemachine.Action;
-import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Arm;
 
-public class Crawl extends Action {
-    private double crawlPower;
-
-    public Crawl(double crawlPower) {
-        this.crawlPower = crawlPower;
-    }
-
+public class SoftCal extends Action {
     /**
      * code to run on action start
-
+     */
     @Override
     public void onStart() {
-        Manipulator.getInstance().setCrawlPower(crawlPower);
+        Arm.getInstance().resetArmMod();
     }
 
     /**
      * code to run while action loops
      * <p>approx every 20 miliseconds
-
+     */
     @Override
     public void onLoop() {
 
@@ -31,7 +25,7 @@ public class Crawl extends Action {
      * method that tells the state machine the action is finished earlier than the scheduler
      *
      * @return true when action is ready to self terminate
-
+     */
     @Override
     public boolean isFinished() {
         return false;
@@ -39,10 +33,9 @@ public class Crawl extends Action {
 
     /**
      * code to run when the action has ben called by the state machine to stop
-
+     */
     @Override
     public void onStop() {
-        Manipulator.getInstance().setCrawlPower(0);
+
     }
 }
-*/

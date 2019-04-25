@@ -14,7 +14,7 @@ public class AStopAction extends Action {
         StateMachine.assertStop();
         Drive.getInstance().overrideTrajectory(true);
         Arm.getInstance().setVelocitymConfig();
-        Manipulator.getInstance().setElevatorPower(0);
+//        Manipulator.getInstance().setElevatorPower(0);
         finished = true;
     }
 
