@@ -1,7 +1,9 @@
 package frc.robot.actions.armactions;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Manipulator;
 
 
 public class UnstowArmAction extends Action {
@@ -13,6 +15,7 @@ public class UnstowArmAction extends Action {
 
     @Override
     public void onStart() {
+        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
         Arm.getInstance().setPistPIDArmConfig(a);
         Arm.getInstance().setStowed(false);
     }

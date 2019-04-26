@@ -86,6 +86,6 @@ public class Manipulator extends Subsystem {
         topMotor.set(0);
         bottomMotor.set(0);
         //ClimbBack.set(DoubleSolenoid.Value.kOff);
-        ClimbFront.set(DoubleSolenoid.Value.kOff);
+        ClimbFront.set(DoubleSolenoid.Value.kForward);
     }
 }

@@ -4,6 +4,7 @@ import frc.lib.geometry.Pose2d;
 import frc.lib.geometry.Rotation2d;
 import frc.lib.statemachine.StateMachineDescriptor;
 import frc.robot.Constants;
+import frc.robot.actions.armactions.ArmSoftCal;
 import frc.robot.actions.armactions.ManipulatorAction;
 import frc.robot.actions.armactions.PistonArmAction;
 import frc.robot.actions.buttonactions.ButtonWaitAction;
@@ -13,8 +14,10 @@ import frc.robot.actions.waitactions.PointCloudWait;
 import frc.robot.planners.DriveTrajectoryGenerator;
 import frc.robot.subsystems.Arm;
 
-public class CargoShip1 extends StateMachineDescriptor {
-    public CargoShip1(boolean isLeft) {
+public class CargoShipRight extends StateMachineDescriptor {
+    public CargoShipRight (boolean doReset) {
+        if(doReset) addSequential(new ArmSoftCal(), 21);
+        Arm.getInstance().setIgnoreSafety(true);
         Arm.getInstance().setStowed(false);
         addSequential(new DriveTra(DriveTrajectoryGenerator.getInstance().HabToOffHab(false), false), 1000);
         addSequential(new LineCrossWait(52, true), 2000);

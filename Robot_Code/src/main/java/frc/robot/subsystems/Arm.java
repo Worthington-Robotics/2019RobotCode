@@ -27,7 +27,7 @@ public class Arm extends Subsystem {
         return m_Arm;
     }
 
-    private TalonSRX armDist;
+    public TalonSRX armDist;
     private DoubleSolenoid proxPist;
     private PeriodicIO periodic;
 
@@ -39,6 +39,7 @@ public class Arm extends Subsystem {
 
     public void readPeriodicInputs() {
 
+        periodic.StowSwitch = armDist.getSensorCollection().isRevLimitSwitchClosed();
         periodic.operatorInput = HIDHelper.getAdjStick(Constants.LAUNCHPAD_STICK);
         periodic.sideShift = Constants.LAUNCH_PAD.getRawButton(9);
         periodic.distAmps = armDist.getOutputCurrent();
@@ -46,15 +47,27 @@ public class Arm extends Subsystem {
         periodic.distRel = armDist.getSensorCollection().getQuadraturePosition();
         periodic.distAbsolute = armDist.getSensorCollection().getPulseWidthPosition();
         periodic.distPoint = periodic.distRel - periodic.distMod;
-        if(Constants.LAUNCH_PAD.getRawButton(9))
+        if(Constants.LAUNCH_PAD.getRawButton(9) && !periodic.SToggle)
         {
             periodic.IgnoreSafety = !periodic.IgnoreSafety;
+            periodic.SToggle = true;
+        }
+        else if(!Constants.LAUNCH_PAD.getRawButton(9))
+        {
+            periodic.SToggle = false;
+        }
+        if(periodic.StowSwitch)
+        {
+            System.out.println("Stowed Switch");
+            Constants.DIST_ABSOLUTE_ZERO = periodic.distAbsolute - Arm.PistonArmStates.STOW_ARM.getDist();
+            System.out.println("Zero Calced");
+            resetArmMod();
+            System.out.println("Mod Adjusted");
         }
     }
 
 
     public void writePeriodicOutputs() {
-
         if (!periodic.ProxPiston.equals(DoubleSolenoid.Value.kReverse)) {
             switch (periodic.armmode) {
                 case DirectControl:
@@ -62,10 +75,6 @@ public class Arm extends Subsystem {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, 0);
                         break;
-                    }
-                    else if (periodic.operatorInput[1] < 0 && periodic.distPoint < Constants.ARM_U_L_LIMIT && !periodic.IgnoreSafety) {
-                        proxPist.set(periodic.ProxPiston);
-                        armDist.set(ControlMode.PercentOutput, 0);
                     } else {
                         proxPist.set(periodic.ProxPiston);
                         armDist.set(ControlMode.PercentOutput, periodic.operatorInput[1]);
@@ -142,6 +151,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm/Dist Abs", periodic.distAbsolute);
         SmartDashboard.putString("Arm/Mode", periodic.armmode.toString());
         SmartDashboard.putBoolean("Arm/Stowed", periodic.stowed);
+        SmartDashboard.putBoolean("Arm/Stowed Switch", periodic.StowSwitch);
     }
 
 
@@ -240,6 +250,10 @@ public class Arm extends Subsystem {
     {
         periodic.IgnoreSafety = n;
     }
+    public void eh()
+    {
+        periodic.armmode = ArmModes.Eh;
+    }
 
 
     public enum ArmModes {
@@ -247,6 +261,7 @@ public class Arm extends Subsystem {
         /*PID,*/
         PPID,
         STATE_SPACE,
+        Eh,
         SAFETY_CATCH;
 
         public String toString() {
@@ -271,6 +286,8 @@ public class Arm extends Subsystem {
         ArmModes armmode = ArmModes.SAFETY_CATCH;
         double distPoint = distRel - distMod;
         boolean IgnoreSafety = false;
+        boolean SToggle = false;
+        boolean StowSwitch = false;
     }
 
 
@@ -284,9 +301,9 @@ public class Arm extends Subsystem {
         FWD_MEDIUM_CARGO(true, 265),
         FWD_HIGH_CARGO(true, 650),
         CARGO_SHIP_CARGO(false, 580),
-        A_CARGO_SHIP_CARGO(true, 0),
+        A_CARGO_SHIP_CARGO(true, -207),
         UNSTOW_ARM(true, 0),
-        STOW_ARM(true, -1059);
+        STOW_ARM(true, -1541);
 
 
         private double dist;

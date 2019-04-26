@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.lib.statemachine.Action;
 import frc.robot.actions.*;
-import frc.robot.actions.armactions.ManipulatorAction;
-import frc.robot.actions.armactions.PistonArmAction;
-import frc.robot.actions.armactions.ProxToggle;
-import frc.robot.actions.armactions.UnstowArmAction;
+import frc.robot.actions.armactions.*;
 import frc.robot.actions.driveactions.AnglePID;
 import frc.robot.actions.driveactions.GyroLock;
 import frc.robot.autoactiongroups.StowProtocol;
@@ -86,7 +83,7 @@ public class OI {
 
         //Stow/Unstow
         unstow.whenPressed(Action.toCommand(new UnstowArmAction()));
-        stow.whenPressed(Action.toCommand(new StateMachineRunner(new StowProtocol())));
+        stow.whileHeld(Action.toCommand(new StowArmAction()));
 
     }
 }

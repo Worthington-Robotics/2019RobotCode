@@ -1,9 +1,11 @@
 package frc.robot.actions.armactions;
 
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;
-import frc.lib.statemachine.StateMachine;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Manipulator;
 
 public class StowArmAction extends Action {
     private Arm.PistonArmStates a;
@@ -14,8 +16,8 @@ public class StowArmAction extends Action {
 
     @Override
     public void onStart() {
-        Arm.getInstance().setPistPIDArmConfig(a);
-        Arm.getInstance().setStowed(true);
+        Arm.getInstance().eh();
+        Arm.getInstance().armDist.set(ControlMode.PercentOutput, -.5);
     }
 
     @Override
@@ -25,12 +27,17 @@ public class StowArmAction extends Action {
 
     @Override
     public boolean isFinished() {
-        return true;
+        if (Arm.getInstance().armDist.getSensorCollection().isRevLimitSwitchClosed()) {
+            Arm.getInstance().setStowed(true);
+            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void onStop() {
-        StateMachine.assertStop();
+        Arm.getInstance().safeMode();
     }
 
 }
