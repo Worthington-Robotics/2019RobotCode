@@ -32,6 +32,7 @@ public class Arm extends Subsystem {
     private PeriodicIO periodic;
 
     private Arm() {
+        System.out.println("DIST_ABSOLUTE_ZERO: " + Constants.DIST_ABSOLUTE_ZERO);
         armDist = new TalonSRX(Constants.ARM_DISTAL);
         proxPist = new DoubleSolenoid(Constants.PROX_LOW, Constants.PROX_HIGH);
         reset();
@@ -56,14 +57,16 @@ public class Arm extends Subsystem {
         {
             periodic.SToggle = false;
         }
-        if(periodic.StowSwitch)
+ /*       if(periodic.StowSwitch)
         {
             System.out.println("Stowed Switch");
             Constants.DIST_ABSOLUTE_ZERO = periodic.distAbsolute - Arm.PistonArmStates.STOW_ARM.getDist();
-            System.out.println("Zero Calced");
+            System.out.println("distAbsolute: " + periodic.distAbsolute);
+            System.out.println("Arm.PistonArmStates.STOW_ARM.getDist(): " + Arm.PistonArmStates.STOW_ARM.getDist());
+            System.out.println("DIST_ABSOLUTE_ZERO: " + Constants.DIST_ABSOLUTE_ZERO);
             resetArmMod();
             System.out.println("Mod Adjusted");
-        }
+        }*/
     }
 
 
@@ -163,6 +166,7 @@ public class Arm extends Subsystem {
 
     public void resetArmMod() {
         periodic.distMod = Constants.DIST_ABSOLUTE_ZERO - periodic.distAbsolute;
+        System.out.println("periodic.distMod: " + periodic.distMod);
     }
 
     public void configTalons() {

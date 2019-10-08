@@ -50,6 +50,7 @@ public class OI {
         //Stow/Unstow
         Button stow = new JoystickButton(Constants.LAUNCH_PAD, 8);
         Button unstow = new JoystickButton(Constants.LAUNCH_PAD, 7);
+        Button lock = new JoystickButton(Constants.LAUNCH_PAD, 9);
         //Safety Things
         Button autoStopButton = new JoystickButton(Constants.LAUNCH_PAD, 1);
         Button ArmProx = new JoystickButton(Constants.LAUNCH_PAD, 3);
@@ -65,13 +66,14 @@ public class OI {
         */
         gyroLock.whileHeld(Action.toCommand(new GyroLock()));
         highCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_HIGH_CARGO)));
+        lock.toggleWhenPressed(Action.toCommand(new Lock()));
         Pistons.toggleWhenPressed(Action.toCommand(new climb()));
-       /* Pistons.whileHeld(Action.toCommand(new Elevator(-1)));
+        Pistons.whileHeld(Action.toCommand(new Elevator(-1)));
         ElevatorUp.whileHeld(Action.toCommand(new Elevator(1)));
         ElevatorDown.whileHeld(Action.toCommand(new Elevator(-1)));
         crawlerForward.whileHeld(Action.toCommand(new Crawl(0.5)));
         crawlerBackward.whileHeld(Action.toCommand(new Crawl(-0.5)));
-*/        //Arm Poses
+        //Arm Poses
         cargoShip.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.CARGO_SHIP_CARGO)));
         groundCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_GROUND_CARGO)));
         botCargo.whenPressed(Action.toCommand(new PistonArmAction(Arm.PistonArmStates.FWD_LOW_CARGO)));

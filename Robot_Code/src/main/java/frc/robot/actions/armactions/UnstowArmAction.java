@@ -15,7 +15,7 @@ public class UnstowArmAction extends Action {
 
     @Override
     public void onStart() {
-        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
+        Manipulator.getInstance().setLockState(DoubleSolenoid.Value.kForward);
         Arm.getInstance().setPistPIDArmConfig(a);
         Arm.getInstance().setStowed(false);
     }

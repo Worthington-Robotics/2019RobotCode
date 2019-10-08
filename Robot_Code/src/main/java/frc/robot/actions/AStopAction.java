@@ -4,7 +4,6 @@ import frc.lib.statemachine.Action;
 import frc.lib.statemachine.StateMachine;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Manipulator;
 
 public class AStopAction extends Action {
     boolean finished = false;
@@ -31,5 +30,8 @@ public class AStopAction extends Action {
     @Override
     public void onStop() {
 
+    }
+
+    public static class Lock {
     }
 }

@@ -30,6 +30,8 @@ public class Constants {
     public static final int TRANS_HIGH_ID = 1;
     public static final int CLIMB_FRONT_LOW_ID = 2;
     public static final int CLIMB_FRONT_HIGH_ID = 3;
+    public static final int LOCK_LOW_ID = 4;
+    public static final int LOCK_HIGH_ID = 5;
     public static final int PROX_LOW = 6;
     public static final int PROX_HIGH = 7;
 
@@ -140,7 +142,7 @@ public class Constants {
     //Stick Constants
     public static final Joystick MASTER = new Joystick(0);
     public static final Joystick LAUNCH_PAD = new Joystick(1);
-    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.2, 0.99, 0.99, 0.5, 2);
+    public static final HIDHelper.HIDConstants MASTER_STICK = new HIDHelper.HIDConstants(MASTER, 0.2, 0.99, 0.99, 0.6, 2);
     public static final HIDHelper.HIDConstants LAUNCHPAD_STICK = new HIDHelper.HIDConstants(LAUNCH_PAD, 0.2, 0.99, 0.99, 0.8, 2);
 
     //Startup Constants

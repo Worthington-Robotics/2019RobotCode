@@ -22,6 +22,13 @@ public class Util {
         return limit(v, -maxMagnitude, maxMagnitude);
     }
 
+    /**
+     * Limits V to between Max and Min
+     * @param v input
+     * @param min min value of V
+     * @param max max value of V
+     * @return
+     */
     public static double limit(double v, double min, double max) {
         return Math.min(max, Math.max(min, v));
     }

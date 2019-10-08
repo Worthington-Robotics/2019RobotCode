@@ -1,13 +1,14 @@
 package frc.robot.actions;
 
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.lib.statemachine.Action;
 import frc.robot.subsystems.Manipulator;
 
-public class climb extends Action {
+public class Lock extends Action {
     @Override
     public void onStart() {
-        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kForward);
+        Manipulator.getInstance().setLockState(DoubleSolenoid.Value.kReverse);
 
 
     }
@@ -24,6 +25,7 @@ public class climb extends Action {
 
     @Override
     public void onStop() {
-        Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
+        Manipulator.getInstance().setLockState(DoubleSolenoid.Value.kForward);
     }
 }
+

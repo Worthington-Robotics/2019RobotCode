@@ -1,27 +1,21 @@
-package frc.robot.actions;
+package frc.robot.actions.waitactions;
 
 import frc.lib.statemachine.Action;
-import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Drive;
 
-public class Crawl extends Action {
-    private double crawlPower;
-
-    public Crawl(double crawlPower) {
-        this.crawlPower = crawlPower;
-    }
-
+public class TrajectoryCompleteWait extends Action {
     /**
      * code to run on action start
-*/
+     */
     @Override
     public void onStart() {
-        Manipulator.getInstance().setCrawlPower(crawlPower);
+
     }
 
     /**
      * code to run while action loops
      * <p>approx every 20 miliseconds
-*/
+     */
     @Override
     public void onLoop() {
 
@@ -31,17 +25,17 @@ public class Crawl extends Action {
      * method that tells the state machine the action is finished earlier than the scheduler
      *
      * @return true when action is ready to self terminate
-*/
+     */
     @Override
     public boolean isFinished() {
-        return false;
+        return Drive.getInstance().isDoneWithTrajectory();
     }
 
     /**
      * code to run when the action has ben called by the state machine to stop
-*/
+     */
     @Override
     public void onStop() {
-        Manipulator.getInstance().setCrawlPower(0);
+
     }
 }

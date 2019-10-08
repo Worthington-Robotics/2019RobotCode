@@ -17,7 +17,7 @@ public class StowArmAction extends Action {
     @Override
     public void onStart() {
         Arm.getInstance().eh();
-        Arm.getInstance().armDist.set(ControlMode.PercentOutput, -.5);
+        Arm.getInstance().armDist.set(ControlMode.PercentOutput, -.75);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class StowArmAction extends Action {
     public boolean isFinished() {
         if (Arm.getInstance().armDist.getSensorCollection().isRevLimitSwitchClosed()) {
             Arm.getInstance().setStowed(true);
-            Manipulator.getInstance().setFrontState(DoubleSolenoid.Value.kReverse);
+            Manipulator.getInstance().setLockState(DoubleSolenoid.Value.kReverse);
             return true;
         }
         return false;

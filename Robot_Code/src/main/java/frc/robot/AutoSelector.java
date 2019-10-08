@@ -2,9 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.statemachine.StateMachineDescriptor;
-import frc.robot.autoactiongroups.AutoTestProtocol;
-import frc.robot.autoactiongroups.CargoShipLeft;
-import frc.robot.autoactiongroups.CargoShipRight;
+import frc.robot.autoactiongroups.*;
 
 /**
  * @author Cole Tucker This enum encompasses all user selectable autonomous
@@ -17,10 +15,11 @@ enum UserSelection {
 
     Auto1("Cargo Ship Left", 1),
     Auto2("Cargo Ship Right", 2),
-    Auto3("Cargo Ship Left(ARM RESET)", 3),
-    Auto4("Cargo Ship Right(ARM RESET)", 4),
-    Auto5("Auto Test Protocol", 5),
-    Auto6("", 6),
+    Auto3("Cargo Ship Left (ARM RESET)", 3),
+    Auto4("Cargo Ship Right (ARM RESET)", 4),
+    Auto5("Cargo Ship Left (ABV)", 5),
+    Auto6("Cargo Ship Right (ABV)", 6),
+    Auto7("Auto Test Protocol", 7),
     Auto20("Remote Operation", 20);
 
     private String name;
@@ -100,10 +99,14 @@ public class AutoSelector {
                 return new CargoShipRight(true);
 
             case Auto5:
-                return new AutoTestProtocol();
+                return new CargoShipLeftAbv(false);
 
             case Auto6:
-                return null;
+                return new CargoShipRightAbv(false);
+
+            case Auto7:
+                return new AutoTestProtocol();
+
 
             default:
                 return null;

@@ -19,7 +19,12 @@ public class Displacement1d implements State<Displacement1d> {
     public double x() {
         return displacement_;
     }
-
+    /**
+     * used by the lower bound
+     * @param other The value of the upper bound
+     * @param x     The requested percentage value of other. Should be between 0 and 1.
+     * @return
+     */
     @Override
     public Displacement1d interpolate(final Displacement1d other, double x) {
         return new Displacement1d(Util.interpolate(displacement_, other.displacement_, x));
